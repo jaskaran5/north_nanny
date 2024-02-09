@@ -62,20 +62,19 @@ class _BtnState extends State<Btn> {
         margin: widget.margin,
         decoration: BoxDecoration(
             color: widget.backGroundColor ?? ColorsValue.primaryColor,
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? 30),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? Dimens.twelve),
             boxShadow: widget.boxShadow,
             border: Border.all(
                 color: widget.borderColor ?? Colors.transparent,
-                width: widget.borderWidth ?? 0)),
+                width: widget.borderWidth ?? Dimens.zero)),
         child: Padding(
           padding: widget.customPadding ??
-              EdgeInsets.all(widget.textPadding ?? 15.0),
+              EdgeInsets.all(widget.textPadding ?? Dimens.fifteen),
           child: Center(
             child: Text(
               (widget.title ?? ""),
               style: widget.titleStyle ??
                   TextStyle(
-                    fontWeight: FontWeight.w500,
                     fontSize: widget.textSize ?? Dimens.sixteen,
                     fontFamily: AppConstants.fontFamilyUrbanist,
                     color: widget.textColor ?? ColorsValue.primaryColor,
