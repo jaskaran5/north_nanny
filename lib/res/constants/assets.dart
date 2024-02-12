@@ -2,6 +2,13 @@
 class Assets {
   Assets._();
 
+  static const String iconsApple = 'assets/icons/apple.svg';
+  static const String iconsBack = 'assets/icons/back.svg';
+  static const String iconsEmail = 'assets/icons/email.svg';
+  static const String iconsFacebook = 'assets/icons/facebook.svg';
+  static const String iconsInstagram = 'assets/icons/instagram.svg';
+  static const String iconsLock = 'assets/icons/lock.svg';
+  static const String iconsShowPassword = 'assets/icons/show_password.svg';
   static const String iconsSplash = 'assets/icons/splash.svg';
 
 }

@@ -21,9 +21,11 @@ class Dimens {
   static final double nine = 9.sp;
   static final double ten = 10.sp;
   static final double twelve = 12.sp;
+  static final double fourteen = 14.sp;
 
   static final double fifteen = 15.sp;
   static final double sixteen = 16.sp;
+  static final double eighteen = 18.sp;
   static final double twenty = 20.sp;
   static final double twentyFour = 24.sp;
   static final double twentyFive = 25.sp;
@@ -32,9 +34,12 @@ class Dimens {
   static final double thirtyTwo = 32.sp;
 
   static final double forty = 40.sp;
+  static final double fortyOne = 41.sp;
   static final double fifty = 50.sp;
+  static final double fiftyThree = 53.sp;
   static final double fiftyFive = 55.sp;
   static final double sixty = 60.sp;
+  static final double seventy = 70.sp;
   static final double seventyEight = 78.sp;
 
   static final double eighty = 80.sp;
@@ -48,6 +53,8 @@ class Dimens {
   static final double twoHundred = 200.sp;
   static final double twoHundredTwenty = 220.sp;
   static final double twoHundredFifty = 250.sp;
+  static final double twoHundredEightyOne = 281.sp;
+  static final double threeHundredThirtyOne = 331.sp;
 
   static final Widget box0 = SizedBox(height: zero);
 
@@ -56,11 +63,15 @@ class Dimens {
   static final Widget boxHeight5 = SizedBox(height: five);
   static final Widget boxHeight8 = SizedBox(height: eight);
   static final Widget boxHeight10 = SizedBox(height: ten);
+  static final Widget boxHeight14 = SizedBox(height: fourteen);
 
   static final Widget boxHeight16 = SizedBox(height: sixteen);
   static final Widget boxHeight20 = SizedBox(height: twenty);
   static final Widget boxHeight24 = SizedBox(height: twentyFour);
   static final Widget boxHeight32 = SizedBox(height: thirtyTwo);
+  static final Widget boxHeight50 = SizedBox(height: fifty);
+  static final Widget boxHeight70 = SizedBox(height: seventy);
+  static final Widget boxHeight100 = SizedBox(height: hundred);
 
   static final Widget boxWidth2 = SizedBox(width: two);
   static final Widget boxWidth4 = SizedBox(width: four);
@@ -82,9 +93,12 @@ class Dimens {
   static final EdgeInsets edgeInsets16 = EdgeInsets.all(sixteen);
 
   static final EdgeInsets edgeInsetsL2 = EdgeInsets.only(left: two);
+  static final EdgeInsets edgeInsetsT10 = EdgeInsets.only(top: ten);
 
   static final EdgeInsets edgeInsetsL4 = EdgeInsets.only(left: four);
+  static final EdgeInsets edgeInsetsL15 = EdgeInsets.only(left: fifteen,);
   static final EdgeInsets edgeInsetsR4 = EdgeInsets.only(right: four);
+  static final EdgeInsets edgeInsetsR8 = EdgeInsets.only(right: eight);
 
   static final EdgeInsets edgeInsets2_0 = EdgeInsets.symmetric(horizontal: two);
   static final EdgeInsets edgeInsets4_0 =

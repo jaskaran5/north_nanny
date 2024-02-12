@@ -14,7 +14,7 @@ class AppLoader extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: CircularProgressIndicator(
-                color: ColorsValue.primaryColor,
+                color: AppColors.primaryColor,
               ),
             ),
           ),

@@ -1,10 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/res/res.dart';
+import 'package:northshore_nanny_flutter/widgets/custom_text_field.dart';
 import 'utils/navigators/navigators.dart';
 import 'utils/utils.dart';
-
 
 void main() async {
   // await _setup();
@@ -35,7 +36,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -43,18 +43,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   /// used to set app orientation.
-  setTheSystemOrientation()async{
+  setTheSystemOrientation() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
   }
 
   @override
-  Widget build(BuildContext context) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.purple),
-        translations: TranslationsFile(),
-        getPages: AppPages.pages,
-        initialRoute: AppPages.initial,
+  Widget build(BuildContext context) => ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: const Locale('en'),
+          theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          translations: TranslationsFile(),
+          getPages: AppPages.pages,
+          initialRoute: AppPages.initial,
+        ),
       );
 }

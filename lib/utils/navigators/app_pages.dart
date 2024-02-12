@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import '../../controllers/splash/splash_binding.dart';
+import 'package:northshore_nanny_flutter/views/signUp/signup_view.dart';
+import '../../controllers/controllers.dart';
 import '../../views/views.dart';
 import 'app_routes.dart';
 
@@ -23,6 +24,34 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: SplashView.new,
       binding: SplashBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<ChooseBabySitterView>(
+      name: Routes.chooseBabySitter,
+      transitionDuration: transitionDuration,
+      page: ChooseBabySitterView.new,
+      binding: ChooseBabySitterBindings(),
+      transition: Transition.leftToRight,
+    ),
+    GetPage<SignUpView>(
+      name: Routes.signUp,
+      transitionDuration: transitionDuration,
+      page: SignUpView.new,
+      binding: SignUpViewBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<LogInView>(
+      name: Routes.logIn,
+      transitionDuration: transitionDuration,
+      page: LogInView.new,
+      binding: LogInViewBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<ForgotPasswordView>(
+      name: Routes.forgotPassword,
+      transitionDuration: transitionDuration,
+      page: ForgotPasswordView.new,
+      binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

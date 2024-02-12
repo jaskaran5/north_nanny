@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 
-class Btn extends StatefulWidget {
+class CustomButton extends StatefulWidget {
   final String? title;
   final double? borderRadius;
   final Widget? child;
@@ -23,7 +23,7 @@ class Btn extends StatefulWidget {
   final List<BoxShadow>? boxShadow;
   final EdgeInsetsGeometry? margin;
 
-  const Btn({
+  const CustomButton({
     super.key,
     this.title,
     this.onTap,
@@ -48,25 +48,28 @@ class Btn extends StatefulWidget {
   });
 
   @override
-  State<Btn> createState() => _BtnState();
+  State<CustomButton> createState() => CustomButtonState();
 }
 
-class _BtnState extends State<Btn> {
+class CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (widget.loading ?? false) ? null : widget.onTap,
       child: Container(
-        width: widget.width ?? double.infinity,
-        height: widget.height,
+        width: widget.width ?? Dimens.threeHundredThirtyOne,
+        height: widget.height ?? Dimens.fiftyThree,
         margin: widget.margin,
         decoration: BoxDecoration(
-            color: widget.backGroundColor ?? ColorsValue.primaryColor,
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? Dimens.twelve),
-            boxShadow: widget.boxShadow,
-            border: Border.all(
-                color: widget.borderColor ?? Colors.transparent,
-                width: widget.borderWidth ?? Dimens.zero)),
+          color: widget.backGroundColor ?? AppColors.primaryColor,
+          borderRadius:
+              BorderRadius.circular(widget.borderRadius ?? Dimens.twelve),
+          boxShadow: widget.boxShadow,
+          border: Border.all(
+            color: widget.borderColor ?? Colors.transparent,
+            width: widget.borderWidth ?? Dimens.zero,
+          ),
+        ),
         child: Padding(
           padding: widget.customPadding ??
               EdgeInsets.all(widget.textPadding ?? Dimens.fifteen),
@@ -77,8 +80,10 @@ class _BtnState extends State<Btn> {
                   TextStyle(
                     fontSize: widget.textSize ?? Dimens.sixteen,
                     fontFamily: AppConstants.fontFamilyUrbanist,
-                    color: widget.textColor ?? ColorsValue.primaryColor,
+                    color: widget.textColor ?? AppColors.primaryColor,
                   ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),
