@@ -36,9 +36,9 @@ InputDecoration customFieldDeco({
     labelText: labelText,
     hintText: hintText,
     counterText: '',
-    labelStyle: AppStyles.black15UbW600,
+    labelStyle: AppStyles.ubBlack15W600,
     helperText: helperText,
-    hintStyle: AppStyles.black15UbW500,
+    hintStyle: AppStyles.ubHintColor15W500,
     prefixIcon: prefixWidget ??
         (prefixIcon != null
             ? Icon(

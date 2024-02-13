@@ -29,6 +29,27 @@ abstract class RouteManagement {
       Routes.forgotPassword,
     );
   }
+
+  /// Go to the Email Verification  Screen
+  static void goToEmailVerification() {
+    Get.toNamed<void>(
+      Routes.emailVerification,
+    );
+  }
+
+  /// Go To Create new Password screen
+  static void goToCreateNewPassword() {
+    Get.offNamed<void>(
+      Routes.newPasswordView,
+    );
+  }
+
+  /// Go to the  Password success Screen
+  static void goToPasswordSuccessView() {
+    Get.toNamed<void>(
+      Routes.passwordSuccessView,
+    );
+  }
   //
   // /// Go to the Home Screen
   // static void goToHome() {

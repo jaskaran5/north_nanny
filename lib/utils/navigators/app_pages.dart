@@ -54,5 +54,26 @@ class AppPages {
       binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
+    GetPage<EmailVerificationView>(
+      name: Routes.emailVerification,
+      transitionDuration: transitionDuration,
+      page: EmailVerificationView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<NewPasswordView>(
+      name: Routes.newPasswordView,
+      transitionDuration: transitionDuration,
+      page: NewPasswordView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<PasswordSuccessView>(
+      name: Routes.passwordSuccessView,
+      transitionDuration: transitionDuration,
+      page: PasswordSuccessView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
   ];
 }

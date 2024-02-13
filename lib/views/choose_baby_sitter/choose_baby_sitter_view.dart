@@ -18,12 +18,12 @@ class ChooseBabySitterView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: Dimens.twoHundredEightyOne,
-                  child: AppText(
-                    text: TranslationKeys.findTheBestBabySitter.tr,
-                    style: AppStyles.pdSemiBoldBlack24,
-                  ),
+                AppText(
+                  text: TranslationKeys.findTheBestBabySitter.tr,
+                  style: AppStyles.pdSemiBoldBlack24,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Dimens.boxHeight50,
                 CustomButton(

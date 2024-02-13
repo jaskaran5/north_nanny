@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/res/res.dart';
-import 'package:northshore_nanny_flutter/widgets/custom_text_field.dart';
 import 'utils/navigators/navigators.dart';
 import 'utils/utils.dart';
 

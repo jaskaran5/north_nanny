@@ -6,6 +6,9 @@ class Routes {
   static const String signUp = Paths.signUp;
   static const String logIn = Paths.logIn;
   static const String forgotPassword = Paths.forgotPassword;
+  static const String emailVerification = Paths.emailVerification;
+  static const String newPasswordView = Paths.newPasswordView;
+  static const String passwordSuccessView = Paths.passwordSuccessView;
 }
 
 /// Paths give to the route.
@@ -15,4 +18,7 @@ class Paths {
   static const String signUp = '/Sign-Up';
   static const String logIn = '/Log-In';
   static const String forgotPassword = '/Forgot-Password';
+  static const String emailVerification = '/Email-Verification-view';
+  static const String newPasswordView = '/New-password-view';
+  static const String passwordSuccessView = '/Password-SuccessView';
 }

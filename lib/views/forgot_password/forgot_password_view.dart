@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/controllers.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
-import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/widgets/widgets.dart';
 
-import '../../widgets/custom_text_field.dart';
+import '../../utils/navigators/routes_management.dart';
+import '../../utils/utils.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
@@ -25,7 +25,6 @@ class ForgotPasswordView extends StatelessWidget {
               children: [
                 AppText(
                   text: TranslationKeys.forgotPassword.tr,
-                  style: AppStyles.pdSemiBoldBlack24,
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -46,7 +45,7 @@ class ForgotPasswordView extends StatelessWidget {
                   decoration: customFieldDeco(
                     hintText: TranslationKeys.enterEmail.tr,
                     prefixWidget: Padding(
-                      padding: Dimens.edgeInsets12,
+                      padding: Dimens.edgeInsets10,
                       child: SvgPicture.asset(
                         Assets.iconsEmail,
                         height: Dimens.ten,
@@ -56,7 +55,7 @@ class ForgotPasswordView extends StatelessWidget {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.done,
-                  style: AppStyles.black15UbW600,
+                  style: AppStyles.ubBlack15W600,
                   cursorColor: AppColors.blackColor,
                   cursorWidth: Dimens.one,
                 ),
@@ -64,6 +63,9 @@ class ForgotPasswordView extends StatelessWidget {
                 CustomButton(
                   title: TranslationKeys.sendCode.tr,
                   backGroundColor: AppColors.navyBlue,
+                  onTap: () {
+                    RouteManagement.goToEmailVerification();
+                  },
                 ),
               ],
             ),

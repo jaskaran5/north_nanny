@@ -22,6 +22,9 @@ class CustomAppbarWidget extends PreferredSize {
   final bool? isLeading;
   final bool toUpperCaseTitle;
   final double? leadingWidth;
+  final double bottomHeight;
+  final double bottomWidth;
+  final double? appBarHeight;
 
   const CustomAppbarWidget({
     super.key,
@@ -29,7 +32,7 @@ class CustomAppbarWidget extends PreferredSize {
     this.titleWidget,
     this.leading,
     this.addBackButton = true,
-    this.toUpperCaseTitle = true,
+    this.toUpperCaseTitle = false,
     this.onBackPress,
     this.textColor,
     this.backgroundColor,
@@ -43,6 +46,9 @@ class CustomAppbarWidget extends PreferredSize {
     this.isLeading,
     this.leadingWidth,
     this.fontFamily,
+    this.bottomHeight = 0.0,
+    this.bottomWidth = 0.0,
+    this.appBarHeight,
   })  : assert(
           textColor == null || textStyle == null,
           'Cannot provide both a textColor and a textStyle\n'
@@ -61,7 +67,11 @@ class CustomAppbarWidget extends PreferredSize {
       backgroundColor: backgroundColor ?? AppColors.primaryColor,
       leading: addBackButton
           ? InkWell(
-              onTap: onBackPress ?? () => Get.back(),
+              onTap: onBackPress ??
+                  () {
+                    Get.focusScope?.unfocus();
+                    Get.back();
+                  },
               child: Padding(
                 padding: Dimens.edgeInsetsL15,
                 child: SvgPicture.asset(
@@ -76,15 +86,18 @@ class CustomAppbarWidget extends PreferredSize {
       title: titleWidget ??
           AppText(
             text: toUpperCaseTitle ? title?.toUpperCase() : title,
-            color: AppColors.blackColor,
-            textSize: Dimens.twentyFour,
-            fontFamily: fontFamily ?? AppConstants.fontFamilyUrbanist,
-            fontWeight: FontWeight.w400,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: textStyle ?? AppStyles.pdBlack22W600,
           ),
       centerTitle: centerTitle ?? true,
       actions: actions,
-      leadingWidth: Dimens.sixty,
-      toolbarHeight: Dimens.sixty,
+      leadingWidth: Dimens.fiftyFive,
+      toolbarHeight: appBarHeight ?? Dimens.sixty,
+      bottom: PreferredSize(
+          preferredSize: Size(bottomWidth, bottomHeight),
+          child: bottom ?? const SizedBox.shrink()),
     );
   }
 }

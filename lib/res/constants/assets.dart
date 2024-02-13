@@ -4,11 +4,26 @@ class Assets {
 
   static const String iconsApple = 'assets/icons/apple.svg';
   static const String iconsBack = 'assets/icons/back.svg';
+  static const String iconsBrifecaseCross = 'assets/icons/brifecase_cross.svg';
+  static const String iconsCake = 'assets/icons/cake.svg';
+  static const String iconsDownArrow = 'assets/icons/down_arrow.svg';
   static const String iconsEmail = 'assets/icons/email.svg';
   static const String iconsFacebook = 'assets/icons/facebook.svg';
+  static const String iconsGender = 'assets/icons/gender.svg';
   static const String iconsInstagram = 'assets/icons/instagram.svg';
+  static const String iconsLocation = 'assets/icons/location.svg';
+  static const String iconsLocationDot = 'assets/icons/location_dot.svg';
   static const String iconsLock = 'assets/icons/lock.svg';
+  static const String iconsNoOfChild = 'assets/icons/no_of_child.svg';
+  static const String iconsPhone = 'assets/icons/phone.svg';
+  static const String iconsProfile = 'assets/icons/profile.svg';
+  static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsShowPassword = 'assets/icons/show_password.svg';
+  static const String iconsSmallProfile = 'assets/icons/small_profile.svg';
   static const String iconsSplash = 'assets/icons/splash.svg';
+  static const String iconsSuccess = 'assets/icons/success.svg';
+  static const String iconsTaskSquare = 'assets/icons/task_square.svg';
+  static const String iconsUpload = 'assets/icons/upload.svg';
+  static const String iconsUserTag = 'assets/icons/user_tag.svg';
 
 }

@@ -6,4 +6,7 @@ class ForgotPasswordController extends GetxController {
   ForgotPasswordController(this.forgotPasswordViewModel);
   final ForgotPasswordViewModel forgotPasswordViewModel;
   final emailTextEditingController = TextEditingController();
+  final otpTextEditingController = TextEditingController();
+  final newPasswordTextEditingController = TextEditingController();
+  final confirmPasswordTextEditingController = TextEditingController();
 }
