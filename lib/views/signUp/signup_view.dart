@@ -14,8 +14,8 @@ import 'package:northshore_nanny_flutter/widgets/custom_text_field.dart';
 import '../../utils/utils.dart';
 
 class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
-
+  SignUpView({super.key});
+  final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) =>
       GetBuilder<SignupViewController>(builder: (controller) {
@@ -203,7 +203,14 @@ class SignUpView extends StatelessWidget {
                             backGroundColor: AppColors.navyBlue,
                             onTap: () {
                               Get.focusScope?.unfocus();
-                              Get.to(const CreateProfileView());
+                              if (selectedInterface ==
+                                  ChooseInterface.customer) {
+                                Get.to(CreateProfileView(),
+                                    arguments: selectedInterface);
+                              } else {
+                                RouteManagement.goToCreateSitterProfileView(
+                                    selectedInterface);
+                              }
                             },
                           ),
                         ],

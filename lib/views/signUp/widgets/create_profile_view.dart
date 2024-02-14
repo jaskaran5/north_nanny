@@ -13,8 +13,8 @@ import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
 import '../../../widgets/custom_text_field.dart';
 
 class CreateProfileView extends StatelessWidget {
-  const CreateProfileView({super.key});
-
+  CreateProfileView({super.key});
+  final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(
@@ -30,7 +30,7 @@ class CreateProfileView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.to(const ChildProfileView());
+                Get.to( ChildProfileView(), arguments: selectedInterface);
               },
             ),
           ),

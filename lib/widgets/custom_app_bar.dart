@@ -64,7 +64,7 @@ class CustomAppbarWidget extends PreferredSize {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: backgroundColor ?? AppColors.primaryColor,
+      backgroundColor: backgroundColor ?? Colors.white,
       leading: addBackButton
           ? InkWell(
               onTap: onBackPress ??

@@ -13,8 +13,8 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_text_field.dart';
 
 class ChildProfileView extends StatelessWidget {
-  const ChildProfileView({super.key});
-
+   ChildProfileView({super.key});
+   final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(
@@ -30,7 +30,7 @@ class ChildProfileView extends StatelessWidget {
                   title: TranslationKeys.submit.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: (){
-                    Get.to(const CreateChildProfileView());
+                    Get.to( CreateChildProfileView(),arguments:selectedInterface );
                   },
                 ),
                 Dimens.boxHeight10,

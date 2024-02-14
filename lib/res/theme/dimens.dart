@@ -36,6 +36,7 @@ class Dimens {
 
   static final double thirty = 30.sp;
   static final double thirtyTwo = 32.sp;
+  static final double thirtyFive = 35.sp;
 
   static final double forty = 40.sp;
   static final double fortyOne = 41.sp;
@@ -52,6 +53,7 @@ class Dimens {
   static final double ninty = 90.sp;
 
   static final double hundred = 100.sp;
+  static final double hundredTen = 110.sp;
   static final double hundredFourteen = 114.sp;
   static final double oneHundredTwenty = 120.sp;
   static final double hundredForty = 140.sp;
@@ -63,6 +65,7 @@ class Dimens {
   static final double twoHundredEightyOne = 281.sp;
   static final double threeHundredThirtyOne = 331.sp;
   static final double threeHundredThirtyFive = 335.sp;
+  static final double threeHundredFortyOne = 341.sp;
 
   static final Widget box0 = SizedBox(height: zero);
 
@@ -105,6 +108,7 @@ class Dimens {
   static final EdgeInsets edgeInsetsT10 = EdgeInsets.only(top: ten);
 
   static final EdgeInsets edgeInsetsL4 = EdgeInsets.only(left: four);
+  static final EdgeInsets edgeInsetsT16R16 = EdgeInsets.only(top: sixteen,right: sixteen);
   static final EdgeInsets edgeInsetsL15 = EdgeInsets.only(
     left: fifteen,
   );

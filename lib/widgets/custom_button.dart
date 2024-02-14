@@ -78,8 +78,9 @@ class CustomButtonState extends State<CustomButton> {
               (widget.title ?? ""),
               style: widget.titleStyle ??
                   TextStyle(
-                    fontSize: widget.textSize ?? Dimens.sixteen,
+                    fontSize: widget.textSize ?? Dimens.fifteen,
                     fontFamily: AppConstants.fontFamilyUrbanist,
+                    fontWeight: FontWeight.w600,
                     color: widget.textColor ?? AppColors.primaryColor,
                   ),
               textAlign: TextAlign.center,

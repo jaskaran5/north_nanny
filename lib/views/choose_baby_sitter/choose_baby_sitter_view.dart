@@ -25,18 +25,20 @@ class ChooseBabySitterView extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Dimens.boxHeight50,
+                Dimens.boxHeight32,
                 CustomButton(
                   backGroundColor: AppColors.navyBlue,
                   title: TranslationKeys.needASitter.tr,
-                  onTap: () => RouteManagement.goToSignUp(),
+                  onTap: () => RouteManagement.goToSignUp(
+                      chooseInterface: ChooseInterface.customer,),
                 ),
                 Dimens.boxHeight16,
                 CustomButton(
                   backGroundColor: AppColors.lightNavyBlue,
                   title: TranslationKeys.iAmSitter.tr,
                   titleStyle: AppStyles.navyBlue15UbW600,
-                  onTap: () => RouteManagement.goToSignUp(),
+                  onTap: () => RouteManagement.goToSignUp(
+                      chooseInterface: ChooseInterface.nanny,),
                 ),
               ],
             ),

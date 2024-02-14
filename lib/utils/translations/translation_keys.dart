@@ -58,6 +58,7 @@ class TranslationKeys {
   static const String firstName = 'firstName';
   static const String lastName = 'lastName';
   static const String selectLocation = 'selectLocation';
+  static const String age = 'age';
   static const String gender = 'gender';
   static const String male = 'male';
   static const String female = 'female';
@@ -75,4 +76,40 @@ class TranslationKeys {
   static const String medicalCondition = 'medicalCondition';
   static const String allergiesDietaryRestriction =
       'allergiesDietaryRestriction';
+  static const String experience = 'experience';
+  static const String nameOfSchool = 'nameOfSchool';
+  static const String nameOfCollege = 'nameOfCollege';
+  static const String driverLicense = 'driverLicense';
+  static const String tellUsAboutYourSelf = 'tellUsAboutYourSelf';
+  static const String selectServices = 'selectServices';
+  static const String houseKeeping = 'houseKeeping';
+  static const String driving = 'driving';
+  static const String petCare = 'petCare';
+  static const String homeWorkHelp = 'homeWorkHelp';
+  static const String runningErrands = 'runningErrands';
+  static const String funActivityOutHouse = 'funActivityOutHouse';
+  static const String pricing = 'pricing';
+  static const String aFixedHourlyRate = 'aFixedHourlyRate';
+  static const String hourlyRate = 'hourlyRate';
+  static const String children = 'children';
+  static const String year = 'year';
+  static const String bankDetails = 'bankDetails';
+  static const String bankName = 'bankName';
+  static const String accountHolderName = 'accountHolderName';
+  static const String accountNumber = 'accountNumber';
+  static const String routingNumber = 'routingNumber';
+  static const String addBank = 'addBank';
+  static const String waitingForApproval = 'waitingForApproval';
+  static const String submissionPendingForApproval = 'submissionPendingForApproval';
+  static const String administrationReviewOrApproveIt = 'administrationReviewOrApproveIt';
+  static const String yes = 'yes';
+  static const String no = 'no';
+  static const String child = 'child';
+  static const String search = 'search';
+  static const String home = 'home';
+  static const String messages = 'messages';
+  static const String calender = 'calender';
+  static const String settings = 'settings';
+  static const String listView = 'listView';
+
 }

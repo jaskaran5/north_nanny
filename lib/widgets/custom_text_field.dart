@@ -57,10 +57,18 @@ InputDecoration customFieldDeco({
     disabledBorder: InputBorder.none,
     errorBorder: errorBorder ?? customBorder,
     focusedErrorBorder: focusErrorBorder ?? customBorder,
-    focusedBorder: focusBorder ?? customBorder,
-    constraints: BoxConstraints.expand(
-      height: Dimens.fiftyThree,
-      width: Dimens.threeHundredThirtyOne,
-    ),
+    focusedBorder: focusBorder ??
+        OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.activeBorderColor,
+            width: Dimens.one,
+            style: BorderStyle.solid,
+          ),
+          borderRadius: BorderRadius.circular(Dimens.eight),
+        ),
+    // constraints: BoxConstraints.expand(
+    //   height: Dimens.fiftyThree,
+    //   width: Dimens.threeHundredThirtyOne,
+    // ),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/controllers/sitter_controllers/create_profile/create_sitter_profile.dart';
 import 'package:northshore_nanny_flutter/views/signUp/signup_view.dart';
 import '../../controllers/controllers.dart';
 import '../../views/views.dart';
@@ -73,6 +74,20 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: PasswordSuccessView.new,
       binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<CreateSitterProfileView>(
+      name: Routes.createSitterProfileView,
+      transitionDuration: transitionDuration,
+      page: CreateSitterProfileView.new,
+      binding: CreateSitterProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<HomeView>(
+      name: Routes.home,
+      transitionDuration: transitionDuration,
+      page: HomeView.new,
+      binding: HomeBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

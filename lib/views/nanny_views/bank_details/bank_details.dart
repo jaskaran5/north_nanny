@@ -1,0 +1,1 @@
+export 'bank_detail_view.dart';

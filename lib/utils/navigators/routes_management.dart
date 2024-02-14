@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/res/constants/enums.dart';
 import 'app_routes.dart';
 
 abstract class RouteManagement {
@@ -10,9 +11,10 @@ abstract class RouteManagement {
   }
 
   /// Go to the SignIn Screen
-  static void goToSignUp() {
+  static void goToSignUp({required ChooseInterface chooseInterface}) {
     Get.toNamed<void>(
       Routes.signUp,
+      arguments: chooseInterface,
     );
   }
 
@@ -50,11 +52,20 @@ abstract class RouteManagement {
       Routes.passwordSuccessView,
     );
   }
-  //
-  // /// Go to the Home Screen
-  // static void goToHome() {
-  //   Get.offAllNamed<void>(
-  //     Routes.home,
-  //   );
-  // }
+
+  /// Go to the  create Sitter Profile  Screen
+  static void goToCreateSitterProfileView(dynamic selectedInterface) {
+    Get.toNamed<void>(
+      Routes.createSitterProfileView,
+      arguments: selectedInterface,
+    );
+  }
+
+  /// Go to the Home Screen
+  static void goToOffAllHome(dynamic selectedInterface) {
+    Get.offAllNamed<void>(
+      Routes.home,
+      arguments: selectedInterface,
+    );
+  }
 }

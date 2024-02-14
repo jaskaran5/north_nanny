@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/controllers.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/widgets/widgets.dart';
 
 import '../../utils/navigators/routes_management.dart';

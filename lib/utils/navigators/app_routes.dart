@@ -9,6 +9,8 @@ class Routes {
   static const String emailVerification = Paths.emailVerification;
   static const String newPasswordView = Paths.newPasswordView;
   static const String passwordSuccessView = Paths.passwordSuccessView;
+  static const String createSitterProfileView = Paths.createSitterProfileView;
+  static const String home = Paths.home;
 }
 
 /// Paths give to the route.
@@ -21,4 +23,6 @@ class Paths {
   static const String emailVerification = '/Email-Verification-view';
   static const String newPasswordView = '/New-password-view';
   static const String passwordSuccessView = '/Password-SuccessView';
+  static const String createSitterProfileView = '/CreateSitterProfileView';
+  static const String home = '/home';
 }

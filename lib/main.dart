@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           locale: const Locale('en'),
           theme: ThemeData(
-            useMaterial3: true,
+            useMaterial3: false,
             scaffoldBackgroundColor: Colors.white,
           ),
           translations: TranslationsFile(),
