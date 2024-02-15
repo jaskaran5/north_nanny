@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/controllers/filter/filter.dart';
 import 'package:northshore_nanny_flutter/controllers/sitter_controllers/create_profile/create_sitter_profile.dart';
 import 'package:northshore_nanny_flutter/views/signUp/signup_view.dart';
 import '../../controllers/controllers.dart';
@@ -88,6 +89,13 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: HomeView.new,
       binding: HomeBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<FilterView>(
+      name: Routes.filterView,
+      transitionDuration: transitionDuration,
+      page: FilterView.new,
+      binding: FilterBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

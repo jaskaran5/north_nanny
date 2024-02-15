@@ -68,4 +68,11 @@ abstract class RouteManagement {
       arguments: selectedInterface,
     );
   }
+
+  /// Go to the Filter Screen
+  static void goToFilterView() {
+    Get.toNamed<void>(
+      Routes.filterView,
+    );
+  }
 }

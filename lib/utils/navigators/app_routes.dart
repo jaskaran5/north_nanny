@@ -11,6 +11,7 @@ class Routes {
   static const String passwordSuccessView = Paths.passwordSuccessView;
   static const String createSitterProfileView = Paths.createSitterProfileView;
   static const String home = Paths.home;
+  static const String filterView = Paths.filterView;
 }
 
 /// Paths give to the route.
@@ -25,4 +26,5 @@ class Paths {
   static const String passwordSuccessView = '/Password-SuccessView';
   static const String createSitterProfileView = '/CreateSitterProfileView';
   static const String home = '/home';
+  static const String filterView ='/filter-View';
 }

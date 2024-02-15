@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/controllers.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
+import 'package:northshore_nanny_flutter/utils/navigators/navigators.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/views/filter_view/filter.dart';
 import 'package:northshore_nanny_flutter/views/home/widgets/custom_home_list.dart';
 import 'package:northshore_nanny_flutter/views/search_view/search.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.to(FilterView());
+                                RouteManagement.goToFilterView();
                               },
                               child: Container(
                                 height: Dimens.thirtyFive,
@@ -134,7 +134,7 @@ class HomeView extends StatelessWidget {
                       Dimens.boxWidth10,
                       InkWell(
                         onTap: () {
-                          Get.to(FilterView());
+                          RouteManagement.goToFilterView();
                         },
                         child: SvgPicture.asset(
                           Assets.iconsFilter,

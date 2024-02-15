@@ -30,7 +30,7 @@ class FilterView extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   RangeSlider(
-                    values: RangeValues(0.0, 20.0),
+                    values: const RangeValues(0.0, 20.0),
                     onChanged: (value) {},
                     max: 20.0,
                     min: 0.0,
