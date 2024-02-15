@@ -115,12 +115,12 @@ class CreateChildProfileView extends StatelessWidget {
                           DropdownMenuItem<String>(
                             value: TranslationKeys.male.tr,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppText(
-                                  text: TranslationKeys.male.tr,
+                                  text: TranslationKeys.male.tr.capitalizeFirst,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
+                                  style: AppStyles.ubNavyBlue15W600,
                                 ),
                               ],
                             ),
@@ -131,9 +131,10 @@ class CreateChildProfileView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppText(
-                                  text: TranslationKeys.female.tr,
+                                  text: TranslationKeys.female.tr.capitalizeFirst,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
+                                  style: AppStyles.ubNavyBlue15W600,
                                 ),
                               ],
                             ),
@@ -186,7 +187,7 @@ class CreateChildProfileView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        menuMaxHeight: Dimens.hundred,
+                        style: AppStyles.ubNavyBlue15W600,
                         alignment: Alignment.bottomCenter,
                       ),
                       Dimens.boxHeight20,

@@ -191,7 +191,6 @@ class CreateSitterProfileView extends StatelessWidget {
                       ),
                     ],
                     onChanged: (value) {
-                      // controller.selectedGender = value;
                     },
                     icon: SvgPicture.asset(
                       Assets.iconsDownArrow,
@@ -239,6 +238,7 @@ class CreateSitterProfileView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    style: AppStyles.ubNavyBlue15W600,
                     menuMaxHeight: Dimens.hundred,
                     alignment: Alignment.bottomCenter,
                   ),
@@ -339,6 +339,7 @@ class CreateSitterProfileView extends StatelessWidget {
                       ),
                     ),
                     menuMaxHeight: Dimens.hundred,
+                    style: AppStyles.ubNavyBlue15W600,
                     alignment: Alignment.bottomCenter,
                   ),
                   Dimens.boxHeight20,
@@ -449,6 +450,7 @@ class CreateSitterProfileView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    style: AppStyles.ubNavyBlue15W600,
                     menuMaxHeight: Dimens.hundred,
                     alignment: Alignment.bottomCenter,
                   ),

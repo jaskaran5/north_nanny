@@ -63,7 +63,7 @@ class TranslationKeys {
   static const String male = 'male';
   static const String female = 'female';
   static const String profilePicture = 'profilePicture';
-  static const String optional = 'optional';
+  static const String optional = 'Optional';
   static const String continueWord = 'continueWord';
   static const String childProfile = 'childProfile';
   static const String noOfChildren = 'noOfChildren';
@@ -100,8 +100,10 @@ class TranslationKeys {
   static const String routingNumber = 'routingNumber';
   static const String addBank = 'addBank';
   static const String waitingForApproval = 'waitingForApproval';
-  static const String submissionPendingForApproval = 'submissionPendingForApproval';
-  static const String administrationReviewOrApproveIt = 'administrationReviewOrApproveIt';
+  static const String submissionPendingForApproval =
+      'submissionPendingForApproval';
+  static const String administrationReviewOrApproveIt =
+      'administrationReviewOrApproveIt';
   static const String yes = 'yes';
   static const String no = 'no';
   static const String child = 'child';
@@ -111,5 +113,12 @@ class TranslationKeys {
   static const String calender = 'calender';
   static const String settings = 'settings';
   static const String listView = 'listView';
-
+  static const String mapView = 'mapView';
+  static const String noResultFound = 'noResultFound';
+  static const String filters = 'filters';
+  static const String distance = 'distance';
+  static const String dateAndTime = 'dateAndTime';
+  static const String miles = 'miles';
+  static const String reset = 'reset';
+  static const String apply = 'apply';
 }

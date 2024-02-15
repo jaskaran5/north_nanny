@@ -30,7 +30,7 @@ class CreateProfileView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.to( ChildProfileView(), arguments: selectedInterface);
+                Get.to(ChildProfileView(), arguments: selectedInterface);
               },
             ),
           ),
@@ -189,7 +189,7 @@ class CreateProfileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: TranslationKeys.male.tr,
+                              text: TranslationKeys.male.tr.capitalizeFirst,
                               maxLines: 1,
                               textAlign: TextAlign.start,
                             ),
@@ -202,7 +202,7 @@ class CreateProfileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: TranslationKeys.female.tr,
+                              text: TranslationKeys.female.tr.capitalizeFirst,
                               maxLines: 1,
                               textAlign: TextAlign.start,
                             ),
@@ -260,6 +260,7 @@ class CreateProfileView extends StatelessWidget {
                       ),
                     ),
                     menuMaxHeight: Dimens.hundred,
+                    style: AppStyles.ubNavyBlue15W600,
                     alignment: Alignment.bottomCenter,
                   ),
                   Dimens.boxHeight20,

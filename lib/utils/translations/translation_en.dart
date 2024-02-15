@@ -102,4 +102,12 @@ var en = <String, String>{
   TranslationKeys.calender: 'Calendar',
   TranslationKeys.settings: 'Settings',
   TranslationKeys.listView: 'List view',
+  TranslationKeys.mapView: 'Map view',
+  TranslationKeys.noResultFound: 'No result found',
+  TranslationKeys.filters: 'Filter',
+  TranslationKeys.distance: 'Distance',
+  TranslationKeys.dateAndTime: 'Date and time',
+  TranslationKeys.miles: 'miles',
+  TranslationKeys.reset: 'Reset',
+  TranslationKeys.apply: 'Apply',
 };

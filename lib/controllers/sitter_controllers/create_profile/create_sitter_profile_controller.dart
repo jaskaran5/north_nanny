@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
 
@@ -18,14 +18,14 @@ class CreateSitterProfileController extends GetxController {
   final routingNumberTextEditingController = TextEditingController();
 
   List<String> experienceList = [
-    '1 ${TranslationKeys.year}',
-    '2 ${TranslationKeys.year}',
-    '3 ${TranslationKeys.year}',
-    '4 ${TranslationKeys.year}',
-    '5 ${TranslationKeys.year}',
-    '6 ${TranslationKeys.year}',
-    '7 ${TranslationKeys.year}',
-    '7+ ${TranslationKeys.year}',
+    '1 ${TranslationKeys.year.capitalizeFirst}',
+    '2 ${TranslationKeys.year.capitalizeFirst}s',
+    '3 ${TranslationKeys.year.capitalizeFirst}s',
+    '4 ${TranslationKeys.year.capitalizeFirst}s',
+    '5 ${TranslationKeys.year.capitalizeFirst}s',
+    '6 ${TranslationKeys.year.capitalizeFirst}s',
+    '7 ${TranslationKeys.year.capitalizeFirst}s',
+    '7+ ${TranslationKeys.year.capitalizeFirst}s',
   ];
 
   List<String> licenseList = [TranslationKeys.yes, TranslationKeys.no];
@@ -62,4 +62,8 @@ class CreateSitterProfileController extends GetxController {
     23,
     22,
   ];
+
+  String? selectedGender = '';
+  String? selectedYear = '';
+  String? licenseHaveOrNot = '';
 }

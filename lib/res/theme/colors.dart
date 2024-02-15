@@ -14,4 +14,7 @@ class AppColors {
   static const Color activeBorderColor = Color(0xff005985);
   static const Color hintColor = Color(0xff8F94AE);
   static const Color searchColor = Color(0xffF2F2F2);
+  static const Color locationColor = Color(0xff524B6B);
+  static const Color listColor = Color(0xffF5F4F6);
+  static const Color listShadowColor =Color(0xff99ABC62E);
 }

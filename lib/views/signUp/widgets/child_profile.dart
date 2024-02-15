@@ -9,12 +9,13 @@ import 'package:northshore_nanny_flutter/views/signUp/signup.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
 
+import '../../../utils/navigators/routes_management.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_text_field.dart';
 
 class ChildProfileView extends StatelessWidget {
-   ChildProfileView({super.key});
-   final selectedInterface = Get.arguments;
+  ChildProfileView({super.key});
+  final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(
@@ -29,8 +30,9 @@ class ChildProfileView extends StatelessWidget {
                 CustomButton(
                   title: TranslationKeys.submit.tr,
                   backGroundColor: AppColors.navyBlue,
-                  onTap: (){
-                    Get.to( CreateChildProfileView(),arguments:selectedInterface );
+                  onTap: () {
+                    Get.to(CreateChildProfileView(),
+                        arguments: selectedInterface);
                   },
                 ),
                 Dimens.boxHeight10,
@@ -38,6 +40,9 @@ class ChildProfileView extends StatelessWidget {
                   title: TranslationKeys.skipForNow.tr,
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
+                  onTap: () {
+                    RouteManagement.goToOffAllHome(selectedInterface);
+                  },
                 ),
               ],
             ),

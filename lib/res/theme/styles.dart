@@ -17,6 +17,12 @@ class AppStyles {
     fontSize: Dimens.twentyTwo,
     color: AppColors.blackColor,
   );
+  static TextStyle pdBlack18W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyPlayfairDisplay,
+    fontSize: Dimens.eighteen,
+    color: AppColors.blackColor,
+  );
   static TextStyle pdRegularBlack24 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyPlayfairDisplay,
@@ -95,11 +101,35 @@ class AppStyles {
     fontSize: Dimens.fourteen,
     color: AppColors.blackColor,
   );
+  static TextStyle ubBlack12W500 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.blackColor,
+  );
+  static TextStyle ubGrey12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.greyColor,
+  );
+  static TextStyle ubGrey10W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.ten,
+    color: AppColors.greyColor,
+  );
   static TextStyle ubBlack14W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fourteen,
     color: AppColors.blackColor,
+  );
+  static TextStyle ubLocationColor14W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: AppColors.locationColor,
   );
   static TextStyle ubBlack14W600 = TextStyle(
     fontWeight: FontWeight.w600,
@@ -121,6 +151,12 @@ class AppStyles {
   );
   static TextStyle ubBlack16W600 = TextStyle(
     fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
+    color: AppColors.blackColor,
+  );
+  static TextStyle ubBlack16W700 = TextStyle(
+    fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.sixteen,
     color: AppColors.blackColor,
@@ -155,6 +191,12 @@ class AppStyles {
     fontSize: Dimens.fourteen,
     color: AppColors.navyBlue,
   );
+  static TextStyle pdNavyBlue20W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyPlayfairDisplay,
+    fontSize: Dimens.twenty,
+    color: AppColors.navyBlue,
+  );
   static TextStyle ubNavyBlue12W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -169,6 +211,12 @@ class AppStyles {
   );
   static TextStyle ubNavyBlue15W700 = TextStyle(
     fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: AppColors.navyBlue,
+  );
+  static TextStyle ubNavyBlue15W600 = TextStyle(
+    fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
     color: AppColors.navyBlue,

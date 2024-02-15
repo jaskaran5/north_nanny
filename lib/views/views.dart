@@ -5,3 +5,5 @@ export 'choose_baby_sitter/choose_baby_sitter.dart';
 export 'logIn/log_in.dart';
 export 'forgot_password/forgot_password.dart';
 export 'nanny_views/nanny_views.dart';
+export 'search_view/search.dart';
+export 'filter_view/filter.dart';

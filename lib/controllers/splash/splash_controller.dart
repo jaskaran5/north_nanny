@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/res/constants/constants.dart';
 import '../../utils/navigators/routes_management.dart';
 
 class SplashController extends GetxController {
@@ -15,6 +16,7 @@ class SplashController extends GetxController {
       const Duration(seconds: 3),
     );
     RouteManagement.goChooseBabySitter();
+    // RouteManagement.goToOffAllHome(ChooseInterface.customer);
     // if (isLoggedIn) {
 
     // } else {

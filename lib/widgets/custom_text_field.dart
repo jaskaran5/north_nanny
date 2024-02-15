@@ -26,6 +26,7 @@ InputDecoration customFieldDeco({
   Color? borderColor = AppColors.navyBlue,
   String? helperText,
   Color? fillColor,
+  TextStyle? hintStyle,
   BorderRadius? classBorderRadius,
 }) {
   return InputDecoration(
@@ -38,7 +39,7 @@ InputDecoration customFieldDeco({
     counterText: '',
     labelStyle: AppStyles.ubBlack15W600,
     helperText: helperText,
-    hintStyle: AppStyles.ubHintColor15W500,
+    hintStyle:hintStyle ??  AppStyles.ubHintColor15W500,
     prefixIcon: prefixWidget ??
         (prefixIcon != null
             ? Icon(

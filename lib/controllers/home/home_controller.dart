@@ -14,6 +14,8 @@ class HomeController extends GetxController {
 
   int selectedTabIndex = 0;
 
+  bool showListView = false;
+
   set selectedBottomTab(int value) {
     selectedTabIndex = value;
     update();
@@ -23,4 +25,10 @@ class HomeController extends GetxController {
     selectedProfile = value.name;
     update();
   }
+
+  List<String> homeCustomList = [
+    'Distance: 3 miles',
+    'Age: 40',
+    'Experience: 7+ yrs'
+  ];
 }

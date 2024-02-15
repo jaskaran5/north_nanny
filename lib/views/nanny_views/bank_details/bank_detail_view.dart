@@ -39,6 +39,12 @@ class BankDetailsView extends StatelessWidget {
                   title: TranslationKeys.skipForNow.tr,
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
+                  onTap: () {
+                    Get.to(
+                      WaitingApprovalView(),
+                      arguments: selectedInterface,
+                    );
+                  },
                 ),
               ],
             ),
