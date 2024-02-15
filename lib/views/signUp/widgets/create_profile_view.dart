@@ -9,6 +9,7 @@ import 'package:northshore_nanny_flutter/views/signUp/signup.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/widgets/custom_drop_down.dart';
 
 import '../../../widgets/custom_text_field.dart';
 
@@ -181,88 +182,121 @@ class CreateProfileView extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                   Dimens.boxHeight20,
-                  DropdownButtonFormField(
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: TranslationKeys.male.tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.male.tr.capitalizeFirst,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: TranslationKeys.female.tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.female.tr.capitalizeFirst,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  AppDropdown(
+                    selectedItem: controller.selectedGender?.isEmpty == true
+                        ? '${TranslationKeys.gender.tr}'
+                        : controller.selectedGender,
                     onChanged: (value) {
-                      // controller.selectedGender = value;
+                      controller.setGenderValue(value.toString());
                     },
-                    icon: SvgPicture.asset(
-                      Assets.iconsDownArrow,
-                    ),
-                    iconSize: Dimens.ten,
-                    borderRadius: BorderRadius.circular(
-                      Dimens.eight,
-                    ),
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(Assets.iconsGender),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
+                    prefix: SvgPicture.asset(Assets.iconsGender),
+                    items: controller.genderList,
+                    hintText: TranslationKeys.gender.tr,
+                    itemBuilder: (context, item, isSelected) {
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppText(
+                                text: item.toString().tr,
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                                style: AppStyles.ubNavyBlue15W600,
+                              ),
+                              isSelected
+                                  ? SvgPicture.asset(Assets.iconsCircleTick)
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      hintMaxLines: 1,
-                      contentPadding: Dimens.edgeInsets16,
-                      hintText:
-                          '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})',
-                      hintStyle: AppStyles.ubHintColor15W500,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                    ),
-                    menuMaxHeight: Dimens.hundred,
-                    style: AppStyles.ubNavyBlue15W600,
-                    alignment: Alignment.bottomCenter,
+                      );
+                    },
                   ),
+                  // DropdownButtonFormField(
+                  //   items: [
+                  //     DropdownMenuItem<String>(
+                  //       value: TranslationKeys.male.tr,
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           AppText(
+                  //             text: TranslationKeys.male.tr.capitalizeFirst,
+                  //             maxLines: 1,
+                  //             textAlign: TextAlign.start,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     DropdownMenuItem<String>(
+                  //       value: TranslationKeys.female.tr,
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           AppText(
+                  //             text: TranslationKeys.female.tr.capitalizeFirst,
+                  //             maxLines: 1,
+                  //             textAlign: TextAlign.start,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  //   onChanged: (value) {
+                  //     // controller.selectedGender = value;
+                  //   },
+                  //   icon: SvgPicture.asset(
+                  //     Assets.iconsDownArrow,
+                  //   ),
+                  //   iconSize: Dimens.ten,
+                  //   borderRadius: BorderRadius.circular(
+                  //     Dimens.eight,
+                  //   ),
+                  //   isExpanded: true,
+                  //   decoration: InputDecoration(
+                  //     prefixIcon: Padding(
+                  //       padding: Dimens.edgeInsets12,
+                  //       child: SvgPicture.asset(Assets.iconsGender),
+                  //     ),
+                  //     border: OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: AppColors.lightNavyBlue,
+                  //         width: Dimens.one,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(
+                  //         Dimens.eight,
+                  //       ),
+                  //     ),
+                  //     hintMaxLines: 1,
+                  //     contentPadding: Dimens.edgeInsets16,
+                  //     hintText:
+                  //         '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})',
+                  //     hintStyle: AppStyles.ubHintColor15W500,
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: AppColors.lightNavyBlue,
+                  //         width: Dimens.one,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(
+                  //         Dimens.eight,
+                  //       ),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: AppColors.lightNavyBlue,
+                  //         width: Dimens.one,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(
+                  //         Dimens.eight,
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   menuMaxHeight: Dimens.hundred,
+                  //   style: AppStyles.ubNavyBlue15W600,
+                  //   alignment: Alignment.bottomCenter,
+                  // ),
                   Dimens.boxHeight20,
                 ],
               ),

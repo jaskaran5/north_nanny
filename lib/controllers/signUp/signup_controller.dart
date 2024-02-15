@@ -26,7 +26,7 @@ class SignupViewController extends GetxController {
   bool? isBoxChecked = false;
 
   /// gender list.
-  List<String> genderList = [TranslationKeys.male, TranslationKeys.female];
+  List<String> genderList = [TranslationKeys.male.capitalizeFirst.toString(), TranslationKeys.female.capitalizeFirst.toString()];
 
   /// open gender dropDown,
   bool? showGenderDropDown = false;

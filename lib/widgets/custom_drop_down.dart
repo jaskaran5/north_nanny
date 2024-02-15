@@ -1,9 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 
+import '../utils/translations/translation_keys.dart';
 import 'app_text.dart';
 
 // class CustomDropDown extends StatelessWidget {
@@ -40,6 +41,7 @@ class AppDropdown<T> extends StatelessWidget {
   final T? selectedItem;
   final double? maxHeight;
   final InputDecoration? dropdownSearchDecoration;
+  final Widget? prefix;
 
   const AppDropdown({
     super.key,
@@ -67,52 +69,82 @@ class AppDropdown<T> extends StatelessWidget {
     this.baseTextStyle,
     this.isSelected,
     this.dropdownSearchDecoration,
+    this.prefix,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppText(
-          text: title ?? "",
-          fontWeight: fontWeight ?? FontWeight.w600,
-          color: textColor ?? AppColors.blackColor,
-        ),
-        Container(
-          height: height ?? Dimens.forty,
-          margin: margin ?? EdgeInsets.zero,
-          width: width ?? Get.width,
-          child: DropdownSearch<dynamic>(
-            dropdownDecoratorProps: DropDownDecoratorProps(
-                baseStyle: baseTextStyle ?? AppStyles.ubNavyBlue15W700,
-                dropdownSearchDecoration: dropdownSearchDecoration),
-            popupProps: PopupProps.menu(
-              itemBuilder: itemBuilder,
-              constraints: BoxConstraints(
-                maxHeight: maxHeight ?? 200,
-              ),
-              menuProps: MenuProps(
-                shape: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(22),
-                  borderSide: BorderSide.none,
+    return Container(
+      // height: height ?? Dimens.zero,
+      // margin: margin ?? Dimens.edgeInsets0,
+      // padding: Dimens.edgeInsets16,
+      width: width ?? Get.width,
+      child: DropdownSearch<dynamic>(
+
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          baseStyle: baseTextStyle ?? AppStyles.ubNavyBlue15W700,
+          dropdownSearchDecoration: dropdownSearchDecoration ??
+              InputDecoration(
+                prefixIcon: Padding(
+                  padding: Dimens.edgeInsets12,
+                  child: prefix,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.lightNavyBlue,
+                    width: Dimens.one,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    Dimens.eight,
+                  ),
+                ),
+                hintMaxLines: 1,
+                contentPadding: Dimens.edgeInsets16,
+                hintText: hintText,
+                hintStyle: AppStyles.ubHintColor15W500,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.lightNavyBlue,
+                    width: Dimens.one,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    Dimens.eight,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.lightNavyBlue,
+                    width: Dimens.one,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    Dimens.eight,
+                  ),
                 ),
               ),
+        ),
+        popupProps: PopupProps.menu(
+          itemBuilder: itemBuilder,
+          constraints: BoxConstraints(
+            maxHeight: maxHeight ?? Dimens.hundred,
+          ),
+          menuProps: MenuProps(
+            shape: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimens.eight),
+              borderSide: BorderSide.none,
             ),
-            dropdownButtonProps: dropDownButtonProps ??
-                const DropdownButtonProps(
-                    padding: EdgeInsets.only(left: 20),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      size: 25,
-                    )),
-            onChanged: onChanged,
-            items: items!,
-            selectedItem: selectedItem,
           ),
         ),
-      ],
+        dropdownButtonProps: dropDownButtonProps ??
+            DropdownButtonProps(
+              iconSize: Dimens.twentyFive,
+              icon: SvgPicture.asset(
+                Assets.iconsDownArrow,
+              ),
+            ),
+        onChanged: onChanged,
+        items: items!,
+        selectedItem: selectedItem,
+      ),
     );
   }
 }

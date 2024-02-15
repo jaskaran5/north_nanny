@@ -131,7 +131,8 @@ class CreateChildProfileView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppText(
-                                  text: TranslationKeys.female.tr.capitalizeFirst,
+                                  text:
+                                      TranslationKeys.female.tr.capitalizeFirst,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
                                   style: AppStyles.ubNavyBlue15W600,
@@ -149,6 +150,7 @@ class CreateChildProfileView extends StatelessWidget {
                           Dimens.eight,
                         ),
                         isExpanded: true,
+
                         decoration: InputDecoration(
                           prefixIcon: Padding(
                             padding: Dimens.edgeInsets12,
