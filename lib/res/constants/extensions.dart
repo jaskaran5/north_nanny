@@ -101,3 +101,14 @@ extension ServiceName on Services {
     }
   }
 }
+
+extension GenderName on GenderConstant {
+  String get genderName {
+    switch (this) {
+      case GenderConstant.male:
+        return TranslationKeys.male;
+      case GenderConstant.female:
+        return TranslationKeys.female;
+    }
+  }
+}

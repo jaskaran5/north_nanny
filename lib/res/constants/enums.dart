@@ -19,3 +19,8 @@ enum Services {
   runningErrands,
   funActivityOutHouse,
 }
+
+enum GenderConstant {
+  male,
+  female,
+}

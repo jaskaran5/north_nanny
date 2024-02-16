@@ -56,6 +56,7 @@ class Assets {
   static const String iconsShieldSecurity = 'assets/icons/shield_security.svg';
   static const String iconsShoppingCart = 'assets/icons/shopping_cart.svg';
   static const String iconsShowPassword = 'assets/icons/show_password.svg';
+  static const String iconsSliderThumb = 'assets/icons/slider_thumb.svg';
   static const String iconsSmallProfile = 'assets/icons/small_profile.svg';
   static const String iconsSplash = 'assets/icons/splash.svg';
   static const String iconsStar = 'assets/icons/star.svg';

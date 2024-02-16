@@ -19,13 +19,111 @@ class BankDetailsView extends StatelessWidget {
           appBar: CustomAppbarWidget(
             title: TranslationKeys.bankDetails.tr,
           ),
-          bottomSheet: Container(
-            padding: Dimens.edgeInsetsL16R16B16,
-            color: AppColors.primaryColor,
+          body: GestureDetector(
+            onTap: () {
+              Get.focusScope?.unfocus();
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: Dimens.edgeInsets16,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller:
+                                controller.bankNameTextEditingController,
+                            maxLines: 1,
+                            minLines: 1,
+                            decoration: customFieldDeco(
+                              hintText: TranslationKeys.bankName.tr,
+                              prefixWidget: Padding(
+                                padding: Dimens.edgeInsets12,
+                                child: SvgPicture.asset(
+                                  Assets.iconsBank,
+                                  height: Dimens.ten,
+                                  width: Dimens.ten,
+                                ),
+                              ),
+                            ),
+                            cursorColor: AppColors.blackColor,
+                            cursorWidth: Dimens.one,
+                            style: AppStyles.ubBlack15W600,
+                            keyboardType: TextInputType.text,
+                          ),
+                          Dimens.boxHeight20,
+                          TextField(
+                            controller:
+                                controller.holderNameTextEditingController,
+                            maxLines: 1,
+                            minLines: 1,
+                            decoration: customFieldDeco(
+                              hintText: TranslationKeys.accountHolderName.tr,
+                              prefixWidget: Padding(
+                                padding: Dimens.edgeInsets12,
+                                child: SvgPicture.asset(
+                                  Assets.iconsSmallProfile,
+                                  height: Dimens.ten,
+                                  width: Dimens.ten,
+                                ),
+                              ),
+                            ),
+                            cursorColor: AppColors.blackColor,
+                            cursorWidth: Dimens.one,
+                            style: AppStyles.ubBlack15W600,
+                            keyboardType: TextInputType.text,
+                          ),
+                          Dimens.boxHeight20,
+                          TextField(
+                            controller:
+                                controller.accountNumberTextEditingController,
+                            maxLines: 1,
+                            minLines: 1,
+                            decoration: customFieldDeco(
+                              hintText: TranslationKeys.accountNumber.tr,
+                              prefixWidget: Padding(
+                                padding: Dimens.edgeInsets12,
+                                child: SvgPicture.asset(
+                                  Assets.iconsMoreSquare,
+                                  height: Dimens.ten,
+                                  width: Dimens.ten,
+                                ),
+                              ),
+                            ),
+                            cursorColor: AppColors.blackColor,
+                            cursorWidth: Dimens.one,
+                            style: AppStyles.ubBlack15W600,
+                            keyboardType: TextInputType.phone,
+                          ),
+                          Dimens.boxHeight20,
+                          TextField(
+                            controller:
+                                controller.routingNumberTextEditingController,
+                            maxLines: 1,
+                            minLines: 1,
+                            decoration: customFieldDeco(
+                              hintText: TranslationKeys.routingNumber.tr,
+                              prefixWidget: Padding(
+                                padding: Dimens.edgeInsets12,
+                                child: SvgPicture.asset(
+                                  Assets.iconsShieldSecurity,
+                                  height: Dimens.ten,
+                                  width: Dimens.ten,
+                                ),
+                              ),
+                            ),
+                            cursorColor: AppColors.blackColor,
+                            cursorWidth: Dimens.one,
+                            style: AppStyles.ubBlack15W600,
+                            keyboardType: TextInputType.phone,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 CustomButton(
                   title: TranslationKeys.addBank.tr,
                   backGroundColor: AppColors.navyBlue,
@@ -49,105 +147,6 @@ class BankDetailsView extends StatelessWidget {
                   },
                 ),
               ],
-            ),
-          ),
-          body: GestureDetector(
-            onTap: () {
-              Get.focusScope?.unfocus();
-            },
-            child: SingleChildScrollView(
-              reverse: true,
-              child: Padding(
-                padding: Dimens.edgeInsets16,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextField(
-                      controller: controller.bankNameTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintText: TranslationKeys.bankName.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.iconsBank,
-                            height: Dimens.ten,
-                            width: Dimens.ten,
-                          ),
-                        ),
-                      ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.text,
-                    ),
-                    Dimens.boxHeight20,
-                    TextField(
-                      controller: controller.holderNameTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintText: TranslationKeys.accountHolderName.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.iconsSmallProfile,
-                            height: Dimens.ten,
-                            width: Dimens.ten,
-                          ),
-                        ),
-                      ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.text,
-                    ),
-                    Dimens.boxHeight20,
-                    TextField(
-                      controller: controller.accountNumberTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintText: TranslationKeys.accountNumber.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.iconsMoreSquare,
-                            height: Dimens.ten,
-                            width: Dimens.ten,
-                          ),
-                        ),
-                      ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.phone,
-                    ),
-                    Dimens.boxHeight20,
-                    TextField(
-                      controller: controller.routingNumberTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintText: TranslationKeys.routingNumber.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.iconsShieldSecurity,
-                            height: Dimens.ten,
-                            width: Dimens.ten,
-                          ),
-                        ),
-                      ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.phone,
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
         ),

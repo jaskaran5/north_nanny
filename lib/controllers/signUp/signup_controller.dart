@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/res/constants/constants.dart';
 import 'package:northshore_nanny_flutter/view_models/sign_up_view_model.dart';
 
 class SignupViewController extends GetxController {
@@ -26,10 +26,9 @@ class SignupViewController extends GetxController {
   bool? isBoxChecked = false;
 
   /// gender list.
-  List<String> genderList = [
-    TranslationKeys.male.capitalizeFirst.toString(),
-    TranslationKeys.female.capitalizeFirst.toString()
-  ];
+  List<String> genderList = GenderConstant.values
+      .map((e) => e.genderName.capitalizeFirst.toString())
+      .toList();
 
   /// open gender dropDown,
   bool? showGenderDropDown = false;

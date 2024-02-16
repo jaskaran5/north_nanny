@@ -17,4 +17,6 @@ class AppColors {
   static const Color locationColor = Color(0xff524B6B);
   static const Color listColor = Color(0xffF5F4F6);
   static const Color dividerColor = Color(0xffDEE1E7);
+  static const Color sliderInActiveColor = Color(0xffCBC9D4);
+  static const Color sliderActiveColor = Color(0xff2074C7);
 }

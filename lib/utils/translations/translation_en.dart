@@ -18,7 +18,7 @@ var en = <String, String>{
   TranslationKeys.privacyPolicy: 'Privacy Policy ',
   TranslationKeys.register: 'Register',
   TranslationKeys.alreadyHaveAccount: 'Already have an account? ',
-  TranslationKeys.signIn: 'Sign in ',
+  TranslationKeys.signIn: 'Sign In ',
   TranslationKeys.welComeBackGlad: 'Welcome back! Glad to see you again. ',
   TranslationKeys.enterLogInInfo: 'Enter your login information to continue ',
   TranslationKeys.rememberMe: 'Remember Me',
@@ -110,4 +110,6 @@ var en = <String, String>{
   TranslationKeys.miles: 'miles',
   TranslationKeys.reset: 'Reset',
   TranslationKeys.apply: 'Apply',
+  TranslationKeys.male: 'Male',
+  TranslationKeys.female: 'Female',
 };
