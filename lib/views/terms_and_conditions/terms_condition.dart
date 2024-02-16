@@ -1,1 +1,1 @@
-export 'privacy_policy_view.dart';
+export 'terms_and_condition_view.dart';
