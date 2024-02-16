@@ -8,7 +8,7 @@ class ForgotPasswordBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<ForgotPasswordController>(
       () => ForgotPasswordController(
-        ForgotPasswordViewModel(
+            ForgotPasswordViewModel(
           ForgotPasswordRepository(),
         ),
       ),

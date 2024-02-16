@@ -46,7 +46,7 @@ class NewPasswordView extends StatelessWidget {
                   ),
                   Dimens.boxHeight32,
                   TextField(
-                    controller: controller.newPasswordTextEditingController,
+                    // controller: controller.newPasswordTextEditingController,
                     maxLines: 1,
                     minLines: 1,
                     decoration: customFieldDeco(
@@ -74,7 +74,7 @@ class NewPasswordView extends StatelessWidget {
                   ),
                   Dimens.boxHeight16,
                   TextField(
-                    controller: controller.confirmPasswordTextEditingController,
+                    // controller: controller.confirmPasswordTextEditingController,
                     maxLines: 1,
                     minLines: 1,
                     decoration: customFieldDeco(

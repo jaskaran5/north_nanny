@@ -65,7 +65,7 @@ class EmailVerificationView extends StatelessWidget {
                     cursorWidth: Dimens.one,
                     autoDismissKeyboard: true,
                     textInputAction: TextInputAction.next,
-                    controller: controller.otpTextEditingController,
+                   // controller: controller.otpTextEditingController,
                     textStyle: AppStyles.ubBlack18W600,
                     pinTheme: PinTheme(
                       borderRadius: BorderRadius.circular(
