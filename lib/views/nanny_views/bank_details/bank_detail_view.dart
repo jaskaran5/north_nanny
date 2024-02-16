@@ -24,6 +24,7 @@ class BankDetailsView extends StatelessWidget {
               Get.focusScope?.unfocus();
             },
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: SingleChildScrollView(
