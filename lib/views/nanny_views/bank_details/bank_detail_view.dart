@@ -24,7 +24,7 @@ class BankDetailsView extends StatelessWidget {
               Get.focusScope?.unfocus();
             },
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: SingleChildScrollView(
@@ -125,15 +125,17 @@ class BankDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                CustomButton(
-                  title: TranslationKeys.addBank.tr,
-                  backGroundColor: AppColors.navyBlue,
-                  onTap: () {
-                    Get.to(
-                      WaitingApprovalView(),
-                      arguments: selectedInterface,
-                    );
-                  },
+                Center(
+                  child: CustomButton(
+                    title: TranslationKeys.addBank.tr,
+                    backGroundColor: AppColors.navyBlue,
+                    onTap: () {
+                      Get.to(
+                        WaitingApprovalView(),
+                        arguments: selectedInterface,
+                      );
+                    },
+                  ),
                 ),
                 Dimens.boxHeight10,
                 CustomButton(
@@ -147,6 +149,7 @@ class BankDetailsView extends StatelessWidget {
                     );
                   },
                 ),
+                Dimens.boxHeight32,
               ],
             ),
           ),

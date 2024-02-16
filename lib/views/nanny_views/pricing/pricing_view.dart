@@ -17,7 +17,7 @@ class PricingView extends StatelessWidget {
         builder: (controller) => Scaffold(
           appBar: const CustomAppbarWidget(),
           bottomSheet: Container(
-            padding: Dimens.edgeInsetsL16R16B16,
+            padding: Dimens.edgeInsetsL16R16B20,
             child: CustomButton(
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,

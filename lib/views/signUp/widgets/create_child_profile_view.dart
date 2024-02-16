@@ -46,7 +46,7 @@ class CreateChildProfileView extends StatelessWidget {
           ),
           bottomSheet: Container(
             color: AppColors.primaryColor,
-            padding: Dimens.edgeInsetsL16R16B16,
+            padding: Dimens.edgeInsetsL16R16B20,
             child: CustomButton(
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,

@@ -38,12 +38,8 @@ class FilterView extends StatelessWidget {
                       values: controller.distanceSliderValues,
                       activeColor: AppColors.sliderActiveColor,
                       inactiveColor: AppColors.sliderInActiveColor,
-                      startThumbIcon: Container(
-                        height: Dimens.hundred,
-                        color: AppColors.blackColor,
-                        child: SvgPicture.asset(
-                          Assets.iconsSliderThumb,
-                        ),
+                      startThumbIcon: SvgPicture.asset(
+                        Assets.iconsSliderThumb,
                       ),
                       endThumbIcon: SvgPicture.asset(
                         Assets.iconsSliderThumb,

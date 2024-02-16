@@ -23,7 +23,7 @@ class ChildProfileView extends StatelessWidget {
           appBar: const CustomAppbarWidget(),
           bottomSheet: Container(
             color: Colors.white,
-            padding: Dimens.edgeInsetsL16R16B16,
+            padding: Dimens.edgeInsetsL16R16B20,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

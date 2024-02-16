@@ -23,7 +23,7 @@ class ServicesView extends StatelessWidget {
             title: TranslationKeys.selectServices.tr,
           ),
           bottomSheet: Container(
-            padding: Dimens.edgeInsetsL16R16B16,
+            padding: Dimens.edgeInsetsL16R16B20,
             child: CustomButton(
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
