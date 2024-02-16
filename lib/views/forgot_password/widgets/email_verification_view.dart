@@ -44,7 +44,7 @@ class EmailVerificationView extends StatelessWidget {
                         style: AppStyles.ubGrey16W400,
                         children: [
                           TextSpan(
-                            text: TranslationKeys.email.tr,
+                            text: '${TranslationKeys.email.tr} ',
                             style: AppStyles.ubBlack16W600,
                           ),
                           TextSpan(
@@ -89,7 +89,7 @@ class EmailVerificationView extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     text: TextSpan(
-                      text: TranslationKeys.didNotReceiveOtp.tr,
+                      text: '${TranslationKeys.didNotReceiveOtp.tr} ',
                       style: AppStyles.ubGrey15W500,
                       children: [
                         TextSpan(

@@ -37,7 +37,7 @@ var en = <String, String>{
   TranslationKeys.submit: 'Submit',
   TranslationKeys.createNewPassword: 'Create New Password',
   TranslationKeys.newPasswordMustBeUnique:
-      'Your new password must be unique from those previously used',
+      'Your new password must be unique from those previously used.',
   TranslationKeys.enterNewPassword: 'Enter New Password',
   TranslationKeys.confirmNewPassword: 'Confirm New Password',
   TranslationKeys.changePassword: 'Change Password',

@@ -112,7 +112,7 @@ class AppDropdown<T> extends StatelessWidget {
           listViewProps: ListViewProps(physics: itemBuilderPhysics),
           constraints: BoxConstraints(
             minHeight: mainHeight ?? Dimens.ninty,
-            maxHeight: maxHeight ?? Dimens.hundred,
+            maxHeight: maxHeight ?? Dimens.hundredFive,
           ),
           menuProps: MenuProps(
             shape: UnderlineInputBorder(

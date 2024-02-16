@@ -233,6 +233,7 @@ class LogInView extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  Dimens.boxHeight24,
                 ],
               ),
             ),

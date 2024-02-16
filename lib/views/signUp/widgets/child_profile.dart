@@ -95,7 +95,7 @@ class ChildProfileView extends StatelessWidget {
                       cursorColor: AppColors.navyBlue,
                       cursorWidth: Dimens.one,
                       style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.phone,
                     ),
                   ],
                 ),
