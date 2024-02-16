@@ -41,15 +41,14 @@ class Assets {
   static const String iconsMoreSquare = 'assets/icons/more_square.svg';
   static const String iconsNoOfChild = 'assets/icons/no_of_child.svg';
   static const String iconsNotification = 'assets/icons/notification.svg';
-  static const String iconsNotificationFill =
-      'assets/icons/notification_fill.svg';
-  static const String iconsNotificationOutline =
-      'assets/icons/notification_outline.svg';
+  static const String iconsNotificationFill = 'assets/icons/notification_fill.svg';
+  static const String iconsNotificationOutline = 'assets/icons/notification_outline.svg';
   static const String iconsPersonalcard = 'assets/icons/personalcard.svg';
   static const String iconsPetThumb = 'assets/icons/pet_thumb.svg';
   static const String iconsPhone = 'assets/icons/phone.svg';
   static const String iconsProfile = 'assets/icons/profile.svg';
   static const String iconsRemove = 'assets/icons/Remove.svg';
+  static const String iconsRemoveBottomSheet = 'assets/icons/remove_bottom_sheet.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';
@@ -67,24 +66,15 @@ class Assets {
   static const String iconsUncheckCircle = 'assets/icons/uncheck_circle.svg';
   static const String iconsUpload = 'assets/icons/upload.svg';
   static const String iconsUserTag = 'assets/icons/user_tag.svg';
-  static const String playfairDisplayPlayfairDisplayBlack =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Black.ttf';
-  static const String playfairDisplayPlayfairDisplayBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Bold.ttf';
-  static const String playfairDisplayPlayfairDisplayExtraBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-ExtraBold.ttf';
-  static const String playfairDisplayPlayfairDisplayMedium =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Medium.ttf';
-  static const String playfairDisplayPlayfairDisplayRegular =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Regular.ttf';
-  static const String playfairDisplayPlayfairDisplaySemiBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-SemiBold.ttf';
-  static const String urbanistUrbanistBold =
-      'assets/fonts/urbanist/Urbanist-Bold.ttf';
-  static const String urbanistUrbanistMedium =
-      'assets/fonts/urbanist/Urbanist-Medium.ttf';
-  static const String urbanistUrbanistRegular =
-      'assets/fonts/urbanist/Urbanist-Regular.ttf';
-  static const String urbanistUrbanistSemiBold =
-      'assets/fonts/urbanist/Urbanist-SemiBold.ttf';
+  static const String playfairDisplayPlayfairDisplayBlack = 'assets/fonts/playfairDisplay/PlayfairDisplay-Black.ttf';
+  static const String playfairDisplayPlayfairDisplayBold = 'assets/fonts/playfairDisplay/PlayfairDisplay-Bold.ttf';
+  static const String playfairDisplayPlayfairDisplayExtraBold = 'assets/fonts/playfairDisplay/PlayfairDisplay-ExtraBold.ttf';
+  static const String playfairDisplayPlayfairDisplayMedium = 'assets/fonts/playfairDisplay/PlayfairDisplay-Medium.ttf';
+  static const String playfairDisplayPlayfairDisplayRegular = 'assets/fonts/playfairDisplay/PlayfairDisplay-Regular.ttf';
+  static const String playfairDisplayPlayfairDisplaySemiBold = 'assets/fonts/playfairDisplay/PlayfairDisplay-SemiBold.ttf';
+  static const String urbanistUrbanistBold = 'assets/fonts/urbanist/Urbanist-Bold.ttf';
+  static const String urbanistUrbanistMedium = 'assets/fonts/urbanist/Urbanist-Medium.ttf';
+  static const String urbanistUrbanistRegular = 'assets/fonts/urbanist/Urbanist-Regular.ttf';
+  static const String urbanistUrbanistSemiBold = 'assets/fonts/urbanist/Urbanist-SemiBold.ttf';
+
 }

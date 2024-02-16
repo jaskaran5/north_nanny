@@ -9,8 +9,8 @@ import 'package:northshore_nanny_flutter/widgets/widgets.dart';
 import '../bank_details/bank_detail_view.dart';
 
 class PricingView extends StatelessWidget {
-   PricingView({super.key});
-   final selectedInterface = Get.arguments;
+  PricingView({super.key});
+  final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) =>
       GetBuilder<CreateSitterProfileController>(
@@ -21,8 +21,8 @@ class PricingView extends StatelessWidget {
             child: CustomButton(
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
-              onTap: (){
-                Get.to( BankDetailsView(),arguments: selectedInterface);
+              onTap: () {
+                Get.to(BankDetailsView(), arguments: selectedInterface);
               },
             ),
           ),
@@ -53,12 +53,12 @@ class PricingView extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(
-                      Dimens.ten,
+                      Dimens.eight,
                     ),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.lightNavyBlue.withOpacity(.8),
-                        blurRadius: Dimens.one,
+                        blurRadius: Dimens.five,
                       )
                     ],
                   ),

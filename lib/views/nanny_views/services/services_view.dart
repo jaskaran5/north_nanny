@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/sitter_controllers/create_profile/create_sitter_profile.dart';
-import 'package:northshore_nanny_flutter/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/res/theme/theme.dart';
+import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
+import 'package:northshore_nanny_flutter/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
 
 import '../pricing/pricing_view.dart';
@@ -37,8 +37,18 @@ class ServicesView extends StatelessWidget {
             child: Column(
               children: List.generate(
                 controller.servicesList.length,
-                (index) => InkWell(
-                  onTap: () {},
+                (index) => GestureDetector(
+                  onTap: () {
+                    if (controller.selectedServices
+                        .contains(controller.servicesList[index].serviceName)) {
+                      controller.selectedServices
+                          .remove(controller.servicesList[index].serviceName);
+                    } else {
+                      controller.selectedServices
+                          .add(controller.servicesList[index].serviceName);
+                    }
+                    controller.update();
+                  },
                   child: SizedBox(
                     height: Dimens.seventy,
                     child: Card(
@@ -46,8 +56,11 @@ class ServicesView extends StatelessWidget {
                       margin: Dimens.edgeInsetsT10,
                       shape: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimens.ten),
-                        borderSide: const BorderSide(
-                          color: AppColors.primaryColor,
+                        borderSide: BorderSide(
+                          color: controller.selectedServices.contains(
+                                  controller.servicesList[index].serviceName)
+                              ? AppColors.navyBlue
+                              : AppColors.primaryColor,
                           width: 1.5,
                         ),
                       ),
@@ -73,12 +86,13 @@ class ServicesView extends StatelessWidget {
                                     ),
                                   ),
                                   child: SvgPicture.asset(
-                                    controller.servicesSvgList[index],
+                                    controller.servicesList[index].servicesSvg,
                                   ),
                                 ),
                                 Dimens.boxWidth10,
                                 AppText(
-                                  text: controller.servicesList[index].tr,
+                                  text: controller
+                                      .servicesList[index].serviceName.tr,
                                   style: AppStyles.ubBlack14W600,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
@@ -90,10 +104,32 @@ class ServicesView extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SvgPicture.asset(Assets.iconsInfoCircle),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.bottomSheet(
+                                      CustomBottomSheet(
+                                        heading: controller
+                                            .servicesList[index].serviceName.tr,
+                                        description: controller
+                                            .servicesList[index]
+                                            .serviceDescription
+                                            .tr,
+                                      ),
+                                      barrierColor:
+                                          AppColors.greyColor.withOpacity(.2),
+                                    );
+                                  },
+                                  child: SvgPicture.asset(
+                                    Assets.iconsInfoCircle,
+                                  ),
+                                ),
                                 Dimens.boxWidth10,
                                 SvgPicture.asset(
-                                  Assets.iconsUncheckCircle,
+                                  controller.selectedServices.contains(
+                                          controller
+                                              .servicesList[index].serviceName)
+                                      ? Assets.iconsCircleTick
+                                      : Assets.iconsUncheckCircle,
                                 ),
                               ],
                             ),

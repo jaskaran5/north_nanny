@@ -26,6 +26,7 @@ class Dimens {
 
   static final double fifteen = 15.sp;
   static final double sixteen = 16.sp;
+  static final double nineteen = 19.sp;
   static final double eighteen = 18.sp;
   static final double twenty = 20.sp;
   static final double twentyTwo = 22.sp;
@@ -109,10 +110,17 @@ class Dimens {
   static final EdgeInsets edgeInsetsL2 = EdgeInsets.only(left: two);
   static final EdgeInsets edgeInsetsT10 = EdgeInsets.only(top: ten);
   static final EdgeInsets edgeInsetsB16 = EdgeInsets.only(bottom: sixteen);
+  static final EdgeInsets edgeInsetsT16B16 =
+      EdgeInsets.only(top: sixteen, bottom: sixteen);
+  static final EdgeInsets edgeInsetsB55 = EdgeInsets.only(bottom: fiftyFive);
 
   static final EdgeInsets edgeInsetsL4 = EdgeInsets.only(left: four);
-  static final EdgeInsets edgeInsetsL6T10R6B10 = EdgeInsets.only(left: six,top: ten,right: six,bottom: 10);
-  static final EdgeInsets edgeInsetsT16R16 = EdgeInsets.only(top: sixteen,right: sixteen);
+  static final EdgeInsets edgeInsetsL6T10R6B10 =
+      EdgeInsets.only(left: six, top: ten, right: six, bottom: ten);
+  static final EdgeInsets edgeInsetsL10T10R16B10 =
+      EdgeInsets.only(left: ten, top: ten, right: sixteen, bottom: ten);
+  static final EdgeInsets edgeInsetsT16R16 =
+      EdgeInsets.only(top: sixteen, right: sixteen);
   static final EdgeInsets edgeInsetsL15 = EdgeInsets.only(
     left: fifteen,
   );
@@ -135,6 +143,8 @@ class Dimens {
   static final EdgeInsets edgeInsets8_0 =
       EdgeInsets.symmetric(horizontal: eight);
   static EdgeInsets edgeInsets10_0 = EdgeInsets.symmetric(horizontal: ten);
+  static EdgeInsets edgeInsetsH20V15 =
+      EdgeInsets.symmetric(horizontal: twenty, vertical: fifteen);
 
   static final EdgeInsets edgeInsets0_4 = EdgeInsets.symmetric(vertical: four);
   static final EdgeInsets edgeInsets0_8 = EdgeInsets.symmetric(vertical: eight);

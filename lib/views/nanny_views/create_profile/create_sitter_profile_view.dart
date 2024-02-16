@@ -161,86 +161,40 @@ class CreateSitterProfileView extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                   Dimens.boxHeight20,
-                  DropdownButtonFormField(
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: TranslationKeys.male.tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.male.tr.capitalizeFirst,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: TranslationKeys.female.tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.female.tr.capitalizeFirst,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  AppDropdown(
+                    selectedItem: controller.selectedGender?.isEmpty == true
+                        ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
+                        : controller.selectedGender,
                     onChanged: (value) {
+                      controller.selectedGender = value.toString();
+                      controller.update();
                     },
-                    icon: SvgPicture.asset(
-                      Assets.iconsDownArrow,
-                    ),
-                    iconSize: Dimens.ten,
-                    borderRadius: BorderRadius.circular(
-                      Dimens.eight,
-                    ),
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(Assets.iconsGender),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
+                    baseTextStyle: controller.selectedGender?.isEmpty == true
+                        ? AppStyles.ubHintColor15W500
+                        : AppStyles.ubNavyBlue15W600,
+                    prefix: SvgPicture.asset(Assets.iconsGender),
+                    items: controller.genderList,
+                    itemBuilder: (context, item, isSelected) {
+                      return Card(
+                        child: Padding(
+                          padding: Dimens.edgeInsetsH20V15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppText(
+                                text: item.toString().tr,
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                                style: AppStyles.ubNavyBlue15W600,
+                              ),
+                              item == controller.selectedGender
+                                  ? SvgPicture.asset(Assets.iconsCircleTick)
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      hintMaxLines: 1,
-                      contentPadding: Dimens.edgeInsets16,
-                      hintText:
-                          '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})',
-                      hintStyle: AppStyles.ubHintColor15W500,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                    ),
-                    style: AppStyles.ubNavyBlue15W600,
-                    menuMaxHeight: Dimens.hundred,
-                    alignment: Alignment.bottomCenter,
+                      );
+                    },
                   ),
                   Dimens.boxHeight20,
                   TextField(
@@ -272,75 +226,40 @@ class CreateSitterProfileView extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                   Dimens.boxHeight20,
-                  DropdownButtonFormField(
-                    items: List.generate(
-                      controller.experienceList.length,
-                      (index) => DropdownMenuItem<String>(
-                        value: controller.experienceList[index].tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: controller
-                                  .experienceList[index].tr.capitalizeFirst,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  AppDropdown(
+                    selectedItem: controller.selectedYear?.isEmpty == true
+                        ? TranslationKeys.experience.tr
+                        : controller.selectedYear,
                     onChanged: (value) {
-                      // controller.selectedGender = value;
+                      controller.selectedYear = value.toString();
+                      controller.update();
                     },
-                    icon: SvgPicture.asset(
-                      Assets.iconsDownArrow,
-                    ),
-                    iconSize: Dimens.ten,
-                    borderRadius: BorderRadius.circular(
-                      Dimens.eight,
-                    ),
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(Assets.iconsBrifecaseCross),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
+                    baseTextStyle: controller.selectedYear?.isEmpty == true
+                        ? AppStyles.ubHintColor15W500
+                        : AppStyles.ubNavyBlue15W600,
+                    prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
+                    items: controller.experienceList,
+                    itemBuilder: (context, item, isSelected) {
+                      return Card(
+                        child: Padding(
+                          padding: Dimens.edgeInsetsH20V15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppText(
+                                text: item.toString().tr,
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                                style: AppStyles.ubNavyBlue15W600,
+                              ),
+                              item == controller.selectedYear
+                                  ? SvgPicture.asset(Assets.iconsCircleTick)
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      hintMaxLines: 1,
-                      contentPadding: Dimens.edgeInsets16,
-                      hintText: TranslationKeys.experience.tr,
-                      hintStyle: AppStyles.ubHintColor15W500,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                    ),
-                    menuMaxHeight: Dimens.hundred,
-                    style: AppStyles.ubNavyBlue15W600,
-                    alignment: Alignment.bottomCenter,
+                      );
+                    },
                   ),
                   Dimens.boxHeight20,
                   TextField(
@@ -385,89 +304,54 @@ class CreateSitterProfileView extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                   Dimens.boxHeight20,
-                  DropdownButtonFormField(
-                    items: List.generate(
-                      controller.licenseList.length,
-                      (index) => DropdownMenuItem<String>(
-                        value: controller.licenseList[index].tr,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: controller.licenseList[index].tr,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  AppDropdown(
+                    selectedItem: controller.licenseHaveOrNot?.isEmpty == true
+                        ? TranslationKeys.driverLicense.tr
+                        : controller.licenseHaveOrNot,
                     onChanged: (value) {
-                      // controller.selectedGender = value;
+                      controller.licenseHaveOrNot = value.toString();
+                      controller.update();
                     },
-                    icon: SvgPicture.asset(
-                      Assets.iconsDownArrow,
-                    ),
-                    iconSize: Dimens.ten,
-                    borderRadius: BorderRadius.circular(
-                      Dimens.eight,
-                    ),
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(Assets.iconsPersonalcard),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
+                    baseTextStyle: controller.selectedYear?.isEmpty == true
+                        ? AppStyles.ubHintColor15W500
+                        : AppStyles.ubNavyBlue15W600,
+                    prefix: SvgPicture.asset(Assets.iconsPersonalcard),
+                    items: controller.licenseList,
+                    itemBuilder: (context, item, isSelected) {
+                      return Card(
+                        child: Padding(
+                          padding: Dimens.edgeInsetsH20V15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppText(
+                                text: item.toString().tr,
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                                style: AppStyles.ubNavyBlue15W600,
+                              ),
+                              controller.licenseHaveOrNot == item.toString()
+                                  ? SvgPicture.asset(Assets.iconsCircleTick)
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      hintMaxLines: 1,
-                      contentPadding: Dimens.edgeInsets16,
-                      hintText: TranslationKeys.driverLicense.tr,
-                      hintStyle: AppStyles.ubHintColor15W500,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.lightNavyBlue,
-                          width: Dimens.one,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                      ),
-                    ),
-                    style: AppStyles.ubNavyBlue15W600,
-                    menuMaxHeight: Dimens.hundred,
-                    alignment: Alignment.bottomCenter,
+                      );
+                    },
                   ),
                   Dimens.boxHeight20,
                   TextField(
                     controller: controller.tellUsTextEditingController,
                     maxLines: 4,
-                    minLines: 3,
                     decoration: customFieldDeco(
                       hintText: TranslationKeys.tellUsAboutYourSelf.tr,
                       prefixWidget: Padding(
-                        padding: Dimens.edgeInsets12,
+                        padding: Dimens.edgeInsetsB55,
                         child: SvgPicture.asset(
                           Assets.iconsDocumentText,
-                          height: Dimens.ten,
-                          width: Dimens.ten,
-                          alignment: Alignment.topLeft,
+                          height: Dimens.eighteen,
+                          width: Dimens.eighteen,
+                          alignment: Alignment.topCenter,
                         ),
                       ),
                     ),

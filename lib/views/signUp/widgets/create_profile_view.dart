@@ -184,14 +184,16 @@ class CreateProfileView extends StatelessWidget {
                   Dimens.boxHeight20,
                   AppDropdown(
                     selectedItem: controller.selectedGender?.isEmpty == true
-                        ? '${TranslationKeys.gender.tr}'
+                        ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
                         : controller.selectedGender,
                     onChanged: (value) {
                       controller.setGenderValue(value.toString());
                     },
+                    baseTextStyle: controller.selectedGender?.isEmpty == true
+                        ? AppStyles.ubHintColor15W500
+                        : null,
                     prefix: SvgPicture.asset(Assets.iconsGender),
                     items: controller.genderList,
-                    hintText: TranslationKeys.gender.tr,
                     itemBuilder: (context, item, isSelected) {
                       return Card(
                         child: Padding(
@@ -206,7 +208,7 @@ class CreateProfileView extends StatelessWidget {
                                 textAlign: TextAlign.start,
                                 style: AppStyles.ubNavyBlue15W600,
                               ),
-                              isSelected
+                              item == controller.selectedGender
                                   ? SvgPicture.asset(Assets.iconsCircleTick)
                                   : const SizedBox.shrink(),
                             ],
@@ -215,88 +217,6 @@ class CreateProfileView extends StatelessWidget {
                       );
                     },
                   ),
-                  // DropdownButtonFormField(
-                  //   items: [
-                  //     DropdownMenuItem<String>(
-                  //       value: TranslationKeys.male.tr,
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           AppText(
-                  //             text: TranslationKeys.male.tr.capitalizeFirst,
-                  //             maxLines: 1,
-                  //             textAlign: TextAlign.start,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     DropdownMenuItem<String>(
-                  //       value: TranslationKeys.female.tr,
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           AppText(
-                  //             text: TranslationKeys.female.tr.capitalizeFirst,
-                  //             maxLines: 1,
-                  //             textAlign: TextAlign.start,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  //   onChanged: (value) {
-                  //     // controller.selectedGender = value;
-                  //   },
-                  //   icon: SvgPicture.asset(
-                  //     Assets.iconsDownArrow,
-                  //   ),
-                  //   iconSize: Dimens.ten,
-                  //   borderRadius: BorderRadius.circular(
-                  //     Dimens.eight,
-                  //   ),
-                  //   isExpanded: true,
-                  //   decoration: InputDecoration(
-                  //     prefixIcon: Padding(
-                  //       padding: Dimens.edgeInsets12,
-                  //       child: SvgPicture.asset(Assets.iconsGender),
-                  //     ),
-                  //     border: OutlineInputBorder(
-                  //       borderSide: BorderSide(
-                  //         color: AppColors.lightNavyBlue,
-                  //         width: Dimens.one,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(
-                  //         Dimens.eight,
-                  //       ),
-                  //     ),
-                  //     hintMaxLines: 1,
-                  //     contentPadding: Dimens.edgeInsets16,
-                  //     hintText:
-                  //         '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})',
-                  //     hintStyle: AppStyles.ubHintColor15W500,
-                  //     enabledBorder: OutlineInputBorder(
-                  //       borderSide: BorderSide(
-                  //         color: AppColors.lightNavyBlue,
-                  //         width: Dimens.one,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(
-                  //         Dimens.eight,
-                  //       ),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderSide: BorderSide(
-                  //         color: AppColors.lightNavyBlue,
-                  //         width: Dimens.one,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(
-                  //         Dimens.eight,
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   menuMaxHeight: Dimens.hundred,
-                  //   style: AppStyles.ubNavyBlue15W600,
-                  //   alignment: Alignment.bottomCenter,
-                  // ),
                   Dimens.boxHeight20,
                 ],
               ),

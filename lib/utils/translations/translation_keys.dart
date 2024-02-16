@@ -63,7 +63,7 @@ class TranslationKeys {
   static const String male = 'male';
   static const String female = 'female';
   static const String profilePicture = 'profilePicture';
-  static const String optional = 'Optional';
+  static const String optional = 'optional';
   static const String continueWord = 'continueWord';
   static const String childProfile = 'childProfile';
   static const String noOfChildren = 'noOfChildren';

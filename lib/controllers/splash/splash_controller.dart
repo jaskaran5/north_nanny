@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/res/constants/constants.dart';
 import '../../utils/navigators/routes_management.dart';
 
 class SplashController extends GetxController {

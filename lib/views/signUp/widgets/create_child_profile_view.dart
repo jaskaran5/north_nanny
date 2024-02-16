@@ -110,87 +110,41 @@ class CreateChildProfileView extends StatelessWidget {
                         keyboardType: TextInputType.text,
                       ),
                       Dimens.boxHeight20,
-                      DropdownButtonFormField(
-                        items: [
-                          DropdownMenuItem<String>(
-                            value: TranslationKeys.male.tr,
-                            child: Row(
-                              children: [
-                                AppText(
-                                  text: TranslationKeys.male.tr.capitalizeFirst,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  style: AppStyles.ubNavyBlue15W600,
-                                ),
-                              ],
+                      AppDropdown(
+                        selectedItem: controller.selectedGender?.isEmpty == true
+                            ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
+                            : controller.selectedGender,
+                        onChanged: (value) {
+                          controller.setGenderValue(value.toString());
+                        },
+                        baseTextStyle:
+                            controller.selectedGender?.isEmpty == true
+                                ? AppStyles.ubHintColor15W500
+                                : null,
+                        prefix: SvgPicture.asset(Assets.iconsGender),
+                        items: controller.genderList,
+                        itemBuilder: (context, item, isSelected) {
+                          return Card(
+                            child: Padding(
+                              padding: Dimens.edgeInsetsH20V15,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AppText(
+                                    text: item.toString().tr,
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    style: AppStyles.ubNavyBlue15W600,
+                                  ),
+                                  item == controller.selectedGender
+                                      ? SvgPicture.asset(Assets.iconsCircleTick)
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
                             ),
-                          ),
-                          DropdownMenuItem<String>(
-                            value: TranslationKeys.female.tr,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppText(
-                                  text:
-                                      TranslationKeys.female.tr.capitalizeFirst,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  style: AppStyles.ubNavyBlue15W600,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                        onChanged: (value) {},
-                        icon: SvgPicture.asset(
-                          Assets.iconsDownArrow,
-                        ),
-                        iconSize: Dimens.ten,
-                        borderRadius: BorderRadius.circular(
-                          Dimens.eight,
-                        ),
-                        isExpanded: true,
-
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: Dimens.edgeInsets12,
-                            child: SvgPicture.asset(Assets.iconsGender),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.lightNavyBlue,
-                              width: Dimens.one,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              Dimens.eight,
-                            ),
-                          ),
-                          hintMaxLines: 1,
-                          contentPadding: Dimens.edgeInsets16,
-                          hintText:
-                              '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})',
-                          hintStyle: AppStyles.ubHintColor15W500,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.lightNavyBlue,
-                              width: Dimens.one,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              Dimens.eight,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.lightNavyBlue,
-                              width: Dimens.one,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              Dimens.eight,
-                            ),
-                          ),
-                        ),
-                        style: AppStyles.ubNavyBlue15W600,
-                        alignment: Alignment.bottomCenter,
+                          );
+                        },
                       ),
                       Dimens.boxHeight20,
                       TextField(
@@ -240,17 +194,17 @@ class CreateChildProfileView extends StatelessWidget {
                       Dimens.boxHeight20,
                       TextField(
                         controller: controller.anyThingTextEditingController,
-                        maxLines: 3,
+                        maxLines: 4,
                         textAlign: TextAlign.start,
                         decoration: customFieldDeco(
                           hintText:
                               '${TranslationKeys.anythingElse.tr} (${TranslationKeys.optional.tr})',
                           prefixWidget: Padding(
-                            padding: const EdgeInsets.only(bottom: 30),
+                            padding: Dimens.edgeInsetsB55,
                             child: SvgPicture.asset(
                               Assets.iconsTaskSquare,
-                              height: Dimens.ten,
-                              width: Dimens.ten,
+                              height: Dimens.eighteen,
+                              width: Dimens.eighteen,
                               alignment: Alignment.topCenter,
                             ),
                           ),

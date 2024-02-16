@@ -48,7 +48,7 @@ var en = <String, String>{
   TranslationKeys.email: 'email',
   TranslationKeys.createProfile: 'Create Profile',
   TranslationKeys.profilePicture: 'Profile picture',
-  TranslationKeys.optional: 'optional',
+  TranslationKeys.optional: 'Optional',
   TranslationKeys.firstName: 'First Name',
   TranslationKeys.lastName: 'Last Name',
   TranslationKeys.selectLocation: 'Select location',

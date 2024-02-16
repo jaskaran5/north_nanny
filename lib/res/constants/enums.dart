@@ -11,4 +11,11 @@ enum BottomTabs {
   settings,
 }
 
-
+enum Services {
+  houseKeeping,
+  driving,
+  petCare,
+  homeWorkHelp,
+  runningErrands,
+  funActivityOutHouse,
+}

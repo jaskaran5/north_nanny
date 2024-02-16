@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
 
 class CreateSitterProfileController extends GetxController {
@@ -28,25 +28,14 @@ class CreateSitterProfileController extends GetxController {
     '7+ ${TranslationKeys.year.capitalizeFirst}s',
   ];
 
-  List<String> licenseList = [TranslationKeys.yes, TranslationKeys.no];
-
-  List<String> servicesList = [
-    TranslationKeys.houseKeeping,
-    TranslationKeys.driving,
-    TranslationKeys.petCare,
-    TranslationKeys.homeWorkHelp,
-    TranslationKeys.runningErrands,
-    TranslationKeys.funActivityOutHouse,
+  List<String> licenseList = [
+    TranslationKeys.yes.capitalizeFirst.toString(),
+    TranslationKeys.no.capitalizeFirst.toString()
   ];
 
-  List<String> servicesSvgList = [
-    Assets.iconsHouseKeeping,
-    Assets.iconsStaringWheel,
-    Assets.iconsPetThumb,
-    Assets.iconsHomeWork,
-    Assets.iconsShoppingCart,
-    Assets.iconsFunActivity,
-  ];
+  List<Services> servicesList = Services.values;
+
+  var selectedServices = [];
 
   List<String> childrenList = [
     '4+ ',
@@ -61,6 +50,12 @@ class CreateSitterProfileController extends GetxController {
     24,
     23,
     22,
+  ];
+
+  /// gender list.
+  List<String> genderList = [
+    TranslationKeys.male.capitalizeFirst.toString(),
+    TranslationKeys.female.capitalizeFirst.toString()
   ];
 
   String? selectedGender = '';
