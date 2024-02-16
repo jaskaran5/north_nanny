@@ -27,8 +27,10 @@ class AppDropdown<T> extends StatelessWidget {
   final TextStyle? baseTextStyle;
   final T? selectedItem;
   final double? maxHeight;
+  final double? mainHeight;
   final InputDecoration? dropdownSearchDecoration;
   final Widget? prefix;
+  final ScrollPhysics itemBuilderPhysics;
 
   const AppDropdown({
     super.key,
@@ -56,6 +58,8 @@ class AppDropdown<T> extends StatelessWidget {
     this.isSelected,
     this.dropdownSearchDecoration,
     this.prefix,
+    this.itemBuilderPhysics = const NeverScrollableScrollPhysics(),
+    this.mainHeight,
   });
 
   @override
@@ -105,7 +109,9 @@ class AppDropdown<T> extends StatelessWidget {
         ),
         popupProps: PopupProps.menu(
           itemBuilder: itemBuilder,
+          listViewProps: ListViewProps(physics: itemBuilderPhysics),
           constraints: BoxConstraints(
+            minHeight: mainHeight ?? Dimens.ninty,
             maxHeight: maxHeight ?? Dimens.hundred,
           ),
           menuProps: MenuProps(

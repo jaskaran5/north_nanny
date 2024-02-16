@@ -17,6 +17,7 @@ class CreateChildProfileView extends StatelessWidget {
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(
             title: TranslationKeys.createChildProfile.tr,
+            appBarHeight: Dimens.oneHundredTwenty,
             toUpperCaseTitle: false,
             actions: [
               Padding(
@@ -37,10 +38,10 @@ class CreateChildProfileView extends StatelessWidget {
             bottom: LinearProgressIndicator(
               backgroundColor: AppColors.lightNavyBlue,
               value: 0.4,
-              minHeight: Dimens.four,
+              minHeight: Dimens.three,
               color: AppColors.navyBlue,
             ),
-            bottomHeight: Dimens.four,
+            bottomHeight: Dimens.three,
             bottomWidth: Get.width,
           ),
           bottomSheet: Container(
@@ -54,18 +55,20 @@ class CreateChildProfileView extends StatelessWidget {
               },
             ),
           ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              // reverse: true,
-              child: GestureDetector(
-                onTap: Get.focusScope?.unfocus,
+          body: GestureDetector(
+            onTap: () {
+              Get.focusScope?.unfocus();
+            },
+            child: SafeArea(
+              child: SingleChildScrollView(
+                // reverse: true,
                 child: Padding(
                   padding: Dimens.edgeInsetsL16R16B16,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Dimens.boxHeight24,
+                      Dimens.boxHeight32,
                       TextField(
                         controller: controller.childNameTextEditingController,
                         maxLines: 1,
@@ -124,25 +127,39 @@ class CreateChildProfileView extends StatelessWidget {
                         prefix: SvgPicture.asset(Assets.iconsGender),
                         items: controller.genderList,
                         itemBuilder: (context, item, isSelected) {
-                          return Card(
-                            child: Padding(
-                              padding: Dimens.edgeInsetsH20V15,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppText(
-                                    text: item.toString().tr,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.start,
-                                    style: AppStyles.ubNavyBlue15W600,
-                                  ),
-                                  item == controller.selectedGender
-                                      ? SvgPicture.asset(Assets.iconsCircleTick)
-                                      : const SizedBox.shrink(),
-                                ],
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: Dimens.edgeInsetsH20V15,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    AppText(
+                                      text: item.toString().tr,
+                                      maxLines: 1,
+                                      textAlign: TextAlign.start,
+                                      style: AppStyles.ubNavyBlue15W600,
+                                    ),
+                                    item == controller.selectedGender
+                                        ? SvgPicture.asset(
+                                            Assets.iconsCircleTick)
+                                        : Dimens.box0,
+                                  ],
+                                ),
                               ),
-                            ),
+                              item != controller.genderList.last
+                                  ? Dimens.boxHeight2
+                                  : Dimens.box0,
+                              item != controller.genderList.last
+                                  ? Divider(
+                                      color: AppColors.dividerColor,
+                                      height: Dimens.two,
+                                    )
+                                  : Dimens.box0,
+                            ],
                           );
                         },
                       ),
