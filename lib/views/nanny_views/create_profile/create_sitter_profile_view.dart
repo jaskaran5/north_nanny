@@ -312,7 +312,7 @@ class CreateSitterProfileView extends StatelessWidget {
                       controller.licenseHaveOrNot = value.toString();
                       controller.update();
                     },
-                    baseTextStyle: controller.selectedYear?.isEmpty == true
+                    baseTextStyle: controller.licenseHaveOrNot?.isEmpty == true
                         ? AppStyles.ubHintColor15W500
                         : AppStyles.ubNavyBlue15W600,
                     prefix: SvgPicture.asset(Assets.iconsPersonalcard),
