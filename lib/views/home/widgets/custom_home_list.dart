@@ -120,7 +120,7 @@ class HomeCustomListView extends StatelessWidget {
                       servicesList.length,
                       (index) => Container(
                         height: Dimens.twentyFive,
-                        padding: Dimens.edgeInsetsL6T10R6B10,
+                        padding: Dimens.edgeInsets6,
                         margin: Dimens.edgeInsetsR16,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
