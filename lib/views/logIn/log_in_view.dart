@@ -139,7 +139,7 @@ class LogInView extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              InkWell(
+                              GestureDetector(
                                 onTap: () =>
                                     RouteManagement.goToForgotPassword(),
                                 child: AppText(

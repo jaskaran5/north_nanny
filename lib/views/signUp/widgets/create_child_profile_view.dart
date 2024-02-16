@@ -21,7 +21,7 @@ class CreateChildProfileView extends StatelessWidget {
             actions: [
               Padding(
                 padding: Dimens.edgeInsetsT16R16,
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     RouteManagement.goToOffAllHome(selectedInterface);
                   },

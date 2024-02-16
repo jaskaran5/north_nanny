@@ -49,7 +49,7 @@ class BankDetailsView extends StatelessWidget {
               ],
             ),
           ),
-          body: InkWell(
+          body: GestureDetector(
             onTap: Get.focusScope?.unfocus,
             child: Padding(
               padding: Dimens.edgeInsets16,

@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 RouteManagement.goToFilterView();
                               },
@@ -73,7 +73,7 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                             Dimens.boxWidth10,
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 Get.to(SearchView());
                               },
@@ -107,7 +107,7 @@ class HomeView extends StatelessWidget {
                 : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           Get.to(SearchView());
                         },
@@ -132,7 +132,7 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                       Dimens.boxWidth10,
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           RouteManagement.goToFilterView();
                         },
@@ -143,7 +143,7 @@ class HomeView extends StatelessWidget {
                     ],
                   ),
           ),
-          floatingActionButton: InkWell(
+          floatingActionButton: GestureDetector(
             onTap: () {
               controller.showListView = !controller.showListView;
               controller.update();

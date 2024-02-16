@@ -66,7 +66,7 @@ class CustomAppbarWidget extends PreferredSize {
       elevation: 0,
       backgroundColor: backgroundColor ?? Colors.white,
       leading: addBackButton
-          ? InkWell(
+          ? GestureDetector(
               onTap: onBackPress ??
                   () {
                     Get.focusScope?.unfocus();

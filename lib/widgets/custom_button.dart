@@ -54,7 +54,7 @@ class CustomButton extends StatefulWidget {
 class CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: (widget.loading ?? false) ? null : widget.onTap,
       child: Container(
         width: widget.width ?? Dimens.threeHundredThirtyOne,

@@ -23,7 +23,7 @@ class SearchView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    InkWell(
+                    GestureDetector(
                       onTap: Get.back,
                       child: SvgPicture.asset(Assets.iconsBackArrow),
                     ),
@@ -46,7 +46,7 @@ class SearchView extends StatelessWidget {
                               width: Dimens.ten,
                             ),
                           ),
-                          suffix: InkWell(
+                          suffix: GestureDetector(
                             onTap: () {
                               searchTextEditingController.clear();
                             },
