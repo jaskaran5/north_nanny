@@ -121,4 +121,6 @@ class TranslationKeys {
   static const String miles = 'miles';
   static const String reset = 'reset';
   static const String apply = 'apply';
+  static const String selectDate = 'selectDate';
+  static const String selectTime = 'selectTime';
 }

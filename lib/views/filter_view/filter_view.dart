@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/filter/filter.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/widgets/widgets.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../utils/translations/translation_keys.dart';
 
 class FilterView extends StatelessWidget {
@@ -17,6 +19,30 @@ class FilterView extends StatelessWidget {
             appBar: CustomAppbarWidget(
               title: TranslationKeys.filters.tr,
             ),
+            bottomSheet: Container(
+              color: AppColors.primaryColor,
+              padding: Dimens.edgeInsets16,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomButton(
+                    height: Dimens.fiftyThree,
+                    width: Dimens.oneHundredFifty,
+                    borderRadius: Dimens.twelve,
+                    title: TranslationKeys.reset.tr,
+                    backGroundColor: AppColors.lightNavyBlue,
+                    textColor: AppColors.navyBlue,
+                  ),
+                  CustomButton(
+                    height: Dimens.fiftyThree,
+                    width: Dimens.oneHundredFifty,
+                    borderRadius: Dimens.twelve,
+                    title: TranslationKeys.apply.tr,
+                    backGroundColor: AppColors.navyBlue,
+                  ),
+                ],
+              ),
+            ),
             body: SafeArea(
               child: Padding(
                 padding: Dimens.edgeInsets16,
@@ -24,51 +50,73 @@ class FilterView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Dimens.boxHeight16,
+                    Dimens.boxHeight10,
                     AppText(
                       text: TranslationKeys.distance.tr,
                       style: AppStyles.ubBlack16W700,
                       maxLines: 1,
                       textAlign: TextAlign.start,
                     ),
-                    Dimens.boxHeight10,
-                    SfRangeSlider(
+                    Dimens.boxHeight4,
+                    FlutterSlider(
+                      handler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      handlerHeight: Dimens.twentyFour,
+                      handlerWidth: Dimens.twentyFour,
+                      rightHandler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      step: const FlutterSliderStep(
+                        isPercentRange: false,
+                      ),
+                      values: [
+                        controller.distanceLowerValue,
+                        controller.distanceHigherValue,
+                      ],
+                      rangeSlider: true,
                       min: Dimens.zero,
                       max: Dimens.ten,
-                      values: controller.distanceSliderValues,
-                      activeColor: AppColors.sliderActiveColor,
-                      inactiveColor: AppColors.sliderInActiveColor,
-                      stepSize: Dimens.two,
-                      startThumbIcon: SvgPicture.asset(
-                        Assets.iconsSliderThumb,
-                      ),
-                      endThumbIcon: SvgPicture.asset(
-                        Assets.iconsSliderThumb,
-                      ),
-                      // enableTooltip: true,
-                      onChanged: (SfRangeValues values) {
-                        controller.distanceSliderValues = values;
+                      axis: Axis.horizontal,
+                      onDragging: (handlerIndex, lowerValue, upperValue) {
+                        controller.distanceHigherValue = upperValue;
+                        controller.distanceLowerValue = lowerValue;
                         controller.update();
                       },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AppText(
+                      handlerAnimation: FlutterSliderHandlerAnimation(
+                        scale: Dimens.one,
+                        duration: Duration.zero,
+                      ),
+                      tooltip: FlutterSliderTooltip(
+                        positionOffset: FlutterSliderTooltipPositionOffset(
+                          top: Dimens.fortySix,
+                        ),
+                        textStyle: AppStyles.ubGrey14W600,
+                        custom: (value) => AppText(
                           text:
-                              '${double.parse(controller.distanceSliderValues.start.toString()).toInt().toString()} miles',
+                              '${double.parse(value.toString()).toInt().toString()} miles',
                           style: AppStyles.ubGrey14W600,
+                          textAlign: TextAlign.center,
                           maxLines: 1,
                         ),
-                        AppText(
-                          text:
-                              '${double.parse(controller.distanceSliderValues.end.toString()).toInt().toString()} miles',
-                          style: AppStyles.ubGrey14W600,
-                          maxLines: 1,
-                        ),
-                      ],
+                        alwaysShowTooltip: true,
+                      ),
+                      trackBar: FlutterSliderTrackBar(
+                        activeTrackBar: BoxDecoration(
+                            color: AppColors.sliderActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        activeTrackBarHeight: Dimens.five,
+                        inactiveTrackBar: BoxDecoration(
+                            color: AppColors.sliderInActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        inactiveTrackBarHeight: Dimens.five,
+                      ),
                     ),
-                    Dimens.boxHeight16,
+                    Dimens.boxHeight26,
                     AppText(
                       text:
                           "${TranslationKeys.gender.tr.capitalizeFirst} (${TranslationKeys.optional.tr})",
@@ -141,25 +189,385 @@ class FilterView extends StatelessWidget {
                       maxLines: 1,
                       textAlign: TextAlign.start,
                     ),
-                    Dimens.boxHeight10,
-                    SfRangeSlider(
-                      max: Dimens.fifty,
+                    Dimens.boxHeight4,
+                    FlutterSlider(
+                      handler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      handlerHeight: Dimens.twentyFour,
+                      handlerWidth: Dimens.twentyFour,
+                      rightHandler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      jump: true,
+                      step: const FlutterSliderStep(
+                        isPercentRange: false,
+                      ),
+                      values: [
+                        controller.ageLowerValue,
+                        controller.ageHigherValue,
+                      ],
+                      rangeSlider: true,
                       min: Dimens.thirteen,
-                      interval: 10,
-                      values: controller.ageSliderValues,
-                      onChanged: (value) {
-                        controller.ageSliderValues = value;
+                      max: Dimens.fifty,
+                      axis: Axis.horizontal,
+                      onDragging: (handlerIndex, lowerValue, upperValue) {
+                        controller.ageHigherValue = upperValue;
+                        controller.ageLowerValue = lowerValue;
                         controller.update();
                       },
+                      handlerAnimation: FlutterSliderHandlerAnimation(
+                        scale: Dimens.one,
+                        duration: Duration.zero,
+                      ),
+                      tooltip: FlutterSliderTooltip(
+                        positionOffset: FlutterSliderTooltipPositionOffset(
+                          top: Dimens.fortySix,
+                        ),
+                        textStyle: AppStyles.ubGrey14W600,
+                        custom: (value) => Padding(
+                          padding: Dimens.edgeInsetsL16R16,
+                          child: AppText(
+                            text: double.parse(value.toString())
+                                .toInt()
+                                .toString(),
+                            style: AppStyles.ubGrey14W600,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                          ),
+                        ),
+                        alwaysShowTooltip: true,
+                      ),
+                      trackBar: FlutterSliderTrackBar(
+                        activeTrackBar: BoxDecoration(
+                            color: AppColors.sliderActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        activeTrackBarHeight: Dimens.five,
+                        inactiveTrackBar: BoxDecoration(
+                            color: AppColors.sliderInActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        inactiveTrackBarHeight: Dimens.five,
+                      ),
                     ),
-                    Dimens.boxHeight16,
+                    Dimens.boxHeight26,
                     AppText(
                       text: TranslationKeys.dateAndTime.tr,
                       style: AppStyles.ubBlack16W700,
                       maxLines: 1,
                     ),
                     Dimens.boxHeight10,
-                    Row(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await Get.dialog(
+                              Center(
+                                child: Padding(
+                                  padding: Dimens.edgeInsetsL16R16,
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.twenty),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      constraints: BoxConstraints(
+                                        maxHeight: Dimens.fiveHundred,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsets10,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AppText(
+                                                  text: TranslationKeys
+                                                      .selectDate.tr,
+                                                  style:
+                                                      AppStyles.ubBlack16W700,
+                                                  maxLines: 1,
+                                                ),
+                                                InkWell(
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    Assets.iconsRemove,
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                      AppColors.blackColor,
+                                                      BlendMode.srcIn,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: Dimens.one,
+                                            color: AppColors.dividerColor,
+                                          ),
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: GetBuilder<FilterController>(
+                                              builder: (filterController) {
+                                                return TableCalendar(
+                                                  sixWeekMonthsEnforced: true,
+                                                  startingDayOfWeek:
+                                                      StartingDayOfWeek.monday,
+                                                  daysOfWeekStyle:
+                                                      DaysOfWeekStyle(
+                                                    weekdayStyle: AppStyles
+                                                        .ubHintColor13W500,
+                                                    weekendStyle: AppStyles
+                                                        .ubHintColor13W500,
+                                                  ),
+                                                  calendarStyle: CalendarStyle(
+                                                    defaultTextStyle:
+                                                        AppStyles.ubBlack15W600,
+                                                    weekendTextStyle:
+                                                        AppStyles.ubBlack15W600,
+                                                    outsideTextStyle: AppStyles
+                                                        .ubHintColor15W500,
+                                                    todayDecoration:
+                                                        const BoxDecoration(
+                                                      color: AppColors.navyBlue,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    todayTextStyle:
+                                                        AppStyles.ubWhite15700,
+                                                    selectedTextStyle:
+                                                        AppStyles.ubWhite15700,
+                                                    selectedDecoration:
+                                                        const BoxDecoration(
+                                                      color: AppColors.navyBlue,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    isTodayHighlighted: false,
+                                                    markersMaxCount: 1,
+                                                  ),
+                                                  firstDay: DateTime.utc(
+                                                      1999, 01, 01),
+                                                  lastDay: DateTime.utc(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month + 1,
+                                                  ),
+                                                  headerStyle: HeaderStyle(
+                                                    titleCentered: true,
+                                                    titleTextStyle:
+                                                        AppStyles.ubBlack18W600,
+                                                    formatButtonVisible: false,
+                                                  ),
+                                                  selectedDayPredicate: (day) =>
+                                                      day ==
+                                                      controller.selectedDate,
+                                                  onDaySelected: (selectedDay,
+                                                      focusedDay) {
+                                                    filterController
+                                                            .selectedDate =
+                                                        selectedDay;
+                                                    filterController.update();
+                                                  },
+                                                  focusedDay: filterController
+                                                      .selectedDate,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: CustomButton(
+                                              title: TranslationKeys.apply.tr,
+                                              backGroundColor:
+                                                  AppColors.navyBlue,
+                                              onTap: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              useSafeArea: true,
+                            );
+                          },
+                          child: Container(
+                            height: Dimens.fifty,
+                            width: Dimens.oneHundredFifty,
+                            padding: Dimens.edgeInsets8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.eight,
+                              ),
+                              border: Border.all(
+                                color: AppColors.lightNavyBlue,
+                                width: Dimens.one,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.iconsCalendar,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
+                                ),
+                                Dimens.boxWidth10,
+                                AppText(
+                                  text:
+                                      '${controller.selectedDate.day.toString().padLeft(2, '0')}/${controller.selectedDate.month.toString().padLeft(2, '0')}/${controller.selectedDate.year}',
+                                  style: AppStyles.ubHintColor15W500,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.dialog(
+                              Padding(
+                                padding: Dimens.edgeInsetsL16R16,
+                                child: Material(
+                                  color: Colors.transparent,
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.twenty),
+                                  child: Center(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      constraints: BoxConstraints(
+                                        maxHeight: Dimens.twoHundredNinety,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsets10,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AppText(
+                                                  text: TranslationKeys
+                                                      .selectTime.tr,
+                                                  style:
+                                                      AppStyles.ubBlack16W700,
+                                                  maxLines: 1,
+                                                ),
+                                                InkWell(
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    Assets.iconsRemove,
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                      AppColors.blackColor,
+                                                      BlendMode.srcIn,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: Dimens.one,
+                                            color: AppColors.dividerColor,
+                                          ),
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: TimePickerSpinner(
+                                              is24HourMode: false,
+                                              isForce2Digits: true,
+                                              highlightedTextStyle:
+                                                  AppStyles.ubNavyBlue20W600,
+                                              normalTextStyle:
+                                                  AppStyles.ubHintColor20W500,
+                                              itemHeight: Dimens.sixty,
+                                              onTimeChange: (time) {
+                                                controller.selectedTime = time;
+                                                controller.update();
+                                              },
+                                              time: controller.selectedTime,
+                                            ),
+                                          ),
+                                          Dimens.boxHeight10,
+                                          CustomButton(
+                                            height: Dimens.fortySix,
+                                            width: Dimens.twoHundredNinety,
+                                            title: TranslationKeys.apply.tr,
+                                            titleStyle: AppStyles.ubWhite14700,
+                                            backGroundColor: AppColors.navyBlue,
+                                            onTap: () {
+                                              Get.back();
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: Dimens.fifty,
+                            width: Dimens.oneHundredFifty,
+                            padding: Dimens.edgeInsets8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.eight,
+                              ),
+                              border: Border.all(
+                                color: AppColors.lightNavyBlue,
+                                width: Dimens.one,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.iconsClock,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
+                                ),
+                                Dimens.boxWidth10,
+                                AppText(
+                                  text:
+                                      '${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')} ${controller.selectedTime.hour > 12 ? 'PM' : 'AM'} ',
+                                  style: AppStyles.ubHintColor15W500,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

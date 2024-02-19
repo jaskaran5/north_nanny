@@ -12,6 +12,7 @@ class Assets {
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsCalendarFilled = 'assets/icons/calendar_filled.svg';
   static const String iconsCircleTick = 'assets/icons/circle_tick.svg';
+  static const String iconsClock = 'assets/icons/clock.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
   static const String iconsDoller = 'assets/icons/doller.svg';
   static const String iconsDownArrow = 'assets/icons/down_arrow.svg';
