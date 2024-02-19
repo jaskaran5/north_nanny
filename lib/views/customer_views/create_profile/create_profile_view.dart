@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/controllers/controllers.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/views/signUp/signup.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_drop_down.dart';
 
 import '../../../widgets/custom_text_field.dart';
+import '../create_child_profile/child_profile.dart';
 
 class CreateProfileView extends StatelessWidget {
   CreateProfileView({super.key});

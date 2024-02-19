@@ -90,7 +90,7 @@ class PricingView extends StatelessWidget {
                                   Dimens.boxWidth8,
                                   AppText(
                                     text:
-                                        "${controller.childrenList[index].toString()} ${TranslationKeys.children.tr}",
+                                    "${controller.childrenList[index].toString()} ",
                                     style: AppStyles.ubBlack14W600,
                                     maxLines: 1,
                                     textAlign: TextAlign.start,

@@ -18,7 +18,7 @@ class AppPages {
     milliseconds: 350,
   );
 
-  static const initial = Routes.splash;
+  static const initial = Routes.filterView;
 
   static final pages = [
     GetPage<SplashView>(

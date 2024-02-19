@@ -33,11 +33,12 @@ class FilterView extends StatelessWidget {
                     ),
                     Dimens.boxHeight10,
                     SfRangeSlider(
-                      min: 0,
-                      max: 20,
+                      min: Dimens.zero,
+                      max: Dimens.ten,
                       values: controller.distanceSliderValues,
                       activeColor: AppColors.sliderActiveColor,
                       inactiveColor: AppColors.sliderInActiveColor,
+                      stepSize: Dimens.two,
                       startThumbIcon: SvgPicture.asset(
                         Assets.iconsSliderThumb,
                       ),
@@ -49,6 +50,23 @@ class FilterView extends StatelessWidget {
                         controller.distanceSliderValues = values;
                         controller.update();
                       },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppText(
+                          text:
+                              '${double.parse(controller.distanceSliderValues.start.toString()).toInt().toString()} miles',
+                          style: AppStyles.ubGrey14W600,
+                          maxLines: 1,
+                        ),
+                        AppText(
+                          text:
+                              '${double.parse(controller.distanceSliderValues.end.toString()).toInt().toString()} miles',
+                          style: AppStyles.ubGrey14W600,
+                          maxLines: 1,
+                        ),
+                      ],
                     ),
                     Dimens.boxHeight16,
                     AppText(
@@ -108,6 +126,40 @@ class FilterView extends StatelessWidget {
                         );
                       },
                     ),
+                    Dimens.boxHeight16,
+                    RichText(
+                      text: TextSpan(
+                        text: TranslationKeys.age.tr,
+                        style: AppStyles.ubBlack16W700,
+                        children: [
+                          TextSpan(
+                            text: ' (13-50)',
+                            style: AppStyles.ubGrey16W500,
+                          )
+                        ],
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                    ),
+                    Dimens.boxHeight10,
+                    SfRangeSlider(
+                      max: Dimens.fifty,
+                      min: Dimens.thirteen,
+                      interval: 10,
+                      values: controller.ageSliderValues,
+                      onChanged: (value) {
+                        controller.ageSliderValues = value;
+                        controller.update();
+                      },
+                    ),
+                    Dimens.boxHeight16,
+                    AppText(
+                      text: TranslationKeys.dateAndTime.tr,
+                      style: AppStyles.ubBlack16W700,
+                      maxLines: 1,
+                    ),
+                    Dimens.boxHeight10,
+                    Row(),
                   ],
                 ),
               ),

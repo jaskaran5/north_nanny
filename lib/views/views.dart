@@ -9,3 +9,4 @@ export 'search_view/search.dart';
 export 'filter_view/filter.dart';
 export 'privacy_policy/privacy.dart';
 export 'terms_and_conditions/terms_condition.dart';
+export 'customer_views/customer_views.dart';

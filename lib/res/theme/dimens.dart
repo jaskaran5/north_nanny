@@ -22,6 +22,7 @@ class Dimens {
   static final double nine = 9.sp;
   static final double ten = 10.sp;
   static final double twelve = 12.sp;
+  static final double thirteen = 13.sp;
   static final double fourteen = 14.sp;
 
   static final double fifteen = 15.sp;

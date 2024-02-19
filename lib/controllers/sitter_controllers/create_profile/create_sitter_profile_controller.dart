@@ -38,11 +38,11 @@ class CreateSitterProfileController extends GetxController {
   var selectedServices = [];
 
   List<String> childrenList = [
-    '4+ ',
-    '4 ',
-    '3 ',
-    '2 ',
-    '1 ',
+    '4+ ${TranslationKeys.children.tr}',
+    '4 ${TranslationKeys.children.tr}',
+    '3 ${TranslationKeys.children.tr}',
+    '2 ${TranslationKeys.children.tr}',
+    '1 ${TranslationKeys.child.tr}',
   ];
   List<int> pricingList = [
     27,

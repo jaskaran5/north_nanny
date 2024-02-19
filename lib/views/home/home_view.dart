@@ -105,7 +105,7 @@ class HomeView extends StatelessWidget {
                     ),
                   )
                 : Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -131,7 +131,6 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Dimens.boxWidth10,
                       GestureDetector(
                         onTap: () {
                           RouteManagement.goToFilterView();

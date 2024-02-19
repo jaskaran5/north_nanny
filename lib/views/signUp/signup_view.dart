@@ -6,7 +6,6 @@ import 'package:northshore_nanny_flutter/controllers/controllers.dart';
 import 'package:northshore_nanny_flutter/res/res.dart';
 import 'package:northshore_nanny_flutter/utils/navigators/navigators.dart';
 import 'package:northshore_nanny_flutter/views/privacy_policy/privacy.dart';
-import 'package:northshore_nanny_flutter/views/signUp/signup.dart';
 import 'package:northshore_nanny_flutter/views/terms_and_conditions/terms_and_condition_view.dart';
 import 'package:northshore_nanny_flutter/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_app_bar.dart';
@@ -14,6 +13,7 @@ import 'package:northshore_nanny_flutter/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/widgets/custom_text_field.dart';
 
 import '../../utils/utils.dart';
+import '../customer_views/create_profile/create_profile_view.dart';
 
 class SignUpView extends StatelessWidget {
   SignUpView({super.key});
