@@ -5,6 +5,7 @@ import 'package:northshore_nanny_flutter/res/res.dart';
 
 class FilterController extends GetxController {
   String? selectedGender = '';
+  //===============//
 
   double distanceLowerValue = Dimens.zero;
   double distanceHigherValue = Dimens.ten;
