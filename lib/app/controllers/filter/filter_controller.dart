@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
   String? selectedGender = '';
+  //===============//
 
   SfRangeValues distanceSliderValues = SfRangeValues(Dimens.zero, Dimens.ten);
   SfRangeValues ageSliderValues = SfRangeValues(
