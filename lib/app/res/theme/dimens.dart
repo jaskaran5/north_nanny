@@ -47,6 +47,7 @@ class Dimens {
   static final double fiftyThree = 53.sp;
   static final double fiftyFive = 55.sp;
   static final double sixty = 60.sp;
+  static final double sixtyFour = 64.sp;
   static final double seventy = 70.sp;
   static final double seventyEight = 78.sp;
 
@@ -68,9 +69,11 @@ class Dimens {
   static final double twoHundredTwenty = 220.sp;
   static final double twoHundredFifty = 250.sp;
   static final double twoHundredEightyOne = 281.sp;
+  static final double twoHundredNinety = 290.sp;
   static final double threeHundredThirtyOne = 331.sp;
   static final double threeHundredThirtyFive = 335.sp;
   static final double threeHundredFortyOne = 341.sp;
+  static final double fiveHundred = 500.sp;
 
   static final Widget box0 = SizedBox(height: zero);
 

@@ -112,4 +112,6 @@ var en = <String, String>{
   TranslationKeys.apply: 'Apply',
   TranslationKeys.male: 'Male',
   TranslationKeys.female: 'Female',
+  TranslationKeys.selectDate: 'Select date',
+  TranslationKeys.selectTime: 'Select time',
 };
