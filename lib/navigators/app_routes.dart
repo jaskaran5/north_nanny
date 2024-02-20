@@ -14,8 +14,8 @@ class Routes {
   static const String filterView = Paths.filterView;
   static const String recentChat = Paths.recentChat;
   static const String chat = Paths.chat;
+  static const String nannyProfileView = Paths.nannyProfileView;
   static const String dashboard = Paths.dashboard;
-  static const String setting = Paths.setting;
 }
 
 /// Paths give to the route.
@@ -33,6 +33,6 @@ class Paths {
   static const String filterView = '/filter-View';
   static const String recentChat = '/recentChat';
   static const String chat = '/chat';
+  static const String nannyProfileView = '/nanny-profile';
   static const String dashboard = '/dashboard';
-  static const String setting = '/setting';
 }

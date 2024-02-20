@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+
+import '../../utils/enums.dart';
 
 extension BottomTabName on BottomTabs {
   String get bottomTabName {
@@ -110,6 +113,38 @@ extension GenderName on GenderConstant {
         return TranslationKeys.male;
       case GenderConstant.female:
         return TranslationKeys.female;
+    }
+  }
+}
+
+extension ChildrenListName on HourlyChildrenRateList {
+  String get childrenName {
+    switch (this) {
+      case HourlyChildrenRateList.forPlusChildren:
+        return '4+ ${TranslationKeys.children.tr}';
+      case HourlyChildrenRateList.forChildren:
+        return '4 ${TranslationKeys.children.tr}';
+      case HourlyChildrenRateList.threeChildren:
+        return '3 ${TranslationKeys.children.tr}';
+      case HourlyChildrenRateList.twoChildren:
+        return '2 ${TranslationKeys.children.tr}';
+      case HourlyChildrenRateList.oneChild:
+        return '1 ${TranslationKeys.child.tr}';
+    }
+  }
+
+  int get ratePricePerChildren {
+    switch (this) {
+      case HourlyChildrenRateList.forPlusChildren:
+        return 27;
+      case HourlyChildrenRateList.forChildren:
+        return 26;
+      case HourlyChildrenRateList.threeChildren:
+        return 24;
+      case HourlyChildrenRateList.twoChildren:
+        return 23;
+      case HourlyChildrenRateList.oneChild:
+        return 22;
     }
   }
 }

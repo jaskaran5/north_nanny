@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String iconsApple = 'assets/icons/apple.svg';
+  static const String iconsBabyBoy = 'assets/icons/baby_boy.svg';
   static const String iconsBack = 'assets/icons/back.svg';
   static const String iconsBackArrow = 'assets/icons/back_arrow.svg';
   static const String iconsBank = 'assets/icons/bank.svg';
@@ -11,6 +12,7 @@ class Assets {
   static const String iconsCake = 'assets/icons/cake.svg';
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsCalendarFilled = 'assets/icons/calendar_filled.svg';
+  static const String iconsCard = 'assets/icons/card.svg';
   static const String iconsCircleTick = 'assets/icons/circle_tick.svg';
   static const String iconsClock = 'assets/icons/clock.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
@@ -31,7 +33,10 @@ class Assets {
   static const String iconsHouseKeeping = 'assets/icons/house_keeping.svg';
   static const String iconsImage = 'assets/icons/image.png';
   static const String iconsInfoCircle = 'assets/icons/info_circle.svg';
+  static const String iconsInfoGreen = 'assets/icons/info_green.svg';
+  static const String iconsInfoGreyCircle = 'assets/icons/info_grey_circle.svg';
   static const String iconsInstagram = 'assets/icons/instagram.svg';
+  static const String iconsLeft = 'assets/icons/left.svg';
   static const String iconsListView = 'assets/icons/list_view.svg';
   static const String iconsLocation = 'assets/icons/location.svg';
   static const String iconsLocationDot = 'assets/icons/location_dot.svg';
@@ -50,6 +55,7 @@ class Assets {
   static const String iconsProfile = 'assets/icons/profile.svg';
   static const String iconsRemove = 'assets/icons/Remove.svg';
   static const String iconsRemoveBottomSheet = 'assets/icons/remove_bottom_sheet.svg';
+  static const String iconsRight = 'assets/icons/right.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';

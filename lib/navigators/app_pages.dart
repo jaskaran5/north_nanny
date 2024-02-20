@@ -9,20 +9,11 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
+
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/forgot_password/email_verification_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/forgot_password/forgot_password_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/forgot_password/forgot_password_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/forgot_password/new_password_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/forgot_password/password_success_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/parents/home/home_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/parents/home/home_view.dart';
+
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
@@ -34,7 +25,7 @@ class AppPages {
     milliseconds: 350,
   );
 
-  static const initial = Routes.splash;
+  static const initial = Routes.nannyProfileView;
 
   static final pages = [
     GetPage<SplashView>(
@@ -65,48 +56,48 @@ class AppPages {
       binding: LoginBinding(),
       transition: Transition.rightToLeft,
     ),
-    GetPage<ForgotPasswordView>(
-      name: Routes.forgotPassword,
-      transitionDuration: transitionDuration,
-      page: ForgotPasswordView.new,
-      binding: ForgotPasswordBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage<EmailVerificationView>(
-      name: Routes.emailVerification,
-      transitionDuration: transitionDuration,
-      page: EmailVerificationView.new,
-      binding: ForgotPasswordBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage<NewPasswordView>(
-      name: Routes.newPasswordView,
-      transitionDuration: transitionDuration,
-      page: NewPasswordView.new,
-      binding: ForgotPasswordBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage<PasswordSuccessView>(
-      name: Routes.passwordSuccessView,
-      transitionDuration: transitionDuration,
-      page: PasswordSuccessView.new,
-      binding: ForgotPasswordBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage<CreateSitterProfileView>(
-      name: Routes.createSitterProfileView,
-      transitionDuration: transitionDuration,
-      page: CreateSitterProfileView.new,
-      binding: CreateSitterBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage<HomeView>(
-      name: Routes.home,
-      transitionDuration: transitionDuration,
-      page: HomeView.new,
-      binding: HomeBinding(),
-      transition: Transition.rightToLeft,
-    ),
+    // GetPage<ForgotPasswordView>(
+    //   name: Routes.forgotPassword,
+    //   transitionDuration: transitionDuration,
+    //   page: ForgotPasswordView.new,
+    //   binding: ForgotPasswordBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
+    // GetPage<EmailVerificationView>(
+    //   name: Routes.emailVerification,
+    //   transitionDuration: transitionDuration,
+    //   page: EmailVerificationView.new,
+    //   binding: ForgotPasswordBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
+    // GetPage<NewPasswordView>(
+    //   name: Routes.newPasswordView,
+    //   transitionDuration: transitionDuration,
+    //   page: NewPasswordView.new,
+    //   binding: ForgotPasswordBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
+    // GetPage<PasswordSuccessView>(
+    //   name: Routes.passwordSuccessView,
+    //   transitionDuration: transitionDuration,
+    //   page: PasswordSuccessView.new,
+    //   // binding: ForgotPasswordBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
+    // GetPage<CreateSitterProfileView>(
+    //   name: Routes.createSitterProfileView,
+    //   transitionDuration: transitionDuration,
+    //   page: CreateSitterProfileView.new,
+    //   binding: CreateSitterBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
+    // GetPage<HomeView>(
+    //   name: Routes.home,
+    //   transitionDuration: transitionDuration,
+    //   page: HomeView.new,
+    //   binding: HomeBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
     GetPage<FilterView>(
       name: Routes.filterView,
       transitionDuration: transitionDuration,
@@ -141,16 +132,6 @@ class AppPages {
       page: DashboardBottomView.new,
       binding: DashboardBottomBinding(),
       transition: Transition.rightToLeft,
-    ),
-
-    /** SETTING */
-
-    GetPage<SettingView>(
-      name: Routes.setting,
-      transitionDuration: transitionDuration,
-      page: SettingView.new,
-      binding: SettingBinding(),
-      transition: Transition.leftToRight,
     ),
   ];
 }

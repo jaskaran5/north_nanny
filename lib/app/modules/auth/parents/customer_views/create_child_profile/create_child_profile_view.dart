@@ -32,7 +32,7 @@ class CreateChildProfileView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     // RouteManagement.goToOffAllHome(selectedInterface);
-                    RouteManagement.goToDashboard(selectedInterface);
+                    RouteManagement.goToDashboard();
                   },
                   child: AppText(
                     text: TranslationKeys.skip.tr,
@@ -60,7 +60,7 @@ class CreateChildProfileView extends StatelessWidget {
               backGroundColor: AppColors.navyBlue,
               onTap: () {
                 // RouteManagement.goToOffAllHome(selectedInterface);
-                RouteManagement.goToDashboard(selectedInterface);
+                RouteManagement.goToDashboard();
               },
             ),
           ),
