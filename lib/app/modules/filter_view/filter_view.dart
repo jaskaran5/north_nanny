@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+// import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/controllers/filter/filter.dart';
-import 'package:northshore_nanny_flutter/res/res.dart';
-import 'package:northshore_nanny_flutter/widgets/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../controllers/filter/filter_controller.dart';
+import '../../res/constants/assets.dart';
+import '../../res/theme/colors.dart';
+import '../../res/theme/dimens.dart';
+import '../../res/theme/styles.dart';
 import '../../utils/translations/translation_keys.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_drop_down.dart';
+import '../../widgets/library/flutter_time_picker_spinner.dart';
 
 class FilterView extends StatelessWidget {
   const FilterView({super.key});

@@ -22,7 +22,6 @@ class HomeController extends GetxController {
 
   set whichProfile(ChooseInterface value) {
     selectedProfile = value.name;
-    update();
   }
 
   List<String> homeCustomList = [

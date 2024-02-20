@@ -35,6 +35,7 @@ class Dimens {
   static final double twentyFour = 24.sp;
   static final double twentyFive = 25.sp;
   static final double twentySix = 26.sp;
+  static final double twentyEight = 28.sp;
 
   static final double thirty = 30.sp;
   static final double thirtyTwo = 32.sp;
@@ -58,6 +59,7 @@ class Dimens {
 
   static final double hundred = 100.sp;
   static final double hundredFive = 105.sp;
+  static final double hundredEight = 108.sp;
   static final double hundredTen = 110.sp;
   static final double hundredFourteen = 114.sp;
   static final double oneHundredTwenty = 120.sp;
@@ -68,6 +70,7 @@ class Dimens {
   static final double twoHundred = 200.sp;
   static final double twoHundredTwenty = 220.sp;
   static final double twoHundredFifty = 250.sp;
+  static final double twoHundredSeventy = 270.sp;
   static final double twoHundredEightyOne = 281.sp;
   static final double twoHundredNinety = 290.sp;
   static final double threeHundredThirtyOne = 331.sp;
@@ -104,6 +107,7 @@ class Dimens {
   static final Widget boxWidth32 = SizedBox(width: thirtyTwo);
 
   static const EdgeInsets edgeInsets0 = EdgeInsets.zero;
+  static final EdgeInsets edgeInsets2 = EdgeInsets.all(two);
   static final EdgeInsets edgeInsets4 = EdgeInsets.all(four);
   static final EdgeInsets edgeInsets5 = EdgeInsets.all(five);
   static final EdgeInsets edgeInsets6 = EdgeInsets.all(six);
@@ -114,6 +118,7 @@ class Dimens {
 
   static final EdgeInsets edgeInsetsL2 = EdgeInsets.only(left: two);
   static final EdgeInsets edgeInsetsT10 = EdgeInsets.only(top: ten);
+  static final EdgeInsets edgeInsetsB10 = EdgeInsets.only(bottom: ten);
   static final EdgeInsets edgeInsetsB16 = EdgeInsets.only(bottom: sixteen);
   static final EdgeInsets edgeInsetsT16B16 =
       EdgeInsets.only(top: sixteen, bottom: sixteen);
@@ -130,8 +135,12 @@ class Dimens {
     left: fifteen,
   );
   static final EdgeInsets edgeInsetsL16R16 = EdgeInsets.only(
-    left: fifteen,
+    left: sixteen,
     right: sixteen,
+  );
+  static final EdgeInsets edgeInsetsL10R10 = EdgeInsets.only(
+    left: ten,
+    right: ten,
   );
   static final EdgeInsets edgeInsetsL16R16B16 = EdgeInsets.only(
     left: fifteen,

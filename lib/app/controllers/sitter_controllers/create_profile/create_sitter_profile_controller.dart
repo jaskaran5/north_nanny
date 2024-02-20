@@ -37,20 +37,6 @@ class CreateSitterProfileController extends GetxController {
 
   var selectedServices = [];
 
-  List<String> childrenList = [
-    '4+ ${TranslationKeys.children.tr}',
-    '4 ${TranslationKeys.children.tr}',
-    '3 ${TranslationKeys.children.tr}',
-    '2 ${TranslationKeys.children.tr}',
-    '1 ${TranslationKeys.child.tr}',
-  ];
-  List<int> pricingList = [
-    27,
-    26,
-    24,
-    23,
-    22,
-  ];
 
   /// gender list.
   List<String> genderList = [

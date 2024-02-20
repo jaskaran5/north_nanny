@@ -10,10 +10,16 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   const CustomBottomSheet(
-      {super.key, required this.heading, required this.description});
+      {super.key,
+      required this.heading,
+      required this.description,
+      this.headingSvg,
+      this.onTapHeadingSvg});
 
   final String heading;
   final String description;
+  final String? headingSvg;
+  final Function()? onTapHeadingSvg;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +52,9 @@ class CustomBottomSheet extends StatelessWidget {
                   maxLines: 1,
                 ),
                 GestureDetector(
-                  onTap: Get.back,
+                  onTap: onTapHeadingSvg ?? Get.back,
                   child: SvgPicture.asset(
-                    Assets.iconsRemoveBottomSheet,
+                    headingSvg ?? Assets.iconsRemoveBottomSheet,
                   ),
                 ),
               ],

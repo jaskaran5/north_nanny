@@ -6,6 +6,7 @@ import 'package:northshore_nanny_flutter/app/controllers/filter/filter_controlle
 import 'package:northshore_nanny_flutter/app/controllers/forgot_password/forgot_password_controller.dart';
 import 'package:northshore_nanny_flutter/app/controllers/home/home_controller.dart';
 import 'package:northshore_nanny_flutter/app/controllers/logIn/log_in_controller.dart';
+import 'package:northshore_nanny_flutter/app/controllers/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/controllers/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/controllers/sitter_controllers/create_profile/create_sitter_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/controllers/splash/splash_controller.dart';
@@ -86,6 +87,11 @@ class AppBinding extends Bindings {
 
     Get.lazyPut<ChatController>(
       () => ChatController(),
+    );
+    /**  Nanny Profile CONTROLLER */
+
+    Get.lazyPut<NannyProfileController>(
+      () => NannyProfileController(),
     );
   }
 }

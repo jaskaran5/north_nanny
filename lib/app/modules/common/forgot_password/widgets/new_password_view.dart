@@ -110,7 +110,19 @@ class NewPasswordView extends StatelessWidget {
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
                       Get.focusScope?.unfocus();
-                      RouteManagement.goToPasswordSuccessView();
+                      RouteManagement.goToSuccessView(
+                        buttonText: TranslationKeys.backToLogIn.tr,
+                        successSvg: Assets.iconsSuccess,
+                        header: TranslationKeys.passwordChanged.tr,
+                        headerStyle: AppStyles.ubDarkBlackColor26W700,
+                        subHeader: TranslationKeys.passwordChangeSuccess.tr,
+                        onTapButton: () {
+                          RouteManagement.goToLogIn();
+                        },
+                        subTitleStyle: AppStyles.ubGreyA116W500,
+                        subHeaderMaxLines: 2,
+                        headerMaxLines: 1,
+                      );
                     },
                   ),
                 ],

@@ -121,4 +121,23 @@ class TranslationKeys {
   static const String apply = 'apply';
   static const String selectDate = 'selectDate';
   static const String selectTime = 'selectTime';
+  static const String reviews = 'reviews';
+  static const String nannyProfile = 'nannyProfile';
+  static const String about = 'about';
+  static const String services = 'services';
+  static const String availability = 'availability';
+  static const String bookSitter = 'bookSitter';
+  static const String scheduleNanny = 'scheduleNanny';
+  static const String confirmBooking = 'confirmBooking';
+  static const String addPaymentMethod = 'addPaymentMethod';
+  static const String cardHolderName = 'cardHolderName';
+  static const String creditDebit = 'creditDebit';
+  static const String expirationDate = 'expirationDate';
+  static const String cVV = 'cVV';
+  static const String backToHome = 'backToHome';
+  static const String nannyRequested = 'nannyRequested';
+  static const String notificationNannyAccept = 'notificationNannyAccept';
+  static const String cardWillCharged = 'cardWillCharged';
+  static const String typeOfServices = 'typeOfServices';
+  static const String selectChildren = 'selectChildren';
 }

@@ -19,4 +19,6 @@ class AppColors {
   static const Color dividerColor = Color(0xffDEE1E7);
   static const Color sliderInActiveColor = Color(0xffCBC9D4);
   static const Color sliderActiveColor = Color(0xff2074C7);
+  static const Color profileBackgroundColor = Color(0xffF9F9F9);
+  static const Color greenColor = Color(0xff569418);
 }

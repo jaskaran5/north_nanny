@@ -17,3 +17,11 @@ enum MessageType {
   success,
   information;
 }
+
+enum HourlyChildrenRateList {
+  forPlusChildren,
+  forChildren,
+  threeChildren,
+  twoChildren,
+  oneChild,
+}

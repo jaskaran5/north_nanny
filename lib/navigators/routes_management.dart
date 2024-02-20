@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
+import 'package:northshore_nanny_flutter/app/widgets/success_un_success.dart';
 import 'app_routes.dart';
 
 abstract class RouteManagement {
@@ -69,10 +71,47 @@ abstract class RouteManagement {
     );
   }
 
+
   /// Go to the Filter Screen
   static void goToFilterView() {
     Get.toNamed<void>(
       Routes.filterView,
+    );
+  }
+
+  /// Go to the Nanny Profile Screen
+  static void goToNannyProfileView() {
+    Get.toNamed<void>(
+      Routes.nannyProfileView,
+    );
+  }
+
+  /// Go to the Success  Screen
+  static void goToSuccessView({
+    Function()? onTapButton,
+    Color? buttonColor,
+    TextStyle? headerStyle,
+    TextStyle? subTitleStyle,
+    required String buttonText,
+    required String successSvg,
+    required String header,
+    required String subHeader,
+    required int subHeaderMaxLines,
+    required int headerMaxLines,
+  }) {
+    Get.off(
+      SuccessUnSuccessView(
+        buttonText: buttonText,
+        successSvg: successSvg,
+        header: header,
+        subHeader: subHeader,
+        buttonColor: buttonColor,
+        onTapButton: onTapButton,
+        headerStyle: headerStyle,
+        subHeaderStyle: subTitleStyle,
+        subHeaderMaxLines: subHeaderMaxLines,
+        headerMaxLines: headerMaxLines,
+      ),
     );
   }
 }

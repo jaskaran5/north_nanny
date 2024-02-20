@@ -6,9 +6,9 @@ import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dar
 import 'package:northshore_nanny_flutter/app/modules/common/forgot_password/forgot_password_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/forgot_password/widgets/email_verification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/forgot_password/widgets/new_password_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/forgot_password/widgets/password_success_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/home/nanny/home_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_views/create_profile/create_sitter_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
@@ -20,7 +20,7 @@ class AppPages {
     milliseconds: 350,
   );
 
-  static const initial = Routes.splash;
+  static const initial = Routes.nannyProfileView;
 
   static final pages = [
     GetPage<SplashView>(
@@ -72,13 +72,7 @@ class AppPages {
       // binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
-    GetPage<PasswordSuccessView>(
-      name: Routes.passwordSuccessView,
-      transitionDuration: transitionDuration,
-      page: PasswordSuccessView.new,
-      // binding: ForgotPasswordBinding(),
-      transition: Transition.rightToLeft,
-    ),
+
     GetPage<CreateSitterProfileView>(
       name: Routes.createSitterProfileView,
       transitionDuration: transitionDuration,
@@ -114,6 +108,13 @@ class AppPages {
       name: Routes.recentChat,
       transitionDuration: transitionDuration,
       page: ChatView.new,
+      transition: Transition.rightToLeft,
+    ),
+    /** Nanny Profile view */
+    GetPage<NannyProfileView>(
+      name: Routes.nannyProfileView,
+      transitionDuration: transitionDuration,
+      page: NannyProfileView.new,
       transition: Transition.rightToLeft,
     ),
   ];
