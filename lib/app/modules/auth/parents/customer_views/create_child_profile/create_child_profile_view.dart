@@ -13,7 +13,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../../../../controllers/signUp/signup_controller.dart';
+import '../../../nanny/signUp/signup_controller.dart';
 
 class CreateChildProfileView extends StatelessWidget {
   CreateChildProfileView({super.key});
@@ -31,7 +31,8 @@ class CreateChildProfileView extends StatelessWidget {
                 padding: Dimens.edgeInsetsT16R16,
                 child: GestureDetector(
                   onTap: () {
-                    RouteManagement.goToOffAllHome(selectedInterface);
+                    // RouteManagement.goToOffAllHome(selectedInterface);
+                    RouteManagement.goToDashboard(selectedInterface);
                   },
                   child: AppText(
                     text: TranslationKeys.skip.tr,
@@ -58,7 +59,8 @@ class CreateChildProfileView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                RouteManagement.goToOffAllHome(selectedInterface);
+                // RouteManagement.goToOffAllHome(selectedInterface);
+                RouteManagement.goToDashboard(selectedInterface);
               },
             ),
           ),

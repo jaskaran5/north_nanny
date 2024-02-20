@@ -75,4 +75,16 @@ abstract class RouteManagement {
       Routes.filterView,
     );
   }
+
+  /// Go to the Home Screen
+  static void goToDashboard(dynamic selectedInterface) {
+    Get.offAllNamed<void>(
+      Routes.dashboard,
+      arguments: selectedInterface,
+    );
+  }
+
+  redirectToChatScreen() {
+    Get.toNamed(Routes.chat);
+  }
 }

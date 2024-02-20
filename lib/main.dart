@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/bindings/app_bindings.dart';
-import 'package:northshore_nanny_flutter/app/utils/navigators/app_pages.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
+import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 
 void main() async {
   // await _setup();
@@ -63,7 +62,6 @@ class _MyAppState extends State<MyApp> {
           translations: TranslationsFile(),
           getPages: AppPages.pages,
           initialRoute: AppPages.initial,
-          initialBinding: AppBinding(),
         ),
       );
 }

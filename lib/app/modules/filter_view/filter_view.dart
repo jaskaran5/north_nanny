@@ -3,9 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/controllers/filter/filter.dart';
-import 'package:northshore_nanny_flutter/res/res.dart';
-import 'package:northshore_nanny_flutter/widgets/widgets.dart';
+import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../utils/translations/translation_keys.dart';
 

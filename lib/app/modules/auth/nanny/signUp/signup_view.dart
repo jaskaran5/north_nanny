@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/controllers/signUp/signup_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -14,9 +14,9 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 
-import 'package:northshore_nanny_flutter/app/modules/privacy_policy/privacy_policy_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/privacy_policy/privacy_policy_view.dart';
 
-import 'package:northshore_nanny_flutter/app/modules/terms_and_conditions/terms_and_condition_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/terms_and_conditions/terms_and_condition_view.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../parents/customer_views/create_profile/create_profile_view.dart';

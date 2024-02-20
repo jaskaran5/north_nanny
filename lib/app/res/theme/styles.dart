@@ -6,6 +6,13 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 class AppStyles {
   const AppStyles._();
 
+  static TextStyle pdNormal = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontFamily: AppConstants.fontFamilyPlayfairDisplay,
+    fontSize: Dimens.twentyFour,
+    color: AppColors.blackColor,
+  );
+
   static TextStyle pdSemiBoldBlack24 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyPlayfairDisplay,
@@ -264,5 +271,12 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
     color: AppColors.navyBlue,
+  );
+
+  static TextStyle navyBlueUrbanist14 = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: Colors.black,
   );
 }
