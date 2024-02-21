@@ -145,4 +145,7 @@ class TranslationKeys {
   static const String subject = 'Subject';
   static const String message = 'Message';
   static const String emailE = 'Email';
+  static const String noBookings = 'noBookings';
+  static const String bookingDetails = 'bookingDetails';
+  static const String trackLocation = 'trackLocation';
 }

@@ -22,4 +22,6 @@ class AppColors {
   static const Color profileBackgroundColor = Color(0xffF9F9F9);
   static const Color greenColor = Color(0xff569418);
   static const Color notificationBackgroundColor = Color(0xffD8E6F6);
+  static const Color trackerBackgroundColor = Color(0xff1B60A5);
+  static const Color settingBackgroundColor = Color(0xff99ABC6);
 }

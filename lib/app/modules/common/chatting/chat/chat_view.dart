@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
+
+import '../../../../res/constants/assets.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -15,18 +20,18 @@ class ChatView extends StatelessWidget {
       init: ChatController(),
       builder: (controller) {
         return Scaffold(
-            backgroundColor: Colors.grey,
+            backgroundColor: HexColor("#F9F9F9"),
             body: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(top: 50),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 16),
+                        padding: const EdgeInsets.only(top: 6, bottom: 30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -38,41 +43,41 @@ class ChatView extends StatelessWidget {
                                 'assets/icons/back_arrow.svg',
                               ),
                             ),
-                            // const CustomCacheNetworkImage(img: '', size: 50),
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      '',
-                                    ),
-                                    fit: BoxFit.cover),
-                              ),
+                            const CustomCacheNetworkImage(img: '', size: 50),
+                            const SizedBox(
+                              width: 10,
                             ),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Christina wang',
                                   textAlign: TextAlign.center,
-                                  // style: titleStyle
-                                  //     .copyWith(
-                                  // //       fontSize: 16,
-                                  //     )
-                                  //     .usePoppinsW5Font(),
+                                  style: AppStyles.B0B0BChristina,
                                 ),
-                                Text(
-                                  'Active now',
-                                  textAlign: TextAlign.center,
-                                  // style: titleStyle
-                                  //     .copyWith(fontSize: 12, color: greyB6B6B6)
-                                  //     .usePoppinsW4Font(),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.circle,
+                                      color: Colors.green,
+                                      size: 10,
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      'Online',
+                                      textAlign: TextAlign.center,
+                                      style: AppStyles.E5F60Online,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              width: Get.width / 3,
+                            ),
+                            SvgPicture.asset(Assets.moreIcon)
                           ],
                         ),
                       ),
@@ -109,25 +114,31 @@ class ChatView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 26),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 13, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: Row(
                     children: [
-                      Expanded(
+                      Container(
+                        width: Get.width * .76,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 26),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 13, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: HexColor("#FFFFFF"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: TextFormField(
                           controller: controller.chatTextController,
-                          decoration: const InputDecoration(
-                              hintText: 'Enter message...',
+                          decoration: InputDecoration(
+                              hintText: 'Write a message',
                               border: InputBorder.none,
-                              prefixIcon:
-                                  Icon(Icons.dashboard_customize_rounded)),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                  Assets.attachementIocn,
+                                ),
+                              )),
                         ),
                       ),
                       InkWell(
@@ -146,16 +157,12 @@ class ChatView extends StatelessWidget {
                             padding: const EdgeInsets.all(0.0),
                             child: Container(
                                 decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: HexColor("#1B60A5"),
                                     borderRadius: BorderRadius.circular(15.0)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Icon(Icons.send),
-                                ))
-                            // SvgPicture.asset(
-                            //   'assets/icons/home/ic_send.svg',
-                            // ),
-                            ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SvgPicture.asset(Assets.sendIcon),
+                                ))),
                       ),
                     ],
                   ),

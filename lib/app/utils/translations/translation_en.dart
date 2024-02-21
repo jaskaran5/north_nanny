@@ -136,4 +136,7 @@ var en = <String, String>{
   TranslationKeys.cardWillCharged:
       'Card will be charged once the job is completed.',
   TranslationKeys.notifications: 'Notifications',
+  TranslationKeys.noBookings: 'No bookings',
+  TranslationKeys.bookingDetails: 'Booking details',
+  TranslationKeys.trackLocation: 'Track location ',
 };

@@ -8,12 +8,16 @@ class Assets {
   static const String nextIcon = "assets/icons/next.svg";
   static const String iconsBackArrow = 'assets/icons/back_arrow.svg';
   static const String iconsBank = 'assets/icons/bank.svg';
+  static const String iconsBookingLocation =
+      'assets/icons/booking-location.svg';
+  static const String iconsBookingTimer = 'assets/icons/booking_timer.svg';
   static const String iconsBrifecaseCross = 'assets/icons/brifecase_cross.svg';
   static const String iconsBuilding = 'assets/icons/building.svg';
   static const String iconsCake = 'assets/icons/cake.svg';
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsCalendarFilled = 'assets/icons/calendar_filled.svg';
   static const String iconsCard = 'assets/icons/card.svg';
+  static const String iconsChatWhite = 'assets/icons/chat_white.svg';
   static const String iconsCircleTick = 'assets/icons/circle_tick.svg';
   static const String iconsClock = 'assets/icons/clock.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
@@ -62,6 +66,8 @@ class Assets {
   static const String iconsRight = 'assets/icons/right.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
+  static const String attachementIocn = "assets/icons/attachments.svg";
+  static const String sendIcon = "assets/icons/messageSend.svg";
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';
   static const String iconsSettingOutline = 'assets/icons/setting_outline.svg';
   static const String iconsShieldSecurity = 'assets/icons/shield_security.svg';
@@ -114,4 +120,5 @@ class Assets {
   static const String aboutIcon = "assets/icons/setting_icons/about.svg";
 
   static const String clipIcon = "assets/icons/setting_icons/about.svg";
+  static const String moreIcon = "assets/icons/more.svg";
 }

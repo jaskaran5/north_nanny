@@ -69,6 +69,24 @@ class AppStyles {
     color: AppColors.primaryColor,
     fontSize: Dimens.fourteen,
   );
+  static TextStyle ubLightNavy12W500 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.lightNavyBlue,
+    fontSize: Dimens.twelve,
+  );
+  static TextStyle ubLightNavy12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.lightNavyBlue,
+    fontSize: Dimens.twelve,
+  );
+  static TextStyle ubLightNavy10W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.lightNavyBlue,
+    fontSize: Dimens.ten,
+  );
   static TextStyle ubBlack15W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -141,6 +159,12 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: AppColors.blackColor,
   );
+  static TextStyle ubBlack12W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.blackColor,
+  );
   static TextStyle ubGrey12W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -149,6 +173,12 @@ class AppStyles {
   );
   static TextStyle ubGrey12W600 = TextStyle(
     fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.greyColor,
+  );
+  static TextStyle ubGrey12W500 = TextStyle(
+    fontWeight: FontWeight.w500,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.twelve,
     color: AppColors.greyColor,
@@ -356,5 +386,35 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyPlayfairDisplay,
     fontSize: Dimens.twentyFour,
     color: HexColor("#0B0B0B"),
+  );
+  static TextStyle E5F60Christina = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: HexColor("#134373"),
+  );
+  static TextStyle messsage = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#5E5F60"),
+  );
+  static TextStyle chatTime = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#AAA6B9"),
+  );
+  static TextStyle B0B0BChristina = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
+    color: HexColor("#0B0B0B"),
+  );
+  static TextStyle E5F60Online = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#5E5F60"),
   );
 }

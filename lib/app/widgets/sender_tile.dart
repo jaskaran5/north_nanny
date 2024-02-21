@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class SenderTile extends StatelessWidget {
   const SenderTile({super.key, this.title});
@@ -8,25 +9,29 @@ class SenderTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 38, left: 50),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 15,
-        ),
-        decoration: const BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20),
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 38, left: 50),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 18,
+              vertical: 15,
+            ),
+            decoration: BoxDecoration(
+              color: HexColor("#1B60A5"),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: Text(
+              title!,
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+            ),
           ),
-        ),
-        child: Text(
-          title!,
-          style: const TextStyle(color: Colors.white),
-          textAlign: TextAlign.left,
-        ),
+        ],
       ),
     );
   }
