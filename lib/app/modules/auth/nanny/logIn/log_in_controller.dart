@@ -1,12 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/view_models/log_in_view_model.dart';
+import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 
 class LogInController extends GetxController {
-  LogInController(this.logInViewModel);
+  @override
+  void onInit() {
+    checkIsNanny();
+    super.onInit();
+  }
 
-  final LogInViewModel logInViewModel;
+  /// check user Type.
+  checkIsNanny() async {
+    var isNanny = await DBWrapper().getSecuredValue(AppConstants.isNanny);
+    debugPrint('---nanny $isNanny');
+    if (isNanny.isNotEmpty && isNanny == 'true') {
+      isNannyView = true;
+      debugPrint('---nanny Profile true');
+    } else if (isNanny.isNotEmpty && isNanny == 'false') {
+      isNannyView = false;
+      debugPrint('---nanny Profile false');
+    }
+    update();
+  }
 
+  bool? isNannyView;
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();

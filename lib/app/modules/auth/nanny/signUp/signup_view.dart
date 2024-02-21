@@ -2,9 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -19,11 +20,10 @@ import 'package:northshore_nanny_flutter/app/modules/common/privacy_policy/priva
 import 'package:northshore_nanny_flutter/app/modules/common/terms_and_conditions/terms_and_condition_view.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../parents/customer_views/create_profile/create_profile_view.dart';
+import '../../customer/customer_views/create_profile/create_profile_view.dart';
 
 class SignUpView extends StatelessWidget {
-  SignUpView({super.key});
-  final selectedInterface = Get.arguments;
+  const SignUpView({super.key});
   @override
   Widget build(BuildContext context) =>
       GetBuilder<SignupViewController>(builder: (controller) {
@@ -237,15 +237,17 @@ class SignUpView extends StatelessWidget {
                           CustomButton(
                             title: TranslationKeys.register.tr,
                             backGroundColor: AppColors.navyBlue,
-                            onTap: () {
+                            onTap: () async {
                               Get.focusScope?.unfocus();
-                              if (selectedInterface ==
-                                  ChooseInterface.customer) {
-                                Get.to(CreateProfileView(),
-                                    arguments: selectedInterface);
+                              var isNanny = await DBWrapper()
+                                  .getSecuredValue(AppConstants.isNanny);
+                              debugPrint('------isNanny:$isNanny');
+                              if (isNanny.toString() == 'false') {
+                                Get.to(
+                                  CreateProfileView(),
+                                );
                               } else {
-                                RouteManagement.goToCreateSitterProfileView(
-                                    selectedInterface);
+                                RouteManagement.goToCreateNannyProfile();
                               }
                             },
                           ),

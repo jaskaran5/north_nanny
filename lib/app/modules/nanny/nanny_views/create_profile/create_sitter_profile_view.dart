@@ -15,9 +15,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import '../services/services_view.dart';
 
-class CreateSitterProfileView extends StatelessWidget {
-  CreateSitterProfileView({super.key});
-  final selectedInterface = Get.arguments;
+class CreateNannyProfileView extends StatelessWidget {
+  const CreateNannyProfileView({super.key});
 
   @override
   Widget build(BuildContext context) =>
@@ -421,7 +420,7 @@ class CreateSitterProfileView extends StatelessWidget {
                       title: TranslationKeys.continueWord.tr,
                       backGroundColor: AppColors.navyBlue,
                       onTap: () {
-                        Get.to(ServicesView(), arguments: selectedInterface);
+                        Get.to(const ServicesView(),);
                       },
                     ),
                   ],

@@ -28,6 +28,7 @@ class CustomAppbarWidget extends PreferredSize {
   final double bottomHeight;
   final double bottomWidth;
   final double? appBarHeight;
+  final TextAlign? titleAlignment;
 
   const CustomAppbarWidget({
     super.key,
@@ -52,6 +53,7 @@ class CustomAppbarWidget extends PreferredSize {
     this.bottomHeight = 0.0,
     this.bottomWidth = 0.0,
     this.appBarHeight,
+    this.titleAlignment,
   })  : assert(
           textColor == null || textStyle == null,
           'Cannot provide both a textColor and a textStyle\n'
@@ -89,14 +91,14 @@ class CustomAppbarWidget extends PreferredSize {
       title: titleWidget ??
           AppText(
             text: toUpperCaseTitle ? title?.toUpperCase() : title,
-            textAlign: TextAlign.center,
+            textAlign: titleAlignment ?? TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: textStyle ?? AppStyles.pdBlack22W600,
           ),
       centerTitle: centerTitle ?? true,
       actions: actions,
-      leadingWidth: Dimens.fiftyFive,
+      leadingWidth:leadingWidth ?? Dimens.fiftyFive,
       toolbarHeight: appBarHeight ?? Dimens.sixty,
       bottom: PreferredSize(
           preferredSize: Size(bottomWidth, bottomHeight),

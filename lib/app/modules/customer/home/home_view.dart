@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:northshore_nanny_flutter/app/modules/parents/home/home_controller.dart';
-import 'package:northshore_nanny_flutter/app/modules/parents/home/widgets/custom_home_list.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/widgets/custom_home_list.dart';
 import 'package:northshore_nanny_flutter/app/modules/search_view/search_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -14,14 +13,16 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
+import 'home_controller.dart';
+
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
-  // final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) => GetBuilder(
         init: HomeController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
+            leadingWidth: Dimens.zero,
             addBackButton: false,
             titleWidget: controller.showListView.value
                 ? Padding(
@@ -184,33 +185,6 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
-
-          // bottomNavigationBar: BottomNavigationBar(
-          //   showUnselectedLabels: true,
-          //   onTap: (value) => controller.selectedBottomTab = value,
-          //   currentIndex: controller.selectedTabIndex,
-          //   type: BottomNavigationBarType.fixed,
-          //   showSelectedLabels: true,
-          //   selectedLabelStyle: AppStyles.ubNavyBlue12W600,
-          //   unselectedLabelStyle: AppStyles.ubHintColor12W500,
-          //   useLegacyColorScheme: false,
-          //   selectedIconTheme: const IconThemeData(
-          //     color: AppColors.navyBlue,
-          //   ),
-          //   items: List.generate(
-          //     controller.bottomTabList.length,
-          //     (index) => BottomNavigationBarItem(
-          //       icon: SvgPicture.asset(
-          //         controller.selectedTabIndex == index
-          //             ? controller.bottomTabList[index].selectedBottomSvg
-          //             : controller.bottomTabList[index].bottomSvg,
-          //       ),
-          //       label: controller.bottomTabList[index].bottomTabName.tr,
-          //       backgroundColor: AppColors.primaryColor,
-          //     ),
-          //   ),
-          //   backgroundColor: AppColors.primaryColor,
-          // ),
           body: controller.isGoogleMap.value
               ? GoogleMap(
                   mapType: MapType.hybrid,

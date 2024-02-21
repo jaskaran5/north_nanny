@@ -15,8 +15,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import '../pricing/pricing_view.dart';
 
 class ServicesView extends StatelessWidget {
-  ServicesView({super.key});
-  final selectedInterface = Get.arguments;
+  const ServicesView({super.key});
 
   @override
   Widget build(BuildContext context) =>
@@ -31,7 +30,7 @@ class ServicesView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.to(PricingView(), arguments: selectedInterface);
+                Get.to(const PricingView(),);
               },
             ),
           ),

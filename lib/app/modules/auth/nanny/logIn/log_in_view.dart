@@ -162,57 +162,62 @@ class LogInView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          height: Dimens.one,
-                          color: AppColors.hintColor,
+                  if (controller.isNannyView != true)
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                height: Dimens.one,
+                                color: AppColors.hintColor,
+                              ),
+                            ),
+                            Dimens.boxWidth4,
+                            AppText(
+                              text: TranslationKeys.orLoginWith.tr,
+                              style: AppStyles.ubHintColor14W600,
+                              maxLines: 1,
+                            ),
+                            Dimens.boxWidth4,
+                            Expanded(
+                              child: Divider(
+                                height: Dimens.one,
+                                color: AppColors.hintColor,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Dimens.boxWidth4,
-                      AppText(
-                        text: TranslationKeys.orLoginWith.tr,
-                        style: AppStyles.ubHintColor14W600,
-                        maxLines: 1,
-                      ),
-                      Dimens.boxWidth4,
-                      Expanded(
-                        child: Divider(
-                          height: Dimens.one,
-                          color: AppColors.hintColor,
+                        Dimens.boxHeight24,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              Assets.iconsFacebook,
+                              alignment: Alignment.center,
+                              height: Dimens.fiftyThree,
+                              width: Dimens.fiftyThree,
+                            ),
+                            Dimens.boxWidth16,
+                            SvgPicture.asset(
+                              Assets.iconsInstagram,
+                              alignment: Alignment.center,
+                              height: Dimens.fiftyThree,
+                              width: Dimens.fiftyThree,
+                            ),
+                            Dimens.boxWidth16,
+                            SvgPicture.asset(
+                              Assets.iconsApple,
+                              alignment: Alignment.center,
+                              height: Dimens.fiftyThree,
+                              width: Dimens.fiftyThree,
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Dimens.boxHeight24,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        Assets.iconsFacebook,
-                        alignment: Alignment.center,
-                        height: Dimens.fiftyThree,
-                        width: Dimens.fiftyThree,
-                      ),
-                      Dimens.boxWidth16,
-                      SvgPicture.asset(
-                        Assets.iconsInstagram,
-                        alignment: Alignment.center,
-                        height: Dimens.fiftyThree,
-                        width: Dimens.fiftyThree,
-                      ),
-                      Dimens.boxWidth16,
-                      SvgPicture.asset(
-                        Assets.iconsApple,
-                        alignment: Alignment.center,
-                        height: Dimens.fiftyThree,
-                        width: Dimens.fiftyThree,
-                      ),
-                    ],
-                  ),
-                  Dimens.boxHeight24,
+                        Dimens.boxHeight24,
+                      ],
+                    ),
                   Center(
                     child: RichText(
                       text: TextSpan(

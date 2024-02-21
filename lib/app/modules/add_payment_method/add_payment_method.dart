@@ -10,7 +10,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../res/constants/assets.dart';
 import '../../res/theme/colors.dart';
 import '../../widgets/custom_text_field.dart';
 
@@ -143,8 +142,7 @@ class AddPaymentMethod extends StatelessWidget {
                       headerStyle: AppStyles.ubDarkBlackColor24W700,
                       subHeader: TranslationKeys.notificationNannyAccept.tr,
                       onTapButton: () {
-                        RouteManagement.goToOffAllHome(
-                            ChooseInterface.customer);
+                        RouteManagement.goToOffAllHome();
                       },
                       subTitleStyle: AppStyles.ubGrey16W500,
                       subHeaderMaxLines: 2,

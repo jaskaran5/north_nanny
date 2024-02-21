@@ -140,4 +140,5 @@ class TranslationKeys {
   static const String cardWillCharged = 'cardWillCharged';
   static const String typeOfServices = 'typeOfServices';
   static const String selectChildren = 'selectChildren';
+  static const String notifications = 'notifications';
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/widgets/success_un_success.dart';
 import 'app_routes.dart';
 
@@ -13,10 +12,9 @@ abstract class RouteManagement {
   }
 
   /// Go to the SignIn Screen
-  static void goToSignUp({required ChooseInterface chooseInterface}) {
+  static void goToSignUp() {
     Get.toNamed<void>(
       Routes.signUp,
-      arguments: chooseInterface,
     );
   }
 
@@ -48,26 +46,18 @@ abstract class RouteManagement {
     );
   }
 
-  /// Go to the  Password success Screen
-  static void goToPasswordSuccessView() {
-    Get.toNamed<void>(
-      Routes.passwordSuccessView,
-    );
-  }
 
   /// Go to the  create Sitter Profile  Screen
-  static void goToCreateSitterProfileView(dynamic selectedInterface) {
+  static void goToCreateNannyProfile() {
     Get.toNamed<void>(
-      Routes.createSitterProfileView,
-      arguments: selectedInterface,
+      Routes.createNannyProfile,
     );
   }
 
   /// Go to the Home Screen
-  static void goToOffAllHome(dynamic selectedInterface) {
+  static void goToOffAllHome() {
     Get.offAllNamed<void>(
       Routes.home,
-      arguments: selectedInterface,
     );
   }
 
@@ -86,8 +76,8 @@ abstract class RouteManagement {
   }
 
   /// Go to the Nanny Profile Screen
-  static void goToDashboard() {
-    Get.toNamed<void>(
+  static void goToOffAllDashboard() {
+    Get.offAllNamed<void>(
       Routes.dashboard,
     );
   }

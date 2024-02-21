@@ -9,8 +9,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class WaitingApprovalView extends StatelessWidget {
-  WaitingApprovalView({super.key});
-  final selectedInterface = Get.arguments;
+  const WaitingApprovalView({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Padding(

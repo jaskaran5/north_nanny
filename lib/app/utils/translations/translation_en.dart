@@ -135,4 +135,5 @@ var en = <String, String>{
       'You will get a notification once the nanny accepts or rejects',
   TranslationKeys.cardWillCharged:
       'Card will be charged once the job is completed.',
+  TranslationKeys.notifications: 'Notifications',
 };

@@ -1,18 +1,13 @@
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/parents/home/home_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
-import 'package:northshore_nanny_flutter/app/view_models/home_view_model.dart';
+
+import '../../customer/home/home_view.dart';
 
 class DashboardBottomController extends GetxController {
-  DashboardBottomController(this._viewModel);
-
-  final HomeViewModel _viewModel;
-
   var bottomTabList = BottomTabs.values;
-
-  String? selectedProfile = '';
 
   int selectedTabIndex = 0;
 
@@ -21,15 +16,10 @@ class DashboardBottomController extends GetxController {
     update();
   }
 
-  set whichProfile(ChooseInterface value) {
-    selectedProfile = value.name;
-    update();
-  }
-
   List bottomBarScreenList = [
     const HomeView(),
     const RecentChatView(),
-    const HomeView(),
+    const NotificationView(),
     const HomeView(),
     const SettingView(),
   ];

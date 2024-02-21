@@ -1,7 +1,4 @@
-enum ChooseInterface {
-  customer,
-  nanny,
-}
+
 
 enum BottomTabs {
   home,

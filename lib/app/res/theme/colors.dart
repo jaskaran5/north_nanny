@@ -21,4 +21,5 @@ class AppColors {
   static const Color sliderActiveColor = Color(0xff2074C7);
   static const Color profileBackgroundColor = Color(0xffF9F9F9);
   static const Color greenColor = Color(0xff569418);
+  static const Color notificationBackgroundColor = Color(0xffD8E6F6);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
+import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -34,18 +35,21 @@ class ChooseBabySitterView extends StatelessWidget {
                 CustomButton(
                   backGroundColor: AppColors.navyBlue,
                   title: TranslationKeys.needASitter.tr,
-                  onTap: () => RouteManagement.goToSignUp(
-                    chooseInterface: ChooseInterface.customer,
-                  ),
+                  onTap: () async{
+                    await DBWrapper()
+                        .saveValueSecurely(AppConstants.isNanny, 'false');
+                    RouteManagement.goToSignUp();
+                  },
                 ),
                 Dimens.boxHeight16,
                 CustomButton(
                   backGroundColor: AppColors.lightNavyBlue,
                   title: TranslationKeys.iAmSitter.tr,
                   titleStyle: AppStyles.navyBlue15UbW600,
-                  onTap: () => RouteManagement.goToSignUp(
-                    chooseInterface: ChooseInterface.nanny,
-                  ),
+                  onTap: () async {
+                   await DBWrapper().saveValueSecurely(AppConstants.isNanny, 'true');
+                    RouteManagement.goToSignUp();
+                  },
                 ),
               ],
             ),

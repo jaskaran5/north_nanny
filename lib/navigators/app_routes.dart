@@ -9,7 +9,7 @@ class Routes {
   static const String emailVerification = Paths.emailVerification;
   static const String newPasswordView = Paths.newPasswordView;
   static const String passwordSuccessView = Paths.passwordSuccessView;
-  static const String createSitterProfileView = Paths.createSitterProfileView;
+  static const String createNannyProfile = Paths.createNannyProfile;
   static const String home = Paths.home;
   static const String filterView = Paths.filterView;
   static const String recentChat = Paths.recentChat;
@@ -28,7 +28,7 @@ class Paths {
   static const String emailVerification = '/Email-Verification-view';
   static const String newPasswordView = '/New-password-view';
   static const String passwordSuccessView = '/Password-SuccessView';
-  static const String createSitterProfileView = '/CreateSitterProfileView';
+  static const String createNannyProfile = '/CreateNannyProfileView';
   static const String home = '/home';
   static const String filterView = '/filter-View';
   static const String recentChat = '/recentChat';

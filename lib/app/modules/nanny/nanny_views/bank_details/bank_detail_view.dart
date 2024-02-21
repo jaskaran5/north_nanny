@@ -13,8 +13,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import '../waiting_approval/waiting_approval_view.dart';
 
 class BankDetailsView extends StatelessWidget {
-  BankDetailsView({super.key});
-  final selectedInterface = Get.arguments;
+  const BankDetailsView({super.key});
   @override
   Widget build(BuildContext context) =>
       GetBuilder<CreateSitterProfileController>(
@@ -135,8 +134,7 @@ class BankDetailsView extends StatelessWidget {
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
                       Get.to(
-                        WaitingApprovalView(),
-                        arguments: selectedInterface,
+                        const WaitingApprovalView(),
                       );
                     },
                   ),
@@ -148,8 +146,7 @@ class BankDetailsView extends StatelessWidget {
                   textColor: AppColors.navyBlue,
                   onTap: () {
                     Get.to(
-                      WaitingApprovalView(),
-                      arguments: selectedInterface,
+                      const WaitingApprovalView(),
                     );
                   },
                 ),

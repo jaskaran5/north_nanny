@@ -18,6 +18,12 @@ import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_vi
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
+import '../app/modules/forgot_password/email_verification_view.dart';
+import '../app/modules/forgot_password/forgot_password_binding.dart';
+import '../app/modules/forgot_password/forgot_password_view.dart';
+import '../app/modules/forgot_password/new_password_view.dart';
+import '../app/modules/nanny/nanny_views/create_profile/create_sitter_profile_binding.dart';
+import '../app/modules/nanny/nanny_views/create_profile/create_sitter_profile_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -25,7 +31,7 @@ class AppPages {
     milliseconds: 350,
   );
 
-  static const initial = Routes.nannyProfileView;
+  static const initial = Routes.splash;
 
   static final pages = [
     GetPage<SplashView>(
@@ -56,41 +62,34 @@ class AppPages {
       binding: LoginBinding(),
       transition: Transition.rightToLeft,
     ),
-    // GetPage<ForgotPasswordView>(
-    //   name: Routes.forgotPassword,
-    //   transitionDuration: transitionDuration,
-    //   page: ForgotPasswordView.new,
-    //   binding: ForgotPasswordBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
-    // GetPage<EmailVerificationView>(
-    //   name: Routes.emailVerification,
-    //   transitionDuration: transitionDuration,
-    //   page: EmailVerificationView.new,
-    //   binding: ForgotPasswordBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
-    // GetPage<NewPasswordView>(
-    //   name: Routes.newPasswordView,
-    //   transitionDuration: transitionDuration,
-    //   page: NewPasswordView.new,
-    //   binding: ForgotPasswordBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
-    // GetPage<PasswordSuccessView>(
-    //   name: Routes.passwordSuccessView,
-    //   transitionDuration: transitionDuration,
-    //   page: PasswordSuccessView.new,
-    //   // binding: ForgotPasswordBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
-    // GetPage<CreateSitterProfileView>(
-    //   name: Routes.createSitterProfileView,
-    //   transitionDuration: transitionDuration,
-    //   page: CreateSitterProfileView.new,
-    //   binding: CreateSitterBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
+    GetPage<ForgotPasswordView>(
+      name: Routes.forgotPassword,
+      transitionDuration: transitionDuration,
+      page: ForgotPasswordView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<EmailVerificationView>(
+      name: Routes.emailVerification,
+      transitionDuration: transitionDuration,
+      page: EmailVerificationView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<NewPasswordView>(
+      name: Routes.newPasswordView,
+      transitionDuration: transitionDuration,
+      page: NewPasswordView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<CreateNannyProfileView>(
+      name: Routes.createNannyProfile,
+      transitionDuration: transitionDuration,
+      page: CreateNannyProfileView.new,
+      binding: CreateNannyProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
     // GetPage<HomeView>(
     //   name: Routes.home,
     //   transitionDuration: transitionDuration,
