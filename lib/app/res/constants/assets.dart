@@ -8,12 +8,15 @@ class Assets {
   static const String nextIcon = "assets/icons/next.svg";
   static const String iconsBackArrow = 'assets/icons/back_arrow.svg';
   static const String iconsBank = 'assets/icons/bank.svg';
+  static const String iconsBookingLocation = 'assets/icons/booking-location.svg';
+  static const String iconsBookingTimer = 'assets/icons/booking_timer.svg';
   static const String iconsBrifecaseCross = 'assets/icons/brifecase_cross.svg';
   static const String iconsBuilding = 'assets/icons/building.svg';
   static const String iconsCake = 'assets/icons/cake.svg';
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsCalendarFilled = 'assets/icons/calendar_filled.svg';
   static const String iconsCard = 'assets/icons/card.svg';
+  static const String iconsChatWhite = 'assets/icons/chat_white.svg';
   static const String iconsCircleTick = 'assets/icons/circle_tick.svg';
   static const String iconsClock = 'assets/icons/clock.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';

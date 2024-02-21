@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/schedule_nanny/schedule_nanny_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/constants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -8,259 +9,108 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/app/widgets/houry_rate_view.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../widgets/custom_bottom_sheet.dart';
 
 class NannyProfileView extends StatelessWidget {
-  NannyProfileView({super.key});
-  List<String> homeCustomList = [
-    'Distance: 3 miles',
-    'Age: 40',
-    'Experience: 7+ yrs',
-    'Experience: 7+ yrs',
-  ];
-  int selectedIndex = 0;
-
-  DateTime selectedDate = DateTime.now();
-
-  List<String>? priceList = [
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
-    '',
-  ];
-  bool isFavorite = false;
-
-  List<String> profileTabList = [
-    TranslationKeys.about.tr,
-    TranslationKeys.services.tr,
-    TranslationKeys.availability.tr
-  ];
+  const NannyProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: CustomAppbarWidget(
-          title: TranslationKeys.nannyProfile.tr,
-          centerTitle: true,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                isFavorite = !isFavorite;
-              },
-              child: Padding(
-                padding: Dimens.edgeInsetsL16R16,
-                child: SvgPicture.asset(isFavorite
-                    ? Assets.iconsHeartFilled
-                    : Assets.iconsHeartOutline),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: AppColors.profileBackgroundColor,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: Dimens.edgeInsetsB16,
-            child: Column(
-              children: [
-                profileView(
-                  nannyName: 'Christina Wang',
-                  servicesList: homeCustomList,
-                  totalRating: 4.5,
-                  totalReview: 12,
+  Widget build(BuildContext context) => GetBuilder(
+      init: NannyProfileController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: CustomAppbarWidget(
+            title: TranslationKeys.nannyProfile.tr,
+            centerTitle: true,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  controller.isFavorite = !controller.isFavorite;
+                  controller.update();
+                },
+                child: Padding(
+                  padding: Dimens.edgeInsetsL16R16,
+                  child: SvgPicture.asset(controller.isFavorite
+                      ? Assets.iconsHeartFilled
+                      : Assets.iconsHeartOutline),
                 ),
-                Dimens.boxHeight20,
-                Container(
-                  margin: Dimens.edgeInsetsL16R16,
-                  height: Dimens.fifty,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(Dimens.ten),
+              ),
+            ],
+          ),
+          backgroundColor: AppColors.profileBackgroundColor,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: Dimens.edgeInsetsB16,
+              child: Column(
+                children: [
+                  CustomNannyProfileView(
+                    nannyName: 'Christina Wang',
+                    servicesList: controller.homeCustomList,
+                    totalRating: 4.5,
+                    totalReview: 12,
                   ),
-                  child: Row(
-                    children: List.generate(
-                      profileTabList.length,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          selectedIndex = index;
-                        },
-                        child: Container(
-                          height: Dimens.forty,
-                          width: Dimens.hundredEight,
-                          // padding: Dimens.edgeInsets8,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: selectedIndex == index
-                                ? AppColors.navyBlue
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(Dimens.eight),
-                          ),
-                          child: AppText(
-                            text: profileTabList[index].tr,
-                            style: selectedIndex == index
-                                ? AppStyles.ubWhite14700
-                                : AppStyles.ubGrey14W600,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
+                  Dimens.boxHeight20,
+                  Container(
+                    margin: Dimens.edgeInsetsL16R16,
+                    height: Dimens.fifty,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(Dimens.ten),
+                    ),
+                    child: Row(
+                      children: List.generate(
+                        controller.profileTabList.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            controller.selectedIndex = index;
+                            controller.update();
+                          },
+                          child: Container(
+                            height: Dimens.forty,
+                            width: Dimens.hundredEight,
+                            // padding: Dimens.edgeInsets8,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: controller.selectedIndex == index
+                                  ? AppColors.navyBlue
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(Dimens.eight),
+                            ),
+                            child: AppText(
+                              text: controller.profileTabList[index].tr,
+                              style: controller.selectedIndex == index
+                                  ? AppStyles.ubWhite14700
+                                  : AppStyles.ubGrey14W600,
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Dimens.boxHeight20,
-                selectedIndex == 0
-                    ? aboutView()
-                    : selectedIndex == 1
-                        ? servicesView(rateList: priceList)
-                        : availabilityView(selectedDate: selectedDate),
-              ],
+                  Dimens.boxHeight20,
+                  controller.selectedIndex == 0
+                      ? const CustomAbout(
+                          aboutNanny:
+                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.')
+                      : controller.selectedIndex == 1
+                          ? servicesView(rateList: controller.priceList)
+                          : availabilityView(
+                              selectedDate: controller.selectedDate),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
+      });
 }
-
-Widget aboutView() => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          margin: Dimens.edgeInsetsL16R16,
-          padding: Dimens.edgeInsets16,
-          decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(Dimens.ten),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(
-                text: TranslationKeys.about.tr,
-                style: AppStyles.ubBlack14W700,
-                maxLines: 1,
-                textAlign: TextAlign.start,
-              ),
-              Dimens.boxHeight16,
-              AppText(
-                text:
-                    'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.',
-                style: AppStyles.ubGrey12W400,
-                textAlign: TextAlign.start,
-              ),
-            ],
-          ),
-        ),
-        Dimens.boxHeight20,
-        Padding(
-          padding: Dimens.edgeInsetsL16R16,
-          child: HourlyRateView(
-            showShadow: false,
-            borderRadius: Dimens.ten,
-          ),
-        ),
-      ],
-    );
-
-Widget profileView({
-  List<String>? servicesList,
-  String? nannyName,
-  double? totalRating,
-  int? totalReview,
-}) =>
-    Container(
-      color: AppColors.primaryColor,
-      width: Get.width,
-      padding: Dimens.edgeInsets16,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: Dimens.ninty,
-            width: Dimens.ninty,
-            padding: Dimens.edgeInsets2,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.activeBorderColor,
-                width: Dimens.one,
-              ),
-              shape: BoxShape.circle,
-            ),
-            child: CircleAvatar(
-              radius: Dimens.hundred,
-              backgroundImage: const AssetImage(
-                Assets.iconsImage,
-              ),
-            ),
-          ),
-          Dimens.boxHeight8,
-          AppText(
-            text: nannyName.toString(),
-            style: AppStyles.ubBlack16W700,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-          ),
-          Dimens.boxHeight8,
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset(Assets.iconsStar),
-              Dimens.boxWidth4,
-              RichText(
-                text: TextSpan(
-                  text: totalRating.toString(),
-                  style: AppStyles.ubBlack12W500,
-                  children: [
-                    TextSpan(
-                      text:
-                          '(${totalReview.toString()} ${TranslationKeys.reviews.tr})',
-                      style: AppStyles.ubGrey12W400,
-                    )
-                  ],
-                ),
-                maxLines: 1,
-              ),
-            ],
-          ),
-          Dimens.boxHeight8,
-          Container(
-            height: Dimens.thirty,
-            margin: Dimens.edgeInsetsL16R16,
-            alignment: Alignment.center,
-            child: ListView(
-              padding: Dimens.edgeInsetsL15,
-              scrollDirection: Axis.horizontal,
-              children: List.generate(
-                servicesList?.length ?? 0,
-                (index) => Container(
-                  height: Dimens.twentyEight,
-                  padding: Dimens.edgeInsets6,
-                  margin: Dimens.edgeInsetsR16,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppColors.listColor,
-                    borderRadius: BorderRadius.circular(Dimens.eight),
-                  ),
-                  child: AppText(
-                    text: servicesList?[index].toString(),
-                    style: AppStyles.ubGrey12W400,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
 
 Widget servicesView({List<String>? rateList}) => Padding(
       padding: Dimens.edgeInsetsL16R16,

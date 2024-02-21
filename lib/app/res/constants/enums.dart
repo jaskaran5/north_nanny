@@ -21,3 +21,11 @@ enum GenderConstant {
   male,
   female,
 }
+
+enum BookingDetails{
+ location,
+  hours,
+  date,
+  time,
+
+}

@@ -141,4 +141,7 @@ class TranslationKeys {
   static const String typeOfServices = 'typeOfServices';
   static const String selectChildren = 'selectChildren';
   static const String notifications = 'notifications';
+  static const String noBookings = 'noBookings';
+  static const String bookingDetails = 'bookingDetails';
+  static const String trackLocation = 'trackLocation';
 }

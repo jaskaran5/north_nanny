@@ -148,3 +148,18 @@ extension ChildrenListName on HourlyChildrenRateList {
     }
   }
 }
+
+extension BookingDeatilsSvg on BookingDetails {
+  String get bookingDetailSvg {
+    switch (this) {
+      case BookingDetails.location:
+        return Assets.iconsBookingLocation;
+      case BookingDetails.hours:
+        return Assets.iconsBookingTimer;
+      case BookingDetails.date:
+        return Assets.iconsCalendar;
+      case BookingDetails.time:
+        return Assets.iconsClock;
+    }
+  }
+}
