@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_item_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_profile_tile.dart';
+
+import '../../../res/theme/colors.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
@@ -13,7 +13,7 @@ class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("#99ABC6").withOpacity(.18),
+      backgroundColor: AppColors.settingBackgroundColor.withOpacity(.18),
       body: GetBuilder<SettingController>(
           init: SettingController(),
           builder: (controller) {
