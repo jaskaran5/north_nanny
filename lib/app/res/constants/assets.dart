@@ -65,6 +65,8 @@ class Assets {
   static const String iconsRight = 'assets/icons/right.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
+  static const String attachementIocn = "assets/icons/attachments.svg";
+  static const String sendIcon = "assets/icons/messageSend.svg";
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';
   static const String iconsSettingOutline = 'assets/icons/setting_outline.svg';
   static const String iconsShieldSecurity = 'assets/icons/shield_security.svg';
@@ -115,4 +117,5 @@ class Assets {
   static const String docIcon = 'assets/icons/setting_icons/doc.svg';
   static const String exitIcon = 'assets/icons/setting_icons/exit.svg';
   static const String aboutIcon = "assets/icons/setting_icons/about.svg";
+  static const String moreIcon = "assets/icons/more.svg";
 }

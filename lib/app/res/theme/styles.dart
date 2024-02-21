@@ -366,4 +366,34 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: HexColor("#5E5F60"),
   );
+  static TextStyle E5F60Christina = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: HexColor("#134373"),
+  );
+  static TextStyle messsage = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#5E5F60"),
+  );
+  static TextStyle chatTime = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#AAA6B9"),
+  );
+  static TextStyle B0B0BChristina = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
+    color: HexColor("#0B0B0B"),
+  );
+  static TextStyle E5F60Online = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#5E5F60"),
+  );
 }
