@@ -14,6 +14,7 @@ class FAQView extends StatelessWidget {
     return GetBuilder<SettingController>(
       init: SettingController(),
       builder: (controller) {
+        //=======//
         return Scaffold(
             backgroundColor: HexColor("#99ABC6"),
             body: ListView.builder(
