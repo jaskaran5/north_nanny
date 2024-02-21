@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -12,7 +13,7 @@ class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightNavyBlue,
+      backgroundColor: HexColor("#99ABC6").withOpacity(.18),
       body: GetBuilder<SettingController>(
           init: SettingController(),
           builder: (controller) {
@@ -24,7 +25,12 @@ class SettingView extends StatelessWidget {
                   children: [
                     const AppText(text: "Settings"),
                     CustomSettingProfileTile(
-                        onTap: () {}, title: "abc", subtitle: "wwf", img: ""),
+                        onTap: () {},
+                        title: "Michael Jorden",
+                        subtitle: "example@gmail.com",
+                        img: "",
+                        trailingIcon:
+                            controller.data[0]["trallingIcon"].toString()),
                     listOfTiles(context, controller),
                   ],
                 ),

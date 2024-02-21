@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -314,5 +315,25 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fourteen,
     color: Colors.black,
+  );
+
+  static TextStyle B0B0BUrbanist15 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: HexColor("#0B0B0B"),
+  );
+  static TextStyle B0B0BUrbanist14 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: HexColor("#0B0B0B"),
+  );
+
+  static TextStyle E5F60Urbanist12 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: HexColor("#5E5F60"),
   );
 }

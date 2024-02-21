@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
 class CustomSettingItemTile extends StatelessWidget {
   final void Function()? onTap;
@@ -22,9 +23,11 @@ class CustomSettingItemTile extends StatelessWidget {
         child: SizedBox(
           height: 60,
           child: Card(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             color: AppColors.primaryColor,
             elevation: 0,
-            margin: const EdgeInsets.all(6),
+            margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 6,
@@ -40,7 +43,10 @@ class CustomSettingItemTile extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(text),
+                  Text(
+                    text,
+                    style: AppStyles.B0B0BUrbanist14,
+                  ),
                   const Spacer(),
                   SvgPicture.asset(trallingIcon),
                   const SizedBox(
