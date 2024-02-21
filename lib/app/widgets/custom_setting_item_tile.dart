@@ -1,37 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 
 class CustomSettingItemTile extends StatelessWidget {
   final void Function()? onTap;
   final String text;
-  const CustomSettingItemTile({
-    super.key,
-    required this.onTap,
-    required this.text,
-  });
+  final String leadingIcon;
+  final String trallingIcon;
+
+  const CustomSettingItemTile(
+      {super.key,
+      required this.onTap,
+      required this.text,
+      required this.trallingIcon,
+      required this.leadingIcon});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(255, 18, 17, 17),
-              blurRadius: 6.0,
-              spreadRadius: 2.0,
-              offset: Offset(0.0, 0.0),
-            )
-          ],
-        ),
-        child: Row(
-          children: [
-            Text(text),
-          ],
-        ),
-      ),
-    );
+        onTap: onTap,
+        child: SizedBox(
+          height: 60,
+          child: Card(
+            color: AppColors.primaryColor,
+            elevation: 0,
+            margin: const EdgeInsets.all(6),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    leadingIcon,
+                    height: 28,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(text),
+                  const Spacer(),
+                  SvgPicture.asset(trallingIcon),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
