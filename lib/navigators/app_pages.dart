@@ -9,6 +9,9 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
@@ -131,6 +134,26 @@ class AppPages {
       page: DashboardBottomView.new,
       binding: DashboardBottomBinding(),
       transition: Transition.rightToLeft,
+    ),
+
+    /** CONTACT US */
+
+    GetPage<ContactUsView>(
+      name: Routes.conatactUs,
+      transitionDuration: transitionDuration,
+      page: ContactUsView.new,
+      binding: SettingBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** FAQ */
+
+    GetPage<FAQView>(
+      name: Routes.faq,
+      transitionDuration: transitionDuration,
+      page: FAQView.new,
+      binding: SettingBinding(),
+      transition: Transition.leftToRight,
     ),
   ];
 }

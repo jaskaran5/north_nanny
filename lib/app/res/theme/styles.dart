@@ -323,6 +323,13 @@ class AppStyles {
     fontSize: Dimens.fifteen,
     color: HexColor("#0B0B0B"),
   );
+
+  static TextStyle B0B0BUrbanist15White = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: HexColor("#FFFFFF"),
+  );
   static TextStyle B0B0BUrbanist14 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -335,5 +342,19 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.twelve,
     color: HexColor("#5E5F60"),
+  );
+
+  static TextStyle E8F94AEUrbanist15 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: HexColor("#8F94AE"),
+  );
+
+  static TextStyle B0B0BPlayfair24 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyPlayfairDisplay,
+    fontSize: Dimens.twentyFour,
+    color: HexColor("#0B0B0B"),
   );
 }

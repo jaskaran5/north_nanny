@@ -46,7 +46,6 @@ abstract class RouteManagement {
     );
   }
 
-
   /// Go to the  create Sitter Profile  Screen
   static void goToCreateNannyProfile() {
     Get.toNamed<void>(
@@ -79,6 +78,20 @@ abstract class RouteManagement {
   static void goToOffAllDashboard() {
     Get.offAllNamed<void>(
       Routes.dashboard,
+    );
+  }
+
+  /// Go to the Contact us  Screen
+  static void goToContactUs() {
+    Get.toNamed(
+      Routes.conatactUs,
+    );
+  }
+
+  /// Go to the Contact us  Screen
+  static void goToFAQ() {
+    Get.toNamed(
+      Routes.faq,
     );
   }
 

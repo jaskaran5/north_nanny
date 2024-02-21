@@ -19,6 +19,7 @@ class TranslationKeys {
   static const String helloRegistration = 'helloRegistration';
   static const String creatingAnAccount = 'creatingAnAccount';
   static const String enterEmail = 'enterEmail';
+
   static const String enterPassword = 'enterPassword';
   static const String confirmPassword = 'confirmPassword';
   static const String bySignUp = 'bySignUp';
@@ -141,4 +142,7 @@ class TranslationKeys {
   static const String typeOfServices = 'typeOfServices';
   static const String selectChildren = 'selectChildren';
   static const String notifications = 'notifications';
+  static const String subject = 'Subject';
+  static const String message = 'Message';
+  static const String emailE = 'Email';
 }

@@ -16,6 +16,8 @@ class Routes {
   static const String chat = Paths.chat;
   static const String nannyProfileView = Paths.nannyProfileView;
   static const String dashboard = Paths.dashboard;
+  static const String conatactUs = Paths.conatactUs;
+  static const String faq = Paths.faq;
 }
 
 /// Paths give to the route.
@@ -35,4 +37,6 @@ class Paths {
   static const String chat = '/chat';
   static const String nannyProfileView = '/nanny-profile';
   static const String dashboard = '/dashboard';
+  static const String conatactUs = '/contact-us';
+  static const String faq = '/faq';
 }

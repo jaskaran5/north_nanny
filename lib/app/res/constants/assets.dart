@@ -112,4 +112,6 @@ class Assets {
   static const String docIcon = 'assets/icons/setting_icons/doc.svg';
   static const String exitIcon = 'assets/icons/setting_icons/exit.svg';
   static const String aboutIcon = "assets/icons/setting_icons/about.svg";
+
+  static const String clipIcon = "assets/icons/setting_icons/about.svg";
 }

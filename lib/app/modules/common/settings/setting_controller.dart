@@ -1,7 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 
 class SettingController extends GetxController {
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController subjectTextEditingController = TextEditingController();
+  TextEditingController messageTextEditingController = TextEditingController();
+
+  RxBool isExpand = false.obs;
+
+  RxInt? expandIndex;
+
+  updateIsExpand({index}) {
+    // if (index != expandIndex) {
+    //   isExpand.value = !isExpand.value;
+    //   print(expandIndex!.value);
+    // }
+    faqlist.elementAt(index)["isExpand"] =
+        !faqlist.elementAt(index)["isExpand"];
+
+    update();
+  }
+
   final data = [
     {
       "name": 'Favorites',
@@ -60,4 +80,32 @@ class SettingController extends GetxController {
       "trallingIcon": Assets.nextIcon
     },
   ];
+
+  RxList faqlist = [
+    {
+      "title": "How are you? click on me",
+      "subtitle": "This is m,y expanded suybttile",
+      "isExpand": false,
+    },
+    {
+      "title": "How are you? click on me",
+      "subtitle": "This is m,y expanded suybttile",
+      "isExpand": false,
+    },
+    {
+      "title": "How are you? click on me",
+      "subtitle": "This is m,y expanded suybttile",
+      "isExpand": true,
+    },
+    {
+      "title": "How are you? click on me",
+      "subtitle": "This is m,y expanded suybttile",
+      "isExpand": false,
+    },
+    {
+      "title": "How are you? click on me",
+      "subtitle": "This is m,y expanded suybttile",
+      "isExpand": false,
+    }
+  ].obs;
 }
