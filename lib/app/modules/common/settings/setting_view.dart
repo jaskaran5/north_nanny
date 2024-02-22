@@ -10,8 +10,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_setting_item_tile.da
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_profile_tile.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../../res/theme/colors.dart';
-
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
 
@@ -58,7 +56,10 @@ class SettingView extends StatelessWidget {
         return CustomSettingItemTile(
           onTap: () {
             log("index: $index");
-            if (index == 6) {
+
+            if (index == 7) {
+              RouteManagement.goToRatingReviewScreen();
+            } else if (index == 6) {
               RouteManagement.goToContactUs();
             } else if (index == 8) {
               RouteManagement.goToFAQ();

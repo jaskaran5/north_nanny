@@ -95,6 +95,13 @@ abstract class RouteManagement {
     );
   }
 
+  /// Go to Rating and Review  Screen
+  static void goToRatingReviewScreen() {
+    Get.toNamed(
+      Routes.ratingReview,
+    );
+  }
+
   /// Go to the Success  Screen
   static void goToSuccessView({
     Function()? onTapButton,

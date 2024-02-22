@@ -261,6 +261,13 @@ class AppStyles {
     fontSize: Dimens.twentyFour,
     color: AppColors.darkBlackColor,
   );
+
+  static TextStyle ubDarkBlackColor14W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: AppColors.darkBlackColor,
+  );
   static TextStyle ubGrey15W500 = TextStyle(
     fontWeight: FontWeight.w500,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -347,10 +354,24 @@ class AppStyles {
     color: Colors.black,
   );
 
+  static TextStyle F94AEUrbanist15w500 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: HexColor("#8F94AE"),
+  );
+
   static TextStyle B0B0BUrbanist15 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
+    color: HexColor("#0B0B0B"),
+  );
+
+  static TextStyle B0B0BUrbanist16 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
     color: HexColor("#0B0B0B"),
   );
 
@@ -362,6 +383,13 @@ class AppStyles {
   );
   static TextStyle B0B0BUrbanist14 = TextStyle(
     fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: HexColor("#0B0B0B"),
+  );
+
+  static TextStyle B0B0BUrbanist14w400 = TextStyle(
+    fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fourteen,
     color: HexColor("#0B0B0B"),
@@ -379,6 +407,27 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
     color: HexColor("#8F94AE"),
+  );
+
+  static TextStyle E5F60Urbanist16W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
+    color: HexColor("#5E5F60"),
+  );
+
+  static TextStyle B0B0BUrbanist14W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: HexColor("#0B0B0B"),
+  );
+
+  static TextStyle btnTextStyle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: HexColor("#FFFFFF"),
   );
 
   static TextStyle B0B0BPlayfair24 = TextStyle(

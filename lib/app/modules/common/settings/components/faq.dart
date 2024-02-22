@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_faq_tile.dart';
 
 class FAQView extends StatelessWidget {
@@ -14,9 +17,12 @@ class FAQView extends StatelessWidget {
     return GetBuilder<SettingController>(
       init: SettingController(),
       builder: (controller) {
-        //=======//
         return Scaffold(
-            backgroundColor: HexColor("#99ABC6"),
+            appBar: CustomAppbarWidget(
+              title: "FAQ",
+              textStyle: AppStyles.B0B0BPlayfair24,
+            ),
+            backgroundColor: Colors.white.withOpacity(.99),
             body: ListView.builder(
               itemCount: controller.faqlist.length,
               shrinkWrap: true,

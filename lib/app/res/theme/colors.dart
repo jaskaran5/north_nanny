@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AppColors {
   const AppColors._();
@@ -24,4 +25,8 @@ class AppColors {
   static const Color notificationBackgroundColor = Color(0xffD8E6F6);
   static const Color trackerBackgroundColor = Color(0xff1B60A5);
   static const Color settingBackgroundColor = Color(0xff99ABC6);
+  static const Color fFC107YellowColor = Color(0xffFFC107);
+  static const Color dEDFE0GreyColor = Color(0xffDEDFE0);
+  static const Color f5F4F6GreyColor = Color(0xffF5F4F6);
+  static const Color greyColor134373 = Color(0xff134373);
 }

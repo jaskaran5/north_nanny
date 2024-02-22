@@ -121,4 +121,6 @@ class Assets {
 
   static const String clipIcon = "assets/icons/setting_icons/about.svg";
   static const String moreIcon = "assets/icons/more.svg";
+  static const String plusIcon = "assets/icons/setting_icons/sms.svg";
+  static const String minusIcon = "assets/icons/setting_icons/minus-cirlce.svg";
 }
