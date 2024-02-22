@@ -23,7 +23,9 @@ class CustomWriteReviewTile extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             AppText(
               text: "Write a review",
-              style: AppStyles.B0B0BUrbanist14W700,
+              style: AppStyles.ubBlack14W700,
+              textAlign: TextAlign.start,
+              maxLines: 1,
             ),
             Dimens.boxHeight14,
             Padding(
@@ -34,11 +36,12 @@ class CustomWriteReviewTile extends StatelessWidget {
                   minLines: 5,
                   maxLines: null,
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Please let us know how the job went!",
-                      hintStyle: AppStyles.F94AEUrbanist15w500,
-                      fillColor: AppColors.f5F4F6GreyColor,
-                      filled: true),
+                    border: InputBorder.none,
+                    hintText: "Please let us know how the job went!",
+                    hintStyle: AppStyles.ubHintColor15W500,
+                    fillColor: AppColors.f5F4F6GreyColor,
+                    filled: true,
+                  ),
                 ),
               ),
             )

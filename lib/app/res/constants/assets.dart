@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String iconsAboutUs = 'assets/icons/about_us.svg';
+  static const String iconsAddCircle = 'assets/icons/add_circle.svg';
   static const String iconsApple = 'assets/icons/apple.svg';
   static const String iconsAttachments = 'assets/icons/attachments.svg';
   static const String iconsBabyBoy = 'assets/icons/baby_boy.svg';
@@ -59,6 +60,7 @@ class Assets {
   static const String iconsMessageFilled = 'assets/icons/message_filled.svg';
   static const String iconsMessageQuestion = 'assets/icons/message_question.svg';
   static const String iconsMessageSend = 'assets/icons/messageSend.svg';
+  static const String iconsMinusCirlce = 'assets/icons/minus_cirlce.svg';
   static const String iconsMore = 'assets/icons/more.svg';
   static const String iconsMoreSquare = 'assets/icons/more_square.svg';
   static const String iconsNext = 'assets/icons/next.svg';
@@ -84,6 +86,7 @@ class Assets {
   static const String iconsShowPassword = 'assets/icons/show_password.svg';
   static const String iconsSliderThumb = 'assets/icons/slider_thumb.svg';
   static const String iconsSmallProfile = 'assets/icons/small_profile.svg';
+  static const String iconsSms = 'assets/icons/sms.svg';
   static const String iconsSplash = 'assets/icons/splash.svg';
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsStaringWheel = 'assets/icons/staring_wheel.svg';
@@ -93,45 +96,6 @@ class Assets {
   static const String iconsUncheckCircle = 'assets/icons/uncheck_circle.svg';
   static const String iconsUpload = 'assets/icons/upload.svg';
   static const String iconsUserTag = 'assets/icons/user_tag.svg';
-  static const String playfairDisplayPlayfairDisplayBlack =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Black.ttf';
-  static const String playfairDisplayPlayfairDisplayBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Bold.ttf';
-  static const String playfairDisplayPlayfairDisplayExtraBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-ExtraBold.ttf';
-  static const String playfairDisplayPlayfairDisplayMedium =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Medium.ttf';
-  static const String playfairDisplayPlayfairDisplayRegular =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-Regular.ttf';
-  static const String playfairDisplayPlayfairDisplaySemiBold =
-      'assets/fonts/playfairDisplay/PlayfairDisplay-SemiBold.ttf';
-  static const String urbanistUrbanistBold =
-      'assets/fonts/urbanist/Urbanist-Bold.ttf';
-  static const String urbanistUrbanistMedium =
-      'assets/fonts/urbanist/Urbanist-Medium.ttf';
-  static const String urbanistUrbanistRegular =
-      'assets/fonts/urbanist/Urbanist-Regular.ttf';
-  static const String urbanistUrbanistSemiBold =
-      'assets/fonts/urbanist/Urbanist-SemiBold.ttf';
-
-  //=========setting page Icons===//
-  static const String favIcon = 'assets/icons/setting_icons/fav.svg';
-  static const String starIcon = 'assets/icons/setting_icons/star.svg';
-  static const String childIcon = 'assets/icons/setting_icons/child.svg';
-  static const String paymentIcon = 'assets/icons/setting_icons/payment.svg';
-  static const String passwordIcon = 'assets/icons/setting_icons/lock.svg';
-  static const String addIcon = 'assets/icons/setting_icons/add.svg';
-  static const String contactIcon = 'assets/icons/setting_icons/contact.svg';
-  static const String faqIcon = 'assets/icons/setting_icons/faq.svg';
-  static const String privacyIcon = 'assets/icons/setting_icons/privcay.svg';
-  static const String docIcon = 'assets/icons/setting_icons/doc.svg';
-  static const String exitIcon = 'assets/icons/setting_icons/exit.svg';
-  static const String aboutIcon = "assets/icons/setting_icons/about.svg";
-
-  static const String clipIcon = "assets/icons/setting_icons/about.svg";
-  static const String moreIcon = "assets/icons/more.svg";
-  static const String plusIcon = "assets/icons/setting_icons/sms.svg";
-  static const String minusIcon = "assets/icons/setting_icons/minus-cirlce.svg";
   static const String imagesUserAvatar = 'assets/images/user_avatar.png';
   static const String playfairDisplayPlayfairDisplayBlack = 'assets/fonts/playfairDisplay/PlayfairDisplay-Black.ttf';
   static const String playfairDisplayPlayfairDisplayBold = 'assets/fonts/playfairDisplay/PlayfairDisplay-Bold.ttf';

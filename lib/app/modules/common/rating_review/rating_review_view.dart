@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rating_profile_tile.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_rating_tile.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_submit_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_write_review_tile.dart';
 
 class RatingReviewView extends StatelessWidget {
@@ -26,12 +27,13 @@ class RatingReviewView extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: AppText(
                 text: "Rating And Review",
-                style: AppStyles.B0B0BPlayfair24,
+                style: AppStyles.pdSemiBoldBlack24,
+                textAlign: TextAlign.start,
               ),
             ),
             AppText(
               text: "How was your experience with this family?",
-              style: AppStyles.E5F60Urbanist16W400,
+              style: AppStyles.ubGrey16W400,
             ),
             Dimens.boxHeight14,
             //=====//
@@ -41,7 +43,7 @@ class RatingReviewView extends StatelessWidget {
 
             /** RATING section */
 
-            SizedBox(width: Get.width, child: const CustomRatingTile()),
+            // SizedBox(width: Get.width, child: const CustomRatingTile()),
             Dimens.boxHeight14,
 
             /** REVIEW section */
@@ -51,8 +53,10 @@ class RatingReviewView extends StatelessWidget {
           ]),
         ),
       ),
-      floatingActionButton: const CustomSubmitButton(
-        btnText: "Submit",
+      floatingActionButton: CustomButton(
+        title: TranslationKeys.submit.tr,
+        backGroundColor: AppColors.navyBlue,
+        textColor: AppColors.primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

@@ -53,52 +53,55 @@ class CustomRatingTile extends StatelessWidget {
                         textAlign: TextAlign.start,
                       ),
                       Dimens.boxHeight4,
-                      RatingBar(
-                        initialRating: totalRating!,
-                        minRating: 1,
-                        maxRating: Dimens.five,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemPadding: Dimens.edgeInsets2,
-                        itemCount: 5,
-                        ratingWidget: RatingWidget(
-                          full: SvgPicture.asset(Assets.iconsFullRating),
-                          half: SvgPicture.asset(Assets.iconsHalfRating),
-                          empty: SvgPicture.asset(Assets.iconsNoRating),
-                        ),
-                        itemSize: Dimens.ten,
-                        onRatingUpdate: (double value) {},
-                      ),
-                      Dimens.boxWidth2,
-                      AppText(
-                        text: personRating.toString(),
-                        style: AppStyles.ubBlack12W500,
-                        maxLines: 1,
-                        textAlign: TextAlign.start,
-                      ),
+                     Row(
+                       mainAxisSize: MainAxisSize.min,
+                       children: [
+                         RatingBar(
+                           initialRating: totalRating,
+                           minRating: 1,
+                           maxRating: Dimens.five,
+                           direction: Axis.horizontal,
+                           allowHalfRating: true,
+                           itemPadding: Dimens.edgeInsets2,
+                           itemCount: 5,
+                           ratingWidget: RatingWidget(
+                             full: SvgPicture.asset(Assets.iconsFullRating),
+                             half: SvgPicture.asset(Assets.iconsHalfRating),
+                             empty: SvgPicture.asset(Assets.iconsNoRating),
+                           ),
+                           itemSize: Dimens.ten,
+                           onRatingUpdate: (double value) {},
+                         ),
+                         Dimens.boxWidth2,
+                         AppText(
+                           text: personRating.toString(),
+                           style: AppStyles.ubBlack12W500,
+                           maxLines: 1,
+                           textAlign: TextAlign.start,
+                         ),
+                       ],
+                     )
                     ],
                   ),
                 ],
               ),
+              AppText(
+                text: reviewDate,
+                style: AppStyles.ubGrey12W400,
+                maxLines: 1,
+                textAlign: TextAlign.start,
+              ),
             ],
           ),
-          AppText(
-            text: reviewDate,
-            style: AppStyles.ubGrey12W400,
-            maxLines: 1,
-            textAlign: TextAlign.start,
+          Dimens.boxHeight8,
+          Flexible(
+            child: AppText(
+              text: ratingDescription,
+              style: AppStyles.ubGrey12W500,
+              maxLines: 4,
+              textAlign: TextAlign.start,
+            ),
           ),
         ],
-      ),
-      Dimens.boxHeight8,
-      Flexible(
-        child: AppText(
-          text: ratingDescription,
-          style: AppStyles.ubGrey12W500,
-          maxLines: 4,
-          textAlign: TextAlign.start,
-        ),
-      ),
-    ],
-  );
+      );
 }

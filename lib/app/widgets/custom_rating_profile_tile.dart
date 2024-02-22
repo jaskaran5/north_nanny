@@ -3,7 +3,6 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rich_text.dart';
 
 class CustomRatingProfileTile extends StatelessWidget {

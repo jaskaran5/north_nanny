@@ -39,12 +39,12 @@ class CustomFAQTile extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 AppText(
                   text: title,
-                  style: AppStyles.B0B0BUrbanist16,
+                  style: AppStyles.ubBlack16W600,
                 ),
                 GestureDetector(
                   onTap: onTap,
                   child: SvgPicture.asset(
-                    isExpand ? Assets.minusIcon : Assets.plusIcon,
+                    isExpand ? Assets.iconsMinusCirlce : Assets.iconsAddCircle,
                     height: Dimens.twenty,
                     width: Dimens.twenty,
                   ),
@@ -54,7 +54,7 @@ class CustomFAQTile extends StatelessWidget {
                   visible: isExpand,
                   child: Text(
                     subtitle,
-                    style: AppStyles.B0B0BUrbanist14w400,
+                    style: AppStyles.ub5E5F60Grey14W400,
                   ))
             ],
           ),

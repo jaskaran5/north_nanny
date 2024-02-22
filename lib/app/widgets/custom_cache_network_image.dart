@@ -15,7 +15,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log("image value is:------>>>. $img");
-    return ((img == '') || (img == '-') || (img == null))
+    return ((img == '') || (img == '-') || (img.isEmpty))
         ? CircleAvatar(
             backgroundColor: Colors.transparent,
             radius: size / 2,
