@@ -36,7 +36,7 @@ class AppPages {
     milliseconds: 350,
   );
 
-  static const initial = Routes.dashboard;
+  static const initial = Routes.splash;
 
   static final pages = [
     GetPage<SplashView>(

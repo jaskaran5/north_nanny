@@ -16,7 +16,7 @@ class Utility {
 
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
-  static Future<bool?> isNannyInterFace() async {
+  static bool? isNannyInterFace()  {
     return DBWrapper().getBoolValue(StringConstants.isNanny);
   }
 

@@ -6,6 +6,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
@@ -36,7 +37,8 @@ class ChooseBabySitterView extends StatelessWidget {
                   backGroundColor: AppColors.navyBlue,
                   title: TranslationKeys.needASitter.tr,
                   onTap: () {
-                    DBWrapper().saveValue(StringConstants.isNanny, false);
+                    DBWrapper().saveValue<bool>(StringConstants.isNanny, false);
+                    print('value:${Utility.isNannyInterFace()}');
                     RouteManagement.goToSignUp();
                   },
                 ),
@@ -45,8 +47,9 @@ class ChooseBabySitterView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   title: TranslationKeys.iAmSitter.tr,
                   titleStyle: AppStyles.navyBlue15UbW600,
-                  onTap: () {
-                    DBWrapper().saveValue(StringConstants.isNanny, true);
+                  onTap: () async {
+                    DBWrapper().saveValue<bool>(StringConstants.isNanny, true);
+                    print('value:${Utility.isNannyInterFace()}');
                     RouteManagement.goToSignUp();
                   },
                 ),

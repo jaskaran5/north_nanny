@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 
+import 'app/data/local/db_wrapper.dart';
 import 'app/data/local/managers/shared_preferences_manager.dart';
 
 void main() async {
@@ -24,7 +25,7 @@ Future<void> _setup() async {
   //       appFlavor: AppFlavor.dev,
   //     ),
   //   ),
-  //   Get.put<DBWrapper>(DBWrapper()),
+    Get.put<DBWrapper>(DBWrapper()).init();
   // ]);
   // Get.put<ApiWrapper>(ApiWrapper());
 }

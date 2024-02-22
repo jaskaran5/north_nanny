@@ -1,13 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
-  // Obtain shared preferences.
-  SharedPreferences? sharedPreferences;
+
 
   /// initialize the hive box
   Future<void> init() async {
     sharedPreferences = await SharedPreferences.getInstance();
   }
+
+  // Obtain shared preferences.
+  SharedPreferences? sharedPreferences;
 
   void clear() {
     sharedPreferences?.clear();
@@ -29,8 +31,8 @@ class SharedPreferencesManager {
   }
 
   /// return bool value
-  bool getBoolValue(String key, bool defaultValue) =>
-      sharedPreferences?.getBool(key) ?? defaultValue;
+  bool? getBoolValue(String key,) =>
+      sharedPreferences?.getBool(key) ;
 
   /// return string value
   String getStringValue(String key, String defaultValue) =>

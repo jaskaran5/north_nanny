@@ -26,9 +26,8 @@ class DBWrapper {
   // /// Delete all data from secure storage
   // Future<void> deleteAllSecuredValues() async =>
   //     _flutterSecureStorage.deleteAllSecuredValues();
-
-  Future<void> init() async => await _preference.init();
   final _preference = Get.find<SharedPreferencesManager>();
+  Future<void> init() async => await _preference.init();
 
   void clearData(String key) => _preference.delete(key);
 
@@ -44,8 +43,12 @@ class DBWrapper {
       _preference.saveSharedValue(key, value);
 
   /// return bool value
-  bool getBoolValue(String key, {bool defaultValue = false}) =>
-      _preference.getBoolValue(key, defaultValue);
+  bool? getBoolValue(
+    String key,
+  ) =>
+      _preference.getBoolValue(
+        key,
+      );
 
   /// return bool value
   int getIntValue(String key, {int defaultValue = 0}) =>

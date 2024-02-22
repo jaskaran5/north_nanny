@@ -12,6 +12,7 @@ class LogInController extends GetxController {
   /// check user Type.
   checkIsNanny() async {
     isNannyView = await Utility.isNannyInterFace();
+    debugPrint('bool:$isNannyView ${ await Utility.isNannyInterFace()}');
     update();
   }
 
