@@ -24,40 +24,37 @@ class CustomRatingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: Dimens.forty,
-                width: Dimens.forty,
-                child: CircleAvatar(
-                  radius: Dimens.hundred,
-                  backgroundImage: AssetImage(userImage),
-                ),
-              ),
-              Dimens.boxWidth10,
-              Column(
+              Row(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText(
-                    text: userName,
-                    maxLines: 1,
-                    style: AppStyles.ubBlack15W600,
-                    textAlign: TextAlign.start,
+                  SizedBox(
+                    height: Dimens.forty,
+                    width: Dimens.forty,
+                    child: CircleAvatar(
+                      radius: Dimens.hundred,
+                      backgroundImage: AssetImage(userImage),
+                    ),
                   ),
-                  Dimens.boxHeight4,
-                  Row(
+                  Dimens.boxWidth10,
+                  Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      AppText(
+                        text: userName,
+                        maxLines: 1,
+                        style: AppStyles.ubBlack15W600,
+                        textAlign: TextAlign.start,
+                      ),
+                      Dimens.boxHeight4,
                       RatingBar(
-                        initialRating: totalRating,
+                        initialRating: totalRating!,
                         minRating: 1,
                         maxRating: Dimens.five,
                         direction: Axis.horizontal,

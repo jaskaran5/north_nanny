@@ -98,7 +98,7 @@ class CustomAppbarWidget extends PreferredSize {
           ),
       centerTitle: centerTitle ?? true,
       actions: actions,
-      leadingWidth:leadingWidth ?? Dimens.fiftyFive,
+      leadingWidth: leadingWidth ?? Dimens.fiftyFive,
       toolbarHeight: appBarHeight ?? Dimens.sixty,
       bottom: PreferredSize(
           preferredSize: Size(bottomWidth, bottomHeight),

@@ -8,6 +8,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
@@ -154,6 +156,16 @@ class AppPages {
       page: FAQView.new,
       binding: SettingBinding(),
       transition: Transition.leftToRight,
+    ),
+
+    /** RATING AND REVIEW */
+
+    GetPage<FAQView>(
+      name: Routes.ratingReview,
+      transitionDuration: transitionDuration,
+      page: RatingReviewView.new,
+      binding: RatingReviewBinding(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }
