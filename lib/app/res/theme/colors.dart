@@ -29,4 +29,5 @@ class AppColors {
   static const Color dEDFE0GreyColor = Color(0xffDEDFE0);
   static const Color f5F4F6GreyColor = Color(0xffF5F4F6);
   static const Color greyColor134373 = Color(0xff134373);
+  static const Color chatTimeColor = Color(0xffAAA6B9);
 }

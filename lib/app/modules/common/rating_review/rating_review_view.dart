@@ -34,7 +34,7 @@ class RatingReviewView extends StatelessWidget {
               style: AppStyles.E5F60Urbanist16W400,
             ),
             Dimens.boxHeight14,
-
+            //=====//
             /** PROFILE section */
             const CustomRatingProfileTile(),
             Dimens.boxHeight14,

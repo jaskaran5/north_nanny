@@ -171,6 +171,12 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: AppColors.greyColor,
   );
+  static TextStyle ubChatTimeColor12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.chatTimeColor,
+  );
   static TextStyle ubGrey12W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -345,13 +351,6 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
     color: AppColors.navyBlue,
-  );
-
-  static TextStyle navyBlueUrbanist14 = TextStyle(
-    fontWeight: FontWeight.normal,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fourteen,
-    color: Colors.black,
   );
 
   static TextStyle F94AEUrbanist15w500 = TextStyle(

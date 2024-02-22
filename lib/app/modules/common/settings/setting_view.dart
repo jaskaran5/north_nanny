@@ -30,7 +30,7 @@ class SettingView extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: AppText(
                         text: "Settings",
-                        style: AppStyles.B0B0BPlayfair24,
+                        style: AppStyles.pdSemiBoldBlack24,
                       ),
                     ),
                     CustomSettingProfileTile(

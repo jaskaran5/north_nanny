@@ -50,11 +50,11 @@ class CustomSettingProfileTile extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: AppStyles.B0B0BUrbanist15,
+                        style: AppStyles.ubBlack15W600,
                       ),
                       Text(
                         subtitle,
-                        style: AppStyles.E5F60Urbanist12,
+                        style: AppStyles.ubGrey12W500,
                       ),
                     ],
                   ),

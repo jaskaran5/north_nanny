@@ -5,7 +5,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/booking_details/book
 import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_booking_detail.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../res/constants/assets.dart';
@@ -232,27 +232,34 @@ class CalenderView extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                             ),
                                             Dimens.boxHeight4,
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SvgPicture.asset(
-                                                    Assets.iconsStar),
-                                                Dimens.boxWidth4,
-                                                RichText(
-                                                  text: TextSpan(
-                                                    text: '4.5 ',
-                                                    style: AppStyles
-                                                        .ubLightNavy12W500,
-                                                    children: [
-                                                      TextSpan(
-                                                        text: '(21 review)',
-                                                        style: AppStyles
-                                                            .ubLightNavy12W400,
-                                                      ),
-                                                    ],
+                                            GestureDetector(
+                                              onTap: (){
+                                                // Utility.openBottomSheet(
+                                                //
+                                                // );
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      Assets.iconsStar),
+                                                  Dimens.boxWidth4,
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      text: '4.5 ',
+                                                      style: AppStyles
+                                                          .ubLightNavy12W500,
+                                                      children: [
+                                                        TextSpan(
+                                                          text: '(21 review)',
+                                                          style: AppStyles
+                                                              .ubLightNavy12W400,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                             Dimens.boxHeight4,
                                             SizedBox(
