@@ -15,6 +15,7 @@ class CustomWriteReviewTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             Dimens.ten,
           )),
+      //=====//
       child: Padding(
         padding: EdgeInsets.all(Dimens.eight),
         child: SingleChildScrollView(
