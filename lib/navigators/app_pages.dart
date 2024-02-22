@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signUp_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_binding.dart';
@@ -21,6 +20,7 @@ import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_vi
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
+import '../app/modules/auth/nanny/signUp/sign_up_binding.dart';
 import '../app/modules/forgot_password/email_verification_view.dart';
 import '../app/modules/forgot_password/forgot_password_binding.dart';
 import '../app/modules/forgot_password/forgot_password_view.dart';
@@ -55,7 +55,7 @@ class AppPages {
       name: Routes.signUp,
       transitionDuration: transitionDuration,
       page: SignUpView.new,
-      binding: SignupBinding(),
+      binding: SignUpBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage<LogInView>(

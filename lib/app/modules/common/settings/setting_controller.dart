@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+
+import '../../../res/constants/assets.dart';
 
 class SettingController extends GetxController {
   TextEditingController emailTextEditingController = TextEditingController();
@@ -25,59 +26,63 @@ class SettingController extends GetxController {
   final data = [
     {
       "name": 'Favorites',
-      "icon": Assets.favIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsHeartOutline,
+      "trallingIcon": Assets.iconsNext,
     },
     {
       "name": 'Manage child profile ',
-      "icon": Assets.childIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsBabyBoy,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": 'Payment method',
-      "icon": Assets.paymentIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsCard,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": 'Change password',
-      "icon": Assets.passwordIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsLock,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": 'About us',
-      "icon": Assets.aboutIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsAboutUs,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": "Invite a friend",
-      "icon": Assets.addIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsProfileAdd,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": "Contact us",
-      "icon": Assets.contactIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsHeadPhone,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": "Rate app",
-      "icon": Assets.starIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsBlackStar,
+      "trallingIcon": Assets.iconsNext
     },
-    {"name": "FAQ", "icon": Assets.faqIcon, "trallingIcon": Assets.nextIcon},
+    {
+      "name": "FAQ",
+      "icon": Assets.iconsMessageQuestion,
+      "trallingIcon": Assets.iconsNext
+    },
     {
       "name": "Terms & Conditions",
-      "icon": Assets.docIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsDocumentText,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": " Privacy Policy",
-      "icon": Assets.privacyIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsShieldSecurity,
+      "trallingIcon": Assets.iconsNext
     },
     {
       "name": "Logout",
-      "icon": Assets.exitIcon,
-      "trallingIcon": Assets.nextIcon
+      "icon": Assets.iconsLogout,
+      "trallingIcon": Assets.iconsNext
     },
   ];
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 
 class LogInController extends GetxController {
   @override
@@ -12,15 +11,7 @@ class LogInController extends GetxController {
 
   /// check user Type.
   checkIsNanny() async {
-    var isNanny = await DBWrapper().getSecuredValue(AppConstants.isNanny);
-    debugPrint('---nanny $isNanny');
-    if (isNanny.isNotEmpty && isNanny == 'true') {
-      isNannyView = true;
-      debugPrint('---nanny Profile true');
-    } else if (isNanny.isNotEmpty && isNanny == 'false') {
-      isNannyView = false;
-      debugPrint('---nanny Profile false');
-    }
+    isNannyView = await Utility.isNannyInterFace();
     update();
   }
 

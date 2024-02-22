@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
-
-import '../../../../res/constants/assets.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -53,7 +53,7 @@ class ChatView extends StatelessWidget {
                                 Text(
                                   'Christina wang',
                                   textAlign: TextAlign.center,
-                                  style: AppStyles.B0B0BChristina,
+                                  style: AppStyles.ubBlack16W700,
                                 ),
                                 Row(
                                   children: [
@@ -68,7 +68,7 @@ class ChatView extends StatelessWidget {
                                     Text(
                                       'Online',
                                       textAlign: TextAlign.center,
-                                      style: AppStyles.E5F60Online,
+                                      style: AppStyles.ubGrey12W400,
                                     ),
                                   ],
                                 ),
@@ -77,7 +77,7 @@ class ChatView extends StatelessWidget {
                             SizedBox(
                               width: Get.width / 3,
                             ),
-                            SvgPicture.asset(Assets.moreIcon)
+                            SvgPicture.asset(Assets.iconsMore)
                           ],
                         ),
                       ),
@@ -125,7 +125,7 @@ class ChatView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 13, vertical: 6),
                         decoration: BoxDecoration(
-                          color: HexColor("#FFFFFF"),
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextFormField(
@@ -136,7 +136,7 @@ class ChatView extends StatelessWidget {
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: SvgPicture.asset(
-                                  Assets.attachementIocn,
+                                  Assets.iconsAttachments,
                                 ),
                               )),
                         ),
@@ -154,15 +154,9 @@ class ChatView extends StatelessWidget {
                           }
                         },
                         child: Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: HexColor("#1B60A5"),
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(Assets.sendIcon),
-                                ))),
+                          padding: const EdgeInsets.all(0.0),
+                          child: SvgPicture.asset(Assets.iconsChatSend),
+                        ),
                       ),
                     ],
                   ),

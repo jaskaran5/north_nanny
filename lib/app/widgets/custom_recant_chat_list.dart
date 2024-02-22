@@ -46,9 +46,15 @@ class CustomeReectChatListTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Deepak Thursday", style: AppStyles.E5F60Christina),
-                      Text("oh my god please help me",
-                          style: AppStyles.messsage),
+                      Text(
+                        "Deepak Thursday",
+                        style: AppStyles.ubBlack14W700,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        "oh my god please help me",
+                        style: AppStyles.ubGrey12W500,
+                      ),
                     ],
                   ),
                   const Spacer(),
@@ -58,7 +64,7 @@ class CustomeReectChatListTile extends StatelessWidget {
                     children: [
                       Text(
                         "5m ago",
-                        style: AppStyles.chatTime,
+                        style: AppStyles.ubChatTimeColor12W400,
                       ),
                     ],
                   )

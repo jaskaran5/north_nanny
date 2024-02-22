@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -171,6 +170,12 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: AppColors.greyColor,
   );
+  static TextStyle ubChatTimeColor12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.chatTimeColor,
+  );
   static TextStyle ubGrey12W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -340,81 +345,7 @@ class AppStyles {
     color: AppColors.navyBlue,
   );
 
-  static TextStyle navyBlueUrbanist14 = TextStyle(
-    fontWeight: FontWeight.normal,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fourteen,
-    color: Colors.black,
-  );
 
-  static TextStyle B0B0BUrbanist15 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fifteen,
-    color: HexColor("#0B0B0B"),
-  );
 
-  static TextStyle B0B0BUrbanist15White = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fifteen,
-    color: HexColor("#FFFFFF"),
-  );
-  static TextStyle B0B0BUrbanist14 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fourteen,
-    color: HexColor("#0B0B0B"),
-  );
 
-  static TextStyle E5F60Urbanist12 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.twelve,
-    color: HexColor("#5E5F60"),
-  );
-
-  static TextStyle E8F94AEUrbanist15 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fifteen,
-    color: HexColor("#8F94AE"),
-  );
-
-  static TextStyle B0B0BPlayfair24 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontFamily: AppConstants.fontFamilyPlayfairDisplay,
-    fontSize: Dimens.twentyFour,
-    color: HexColor("#0B0B0B"),
-  );
-  static TextStyle E5F60Christina = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.fourteen,
-    color: HexColor("#134373"),
-  );
-  static TextStyle messsage = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.twelve,
-    color: HexColor("#5E5F60"),
-  );
-  static TextStyle chatTime = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.twelve,
-    color: HexColor("#AAA6B9"),
-  );
-  static TextStyle B0B0BChristina = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.sixteen,
-    color: HexColor("#0B0B0B"),
-  );
-  static TextStyle E5F60Online = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontFamily: AppConstants.fontFamilyUrbanist,
-    fontSize: Dimens.twelve,
-    color: HexColor("#5E5F60"),
-  );
 }

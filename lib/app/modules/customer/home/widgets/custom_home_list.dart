@@ -41,7 +41,7 @@ class HomeCustomListView extends StatelessWidget {
               borderRadius: BorderRadius.circular(Dimens.ten),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.lightNavyBlue.withOpacity(.7),
+                  color: AppColors.lightNavyBlue.withOpacity(.8),
                   blurRadius: Dimens.eight,
                 ),
               ],

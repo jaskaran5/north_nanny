@@ -24,97 +24,99 @@ class ContactUsView extends StatelessWidget {
           appBar: const CustomAppbarWidget(),
           body: Center(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: Dimens.edgeInsets16,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppText(
-                      text: "Contact us",
-                      style: AppStyles.B0B0BPlayfair24,
-                    ),
-                    SizedBox(
-                      height: Get.height * .1,
-                    ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppText(
+                    text: "Contact us",
+                    style: AppStyles.pdSemiBoldBlack24,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(
+                    height: Get.height * .1,
+                  ),
 
-                    /** Email  */
-                    TextField(
-                      controller: controller.emailTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintText: TranslationKeys.emailE.tr,
-                        hintStyle: AppStyles.E8F94AEUrbanist15,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.iconsEmail,
-                            height: Dimens.twentyFour,
-                            width: Dimens.twentyFour,
-                          ),
+                  /** Email  */
+                  TextField(
+                    controller: controller.emailTextEditingController,
+                    maxLines: 1,
+                    minLines: 1,
+                    decoration: customFieldDeco(
+                      hintText: TranslationKeys.emailE.tr,
+                      hintStyle: AppStyles.ubHintColor15W500,
+                      prefixWidget: Padding(
+                        padding: Dimens.edgeInsets12,
+                        child: SvgPicture.asset(
+                          Assets.iconsEmail,
+                          height: Dimens.twentyFour,
+                          width: Dimens.twentyFour,
                         ),
                       ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
                     ),
-                    const SizedBox(height: 20),
-                    /** SUBJECT */
-                    TextField(
-                      controller: controller.subjectTextEditingController,
-                      maxLines: 1,
-                      minLines: 1,
-                      decoration: customFieldDeco(
-                        hintStyle: AppStyles.E8F94AEUrbanist15,
-                        hintText: TranslationKeys.subject.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.docIcon,
-                            height: Dimens.twentyFour,
-                            width: Dimens.twentyFour,
-                          ),
+                    cursorColor: AppColors.blackColor,
+                    cursorWidth: Dimens.one,
+                    style: AppStyles.ubBlack15W600,
+                  ),
+                  const SizedBox(height: 20),
+                  /** SUBJECT */
+                  TextField(
+                    controller: controller.subjectTextEditingController,
+                    maxLines: 1,
+                    minLines: 1,
+                    decoration: customFieldDeco(
+                      hintStyle: AppStyles.ubHintColor15W500,
+                      hintText: TranslationKeys.subject.tr,
+                      prefixWidget: Padding(
+                        padding: Dimens.edgeInsets12,
+                        child: SvgPicture.asset(
+                          Assets.iconsDocumentText,
+                          height: Dimens.twentyFour,
+                          width: Dimens.twentyFour,
                         ),
                       ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
                     ),
-                    const SizedBox(height: 20),
+                    cursorColor: AppColors.blackColor,
+                    cursorWidth: Dimens.one,
+                    style: AppStyles.ubBlack15W600,
+                  ),
+                  const SizedBox(height: 20),
 
-                    /** MESSAGE */
-                    TextField(
-                      keyboardType: TextInputType.multiline,
-                      controller: controller.messageTextEditingController,
-                      maxLines: null,
-                      minLines: 2,
-                      decoration: customFieldDeco(
-                        hintStyle: AppStyles.E8F94AEUrbanist15,
-                        hintText: TranslationKeys.message.tr,
-                        prefixWidget: Padding(
-                          padding: Dimens.edgeInsets12,
-                          child: SvgPicture.asset(
-                            Assets.clipIcon,
-                            height: Dimens.twentyFour,
-                            width: Dimens.twentyFour,
-                          ),
+                  /** MESSAGE */
+                  TextField(
+                    keyboardType: TextInputType.multiline,
+                    controller: controller.messageTextEditingController,
+                    maxLines: null,
+                    minLines: 2,
+                    decoration: customFieldDeco(
+                      hintStyle: AppStyles.ubHintColor15W500,
+                      hintText: TranslationKeys.message.tr,
+                      prefixWidget: Padding(
+                        padding: Dimens.edgeInsets12,
+                        child: SvgPicture.asset(
+                          Assets.iconsAboutUs,
+                          height: Dimens.twentyFour,
+                          width: Dimens.twentyFour,
                         ),
                       ),
-                      cursorColor: AppColors.blackColor,
-                      cursorWidth: Dimens.one,
-                      style: AppStyles.ubBlack15W600,
                     ),
-                    const Spacer(),
+                    cursorColor: AppColors.blackColor,
+                    cursorWidth: Dimens.one,
+                    style: AppStyles.ubBlack15W600,
+                  ),
+                  const Spacer(),
 
-                    /** SUBMIT BUTTON */
+                  /** SUBMIT BUTTON */
 
-                    CustomButton(
-                      title: "Submit",
-                      textColor: Colors.white,
-                      backGroundColor: AppColors.navyBlue,
-                      titleStyle: AppStyles.B0B0BUrbanist15White,
-                    )
-                  ]),
+                  CustomButton(
+                    title: TranslationKeys.submit.tr,
+                    textColor: Colors.white,
+                    backGroundColor: AppColors.navyBlue,
+                  )
+                ],
+              ),
             ),
           ),
         );

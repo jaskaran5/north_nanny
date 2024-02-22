@@ -10,7 +10,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_setting_item_tile.da
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_profile_tile.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../../res/theme/colors.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
@@ -32,7 +31,7 @@ class SettingView extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: AppText(
                         text: "Settings",
-                        style: AppStyles.B0B0BPlayfair24,
+                        style: AppStyles.pdSemiBoldBlack24,
                       ),
                     ),
                     CustomSettingProfileTile(

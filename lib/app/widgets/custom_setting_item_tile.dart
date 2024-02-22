@@ -45,7 +45,7 @@ class CustomSettingItemTile extends StatelessWidget {
                   ),
                   Text(
                     text,
-                    style: AppStyles.B0B0BUrbanist14,
+                    style: AppStyles.ubBlack14W600,
                   ),
                   const Spacer(),
                   SvgPicture.asset(trallingIcon),

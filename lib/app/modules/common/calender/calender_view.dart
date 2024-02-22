@@ -5,7 +5,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/booking_details/book
 import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_booking_detail.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../res/constants/assets.dart';
