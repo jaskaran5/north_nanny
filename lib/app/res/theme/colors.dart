@@ -25,4 +25,5 @@ class AppColors {
   static const Color trackerBackgroundColor = Color(0xff1B60A5);
   static const Color settingBackgroundColor = Color(0xff99ABC6);
   static const Color chatTimeColor = Color(0xffAAA6B9);
+  static const Color greenColor05B016 = Color(0xff05B016);
 }

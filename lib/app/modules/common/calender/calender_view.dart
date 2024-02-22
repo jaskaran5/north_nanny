@@ -6,6 +6,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_co
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../res/constants/assets.dart';
@@ -233,10 +234,20 @@ class CalenderView extends StatelessWidget {
                                             ),
                                             Dimens.boxHeight4,
                                             GestureDetector(
-                                              onTap: (){
-                                                // Utility.openBottomSheet(
-                                                //
-                                                // );
+                                              onTap: () {
+                                                Utility.openBottomSheet(
+                                                  const CustomReviewBottomSheet(
+                                                    totalReviews: '21',
+                                                    totalReviewsRating: 4.5,
+                                                    reviewsList: [
+                                                      'Michael Johnson',
+                                                      'Giorgio Chiellini',
+                                                      'Michael Johnson',
+                                                      'Alex Morgan',
+                                                      'Giorgio Chiellini'
+                                                    ],
+                                                  ),
+                                                );
                                               },
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,

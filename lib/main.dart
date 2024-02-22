@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 
-import 'app/data/local/db_wrapper.dart';
+import 'app/data/local/managers/shared_preferences_manager.dart';
 
 void main() async {
   await _setup();
@@ -15,9 +15,8 @@ void main() async {
 //
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(DBWrapper());
   // Get.put(DeviceConfig()).init();
-  // Get.lazyPut(SharedPreferencesManager.new);
+  Get.lazyPut(SharedPreferencesManager.new);
   // await Future.wait([
   //   AppConfig.init(
   //     const EnvConfig(

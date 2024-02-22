@@ -13,75 +13,95 @@ class CustomRatingTile extends StatelessWidget {
       required this.userImage,
       required this.userName,
       required this.ratingDescription,
-      required this.totalRating});
+      required this.totalRating,
+      required this.personRating});
   final String reviewDate;
   final String userImage;
   final String userName;
   final String ratingDescription;
   final double totalRating;
+  final double personRating;
 
   @override
   Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
+              SizedBox(
+                height: Dimens.forty,
+                width: Dimens.forty,
+                child: CircleAvatar(
+                  radius: Dimens.hundred,
+                  backgroundImage: AssetImage(userImage),
+                ),
+              ),
+              Dimens.boxWidth10,
+              Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: Dimens.forty,
-                    width: Dimens.forty,
-                    child: CircleAvatar(
-                      radius: Dimens.hundred,
-                      backgroundImage: AssetImage(userImage),
-                    ),
+                  AppText(
+                    text: userName,
+                    maxLines: 1,
+                    style: AppStyles.ubBlack15W600,
+                    textAlign: TextAlign.start,
                   ),
-                  Dimens.boxWidth10,
-                  Column(
+                  Dimens.boxHeight4,
+                  Row(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppText(
-                        text: userName,
-                        maxLines: 1,
-                        style: AppStyles.ubBlack15W600,
-                        textAlign: TextAlign.start,
-                      ),
-                      Dimens.boxHeight4,
                       RatingBar(
                         initialRating: totalRating,
                         minRating: 1,
                         maxRating: Dimens.five,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
-                        itemPadding: Dimens.edgeInsets4,
+                        itemPadding: Dimens.edgeInsets2,
                         itemCount: 5,
                         ratingWidget: RatingWidget(
                           full: SvgPicture.asset(Assets.iconsFullRating),
                           half: SvgPicture.asset(Assets.iconsHalfRating),
                           empty: SvgPicture.asset(Assets.iconsNoRating),
                         ),
+                        itemSize: Dimens.ten,
                         onRatingUpdate: (double value) {},
+                      ),
+                      Dimens.boxWidth2,
+                      AppText(
+                        text: personRating.toString(),
+                        style: AppStyles.ubBlack12W500,
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
                       ),
                     ],
                   ),
                 ],
               ),
-              AppText(
-                  text: reviewDate, style: AppStyles.ubGrey12W400, maxLines: 1),
             ],
           ),
-          Dimens.boxHeight8,
-          Flexible(
-            child: AppText(
-              text: ratingDescription,
-              style: AppStyles.ubGrey12W500,
-              maxLines: 4,
-            ),
+          AppText(
+            text: reviewDate,
+            style: AppStyles.ubGrey12W400,
+            maxLines: 1,
+            textAlign: TextAlign.start,
           ),
         ],
-      );
+      ),
+      Dimens.boxHeight8,
+      Flexible(
+        child: AppText(
+          text: ratingDescription,
+          style: AppStyles.ubGrey12W500,
+          maxLines: 4,
+          textAlign: TextAlign.start,
+        ),
+      ),
+    ],
+  );
 }

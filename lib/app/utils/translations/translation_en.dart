@@ -139,4 +139,5 @@ var en = <String, String>{
   TranslationKeys.noBookings: 'No bookings',
   TranslationKeys.bookingDetails: 'Booking details',
   TranslationKeys.trackLocation: 'Track location ',
+  TranslationKeys.totalTimeLeft: 'Total Time Left ',
 };

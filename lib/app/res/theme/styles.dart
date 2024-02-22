@@ -200,6 +200,12 @@ class AppStyles {
     fontSize: Dimens.ten,
     color: AppColors.greyColor,
   );
+  static TextStyle ub5E5F60Grey14W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: AppColors.greyColor,
+  );
   static TextStyle ubBlack14W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -248,11 +254,29 @@ class AppStyles {
     fontSize: Dimens.eighteen,
     color: AppColors.blackColor,
   );
+  static TextStyle ubBlack0B0B18W600 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.eighteen,
+    color: AppColors.blackColor,
+  );
   static TextStyle ubBlack30W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.thirty,
     color: AppColors.blackColor,
+  );
+  static TextStyle ubNavyBlue30W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.thirty,
+    color: AppColors.navyBlue,
+  );
+  static TextStyle ubNavyBlue34W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.thirtyFour,
+    color: AppColors.navyBlue,
   );
   static TextStyle ubDarkBlackColor26W700 = TextStyle(
     fontWeight: FontWeight.w700,
@@ -344,8 +368,4 @@ class AppStyles {
     fontSize: Dimens.fifteen,
     color: AppColors.navyBlue,
   );
-
-
-
-
 }

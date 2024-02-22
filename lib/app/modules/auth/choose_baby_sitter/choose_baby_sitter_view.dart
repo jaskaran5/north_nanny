@@ -35,9 +35,8 @@ class ChooseBabySitterView extends StatelessWidget {
                 CustomButton(
                   backGroundColor: AppColors.navyBlue,
                   title: TranslationKeys.needASitter.tr,
-                  onTap: () async {
-                    await DBWrapper()
-                        .saveValueSecurely(StringConstants.isNanny, 'false');
+                  onTap: () {
+                    DBWrapper().saveValue(StringConstants.isNanny, false);
                     RouteManagement.goToSignUp();
                   },
                 ),
@@ -46,9 +45,8 @@ class ChooseBabySitterView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   title: TranslationKeys.iAmSitter.tr,
                   titleStyle: AppStyles.navyBlue15UbW600,
-                  onTap: () async {
-                    await DBWrapper()
-                        .saveValueSecurely(StringConstants.isNanny, 'true');
+                  onTap: () {
+                    DBWrapper().saveValue(StringConstants.isNanny, true);
                     RouteManagement.goToSignUp();
                   },
                 ),

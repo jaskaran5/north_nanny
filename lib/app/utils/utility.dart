@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/constants.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
 
@@ -12,17 +17,8 @@ class Utility {
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
   static Future<bool?> isNannyInterFace() async {
-     var isNanny = await DBWrapper().getSecuredValue(StringConstants.isNanny);
-     if (isNanny.isNotEmpty) {
-       if (isNanny == 'true') {
-         return true;
-       }
-       else {
-         return false;
-       }
-     }
-     return null;
-   }
+    return DBWrapper().getBoolValue(StringConstants.isNanny);
+  }
 
   /// Returns true if the internet connection is available.
   // static Future<bool> get isNetworkAvailable async {
@@ -128,26 +124,104 @@ class Utility {
   static void showAlertDialog({
     String? message,
     String? title,
-    Function()? onPress,
+    String? firstButtonTitle,
+    String? secondButtonTitle,
+    Color? secondButtonBackgroundColor,
+    Color? firstButtonBackgroundColor,
+    String assetName = '',
+    String secondButtonSvg = '',
+    Function()? onTapFirstButton,
+    Function()? onTapSecondButton,
+    TextStyle? secondButtonStyle,
+    TextStyle? firstButtonStyle,
+    bool showContentSvg = false,
+    bool showButtonSvg = false,
   }) async {
-    await Get.dialog(
-      CupertinoAlertDialog(
-        title: Text('$title'),
-        content: Text('$message'),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: onPress,
-            child: Text('yes'.tr),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            onPressed: closeDialog,
-            child: Text('no'.tr),
-          )
-        ],
+    await Get.dialog(Center(
+      child: Container(
+        padding: Dimens.edgeInsets10,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(Dimens.twenty),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showContentSvg) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset(Assets.iconsRemoveBottomSheet)),
+                ],
+              ),
+              Dimens.boxHeight4,
+              SvgPicture.asset(assetName),
+              Dimens.boxHeight8,
+            ],
+            AppText(
+              text: title,
+              style: AppStyles.ubBlack0B0B18W600,
+              maxLines: 1,
+            ),
+            Dimens.boxHeight10,
+            Flexible(
+              child: AppText(
+                text: message,
+                style: AppStyles.ub5E5F60Grey14W400,
+                maxLines: 4,
+              ),
+            ),
+            Dimens.boxHeight10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomButton(
+                  title: firstButtonTitle,
+                  height: Dimens.forty,
+                  width: Dimens.hundredForty,
+                  borderRadius: Dimens.eight,
+                  backGroundColor: firstButtonBackgroundColor,
+                  titleStyle: firstButtonStyle,
+                  onTap: onTapFirstButton,
+                ),
+                GestureDetector(
+                  onTap: onTapSecondButton,
+                  child: Container(
+                    height: Dimens.forty,
+                    width: Dimens.hundredForty,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: secondButtonBackgroundColor,
+                      borderRadius: BorderRadius.circular(Dimens.eight),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppText(
+                          text: secondButtonTitle,
+                          style: secondButtonStyle,
+                          maxLines: 1,
+                        ),
+                        if (showButtonSvg) ...[
+                          Dimens.boxWidth4,
+                          SvgPicture.asset(secondButtonSvg),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    );
+    ));
   }
 
   /// Close any open dialog.

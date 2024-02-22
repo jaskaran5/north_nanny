@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/constants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_children_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_detail.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_receipt_tile.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_booking_review.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_bookng_service_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
+
+import '../../../res/theme/colors.dart';
 
 class BookingDetailView extends StatelessWidget {
   const BookingDetailView({super.key});
@@ -27,6 +34,68 @@ class BookingDetailView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  GestureDetector(
+                    onTap: (){
+                      Utility.showAlertDialog();
+                    },
+                    child: Container(
+                      padding: Dimens.edgeInsets16,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          Dimens.fourteen,
+                        ),
+                        border: Border.all(
+                            color: AppColors.navyBlue, width: Dimens.two),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppText(
+                            text: TranslationKeys.totalTimeLeft.tr,
+                            style: AppStyles.ubBlack14W700,
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                          ),
+                          Dimens.boxHeight10,
+                          AppText(
+                            text: '04:00:00',
+                            style: AppStyles.ubNavyBlue34W700,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Dimens.boxHeight16,
+                  Container(
+                    padding: Dimens.edgeInsets10,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: AppColors.greenColor05B016,
+                      borderRadius: BorderRadius.circular(
+                        Dimens.ten,
+                      ),
+                      border: Border.all(
+                          color: AppColors.greenColor05B016, width: Dimens.two),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(Assets.iconsGreenBoxInfo),
+                        Dimens.boxWidth10,
+                        AppText(
+                          text: 'Nanny has arrived at your location.',
+                          style: AppStyles.ubWhite14700,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Dimens.boxHeight16,
                   const CustomBookingDetailView(
                     bookingHeader: 'Booking details',
                     bookingDetailsList: [
@@ -84,6 +153,9 @@ class BookingDetailView extends StatelessWidget {
                     totalPriceReceived: controller.totalPrice,
                     receiptPricesList: controller.receiptPriceList,
                   ),
+                  Dimens.boxHeight16,
+                  const CustomBookingReview(
+                      reviewsList: ['Christon Wang.F', 'Michal Johnson']),
                 ],
               ),
             ),
