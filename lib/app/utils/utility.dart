@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/constants.dart';
 
+import '../res/theme/colors.dart';
+
 class Utility {
   const Utility._();
 
@@ -40,7 +42,7 @@ class Utility {
   }) async =>
       await Get.bottomSheet<T>(
         child,
-        barrierColor: Colors.black.withOpacity(0.7),
+        barrierColor: AppColors.greyColor.withOpacity(.2),
         backgroundColor: backgroundColor,
         isDismissible: isDismissible,
         shape: shape,

@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
@@ -21,34 +22,34 @@ class ChatView extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
             backgroundColor: HexColor("#F9F9F9"),
-            body: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 50),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6, bottom: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    padding: Dimens.edgeInsets10,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
                               icon: SvgPicture.asset(
-                                'assets/icons/back_arrow.svg',
+                                Assets.iconsBackArrow,
                               ),
                             ),
-                            const CustomCacheNetworkImage(img: '', size: 50),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            CustomCacheNetworkImage(
+                                img: '', size: Dimens.forty),
+                            Dimens.boxWidth10,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   'Christina wang',
@@ -74,20 +75,15 @@ class ChatView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: Get.width / 3,
-                            ),
-                            SvgPicture.asset(Assets.iconsMore)
                           ],
                         ),
-                      ),
-                    ],
+                        SvgPicture.asset(Assets.iconsMore)
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: SizedBox(
+                  Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: Dimens.edgeInsets10,
                       child: Visibility(
                         visible: true,
                         replacement: const Center(),
@@ -113,55 +109,55 @@ class ChatView extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: Get.width * .76,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 26),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 13, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(10),
+                  Padding(
+                    padding: Dimens.edgeInsetsL16R16B16,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width * .76,
+                          padding: Dimens.edgeInsets4,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: TextFormField(
+                            controller: controller.chatTextController,
+                            decoration: InputDecoration(
+                                hintText: 'Write a message',
+                                border: InputBorder.none,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SvgPicture.asset(
+                                    Assets.iconsAttachments,
+                                  ),
+                                )),
+                          ),
                         ),
-                        child: TextFormField(
-                          controller: controller.chatTextController,
-                          decoration: InputDecoration(
-                              hintText: 'Write a message',
-                              border: InputBorder.none,
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: SvgPicture.asset(
-                                  Assets.iconsAttachments,
-                                ),
-                              )),
+                        InkWell(
+                          onTap: () {
+                            if (controller.chatTextController.text.trim() ==
+                                '') {
+                              showToast(message: "Please Enter your message");
+                            } else {
+                              controller.sendChatMessage(
+                                  message:
+                                      controller.chatTextController.text.trim(),
+                                  receiverId: 1);
+                              controller.chatTextController.text = '';
+                            }
+                          },
+                          child: SvgPicture.asset(
+                            Assets.iconsChatSend,
+                            height: Dimens.fifty,
+                            width: Dimens.fifty,
+                          ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (controller.chatTextController.text.trim() == '') {
-                            showToast(message: "Please Enter your message");
-                          } else {
-                            controller.sendChatMessage(
-                                message:
-                                    controller.chatTextController.text.trim(),
-                                receiverId: 1);
-                            controller.chatTextController.text = '';
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: SvgPicture.asset(Assets.iconsChatSend),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ));
       },
     );
