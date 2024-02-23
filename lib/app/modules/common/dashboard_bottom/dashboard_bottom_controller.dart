@@ -8,12 +8,27 @@ import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import '../../customer/home/home_view.dart';
 
 class DashboardBottomController extends GetxController {
+  RxBool isFromPassword = false.obs;
+
   var bottomTabList = BottomTabs.values;
 
-  int selectedTabIndex = 0;
+  RxInt selectedTabIndex = 0.obs;
 
   set selectedBottomTab(int value) {
-    selectedTabIndex = value;
+    selectedTabIndex.value = value;
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    isFromPassword.value = Get.arguments;
+
+    if (isFromPassword.value) {
+      selectedTabIndex.value = 4;
+    } else {
+      selectedTabIndex.value = 0;
+    }
     update();
   }
 

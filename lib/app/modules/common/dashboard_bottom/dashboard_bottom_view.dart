@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -17,7 +19,7 @@ class DashboardBottomView extends StatelessWidget {
             bottomNavigationBar: BottomNavigationBar(
               showUnselectedLabels: true,
               onTap: (value) => controller.selectedBottomTab = value,
-              currentIndex: controller.selectedTabIndex,
+              currentIndex: controller.selectedTabIndex.value,
               type: BottomNavigationBarType.fixed,
               showSelectedLabels: true,
               selectedLabelStyle: AppStyles.ubNavyBlue12W600,
@@ -32,7 +34,7 @@ class DashboardBottomView extends StatelessWidget {
                   icon: Stack(
                     children: [
                       SvgPicture.asset(
-                        controller.selectedTabIndex == index
+                        controller.selectedTabIndex.value == index
                             ? controller.bottomTabList[index].selectedBottomSvg
                             : controller.bottomTabList[index].bottomSvg,
                       ),
@@ -75,6 +77,6 @@ class DashboardBottomView extends StatelessWidget {
               backgroundColor: AppColors.primaryColor,
             ),
             body: controller.bottomBarScreenList
-                .elementAt(controller.selectedTabIndex)),
+                .elementAt(controller.selectedTabIndex.value)),
       );
 }

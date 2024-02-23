@@ -55,7 +55,7 @@ class TranslationKeys {
   static const String passwordChanged = 'passwordChanged';
   static const String passwordChangeSuccess = 'passwordChangeSuccess';
   static const String backToLogIn = 'backToLogIn';
-  static const String backTosetting = 'backToSetting';
+  static const String backTosetting = 'Back To Setting';
   static const String email = 'email';
   static const String createProfile = 'createProfile';
   static const String firstName = 'firstName';

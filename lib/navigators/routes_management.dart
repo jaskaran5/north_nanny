@@ -11,6 +11,12 @@ abstract class RouteManagement {
     );
   }
 
+  static void goToSetting() {
+    Get.offAllNamed<void>(
+      Routes.settingView,
+    );
+  }
+
   /// Go to the SignIn Screen
   static void goToSignUp() {
     Get.toNamed<void>(
@@ -75,10 +81,8 @@ abstract class RouteManagement {
   }
 
   /// Go to the Nanny Profile Screen
-  static void goToOffAllDashboard() {
-    Get.offAllNamed<void>(
-      Routes.dashboard,
-    );
+  static void goToOffAllDashboard({required bool isFromSetting}) {
+    Get.offAllNamed<void>(Routes.dashboard, arguments: isFromSetting);
   }
 
   /// Go to the Contact us  Screen
@@ -106,13 +110,6 @@ abstract class RouteManagement {
   static void goToChnagePasswordScreen() {
     Get.toNamed(
       Routes.changePasswordView,
-    );
-  }
-
-  /// Go to Rating and Review  Screen
-  static void goToPasswordChangedScreen() {
-    Get.toNamed(
-      Routes.passwordChnagedView,
     );
   }
 

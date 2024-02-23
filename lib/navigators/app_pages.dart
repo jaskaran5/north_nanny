@@ -15,6 +15,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
@@ -118,6 +119,13 @@ class AppPages {
       name: Routes.passwordChnagedView,
       transitionDuration: transitionDuration,
       page: PasswordChangesView.new,
+      binding: SettingBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<SettingView>(
+      name: Routes.settingView,
+      transitionDuration: transitionDuration,
+      page: SettingView.new,
       binding: SettingBinding(),
       transition: Transition.rightToLeft,
     ),

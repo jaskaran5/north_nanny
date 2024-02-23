@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/forgot_password/forgot_password_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -52,7 +53,8 @@ class PasswordChangesView extends StatelessWidget {
               title: TranslationKeys.backTosetting.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                // RouteManagement.goToLogIn();
+                RouteManagement.goToOffAllDashboard(isFromSetting: true);
+                // Get.to(const SettingView());
               },
             ),
           ],
