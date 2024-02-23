@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/invite_friends.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -58,8 +59,11 @@ class SettingView extends StatelessWidget {
             log("index: $index");
             if (index == 3) {
               RouteManagement.goToChnagePasswordScreen();
-            }
-            if (index == 7) {
+            } else if (index == 4) {
+              controller.redirectToCommonWebView();
+            } else if (index == 5) {
+              Get.to(const InviteFriendsView());
+            } else if (index == 7) {
               RouteManagement.goToRatingReviewScreen();
             } else if (index == 6) {
               RouteManagement.goToContactUs();

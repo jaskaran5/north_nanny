@@ -4,6 +4,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_new_message_count_icon.dart';
 
 class CustomeReectChatListTile extends StatelessWidget {
   const CustomeReectChatListTile({super.key});
@@ -19,7 +20,6 @@ class CustomeReectChatListTile extends StatelessWidget {
               onTap: () {
                 controller.redirectToChatScreen();
               },
-              //======//
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -28,25 +28,22 @@ class CustomeReectChatListTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       child: Image.network(
                         "https://media.istockphoto.com/id/1358464345/photo/mare-and-foal.jpg?s=612x612&w=0&k=20&c=K_yKzFMHEWckTpYN-LJMo7jUDdNR5Gndk5ZYSaXnTwI=",
-                        height: 55,
-                        width: 55,
+                        height: Dimens.fifty,
+                        width: Dimens.fifty,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(50.0)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: Positioned(
-                          bottom: 2,
-                          right: 3,
-                          child: Icon(
-                            Icons.circle,
-                            color: Colors.green,
-                            size: 14,
-                          ),
+                    Positioned(
+                      bottom: 2,
+                      right: 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(Dimens.ten)),
+                        child: const Icon(
+                          Icons.circle,
+                          color: Colors.green,
+                          size: 14,
                         ),
                       ),
                     )
@@ -60,6 +57,7 @@ class CustomeReectChatListTile extends StatelessWidget {
                         style: AppStyles.ubBlack14W700,
                         maxLines: 1,
                       ),
+                      Dimens.boxHeight8,
                       Text(
                         "oh my god please help me",
                         style: AppStyles.ubGrey12W500,
@@ -68,13 +66,17 @@ class CustomeReectChatListTile extends StatelessWidget {
                   ),
                   const Spacer(),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "5m ago",
                         style: AppStyles.ubChatTimeColor12W400,
                       ),
+                      Dimens.boxHeight8,
+                      const CustomNewMessageCountIcon(
+                        count: "2",
+                      )
                     ],
                   )
                 ],

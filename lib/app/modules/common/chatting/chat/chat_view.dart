@@ -11,6 +11,7 @@ import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -77,7 +78,29 @@ class ChatView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SvgPicture.asset(Assets.iconsMore)
+
+                        PopupMenuButton(
+                          padding: Dimens.edgeInsets0,
+                          position: PopupMenuPosition.under,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.eight)),
+                          icon: SvgPicture.asset(Assets.iconsMore),
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              const PopupMenuItem(child: Text("Clear Chat")),
+                              const PopupMenuItem(
+                                  child: Text(
+                                "Delete Chat",
+                                style: TextStyle(color: Colors.red),
+                              )),
+                            ];
+                          },
+                        ),
+                        // GestureDetector(
+                        //   child: SvgPicture.asset(Assets.iconsMore),
+                        // )
                       ],
                     ),
                   ),
@@ -161,5 +184,9 @@ class ChatView extends StatelessWidget {
             ));
       },
     );
+  }
+
+  Widget chatManageWidget() {
+    return Container();
   }
 }

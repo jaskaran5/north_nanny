@@ -351,6 +351,13 @@ class AppStyles {
     fontSize: Dimens.fourteen,
     color: AppColors.hintColor,
   );
+
+  static TextStyle ubHintColor9W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.nine,
+    color: AppColors.primaryColor,
+  );
   static TextStyle ubNavyBlue15W700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,
