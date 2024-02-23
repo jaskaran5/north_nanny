@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
 class CustomeReectChatListTile extends StatelessWidget {
@@ -12,7 +14,7 @@ class CustomeReectChatListTile extends StatelessWidget {
         init: RecentChatController(),
         builder: (controller) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: Dimens.edgeInsets12,
             child: GestureDetector(
               onTap: () {
                 controller.redirectToChatScreen();
@@ -30,19 +32,25 @@ class CustomeReectChatListTile extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const Positioned(
-                      bottom: 2,
-                      right: 3,
-                      child: Icon(
-                        Icons.circle,
-                        color: Colors.green,
-                        size: 14,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(50.0)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Positioned(
+                          bottom: 2,
+                          right: 3,
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 14,
+                          ),
+                        ),
                       ),
                     )
                   ]),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  Dimens.boxWidth10,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

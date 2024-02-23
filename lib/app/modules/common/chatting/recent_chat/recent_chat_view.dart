@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_recant_chat_list.dart';
 
@@ -32,23 +33,21 @@ class RecentChatView extends StatelessWidget {
                               style: AppStyles.pdNormal,
                             ),
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: Dimens.forty,
+                              width: Dimens.forty,
                               decoration: BoxDecoration(
                                   color: Colors.white10,
                                   borderRadius: BorderRadius.circular(20)),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.search,
                                 color: Colors.black,
-                                size: 25,
+                                size: Dimens.twentyFive,
                               ),
                             )
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      Dimens.boxHeight10,
                       ListView.builder(
                         itemCount: 16,
                         shrinkWrap: true,
