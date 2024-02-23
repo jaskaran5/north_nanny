@@ -10,6 +10,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rating_profile_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_write_review_tile.dart';
 
+import '../../../widgets/custom_rate_view.dart';
+
 class RatingReviewView extends StatelessWidget {
   const RatingReviewView({super.key});
 
@@ -19,38 +21,43 @@ class RatingReviewView extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: const CustomAppbarWidget(),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: Dimens.edgeInsets16,
         child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: AppText(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(
                 text: "Rating And Review",
                 style: AppStyles.pdSemiBoldBlack24,
                 textAlign: TextAlign.start,
               ),
-            ),
-            AppText(
-              text: "How was your experience with this family?",
-              style: AppStyles.ubGrey16W400,
-            ),
-            Dimens.boxHeight14,
-            //=====//
-            /** PROFILE section */
-            const CustomRatingProfileTile(),
-            Dimens.boxHeight14,
+              Dimens.boxHeight10,
+              AppText(
+                text: "How was your experience with this family?",
+                style: AppStyles.ubGrey16W400,
+              ),
+              Dimens.boxHeight16,
+              //=====//
+              /** PROFILE section */
+              const CustomRatingProfileTile(),
+              Dimens.boxHeight16,
 
-            /** RATING section */
+              /** RATING section */
 
-            // SizedBox(width: Get.width, child: const CustomRatingTile()),
-            Dimens.boxHeight14,
+              SizedBox(
+                  width: Get.width,
+                  child: CustomGiveRate(
+                    onRatingUpdate: (double rating) {},
+                    initialRating: 0.0,
+                  )),
+              Dimens.boxHeight16,
 
-            /** REVIEW section */
+              /** REVIEW section */
 
-            SizedBox(width: Get.width, child: const CustomWriteReviewTile()),
-            // const Spacer(),
-          ]),
+              SizedBox(width: Get.width, child: const CustomWriteReviewTile()),
+              // const Spacer(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: CustomButton(

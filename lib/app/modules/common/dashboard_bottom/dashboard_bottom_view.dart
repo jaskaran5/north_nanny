@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class DashboardBottomView extends StatelessWidget {
   const DashboardBottomView({super.key});
@@ -27,10 +29,44 @@ class DashboardBottomView extends StatelessWidget {
               items: List.generate(
                 controller.bottomTabList.length,
                 (index) => BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    controller.selectedTabIndex == index
-                        ? controller.bottomTabList[index].selectedBottomSvg
-                        : controller.bottomTabList[index].bottomSvg,
+                  icon: Stack(
+                    children: [
+                      SvgPicture.asset(
+                        controller.selectedTabIndex == index
+                            ? controller.bottomTabList[index].selectedBottomSvg
+                            : controller.bottomTabList[index].bottomSvg,
+                      ),
+                      if (controller.bottomTabList[index].bottomTabName
+                              .toLowerCase() ==
+                          '')
+                        Positioned(
+                          top: Dimens.two,
+                          right: Dimens.zero,
+                          child: Container(
+                            height: Dimens.sixteen,
+                            width: Dimens.sixteen,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              border: Border.all(
+                                color: AppColors.primaryColor,
+                                width: Dimens.one,
+                              ),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: AppColors.greenColor.withOpacity(.5),
+                                    blurRadius: Dimens.two)
+                              ],
+                            ),
+                            child: AppText(
+                              text: '2',
+                              style: AppStyles.ubWhite10700,
+                              maxLines: 1,
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                   label: controller.bottomTabList[index].bottomTabName.tr,
                   backgroundColor: AppColors.primaryColor,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -40,14 +42,16 @@ class CustomRatingProfileTile extends StatelessWidget {
                 text: "Michaekl johnson",
                 style: AppStyles.ubDarkBlackColor14W700,
               ),
-              const Row(
+              Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.star,
-                    color: AppColors.fFC107YellowColor,
+                  SvgPicture.asset(
+                    Assets.iconsStar,
+                    height: Dimens.ten,
+                    width: Dimens.ten,
                   ),
-
-                  CustomRichText(firstTxt: "4.5", lastTxt: "(21 reviews)")
+                  Dimens.boxWidth2,
+                  const CustomRichText(firstTxt: "4.5", lastTxt: "(21 reviews)")
                   // AppText(
                   //   text: "4.5 (21 reviews)",
                   //   style: AppStyles.ubGrey10W400,

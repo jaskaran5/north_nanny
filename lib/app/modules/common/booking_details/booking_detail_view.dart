@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -37,8 +38,40 @@ class BookingDetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Utility.showAlertDialog();
+                    onTap: () {
+                      Utility.showAlertDialog(
+                        title: 'Confirmation',
+                        firstButtonTitle: 'No',
+                        secondButtonTitle: 'Yes',
+                        onTapFirstButton: () => Get.back(),
+                        onTapSecondButton: () {
+                          Utility.closeDialog();
+                          Utility.showAlertDialog(
+                            title: 'Confirmations!',
+                            firstButtonTitle: 'Send Tip',
+                            onTapSecondButton: () {
+                              Get.to(const RatingReviewView());
+                            },
+                            secondButtonTitle: 'Rate Now',
+                            firstButtonBackgroundColor: AppColors.lightNavyBlue,
+                            firstButtonStyle: AppStyles.ubNavyBlue14W700,
+                            secondButtonBackgroundColor: AppColors.navyBlue,
+                            secondButtonStyle: AppStyles.ubWhite14700,
+                            imageName: Assets.imagesStar,
+                            showContentSvg: true,
+                            message:
+                                'Your job has been successfully completed. Please rate your experience with this sitter',
+                          );
+                        },
+                        firstButtonBackgroundColor: AppColors.lightNavyBlue,
+                        message:
+                            'Your nanny has marked this job as complete, please confirm that the job was completed successfully.',
+                        secondButtonSvg: Assets.iconsStar,
+                        showButtonSvg: true,
+                        firstButtonStyle: AppStyles.ubNavyBlue14W700,
+                        secondButtonBackgroundColor: AppColors.navyBlue,
+                        secondButtonStyle: AppStyles.ubWhite14700,
+                      );
                     },
                     child: Container(
                       padding: Dimens.edgeInsets16,

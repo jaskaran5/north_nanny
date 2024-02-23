@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
 class CustomRichText extends StatelessWidget {
   final String firstTxt;
@@ -16,14 +16,12 @@ class CustomRichText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: firstTxt,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: AppColors.blackColor,
-        ),
+        style: AppStyles.ubBlack12W500,
         children: <TextSpan>[
           TextSpan(
-              text: " $lastTxt",
-              style: const TextStyle(color: AppColors.hintColor)),
+            text: " $lastTxt",
+            style: AppStyles.ubGrey12W400,
+          ),
         ],
       ),
     );

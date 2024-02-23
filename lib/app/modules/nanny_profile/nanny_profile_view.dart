@@ -101,7 +101,7 @@ class NannyProfileView extends StatelessWidget {
                   controller.selectedIndex == 0
                       ? const CustomAbout(
                           aboutNanny:
-                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.')
+                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.\n \n I have very Strong communication and instructional skill; patience and i have a Degree.')
                       : controller.selectedIndex == 1
                           ? servicesView(rateList: controller.priceList)
                           : availabilityView(

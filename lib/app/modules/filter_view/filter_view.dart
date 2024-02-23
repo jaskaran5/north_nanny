@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -282,7 +281,7 @@ class FilterView extends StatelessWidget {
                                   child: Container(
                                     alignment: Alignment.center,
                                     constraints: BoxConstraints(
-                                      maxHeight: Dimens.fiveHundred,
+                                      maxHeight: Dimens.fourHundredEighty,
                                     ),
                                     decoration: BoxDecoration(
                                       color: AppColors.primaryColor,
@@ -290,6 +289,7 @@ class FilterView extends StatelessWidget {
                                           BorderRadius.circular(Dimens.twenty),
                                     ),
                                     child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Padding(
                                           padding: Dimens.edgeInsets10,

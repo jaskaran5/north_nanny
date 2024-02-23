@@ -129,7 +129,7 @@ extension ChildrenListName on HourlyChildrenRateList {
       case HourlyChildrenRateList.twoChildren:
         return '2 ${TranslationKeys.children.tr}';
       case HourlyChildrenRateList.oneChild:
-        return '1 ${TranslationKeys.child.tr}';
+        return 'One ${TranslationKeys.child.tr}';
     }
   }
 

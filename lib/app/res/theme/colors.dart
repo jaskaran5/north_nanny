@@ -21,7 +21,7 @@ class AppColors {
   static const Color sliderActiveColor = Color(0xff2074C7);
   static const Color profileBackgroundColor = Color(0xffF9F9F9);
   static const Color greenColor = Color(0xff569418);
-  static const Color notificationBackgroundColor = Color(0xffD8E6F6);
+  static const Color notificationBackgroundColor = Color(0xffE7ECF1);
   static const Color trackerBackgroundColor = Color(0xff1B60A5);
   static const Color settingBackgroundColor = Color(0xff99ABC6);
   static const Color fFC107YellowColor = Color(0xffFFC107);
@@ -30,4 +30,5 @@ class AppColors {
   static const Color greyColor134373 = Color(0xff134373);
   static const Color chatTimeColor = Color(0xffAAA6B9);
   static const Color greenColor05B016 = Color(0xff05B016);
+  static const Color d8E6F6BorderColor = Color(0xffD8E6F6);
 }

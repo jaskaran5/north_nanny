@@ -62,6 +62,12 @@ class AppStyles {
     color: AppColors.primaryColor,
     fontSize: Dimens.fifteen,
   );
+  static TextStyle ubWhite10700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.primaryColor,
+    fontSize: Dimens.ten,
+  );
   static TextStyle ubWhite14700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,

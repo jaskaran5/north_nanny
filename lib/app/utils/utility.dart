@@ -6,7 +6,6 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
 
@@ -15,9 +14,8 @@ class Utility {
 
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
-  static bool? isNannyInterFace()  {
+  static bool? isNannyInterFace() {
     return null;
-  
   }
 
   /// Returns true if the internet connection is available.
@@ -129,99 +127,125 @@ class Utility {
     Color? secondButtonBackgroundColor,
     Color? firstButtonBackgroundColor,
     String assetName = '',
+    String imageName = '',
     String secondButtonSvg = '',
     Function()? onTapFirstButton,
     Function()? onTapSecondButton,
     TextStyle? secondButtonStyle,
     TextStyle? firstButtonStyle,
     bool showContentSvg = false,
+    bool isSvgImage = false,
     bool showButtonSvg = false,
   }) async {
-    await Get.dialog(Center(
-      child: Container(
-        padding: Dimens.edgeInsets10,
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(Dimens.twenty),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (showContentSvg) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+    await Get.dialog(
+      Padding(
+        padding: Dimens.edgeInsetsL16R16,
+        child: Center(
+          child: Material(
+            borderRadius: BorderRadius.circular(Dimens.twenty),
+            type: MaterialType.card,
+            child: Container(
+              padding: Dimens.edgeInsets16,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(Dimens.twenty),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: SvgPicture.asset(Assets.iconsRemoveBottomSheet)),
-                ],
-              ),
-              Dimens.boxHeight4,
-              SvgPicture.asset(assetName),
-              Dimens.boxHeight8,
-            ],
-            AppText(
-              text: title,
-              style: AppStyles.ubBlack0B0B18W600,
-              maxLines: 1,
-            ),
-            Dimens.boxHeight10,
-            Flexible(
-              child: AppText(
-                text: message,
-                style: AppStyles.ub5E5F60Grey14W400,
-                maxLines: 4,
-              ),
-            ),
-            Dimens.boxHeight10,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomButton(
-                  title: firstButtonTitle,
-                  height: Dimens.forty,
-                  width: Dimens.hundredForty,
-                  borderRadius: Dimens.eight,
-                  backGroundColor: firstButtonBackgroundColor,
-                  titleStyle: firstButtonStyle,
-                  onTap: onTapFirstButton,
-                ),
-                GestureDetector(
-                  onTap: onTapSecondButton,
-                  child: Container(
-                    height: Dimens.forty,
-                    width: Dimens.hundredForty,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: secondButtonBackgroundColor,
-                      borderRadius: BorderRadius.circular(Dimens.eight),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  if (showContentSvg) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        AppText(
-                          text: secondButtonTitle,
-                          style: secondButtonStyle,
-                          maxLines: 1,
-                        ),
-                        if (showButtonSvg) ...[
-                          Dimens.boxWidth4,
-                          SvgPicture.asset(secondButtonSvg),
-                        ],
+                        GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: SvgPicture.asset(
+                                Assets.iconsRemoveBottomSheet)),
                       ],
                     ),
+                    Dimens.boxHeight4,
+                    isSvgImage
+                        ? SvgPicture.asset(assetName)
+                        : Image(image: AssetImage(imageName)),
+                  ],
+                  Dimens.boxHeight16,
+                  AppText(
+                    text: title,
+                    style: AppStyles.ubBlack0B0B18W600,
+                    maxLines: 1,
                   ),
-                ),
-              ],
+                  Dimens.boxHeight16,
+                  Flexible(
+                    child: AppText(
+                      text: message,
+                      style: AppStyles.ub5E5F60Grey14W400,
+                      maxLines: 4,
+                    ),
+                  ),
+                  Dimens.boxHeight26,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: onTapFirstButton,
+                        child: Container(
+                          height: Dimens.forty,
+                          width: Dimens.hundredForty,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: firstButtonBackgroundColor,
+                            borderRadius: BorderRadius.circular(Dimens.eight),
+                          ),
+                          child: AppText(
+                            text: firstButtonTitle,
+                            style: firstButtonStyle,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: onTapSecondButton,
+                        child: Container(
+                          height: Dimens.forty,
+                          width: Dimens.hundredForty,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: secondButtonBackgroundColor,
+                            borderRadius: BorderRadius.circular(Dimens.eight),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AppText(
+                                text: secondButtonTitle,
+                                style: secondButtonStyle,
+                                maxLines: 1,
+                              ),
+                              if (showButtonSvg) ...[
+                                Dimens.boxWidth4,
+                                SvgPicture.asset(
+                                  secondButtonSvg,
+                                  height: Dimens.sixteen,
+                                  width: Dimens.sixteen,
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   /// Close any open dialog.
