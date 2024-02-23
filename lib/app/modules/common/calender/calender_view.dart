@@ -53,7 +53,7 @@ class CalenderView extends StatelessWidget {
                         markersMaxCount: 1,
                         markerSize: Dimens.four,
                         markersAutoAligned: true,
-                        markerMargin: Dimens.edgeInsets2,
+                        markerMargin: Dimens.edgeInsets4,
                         markersAlignment: Alignment.center,
                       ),
                       firstDay: DateTime.now(),

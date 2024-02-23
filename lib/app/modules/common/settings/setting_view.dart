@@ -23,7 +23,7 @@ class SettingView extends StatelessWidget {
             return SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding:Dimens.edgeInsets16,
+                  padding: Dimens.edgeInsets16,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +58,9 @@ class SettingView extends StatelessWidget {
         return CustomSettingItemTile(
           onTap: () {
             log("index: $index");
-            if (index == 3) {
+            if (index == 0) {
+              RouteManagement.goToFilterView();
+            } else if (index == 3) {
               RouteManagement.goToChnagePasswordScreen();
             } else if (index == 4) {
               controller.redirectToCommonWebView();

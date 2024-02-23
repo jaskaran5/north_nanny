@@ -7,7 +7,6 @@ class NannyProfileController extends GetxController {
     'Distance: 3 miles',
     'Age: 40',
     'Experience: 7+ yrs',
-    'Experience: 7+ yrs',
   ];
   int selectedIndex = 0;
 

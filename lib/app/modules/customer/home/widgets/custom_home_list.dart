@@ -30,8 +30,7 @@ class HomeCustomListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
-        children: List.generate(
-          3,
+        children: List.generate(3,
           (index) => Container(
             height: Dimens.oneHundredEightyTwo,
             padding: Dimens.edgeInsets16,
@@ -110,7 +109,9 @@ class HomeCustomListView extends StatelessWidget {
                     ),
                     Dimens.boxWidth16,
                     SvgPicture.asset(
-                      heartSvg,
+                      isHeartTapped
+                          ? Assets.iconsHeartFilled
+                          : Assets.iconsHeartOutline,
                     ),
                   ],
                 ),

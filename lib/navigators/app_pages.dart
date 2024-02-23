@@ -8,6 +8,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/favorite_view/favorite_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/favorite_view/favorite_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/change_password.dart';
@@ -30,7 +32,6 @@ import '../app/modules/forgot_password/email_verification_view.dart';
 import '../app/modules/forgot_password/forgot_password_binding.dart';
 import '../app/modules/forgot_password/forgot_password_view.dart';
 import '../app/modules/forgot_password/new_password_view.dart';
-import '../app/modules/nanny/nanny_views/create_profile/create_sitter_profile_binding.dart';
 import '../app/modules/nanny/nanny_views/create_profile/create_sitter_profile_view.dart';
 import 'app_routes.dart';
 
@@ -192,6 +193,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: RatingReviewView.new,
       binding: RatingReviewBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    /** FavoriteView */
+
+    GetPage<FavoriteView>(
+      name: Routes.favoriteView,
+      transitionDuration: transitionDuration,
+      page: FavoriteView.new,
+      binding: FavoriteBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

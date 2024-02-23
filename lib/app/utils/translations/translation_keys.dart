@@ -153,4 +153,5 @@ class TranslationKeys {
   static const String bookingDetails = 'bookingDetails';
   static const String trackLocation = 'trackLocation';
   static const String totalTimeLeft = 'totalTimeLeft';
+  static const String favorites = 'favorites';
 }

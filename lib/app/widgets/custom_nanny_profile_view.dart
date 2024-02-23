@@ -85,17 +85,17 @@ class CustomNannyProfileView extends StatelessWidget {
             Dimens.boxHeight8,
             Container(
               height: Dimens.thirty,
-              margin: Dimens.edgeInsetsL16R16,
+              // margin: Dimens.edgeInsetsL16R16,
               alignment: Alignment.center,
               child: ListView(
-                padding: Dimens.edgeInsetsL15,
+                // padding: Dimens.edgeInsetsL15,
                 scrollDirection: Axis.horizontal,
                 children: List.generate(
                   servicesList?.length ?? 0,
                   (index) => Container(
                     height: Dimens.twentyEight,
                     padding: Dimens.edgeInsetsL12T6R12B6,
-                    margin: Dimens.edgeInsetsR16,
+                    margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: AppColors.listColor,

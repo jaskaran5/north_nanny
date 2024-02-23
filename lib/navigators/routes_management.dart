@@ -111,6 +111,11 @@ abstract class RouteManagement {
     Get.toNamed(
       Routes.changePasswordView,
     );
+  } /// Go to favorite view  Screen
+  static void goToFavoriteScreen() {
+    Get.toNamed(
+      Routes.favoriteView,
+    );
   }
 
   /// Go to the Success  Screen

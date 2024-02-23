@@ -22,6 +22,7 @@ class Routes {
   static const String faq = Paths.faq;
   static const String ratingReview = Paths.ratingReview;
   static const String settingView = Paths.settingView;
+  static const String favoriteView = Paths.favoriteView;
 }
 
 /// Paths give to the route.
@@ -47,4 +48,5 @@ class Paths {
   static const String faq = '/faq';
   static const String ratingReview = '/rating-review';
   static const String settingView = '/setting-view';
+  static const String favoriteView = '/Favorite-view';
 }
