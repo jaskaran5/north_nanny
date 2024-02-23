@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../res/constants/assets.dart';
 
@@ -12,6 +13,13 @@ class SettingController extends GetxController {
   RxBool isExpand = false.obs;
 
   RxInt? expandIndex;
+
+  /// Go to Rating and Review  Screen
+  redirectToPasswordChangedScreen() {
+    Get.toNamed(
+      Routes.passwordChnagedView,
+    );
+  }
 
   updateIsExpand({index}) {
     // if (index != expandIndex) {
@@ -115,10 +123,8 @@ class SettingController extends GetxController {
     }
   ].obs;
 
-
-/// REDIRECT TO COMMON WEB VIEW
-  redirectToCommonWebView(){
-Get.to(()=>const CommonWebView());
-
+  /// REDIRECT TO COMMON WEB VIEW
+  redirectToCommonWebView() {
+    Get.to(() => const CommonWebView());
   }
 }

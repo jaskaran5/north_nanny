@@ -56,18 +56,19 @@ class SettingView extends StatelessWidget {
         return CustomSettingItemTile(
           onTap: () {
             log("index: $index");
-
+            if (index == 3) {
+              RouteManagement.goToChnagePasswordScreen();
+            }
             if (index == 7) {
               RouteManagement.goToRatingReviewScreen();
             } else if (index == 6) {
               RouteManagement.goToContactUs();
             } else if (index == 8) {
               RouteManagement.goToFAQ();
-            }else if(index==9){
-            controller.redirectToCommonWebView();
-            }
-            else if(index==10){
-            controller.  redirectToCommonWebView();
+            } else if (index == 9) {
+              controller.redirectToCommonWebView();
+            } else if (index == 10) {
+              controller.redirectToCommonWebView();
             }
           },
           text: controller.data[index]["name"].toString(),

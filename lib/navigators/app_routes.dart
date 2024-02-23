@@ -8,6 +8,8 @@ class Routes {
   static const String forgotPassword = Paths.forgotPassword;
   static const String emailVerification = Paths.emailVerification;
   static const String newPasswordView = Paths.newPasswordView;
+  static const String changePasswordView = Paths.changePasswordView;
+  static const String passwordChnagedView = Paths.passwordChnagedView;
   static const String passwordSuccessView = Paths.passwordSuccessView;
   static const String createNannyProfile = Paths.createNannyProfile;
   static const String home = Paths.home;
@@ -19,6 +21,7 @@ class Routes {
   static const String conatactUs = Paths.conatactUs;
   static const String faq = Paths.faq;
   static const String ratingReview = Paths.ratingReview;
+  static const String settingView = Paths.settingView;
 }
 
 /// Paths give to the route.
@@ -30,6 +33,8 @@ class Paths {
   static const String forgotPassword = '/Forgot-Password';
   static const String emailVerification = '/Email-Verification-view';
   static const String newPasswordView = '/New-password-view';
+  static const String changePasswordView = '/change-password-view';
+  static const String passwordChnagedView = '/password-chnaged-view';
   static const String passwordSuccessView = '/Password-SuccessView';
   static const String createNannyProfile = '/CreateNannyProfileView';
   static const String home = '/home';
@@ -41,4 +46,5 @@ class Paths {
   static const String conatactUs = '/contact-us';
   static const String faq = '/faq';
   static const String ratingReview = '/rating-review';
+  static const String settingView = '/setting-view';
 }

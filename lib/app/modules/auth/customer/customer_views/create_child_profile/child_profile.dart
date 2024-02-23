@@ -46,7 +46,7 @@ class ChildProfileView extends StatelessWidget {
                   onTap: () {
                     // RouteManagement.goToOffAllHome(selectedInterface);
 
-                    RouteManagement.goToOffAllDashboard();
+                    RouteManagement.goToOffAllDashboard(isFromSetting: false);
                   },
                 ),
               ],

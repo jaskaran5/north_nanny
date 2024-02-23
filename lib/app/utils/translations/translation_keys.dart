@@ -45,13 +45,17 @@ class TranslationKeys {
   static const String didNotReceiveOtp = 'didNotReceiveOtp';
   static const String reSendOtp = 'reSendOtp';
   static const String createNewPassword = 'createNewPassword';
+  static const String changepassword = 'Change password';
   static const String enterNewPassword = 'enterNewPassword';
+  static const String enterOldPassword = 'Enter Old Pasword';
+  static const String newPassword = 'New Password';
   static const String confirmNewPassword = 'confirmNewPassword';
   static const String newPasswordMustBeUnique = 'newPasswordMustBeUnique';
   static const String changePassword = 'changePassword';
   static const String passwordChanged = 'passwordChanged';
   static const String passwordChangeSuccess = 'passwordChangeSuccess';
   static const String backToLogIn = 'backToLogIn';
+  static const String backTosetting = 'Back To Setting';
   static const String email = 'email';
   static const String createProfile = 'createProfile';
   static const String firstName = 'firstName';
