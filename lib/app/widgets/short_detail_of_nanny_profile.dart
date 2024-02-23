@@ -55,7 +55,7 @@ class ShortDetailProfileView extends StatelessWidget {
                       children: [
                         TextSpan(
                           text:
-                              '(${totalReviews.toString()} ${TranslationKeys.reviews.tr})',
+                              ' (${totalReviews.toString()} ${TranslationKeys.reviews.tr})',
                           style: AppStyles.ubGrey12W400,
                         )
                       ],

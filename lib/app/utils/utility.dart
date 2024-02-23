@@ -129,8 +129,8 @@ class Utility {
     String assetName = '',
     String imageName = '',
     String secondButtonSvg = '',
-    Function()? onTapFirstButton,
-    Function()? onTapSecondButton,
+    required Function() onTapFirstButton,
+    required Function() onTapSecondButton,
     TextStyle? secondButtonStyle,
     TextStyle? firstButtonStyle,
     bool showContentSvg = false,
@@ -190,7 +190,10 @@ class Utility {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: onTapFirstButton,
+                        onTap: () {
+                          Utility.closeDialog();
+                          onTapFirstButton();
+                        },
                         child: Container(
                           height: Dimens.forty,
                           width: Dimens.hundredForty,
@@ -207,7 +210,10 @@ class Utility {
                         ),
                       ),
                       GestureDetector(
-                        onTap: onTapSecondButton,
+                        onTap: () {
+                          Utility.closeDialog();
+                          onTapSecondButton();
+                        },
                         child: Container(
                           height: Dimens.forty,
                           width: Dimens.hundredForty,

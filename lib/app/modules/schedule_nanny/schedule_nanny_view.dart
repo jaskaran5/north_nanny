@@ -240,7 +240,7 @@ class ScheduleNannyView extends StatelessWidget {
                   selectedItem: '${TranslationKeys.typeOfServices.tr} ',
                   itemBuilderPhysics: const ScrollPhysics(),
                   onChanged: (value) {},
-                  maxHeight: Dimens.twoHundredFifty,
+                  maxHeight: Dimens.twoHundredSeventy,
                   baseTextStyle: AppStyles.ubHintColor15W500,
                   prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
                   items: [
@@ -292,8 +292,9 @@ class ScheduleNannyView extends StatelessWidget {
                   onChanged: (value) {},
                   baseTextStyle: AppStyles.ubHintColor15W500,
                   prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                  items: const ['Alexander', 'Oliver', 'add',],
+                  items: const ['Select all','Alexander', 'Oliver', 'add',],
                   itemBuilderPhysics: const ScrollPhysics(),
+                  maxHeight: Dimens.twoHundred,
                   itemBuilder: (context, item, isSelected) {
                     return Visibility(
                       visible: item!="add",

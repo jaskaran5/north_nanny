@@ -274,7 +274,7 @@ class CalenderView extends StatelessWidget {
                                             ),
                                             Dimens.boxHeight4,
                                             SizedBox(
-                                              width: Dimens.oneHundredFifty,
+                                              width: Dimens.oneHundredEightyTwo,
                                               child: AppText(
                                                 text:
                                                     'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.',

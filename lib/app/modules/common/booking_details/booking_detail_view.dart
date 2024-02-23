@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/send_tip_view/send_tip_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -45,10 +46,18 @@ class BookingDetailView extends StatelessWidget {
                         secondButtonTitle: 'Yes',
                         onTapFirstButton: () => Get.back(),
                         onTapSecondButton: () {
-                          Utility.closeDialog();
                           Utility.showAlertDialog(
                             title: 'Confirmations!',
                             firstButtonTitle: 'Send Tip',
+                            onTapFirstButton: () {
+                              Get.to(
+                                SendTipView(
+                                    userName: 'Christina Wang, F',
+                                    image: '',
+                                    amountTextEditingController:
+                                        TextEditingController()),
+                              );
+                            },
                             onTapSecondButton: () {
                               Get.to(const RatingReviewView());
                             },

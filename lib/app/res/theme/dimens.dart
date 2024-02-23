@@ -109,6 +109,7 @@ class Dimens {
   static final Widget boxWidth20 = SizedBox(width: twenty);
   static final Widget boxWidth24 = SizedBox(width: twentyFour);
   static final Widget boxWidth32 = SizedBox(width: thirtyTwo);
+  static final Widget boxWidth55 = SizedBox(width: fiftyFive);
 
   static const EdgeInsets edgeInsets0 = EdgeInsets.zero;
   static final EdgeInsets edgeInsets2 = EdgeInsets.all(two);

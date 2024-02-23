@@ -84,7 +84,7 @@ var en = <String, String>{
   TranslationKeys.pricing: 'Pricing',
   TranslationKeys.aFixedHourlyRate:
       'A fixed hourly rate based on the number of children you are caring for:',
-  TranslationKeys.hourlyRate: 'Hourly Rate',
+  TranslationKeys.hourlyRate: 'Hourly rate',
   TranslationKeys.children: 'children',
   TranslationKeys.houseKeeping: 'Housekeeping',
   TranslationKeys.driving: 'Driving',

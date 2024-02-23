@@ -62,11 +62,23 @@ class CustomTrackerTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppText(
-                      text: name,
-                      style: AppStyles.ubWhite14700,
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
+                    Row(
+                     mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AppText(
+                          text: name,
+                          style: AppStyles.ubWhite14700,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                        ),
+                       Dimens.boxWidth55,
+                        GestureDetector(
+                          onTap: onTapSvg,
+                          child: SvgPicture.asset(
+                            svgPath,
+                          ),
+                        ),
+                      ],
                     ),
                     Dimens.boxHeight4,
                     Row(
@@ -90,7 +102,7 @@ class CustomTrackerTile extends StatelessWidget {
                     ),
                     Dimens.boxHeight4,
                     SizedBox(
-                      width: Dimens.oneHundredFifty,
+                      width: Dimens.oneHundredEightyTwo,
                       child: AppText(
                         text: description,
                         maxLines: 4,
@@ -99,13 +111,6 @@ class CustomTrackerTile extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-                Dimens.boxWidth16,
-                GestureDetector(
-                  onTap: onTapSvg,
-                  child: SvgPicture.asset(
-                    svgPath,
-                  ),
                 ),
               ],
             ),
@@ -147,6 +152,7 @@ class CustomTrackerTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimens.ten),
               ),
+              child: Image.asset(Assets.imagesMap),
             ),
           ],
         ),

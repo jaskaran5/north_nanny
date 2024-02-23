@@ -56,6 +56,7 @@ class Assets {
   static const String iconsLocationDot = 'assets/icons/location_dot.svg';
   static const String iconsLock = 'assets/icons/lock.svg';
   static const String iconsLogout = 'assets/icons/logout.svg';
+  static const String iconsMap = 'assets/icons/map.svg';
   static const String iconsMapView = 'assets/icons/map_view.svg';
   static const String iconsMessage = 'assets/icons/message.svg';
   static const String iconsMessageFilled = 'assets/icons/message_filled.svg';
@@ -97,6 +98,7 @@ class Assets {
   static const String iconsUncheckCircle = 'assets/icons/uncheck_circle.svg';
   static const String iconsUpload = 'assets/icons/upload.svg';
   static const String iconsUserTag = 'assets/icons/user_tag.svg';
+  static const String imagesMap = 'assets/images/map.png';
   static const String imagesStar = 'assets/images/star.png';
   static const String imagesUserAvatar = 'assets/images/user_avatar.png';
   static const String playfairDisplayPlayfairDisplayBlack = 'assets/fonts/playfairDisplay/PlayfairDisplay-Black.ttf';
