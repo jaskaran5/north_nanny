@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
-import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 
 class LogInController extends GetxController {
-
-
-  RxString loginType=''.obs; 
+  String loginType = '';
   @override
   void onInit() {
     checkLoginType();
@@ -16,11 +13,9 @@ class LogInController extends GetxController {
     super.onInit();
   }
 
-  checkLoginType(){
-
- loginType=Storage.getValue(StringConstants.loginType);
- update();
-
+  checkLoginType() {
+    loginType = Storage.getValue(StringConstants.loginType);
+    update();
   }
 
   /// check user Type.

@@ -241,7 +241,7 @@ class SignUpView extends StatelessWidget {
                             onTap: () async {
                               Get.focusScope?.unfocus();
 
-                              if(controller.loginType.value==StringConstants.parents){
+                              if(controller.loginType.value==StringConstants.customer){
                              controller.   redirectToCreateProfileParents();
 
 

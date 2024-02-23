@@ -163,7 +163,7 @@ class LogInView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (controller.loginType.value == StringConstants.parents)
+                  if (controller.loginType == StringConstants.customer)
                     Column(
                       children: [
                         Row(

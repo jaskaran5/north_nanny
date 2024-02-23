@@ -46,9 +46,9 @@ class ChooseBabySitterView extends StatelessWidget {
                       onTap: ()async {
       
                         log("==>> ${StringConstants.loginType}");
-                        log("==>> ${StringConstants.parents}");
+                        log("==>> ${StringConstants.customer}");
       
-                       await Storage.saveValue(StringConstants.loginType, StringConstants.parents);
+                       await Storage.saveValue(StringConstants.loginType, StringConstants.customer);
                         RouteManagement.goToSignUp();
                       },
                     ),
