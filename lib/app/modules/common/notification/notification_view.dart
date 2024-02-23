@@ -10,6 +10,7 @@ import '../../../res/theme/dimens.dart';
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key});
 
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: CustomAppbarWidget(
