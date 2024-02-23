@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/data/local/db_wrapper.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/constants.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -17,7 +16,8 @@ class Utility {
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
   static bool? isNannyInterFace()  {
-    return DBWrapper().getBoolValue(StringConstants.isNanny);
+    return null;
+  
   }
 
   /// Returns true if the internet connection is available.

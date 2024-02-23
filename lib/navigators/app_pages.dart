@@ -39,6 +39,8 @@ class AppPages {
   static const initial = Routes.splash;
 
   static final pages = [
+
+    /** SPLASH VIEW */
     GetPage<SplashView>(
       name: Routes.splash,
       transitionDuration: transitionDuration,
@@ -46,6 +48,9 @@ class AppPages {
       binding: SplashBinding(),
       transition: Transition.rightToLeft,
     ),
+
+    /** CHOOSE BABY SITTER VIEW */
+
     GetPage<ChooseBabySitterView>(
       name: Routes.chooseBabySitter,
       transitionDuration: transitionDuration,
@@ -53,6 +58,9 @@ class AppPages {
       binding: ChooseBabySitterBinding(),
       transition: Transition.leftToRight,
     ),
+
+    /** SIGN UP VIEW */
+
     GetPage<SignUpView>(
       name: Routes.signUp,
       transitionDuration: transitionDuration,
@@ -60,6 +68,9 @@ class AppPages {
       binding: SignUpBinding(),
       transition: Transition.rightToLeft,
     ),
+
+    /** LOGIN VIEW */
+
     GetPage<LogInView>(
       name: Routes.logIn,
       transitionDuration: transitionDuration,

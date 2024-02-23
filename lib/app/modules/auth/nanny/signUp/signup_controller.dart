@@ -1,11 +1,42 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
 
 class SignupViewController extends GetxController {
-  SignupViewController();
+
+  RxString loginType=''.obs;
+
+@override
+  void onInit()async {
+    getLoginType();
+
+    super.onInit();
+  }
+
+  getLoginType()async{
+     loginType.value= await Storage.getValue(StringConstants.loginType);
+
+log("login type is:-->> ${loginType.value}");
+update();
+
+  }
+
+  /// Redirect to create profile screen
+
+  redirectToCreateProfileParents(){
+  Get.to(
+CreateProfileView(),
+ );
+
+  }
+
 
 
   final emailTextEditingController = TextEditingController();
@@ -56,4 +87,6 @@ class SignupViewController extends GetxController {
   //     log("check image is  null -->$editPickedImage");
   //   }
   // }
+
+  
 }

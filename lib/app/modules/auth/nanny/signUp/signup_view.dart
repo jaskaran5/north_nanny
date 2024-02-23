@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -13,13 +14,10 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 
-import 'package:northshore_nanny_flutter/app/modules/common/privacy_policy/privacy_policy_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 
-import 'package:northshore_nanny_flutter/app/modules/common/terms_and_conditions/terms_and_condition_view.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../../../utils/utility.dart';
-import '../../customer/customer_views/create_profile/create_profile_view.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -184,16 +182,18 @@ class SignUpView extends StatelessWidget {
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
                                               Get.to(
-                                                TermAndCondition(
-                                                  appBarTitle: TranslationKeys
-                                                      .termAndConditions.tr,
-                                                  termsText:
-                                                      ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                                                  termsSecondText:
-                                                      '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
-                                                  headingText:
-                                                      'It was popularised in the 1960s with',
-                                                ),
+
+                                                const CommonWebView()
+                                                // TermAndCondition(
+                                                //   appBarTitle: TranslationKeys
+                                                //       .termAndConditions.tr,
+                                                //   termsText:
+                                                //       ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
+                                                //   termsSecondText:
+                                                //       '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
+                                                //   headingText:
+                                                //       'It was popularised in the 1960s with',
+                                                // ),
                                               );
                                             },
                                         ),
@@ -208,16 +208,18 @@ class SignUpView extends StatelessWidget {
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
                                               Get.to(
-                                                PrivacyPolicyView(
-                                                  appBarTitle: TranslationKeys
-                                                      .privacyPolicy.tr,
-                                                  privacyText:
-                                                      ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                                                  privacySecondText:
-                                                      '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
-                                                  headingText:
-                                                      'It was popularised in the 1960s with',
-                                                ),
+
+                                                       const CommonWebView()
+                                                // PrivacyPolicyView(
+                                                //   appBarTitle: TranslationKeys
+                                                //       .privacyPolicy.tr,
+                                                //   privacyText:
+                                                //       ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
+                                                //   privacySecondText:
+                                                //       '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
+                                                //   headingText:
+                                                //       'It was popularised in the 1960s with',
+                                                // ),
                                               );
                                             },
                                         ),
@@ -238,15 +240,28 @@ class SignUpView extends StatelessWidget {
                             backGroundColor: AppColors.navyBlue,
                             onTap: () async {
                               Get.focusScope?.unfocus();
-                              var isNanny = await Utility.isNannyInterFace();
-                              debugPrint('------isNanny:$isNanny');
-                              if (isNanny == false) {
-                                Get.to(
-                                  CreateProfileView(),
-                                );
-                              } else {
+
+                              if(controller.loginType.value==StringConstants.parents){
+                             controller.   redirectToCreateProfileParents();
+
+
+                              }else{
                                 RouteManagement.goToCreateNannyProfile();
+
+
                               }
+
+
+
+                              // // var isNanny = await Utility.isNannyInterFace();
+                              // debugPrint('------isNanny:$isNanny');
+                              // if (isNanny == false) {
+                              //   Get.to(
+                              //     CreateProfileView(),
+                              //   );
+                              // } else {
+                              //   RouteManagement.goToCreateNannyProfile();
+                              // }
                             },
                           ),
                         ],

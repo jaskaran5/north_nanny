@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:northshore_nanny_flutter/app/utils/initializers.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 
-import 'app/data/local/db_wrapper.dart';
-import 'app/data/local/managers/shared_preferences_manager.dart';
+
 
 void main() async {
   await _setup();
+
+
   runApp(const MyApp());
 }
 
 //
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Get.put(DeviceConfig()).init();
-  Get.lazyPut(SharedPreferencesManager.new);
-  // await Future.wait([
-  //   AppConfig.init(
-  //     const EnvConfig(
-  //       appTitle: AppConstants.appName,
-  //       appFlavor: AppFlavor.dev,
-  //     ),
-  //   ),
-    Get.put<DBWrapper>(DBWrapper()).init();
-  // ]);
-  // Get.put<ApiWrapper>(ApiWrapper());
+     await GetStorage.init();
+
 }
 
 class MyApp extends StatefulWidget {
@@ -41,15 +33,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    setTheSystemOrientation();
   }
 
-  /// used to set app orientation.
-  setTheSystemOrientation() async {
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-  }
+
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
@@ -66,6 +52,7 @@ class _MyAppState extends State<MyApp> {
           translations: TranslationsFile(),
           getPages: AppPages.pages,
           initialRoute: AppPages.initial,
+          initialBinding: InitialBindings(),
         ),
       );
 }

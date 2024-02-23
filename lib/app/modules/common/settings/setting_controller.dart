@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 
 import '../../../res/constants/assets.dart';
 
@@ -113,4 +114,11 @@ class SettingController extends GetxController {
       "isExpand": false,
     }
   ].obs;
+
+
+/// REDIRECT TO COMMON WEB VIEW
+  redirectToCommonWebView(){
+Get.to(()=>const CommonWebView());
+
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import '../res/constants/constants.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
+
 
 class AppLog {
   ///This Constructor of `AppLog` take 2 parameters

@@ -5,8 +5,14 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    
     startOnInit();
+
+    
   }
+
+
 
   // var isLoggedIn = false;
 

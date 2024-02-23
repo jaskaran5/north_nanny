@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_controller.dart';
 
 class SplashBinding extends Bindings {
@@ -7,5 +8,6 @@ class SplashBinding extends Bindings {
     Get.lazyPut<SplashController>(
       () => SplashController(),
     );
+
   }
 }
