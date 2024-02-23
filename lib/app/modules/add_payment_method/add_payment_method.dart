@@ -142,7 +142,8 @@ class AddPaymentMethod extends StatelessWidget {
                       headerStyle: AppStyles.ubDarkBlackColor24W700,
                       subHeader: TranslationKeys.notificationNannyAccept.tr,
                       onTapButton: () {
-                        RouteManagement.goToOffAllHome();
+                        RouteManagement.goToOffAllDashboard(
+                            isFromSetting: false);
                       },
                       subTitleStyle: AppStyles.ubGrey16W500,
                       subHeaderMaxLines: 2,

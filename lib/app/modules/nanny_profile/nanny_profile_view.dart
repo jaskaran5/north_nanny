@@ -185,7 +185,7 @@ Widget servicesView({List<String>? rateList}) => Padding(
                                 heading: Services.values[index].serviceName.tr,
                                 description: Services
                                     .values[index].serviceDescription.tr,
-                                headingSvg: Assets.iconsHeartOutline,
+                                headingSvg: Assets.iconsRemoveBottomSheet,
                               ),
                               barrierColor: AppColors.greyColor.withOpacity(.2),
                             );

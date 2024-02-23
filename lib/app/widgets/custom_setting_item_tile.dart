@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
+import '../res/theme/dimens.dart';
+
 class CustomSettingItemTile extends StatelessWidget {
   final void Function()? onTap;
   final String text;
@@ -19,43 +21,44 @@ class CustomSettingItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          height: 60,
-          child: Card(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            color: AppColors.primaryColor,
-            elevation: 0,
-            margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    leadingIcon,
-                    height: 28,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    text,
-                    style: AppStyles.ubBlack14W600,
-                  ),
-                  const Spacer(),
-                  SvgPicture.asset(trallingIcon),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                ],
-              ),
+      onTap: onTap,
+      child: Container(
+        padding: Dimens.edgeInsets16,
+        margin: Dimens.edgeInsetsT10,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(Dimens.ten),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.settingBackgroundColor.withOpacity(.18),
+              blurRadius: Dimens.fifteen,
             ),
-          ),
-        ));
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  leadingIcon,
+                  height: Dimens.twentyFour,
+                  width: Dimens.twentyFour,
+                ),
+                Dimens.boxWidth10,
+                Text(
+                  text,
+                  style: AppStyles.ubBlack14W600,
+                  maxLines: 1,
+                ),
+              ],
+            ),
+            SvgPicture.asset(trallingIcon),
+          ],
+        ),
+      ),
+    );
   }
 }

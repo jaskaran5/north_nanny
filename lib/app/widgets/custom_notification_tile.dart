@@ -10,7 +10,8 @@ class CustomNotificationTile extends StatelessWidget {
     required this.notificationHeading,
     required this.notificationSubHeading,
     required this.notificationTime,
-    required this.isNotificationRead, required this.containerColor,
+    required this.isNotificationRead,
+    required this.containerColor,
   });
 
   final String notificationHeading;
@@ -25,7 +26,7 @@ class CustomNotificationTile extends StatelessWidget {
         margin: Dimens.edgeInsetsB16,
         height: Dimens.hundredFortyFive,
         decoration: BoxDecoration(
-          color:containerColor,
+          color: containerColor,
           borderRadius: BorderRadius.circular(Dimens.fourteen),
           border: Border.all(
             color: AppColors.d8E6F6BorderColor,
@@ -33,9 +34,9 @@ class CustomNotificationTile extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.notificationBackgroundColor,
-              blurRadius: Dimens.three,
-            )
+                color: AppColors.lightNavyBlue.withOpacity(.18),
+                blurRadius: Dimens.sixty,
+                offset: Offset(Dimens.zero, Dimens.four))
           ],
         ),
         child: Column(

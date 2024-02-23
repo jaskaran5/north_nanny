@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
@@ -23,51 +24,49 @@ class CustomSettingProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          height: 70,
-          child: Card(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            color: AppColors.primaryColor,
-            elevation: 0,
-            margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-              ),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const CustomCacheNetworkImage(img: '', size: 40),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: AppStyles.ubBlack15W600,
-                      ),
-                      Text(
-                        subtitle,
-                        style: AppStyles.ubGrey12W500,
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  SvgPicture.asset(trailingIcon),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                ],
-              ),
+      onTap: onTap,
+      child: Container(
+        padding: Dimens.edgeInsets16,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(Dimens.ten),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.settingBackgroundColor.withOpacity(.18),
+              blurRadius: Dimens.fifteen,
             ),
-          ),
-        ));
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomCacheNetworkImage(img: '', size: Dimens.forty),
+                Dimens.boxWidth10,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: AppStyles.ubBlack15W600,
+                    ),
+                    Text(
+                      subtitle,
+                      style: AppStyles.ubGrey12W500,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SvgPicture.asset(trailingIcon),
+          ],
+        ),
+      ),
+    );
   }
 
   // @override

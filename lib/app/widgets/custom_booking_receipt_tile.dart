@@ -12,12 +12,16 @@ class CustomBookingReceiptTile extends StatelessWidget {
       required this.receiptHeader,
       required this.receiptDetailsList,
       required this.totalPriceReceived,
-      required this.receiptPricesList});
+      required this.receiptPricesList,
+      this.shoBorder=true,
+      this.showHeader=true});
 
   final String receiptHeader;
   final int totalPriceReceived;
   final List<String> receiptDetailsList;
   final List<int> receiptPricesList;
+  final bool shoBorder;
+  final bool showHeader;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -27,11 +31,12 @@ class CustomBookingReceiptTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             Dimens.fourteen,
           ),
-          border: Border.all(color: AppColors.navyBlue, width: Dimens.two),
+          border:shoBorder? Border.all(color: AppColors.navyBlue, width: Dimens.two):null,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if(showHeader)...[
             AppText(
               text: receiptHeader,
               style: AppStyles.ubBlack14W700,
@@ -39,6 +44,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Dimens.boxHeight10,
+            ],
             ...List.generate(
               receiptDetailsList.length,
               (index) => Padding(

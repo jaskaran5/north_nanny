@@ -84,7 +84,7 @@ class HomeCustomListView extends StatelessWidget {
                             SvgPicture.asset(Assets.iconsStar),
                             RichText(
                               text: TextSpan(
-                                text: rating,
+                                text: '$rating ',
                                 style: AppStyles.ubBlack12W500,
                                 children: [
                                   TextSpan(
@@ -123,7 +123,7 @@ class HomeCustomListView extends StatelessWidget {
                       servicesList.length,
                       (index) => Container(
                         height: Dimens.twentyFive,
-                        padding: Dimens.edgeInsets6,
+                        padding: Dimens.edgeInsetsL12T6R12B6,
                         margin: Dimens.edgeInsetsR16,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
