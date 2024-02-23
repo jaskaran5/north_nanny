@@ -1,3 +1,70 @@
-PODFILE CHECKSUM: f7013b2a17970a462c6b72b9caa9c2d7aed8ddc5
+PODS:
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - google_maps_flutter_ios (0.0.1):
+    - Flutter
+    - GoogleMaps (< 9.0)
+  - GoogleMaps (6.2.1):
+    - GoogleMaps/Maps (= 6.2.1)
+  - GoogleMaps/Base (6.2.1)
+  - GoogleMaps/Maps (6.2.1):
+    - GoogleMaps/Base
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - sqflite (0.0.3):
+    - Flutter
+    - FlutterMacOS
+  - Toast (4.1.0)
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
 
-COCOAPODS: 1.15.0
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite (from `.symlinks/plugins/sqflite/darwin`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+
+SPEC REPOS:
+  trunk:
+    - GoogleMaps
+    - Toast
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  google_maps_flutter_ios:
+    :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/darwin"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
+  google_maps_flutter_ios: d1318b4ff711612cab16862d7a87e31a7403d458
+  GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
+  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
+  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
+
+PODFILE CHECKSUM: aabe5ac76e8922bd6783d250f2fedd57960b9a1f
+
+COCOAPODS: 1.14.3
