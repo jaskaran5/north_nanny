@@ -19,6 +19,7 @@ class CustomeReectChatListTile extends StatelessWidget {
               onTap: () {
                 controller.redirectToChatScreen();
               },
+              //======//
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
