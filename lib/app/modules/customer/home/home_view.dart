@@ -72,6 +72,10 @@ class HomeView extends StatelessWidget {
                                 ),
                                 child: SvgPicture.asset(
                                   Assets.iconsFillterIcon,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
+                                  colorFilter: const ColorFilter.mode(
+                                      Colors.black, BlendMode.srcIn),
                                 ),
                               ),
                             ),
@@ -96,9 +100,9 @@ class HomeView extends StatelessWidget {
                                   ],
                                 ),
                                 child: SvgPicture.asset(
-                                  Assets.iconsSearch,
-                                  colorFilter: const ColorFilter.mode(
-                                      AppColors.blackColor, BlendMode.srcIn),
+                                  Assets.iconsHomeSearchIcon,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
                                 ),
                               ),
                             ),

@@ -38,7 +38,7 @@ class ContactUsView extends StatelessWidget {
                   SizedBox(
                     height: Get.height * .1,
                   ),
-
+             //======//
                   /** Email  */
                   TextField(
                     controller: controller.emailTextEditingController,
@@ -88,13 +88,15 @@ class ContactUsView extends StatelessWidget {
                   TextField(
                     keyboardType: TextInputType.multiline,
                     controller: controller.messageTextEditingController,
-                    maxLines: 2,
-                    minLines: 2,
+
+
+                    maxLines: null,
+                    minLines: 3,
                     decoration: customFieldDeco(
                       hintStyle: AppStyles.ubHintColor15W500,
                       hintText: TranslationKeys.message.tr,
                       prefixWidget: Padding(
-                        padding: Dimens.edgeInsets12,
+                        padding: Dimens.edgeInsets0.copyWith(bottom: Dimens.thirtyFive),
                         child: SvgPicture.asset(
                           Assets.iconsAboutUs,
                           height: Dimens.twentyFour,

@@ -129,8 +129,8 @@ class Dimens {
   static final EdgeInsets edgeInsetsB55 = EdgeInsets.only(bottom: fiftyFive);
 
   static final EdgeInsets edgeInsetsL4 = EdgeInsets.only(left: four);
-  static final EdgeInsets edgeInsetsL6T10R6B10 =
-      EdgeInsets.only(left: six, top: ten, right: six, bottom: ten);
+  static final EdgeInsets edgeInsetsL12T6R12B6 =
+      EdgeInsets.only(left: twelve, top: six, right: twelve, bottom: six);
   static final EdgeInsets edgeInsetsL10T10R16B10 =
       EdgeInsets.only(left: ten, top: ten, right: sixteen, bottom: ten);
   static final EdgeInsets edgeInsetsT16R16 =

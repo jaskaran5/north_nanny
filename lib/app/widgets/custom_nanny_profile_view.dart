@@ -72,7 +72,7 @@ class CustomNannyProfileView extends StatelessWidget {
                       children: [
                         TextSpan(
                           text:
-                              '(${totalReview.toString()} ${TranslationKeys.reviews.tr})',
+                              ' (${totalReview.toString()} ${TranslationKeys.reviews.tr})',
                           style: AppStyles.ubGrey12W400,
                         )
                       ],
@@ -94,7 +94,7 @@ class CustomNannyProfileView extends StatelessWidget {
                   servicesList?.length ?? 0,
                   (index) => Container(
                     height: Dimens.twentyEight,
-                    padding: Dimens.edgeInsets6,
+                    padding: Dimens.edgeInsetsL12T6R12B6,
                     margin: Dimens.edgeInsetsR16,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(

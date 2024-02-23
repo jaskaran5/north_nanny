@@ -13,6 +13,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../res/theme/colors.dart';
 import '../../res/theme/styles.dart';
 import '../../widgets/app_text.dart';
+import '../../widgets/custom_booking_receipt_tile.dart';
 import '../../widgets/custom_drop_down.dart';
 
 class ScheduleNannyView extends StatelessWidget {
@@ -239,10 +240,16 @@ class ScheduleNannyView extends StatelessWidget {
                   selectedItem: '${TranslationKeys.typeOfServices.tr} ',
                   itemBuilderPhysics: const ScrollPhysics(),
                   onChanged: (value) {},
-                  maxHeight: Dimens.oneHundredFifty,
+                  maxHeight: Dimens.twoHundredFifty,
                   baseTextStyle: AppStyles.ubHintColor15W500,
                   prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
-                  items: Services.values,
+                  items: [
+                    Services.homeWorkHelp.name,
+                    Services.driving.name,
+                    Services.petCare.name,
+                    Services.homeWorkHelp.name,
+                    Services.funActivityOutHouse.name,
+                  ],
                   itemBuilder: (context, item, isSelected) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,7 +267,7 @@ class ScheduleNannyView extends StatelessWidget {
                                 style: AppStyles.ubNavyBlue15W600,
                               ),
                               // item == controller.selectedGender
-                              //     ? SvgPicture.asset(Assets.iconsCircleTick)
+                              SvgPicture.asset(Assets.iconsCircleTick)
                               //     : Dimens.box0,
                             ],
                           ),
@@ -285,40 +292,55 @@ class ScheduleNannyView extends StatelessWidget {
                   onChanged: (value) {},
                   baseTextStyle: AppStyles.ubHintColor15W500,
                   prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                  items: const ['Alexander', 'Oliver'],
+                  items: const ['Alexander', 'Oliver', 'add',],
+                  itemBuilderPhysics: const ScrollPhysics(),
                   itemBuilder: (context, item, isSelected) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: Dimens.edgeInsetsH20V15,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppText(
-                                text: item.toString().tr,
-                                maxLines: 1,
-                                textAlign: TextAlign.start,
-                                style: AppStyles.ubNavyBlue15W600,
-                              ),
-                              // item == controller.selectedGender
-                              //     ? SvgPicture.asset(Assets.iconsCircleTick)
-                              //     : Dimens.box0,
-                            ],
+                    return Visibility(
+                      visible: item!="add",
+                      replacement:  Padding(
+                        padding: Dimens.edgeInsets16,
+                        child: Center(
+                          child: AppText(
+                            text: '+ Add kids',
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: AppStyles.ubNavyBlue15W600,
                           ),
                         ),
-                        // item != controller.genderList.last
-                        //     ? Dimens.boxHeight2
-                        //     : Dimens.box0,
-                        // item != controller.genderList.last
-                        //     ?
-                        Divider(
-                          color: AppColors.dividerColor,
-                          height: Dimens.two,
-                        )
-                        // : Dimens.box0,
-                      ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: Dimens.edgeInsetsH20V15,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppText(
+                                  text: item.toString().tr,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.start,
+                                  style: AppStyles.ubNavyBlue15W600,
+                                ),
+                                // item == controller.selectedGender
+                                SvgPicture.asset(Assets.iconsCircleTick)
+                                //     : Dimens.box0,
+                              ],
+                            ),
+                          ),
+                          // item != controller.genderList.last
+                          //     ? Dimens.boxHeight2
+                          //     : Dimens.box0,
+                          // item != controller.genderList.last
+                          //     ?
+                          Divider(
+                            color: AppColors.dividerColor,
+                            height: Dimens.two,
+                          )
+                          // : Dimens.box0,
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -338,50 +360,18 @@ class ScheduleNannyView extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ...List.generate(
-                        4,
-                        (index) => Container(
-                          padding: Dimens.edgeInsets10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppText(
-                                text: 'HouseKeeping',
-                                style: AppStyles.ubGrey15W500,
-                                maxLines: 1,
-                                textAlign: TextAlign.start,
-                              ),
-                              AppText(
-                                text: '\$10',
-                                style: AppStyles.ubGrey15W500,
-                                maxLines: 1,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: Dimens.edgeInsets10,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText(
-                              text: 'Total',
-                              style: AppStyles.ubBlack15W600,
-                              maxLines: 1,
-                            ),
-                            AppText(
-                              text: '\$112',
-                              style: AppStyles.ubBlack15W600,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                      ),
+                  child:const CustomBookingReceiptTile(
+                    receiptHeader: 'Receipt',
+                    receiptDetailsList:  [
+                      'Housekeeping',
+                      'Driving',
+                      '2 children',
+                      'Total Time: 4 Hours',
                     ],
+                    shoBorder: false,
+                    showHeader: false,
+                    totalPriceReceived: 112,
+                    receiptPricesList: [10,10,23,92,],
                   ),
                 ),
                 Dimens.boxHeight16,

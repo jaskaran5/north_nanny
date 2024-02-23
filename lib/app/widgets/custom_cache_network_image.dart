@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 
 class CustomCacheNetworkImage extends StatelessWidget {
   final String img;
@@ -16,10 +18,15 @@ class CustomCacheNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     log("image value is:------>>>. $img");
     return ((img == '') || (img == '-') || (img.isEmpty))
-        ? CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: size / 2,
-            backgroundImage: const AssetImage('assets/images/user_avatar.png'),
+        ? SizedBox(
+            height: size,
+            width: size,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: Dimens.hundred,
+              backgroundImage:
+                  const AssetImage(Assets.iconsImage),
+            ),
           )
         : CachedNetworkImage(
             imageUrl: img,
