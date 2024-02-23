@@ -88,7 +88,7 @@ class ContactUsView extends StatelessWidget {
                   TextField(
                     keyboardType: TextInputType.multiline,
                     controller: controller.messageTextEditingController,
-                    maxLines: null,
+                    maxLines: 2,
                     minLines: 2,
                     decoration: customFieldDeco(
                       hintStyle: AppStyles.ubHintColor15W500,

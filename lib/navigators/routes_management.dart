@@ -102,6 +102,20 @@ abstract class RouteManagement {
     );
   }
 
+  /// Go to Rating and Review  Screen
+  static void goToChnagePasswordScreen() {
+    Get.toNamed(
+      Routes.changePasswordView,
+    );
+  }
+
+  /// Go to Rating and Review  Screen
+  static void goToPasswordChangedScreen() {
+    Get.toNamed(
+      Routes.passwordChnagedView,
+    );
+  }
+
   /// Go to the Success  Screen
   static void goToSuccessView({
     Function()? onTapButton,

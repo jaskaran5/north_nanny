@@ -10,6 +10,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/das
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/change_password.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/password_changed.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
@@ -39,7 +41,6 @@ class AppPages {
   static const initial = Routes.splash;
 
   static final pages = [
-
     /** SPLASH VIEW */
     GetPage<SplashView>(
       name: Routes.splash,
@@ -99,20 +100,27 @@ class AppPages {
       binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
+    GetPage<ChnagePasswordView>(
+      name: Routes.changePasswordView,
+      transitionDuration: transitionDuration,
+      page: ChnagePasswordView.new,
+      binding: ForgotPasswordBinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage<CreateNannyProfileView>(
       name: Routes.createNannyProfile,
       transitionDuration: transitionDuration,
       page: CreateNannyProfileView.new,
-      binding: CreateNannyProfileBinding(),
+      binding: SettingBinding(),
       transition: Transition.rightToLeft,
     ),
-    // GetPage<HomeView>(
-    //   name: Routes.home,
-    //   transitionDuration: transitionDuration,
-    //   page: HomeView.new,
-    //   binding: HomeBinding(),
-    //   transition: Transition.rightToLeft,
-    // ),
+    GetPage<PasswordChangesView>(
+      name: Routes.passwordChnagedView,
+      transitionDuration: transitionDuration,
+      page: PasswordChangesView.new,
+      binding: SettingBinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage<FilterView>(
       name: Routes.filterView,
       transitionDuration: transitionDuration,
@@ -171,7 +179,7 @@ class AppPages {
 
     /** RATING AND REVIEW */
 
-    GetPage<FAQView>(
+    GetPage<RatingReviewView>(
       name: Routes.ratingReview,
       transitionDuration: transitionDuration,
       page: RatingReviewView.new,

@@ -8,6 +8,7 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rating_profile_tile.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_rating_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_write_review_tile.dart';
 
 import '../../../widgets/custom_rate_view.dart';
