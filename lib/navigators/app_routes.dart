@@ -23,6 +23,9 @@ class Routes {
   static const String ratingReview = Paths.ratingReview;
   static const String settingView = Paths.settingView;
   static const String favoriteView = Paths.favoriteView;
+  static const String manageChildProfile = Paths.manageChildProfile;
+  static const String addChildProfile = Paths.addChildProfile;
+  static const String editChildProfile = Paths.editChildProfile;
 }
 
 /// Paths give to the route.
@@ -49,4 +52,7 @@ class Paths {
   static const String ratingReview = '/rating-review';
   static const String settingView = '/setting-view';
   static const String favoriteView = '/Favorite-view';
+  static const String manageChildProfile = '/manage-child-profile';
+  static const String addChildProfile = '/add-child-profile';
+  static const String editChildProfile = '/edit-child-profile';
 }

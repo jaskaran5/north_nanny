@@ -99,6 +99,13 @@ abstract class RouteManagement {
     );
   }
 
+  /// Go to the Manage Child Profile  Screen
+  static void goToManageChildProfileScreen() {
+    Get.toNamed(
+      Routes.manageChildProfile,
+    );
+  }
+
   /// Go to Rating and Review  Screen
   static void goToRatingReviewScreen() {
     Get.toNamed(
@@ -111,7 +118,9 @@ abstract class RouteManagement {
     Get.toNamed(
       Routes.changePasswordView,
     );
-  } /// Go to favorite view  Screen
+  }
+
+  /// Go to favorite view  Screen
   static void goToFavoriteScreen() {
     Get.toNamed(
       Routes.favoriteView,

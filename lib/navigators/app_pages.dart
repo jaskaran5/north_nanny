@@ -16,6 +16,10 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/password_changed.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/components/add_child_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/components/edit_child_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 
@@ -202,6 +206,36 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: FavoriteView.new,
       binding: FavoriteBinding(),
+      transition: Transition.rightToLeft,
+    ),
+
+    /** Manage Child Profile */
+
+    GetPage<ManageChildProfileView>(
+      name: Routes.manageChildProfile,
+      transitionDuration: transitionDuration,
+      page: ManageChildProfileView.new,
+      binding: ManageChildProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+
+    /** add Child Profile */
+
+    GetPage<AddChildProfileView>(
+      name: Routes.addChildProfile,
+      transitionDuration: transitionDuration,
+      page: AddChildProfileView.new,
+      binding: ManageChildProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+
+    /** edit Child Profile */
+
+    GetPage<EditChildProfileView>(
+      name: Routes.editChildProfile,
+      transitionDuration: transitionDuration,
+      page: EditChildProfileView.new,
+      binding: ManageChildProfileBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

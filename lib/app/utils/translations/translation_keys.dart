@@ -73,6 +73,8 @@ class TranslationKeys {
   static const String skipForNow = 'skipForNow';
   static const String skip = 'skip';
   static const String createChildProfile = 'createChildProfile';
+  static const String addChildProfile = 'Add Child Profile';
+
   static const String nameOfChild = 'nameOfChild';
   static const String ageOfChild = 'ageOfChild';
   static const String anythingElse = 'anythingElse';

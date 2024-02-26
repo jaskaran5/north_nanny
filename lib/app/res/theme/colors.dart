@@ -34,4 +34,6 @@ class AppColors {
   static const Color chatTimeColor = Color(0xffAAA6B9);
   static const Color greenColor05B016 = Color(0xff05B016);
   static const Color d8E6F6BorderColor = Color(0xffD8E6F6);
+  static const Color fC3030RedColor = Color(0xffFC3030);
+  static const Color fFEAEARedColor = Color(0xffFFEAEA);
 }

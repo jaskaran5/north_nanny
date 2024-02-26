@@ -60,16 +60,22 @@ class SettingView extends StatelessWidget {
             log("index: $index");
             if (index == 0) {
               RouteManagement.goToFilterView();
+            } else if (index == 1) {
+              RouteManagement.goToManageChildProfileScreen();
+
+              log("click on index 1");
+            } else if (index == 2) {
+              log("click on index 2");
             } else if (index == 3) {
               RouteManagement.goToChnagePasswordScreen();
             } else if (index == 4) {
               controller.redirectToCommonWebView();
             } else if (index == 5) {
               Get.to(const InviteFriendsView());
-            } else if (index == 7) {
-              RouteManagement.goToRatingReviewScreen();
             } else if (index == 6) {
               RouteManagement.goToContactUs();
+            } else if (index == 7) {
+              RouteManagement.goToRatingReviewScreen();
             } else if (index == 8) {
               RouteManagement.goToFAQ();
             } else if (index == 9) {
