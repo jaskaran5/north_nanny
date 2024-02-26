@@ -3,41 +3,27 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
-
 class SignupViewController extends GetxController {
+  RxString loginType = ''.obs;
+  String imageUrl = '';
 
-  RxString loginType=''.obs;
-
-@override
-  void onInit()async {
+  @override
+  void onInit() async {
     getLoginType();
 
     super.onInit();
   }
 
-  getLoginType()async{
-     loginType.value= await Storage.getValue(StringConstants.loginType);
+  getLoginType() async {
+    loginType.value = await Storage.getValue(StringConstants.loginType);
 
-log("login type is:-->> ${loginType.value}");
-update();
-
+    log("login type is:-->> ${loginType.value}");
+    update();
   }
-
-  /// Redirect to create profile screen
-
-  redirectToCreateProfileParents(){
-  Get.to(
-CreateProfileView(),
- );
-
-  }
-
-
 
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
@@ -60,9 +46,6 @@ CreateProfileView(),
   List<String> genderList = GenderConstant.values
       .map((e) => e.genderName.capitalizeFirst.toString())
       .toList();
-
-  /// open gender dropDown,
-  bool? showGenderDropDown = false;
 
   /// selected Gender
   String? selectedGender = '';
@@ -87,6 +70,4 @@ CreateProfileView(),
   //     log("check image is  null -->$editPickedImage");
   //   }
   // }
-
-  
 }

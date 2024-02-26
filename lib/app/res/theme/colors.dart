@@ -10,6 +10,8 @@ class AppColors {
   static const Color navyBlue3288DE = Color(0xff3288DE);
 
   static const Color lightNavyBlue = Color(0xffDDEBF9);
+  static const Color colorEEF5FCLightNavyBlue = Color(0xffEEF5FC);
+  static const Color color549CE3lightNavyBlue = Color(0xff549CE3);
   static const Color checkBoxBorderColor = Color(0xffD4D9E2);
   static const Color greyColor = Color(0xff5E5F60);
   static const Color greyA1Color = Color(0xff8391A1);

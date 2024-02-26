@@ -43,7 +43,7 @@ class CustomSettingProfileTile extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomCacheNetworkImage(img: '', size: Dimens.forty),
+                CustomCacheNetworkImage(img: '', size: Dimens.forty, imageRadius: null, imageShape: null,),
                 Dimens.boxWidth10,
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -148,6 +148,8 @@ class AddPaymentMethod extends StatelessWidget {
                       subTitleStyle: AppStyles.ubGrey16W500,
                       subHeaderMaxLines: 2,
                       headerMaxLines: 2,
+                      successImage: '',
+                      sendTipText: false,
                     );
                   },
                 ),

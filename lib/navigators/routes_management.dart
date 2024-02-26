@@ -59,6 +59,13 @@ abstract class RouteManagement {
     );
   }
 
+  /// Go to the  create  Profile  Screen
+  static void goToCreateProfile() {
+    Get.toNamed<void>(
+      Routes.createProfileView,
+    );
+  }
+
   /// Go to the Home Screen
   static void goToOffAllHome() {
     Get.offAllNamed<void>(
@@ -88,7 +95,7 @@ abstract class RouteManagement {
   /// Go to the Contact us  Screen
   static void goToContactUs() {
     Get.toNamed(
-      Routes.conatactUs,
+      Routes.contactUs,
     );
   }
 
@@ -127,6 +134,20 @@ abstract class RouteManagement {
     );
   }
 
+  /// Go to My Profile view  Screen
+  static void goToMyProfileView() {
+    Get.toNamed(
+      Routes.myProfileView,
+    );
+  }
+
+  /// Go to Edit customer Profile view  Screen
+  static void goToEditProfileView() {
+    Get.toNamed(
+      Routes.ediProfileView,
+    );
+  }
+
   /// Go to the Success  Screen
   static void goToSuccessView({
     Function()? onTapButton,
@@ -137,8 +158,10 @@ abstract class RouteManagement {
     required String successSvg,
     required String header,
     required String subHeader,
+    required String successImage,
     required int subHeaderMaxLines,
     required int headerMaxLines,
+    required bool sendTipText,
   }) {
     Get.off(
       SuccessUnSuccessView(
@@ -152,6 +175,8 @@ abstract class RouteManagement {
         subHeaderStyle: subTitleStyle,
         subHeaderMaxLines: subHeaderMaxLines,
         headerMaxLines: headerMaxLines,
+        sendTipText: sendTipText,
+        successImage: successImage,
       ),
     );
   }

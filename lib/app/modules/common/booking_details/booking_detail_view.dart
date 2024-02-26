@@ -20,6 +20,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_booking_review.dart'
 import 'package:northshore_nanny_flutter/app/widgets/custom_bookng_service_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
 
+import '../../../../navigators/routes_management.dart';
 import '../../../res/theme/colors.dart';
 
 class BookingDetailView extends StatelessWidget {
@@ -55,7 +56,26 @@ class BookingDetailView extends StatelessWidget {
                                     userName: 'Christina Wang, F',
                                     image: '',
                                     amountTextEditingController:
-                                        TextEditingController()),
+                                        TextEditingController(),
+                                    onTapSubmitButton: () {
+                                      RouteManagement.goToSuccessView(
+                                        buttonText:
+                                            TranslationKeys.backToHome.tr,
+                                        successSvg: '',
+                                        header: TranslationKeys.thankYou.tr,
+                                        subHeader: TranslationKeys
+                                            .yourNannyTipReceived.tr,
+                                        onTapButton: () {
+                                          RouteManagement.goToOffAllDashboard(
+                                              isFromSetting: false);
+                                        },
+                                        subTitleStyle: AppStyles.ubGrey16W500,
+                                        subHeaderMaxLines: 2,
+                                        headerMaxLines: 2,
+                                        successImage: Assets.imagesPinkHeart,
+                                        sendTipText: true,
+                                      );
+                                    }),
                               );
                             },
                             onTapSecondButton: () {

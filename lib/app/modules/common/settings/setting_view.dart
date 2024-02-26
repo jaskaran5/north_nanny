@@ -35,7 +35,9 @@ class SettingView extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       CustomSettingProfileTile(
-                          onTap: () {},
+                          onTap: () {
+                            RouteManagement.goToMyProfileView();
+                          },
                           title: "Michael Jorden",
                           subtitle: "example@gmail.com",
                           img: "",
@@ -66,6 +68,7 @@ class SettingView extends StatelessWidget {
               log("click on index 1");
             } else if (index == 2) {
               log("click on index 2");
+              RouteManagement.goToFavoriteScreen();
             } else if (index == 3) {
               RouteManagement.goToChnagePasswordScreen();
             } else if (index == 4) {

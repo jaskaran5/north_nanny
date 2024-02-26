@@ -121,7 +121,7 @@ class NewPasswordView extends StatelessWidget {
                         },
                         subTitleStyle: AppStyles.ubGreyA116W500,
                         subHeaderMaxLines: 2,
-                        headerMaxLines: 1,
+                        headerMaxLines: 1, successImage: '', sendTipText: false,
                       );
                     },
                   ),

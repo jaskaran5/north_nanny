@@ -268,7 +268,7 @@ class AppStyles {
     fontSize: Dimens.eighteen,
     color: AppColors.blackColor,
   );
-  static TextStyle ubBlack0B0B18W600 = TextStyle(
+  static TextStyle ubBlack0B0B18W700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.eighteen,
