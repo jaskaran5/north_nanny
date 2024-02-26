@@ -33,8 +33,8 @@ class CustomNannyProfileView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: Dimens.ninty,
-              width: Dimens.ninty,
+              height: Dimens.ninety,
+              width: Dimens.ninety,
               padding: Dimens.edgeInsets2,
               decoration: BoxDecoration(
                 border: Border.all(

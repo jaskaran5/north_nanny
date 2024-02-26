@@ -11,7 +11,6 @@ import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
-import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -46,7 +45,7 @@ class ChatView extends StatelessWidget {
                               ),
                             ),
                             CustomCacheNetworkImage(
-                                img: '', size: Dimens.forty),
+                                img: '', size: Dimens.forty, imageRadius: null, imageShape: null,),
                             Dimens.boxWidth10,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

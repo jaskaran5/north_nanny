@@ -17,6 +17,7 @@ class HomeCustomListView extends StatelessWidget {
     required this.servicesList,
     required this.isHeartTapped,
     required this.heartSvg,
+    required this.onTapHeartIcon,
   });
 
   final String image;
@@ -27,10 +28,12 @@ class HomeCustomListView extends StatelessWidget {
   final String description;
   final List<String> servicesList;
   final bool isHeartTapped;
+  final Function() onTapHeartIcon;
 
   @override
   Widget build(BuildContext context) => ListView(
-        children: List.generate(3,
+        children: List.generate(
+          3,
           (index) => Container(
             height: Dimens.oneHundredEightyTwo,
             padding: Dimens.edgeInsets16,
@@ -50,8 +53,6 @@ class HomeCustomListView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
@@ -71,11 +72,28 @@ class HomeCustomListView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        AppText(
-                          text: name,
-                          style: AppStyles.ubBlack14W700,
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
+                        SizedBox(
+                          width: Dimens.oneHundredNinety,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppText(
+                                text: name,
+                                style: AppStyles.ubBlack14W700,
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                              ),
+                              GestureDetector(
+                                onTap: onTapHeartIcon,
+                                child: SvgPicture.asset(
+                                  isHeartTapped
+                                      ? Assets.iconsHeartFilled
+                                      : Assets.iconsHeartOutline,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Dimens.boxHeight4,
                         Row(
@@ -97,7 +115,7 @@ class HomeCustomListView extends StatelessWidget {
                         ),
                         Dimens.boxHeight4,
                         SizedBox(
-                          width: Dimens.oneHundredFifty,
+                          width: Dimens.oneHundredNinety,
                           child: AppText(
                             text: description,
                             maxLines: 4,
@@ -106,12 +124,6 @@ class HomeCustomListView extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                    Dimens.boxWidth16,
-                    SvgPicture.asset(
-                      isHeartTapped
-                          ? Assets.iconsHeartFilled
-                          : Assets.iconsHeartOutline,
                     ),
                   ],
                 ),

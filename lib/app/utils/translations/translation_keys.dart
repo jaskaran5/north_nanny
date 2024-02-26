@@ -154,4 +154,15 @@ class TranslationKeys {
   static const String trackLocation = 'trackLocation';
   static const String totalTimeLeft = 'totalTimeLeft';
   static const String favorites = 'favorites';
+  static const String address = 'address';
+  static const String myProfile = 'myProfile';
+  static const String phoneNumber = 'phoneNumber';
+  static const String editProfile = 'editProfile';
+  static const String contactUs = 'contactUs';
+  static const String save = 'save';
+  static const String haveGreatDay = 'haveGreatDay';
+  static const String thankYou = 'thankYou';
+  static const String nannyTeam = 'nannyTeam';
+  static const String paymentDetails = 'paymentDetails';
+  static const String yourNannyTipReceived = 'yourNannyTipReceived';
 }

@@ -18,11 +18,14 @@ class Routes {
   static const String chat = Paths.chat;
   static const String nannyProfileView = Paths.nannyProfileView;
   static const String dashboard = Paths.dashboard;
-  static const String conatactUs = Paths.conatactUs;
+  static const String contactUs = Paths.contactUs;
   static const String faq = Paths.faq;
   static const String ratingReview = Paths.ratingReview;
   static const String settingView = Paths.settingView;
   static const String favoriteView = Paths.favoriteView;
+  static const String createProfileView = Paths.createProfile;
+  static const String myProfileView = Paths.myProfile;
+  static const String ediProfileView = Paths.ediProfileView;
 }
 
 /// Paths give to the route.
@@ -44,9 +47,12 @@ class Paths {
   static const String chat = '/chat';
   static const String nannyProfileView = '/nanny-profile';
   static const String dashboard = '/dashboard';
-  static const String conatactUs = '/contact-us';
+  static const String contactUs = '/contact-us';
   static const String faq = '/faq';
   static const String ratingReview = '/rating-review';
   static const String settingView = '/setting-view';
   static const String favoriteView = '/Favorite-view';
+  static const String createProfile = '/create-Profile';
+  static const String myProfile = '/myProfile-view';
+  static const String ediProfileView = '/EditProfile-view';
 }

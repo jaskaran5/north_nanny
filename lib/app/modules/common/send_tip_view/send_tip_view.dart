@@ -30,7 +30,7 @@ class SendTipView extends StatelessWidget {
         body: Padding(
           padding: Dimens.edgeInsets16,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: Column(
@@ -62,28 +62,30 @@ class SendTipView extends StatelessWidget {
                 ),
               ),
               Dimens.boxHeight50,
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppText(
-                    text: '\$',
-                    maxLines: 1,
-                    style: AppStyles.ubNavyBlue40W600,
+              SizedBox(
+                width: Dimens.twoHundredTwenty,
+                child: TextField(
+                  style: AppStyles.ubNavyBlue40W800,
+                  maxLines: 1,
+                  maxLength: 10,
+                  cursorHeight: Dimens.forty,
+                  controller: amountTextEditingController,
+                  cursorColor: AppColors.navyBlue,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '100.00',
+                    hintStyle: AppStyles.ubNavyBlue40W800,
+                    counterText: '',
+                    focusedBorder: InputBorder.none,
+                    icon: AppText(
+                      text: '\$',
+                      maxLines: 1,
+                      style: AppStyles.ubNavyBlue40W600,
+                    ),
                   ),
-                  Dimens.boxWidth4,
-                  AppText(
-                    text: '100.00',
-                    maxLines: 1,
-                    style: AppStyles.ubNavyBlue40W800,
-                  ),
-                  // TextField(
-                  //   style: AppStyles.ubNavyBlue40W800,
-                  //   maxLines: 1,
-                  //   maxLength: 10,
-                  //   controller: amountTextEditingController,
-                  // ),
-                ],
+                  keyboardType: TextInputType.number,
+                ),
               ),
               const Spacer(),
               CustomButton(

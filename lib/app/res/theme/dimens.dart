@@ -50,15 +50,18 @@ class Dimens {
   static final double fiftyFive = 55.sp;
   static final double sixty = 60.sp;
   static final double sixtyFour = 64.sp;
+  static final double sixtyEight = 68.sp;
   static final double seventy = 70.sp;
   static final double seventyEight = 78.sp;
 
   static final double eighty = 80.sp;
   static final double eightyThree = 83.sp;
   static final double eightySix = 86.sp;
-  static final double ninty = 90.sp;
+  static final double ninety = 90.sp;
+  static final double ninetyFour = 94.sp;
 
   static final double hundred = 100.sp;
+  static final double hundredTwo = 102.sp;
   static final double hundredFive = 105.sp;
   static final double hundredEight = 108.sp;
   static final double hundredTen = 110.sp;
@@ -70,6 +73,7 @@ class Dimens {
   static final double oneHundredFifty = 150.sp;
   static final double oneHundredSeventy = 170.sp;
   static final double oneHundredEightyTwo = 182.sp;
+  static final double oneHundredNinety = 190.sp;
   static final double twoHundred = 200.sp;
   static final double twoHundredTwenty = 220.sp;
   static final double twoHundredFifty = 250.sp;

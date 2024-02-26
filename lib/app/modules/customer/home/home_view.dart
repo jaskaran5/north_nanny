@@ -212,6 +212,7 @@ class HomeView extends StatelessWidget {
                     servicesList: controller.homeCustomList,
                     isHeartTapped: false,
                     heartSvg: Assets.iconsHeartOutline,
+                    onTapHeartIcon: () {},
                   ),
                 ),
         ),

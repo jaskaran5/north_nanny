@@ -11,6 +11,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_setting_item_tile.da
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_profile_tile.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
+
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
 
@@ -35,7 +36,9 @@ class SettingView extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       CustomSettingProfileTile(
-                          onTap: () {},
+                          onTap: () {
+                          RouteManagement.goToMyProfileView();
+                          },
                           title: "Michael Jorden",
                           subtitle: "example@gmail.com",
                           img: "",
@@ -59,7 +62,7 @@ class SettingView extends StatelessWidget {
           onTap: () {
             log("index: $index");
             if (index == 0) {
-              RouteManagement.goToFilterView();
+              RouteManagement.goToFavoriteScreen();
             } else if (index == 3) {
               RouteManagement.goToChnagePasswordScreen();
             } else if (index == 4) {

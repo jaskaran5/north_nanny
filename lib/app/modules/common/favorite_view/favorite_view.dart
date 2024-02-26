@@ -19,16 +19,21 @@ class FavoriteView extends StatelessWidget {
           ),
           body: Padding(
             padding: Dimens.edgeInsets16,
-            child: const HomeCustomListView(
+            child: HomeCustomListView(
               image: Assets.iconsImage,
               name: 'Sudhanshu',
               rating: " 4.5",
-              reviews: "21",
+              reviews: "(21 reviews)",
               description:
                   'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
-              servicesList: ['Distance 10 miles', 'Age 23', 'Experience 7+'],
+              servicesList: const [
+                'Distance 10 miles',
+                'Age 23',
+                'Experience 7+'
+              ],
               isHeartTapped: true,
               heartSvg: Assets.iconsHeartFilled,
+              onTapHeartIcon: () {},
             ),
           ),
         ),

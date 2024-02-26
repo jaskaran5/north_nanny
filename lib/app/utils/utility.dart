@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
 
@@ -99,22 +99,55 @@ class Utility {
   // }
 
   /// Show info dialog
-  static void showDialog(
-    String message,
-  ) async {
+  static void showDialog({
+    required String assetName,
+    required String title,
+    required String subTitle,
+    required String buttonTitleText,
+    required double assetWidth,
+    required double assetHeight,
+    required int titleMaxLine,
+    required int subTitleMaxLine,
+    required Function() onTapButton,
+  }) async {
     await Get.dialog(
-      CupertinoAlertDialog(
-        title: const Text('Info'),
-        content: Text(
-          message,
-        ),
-        actions: [
-          CupertinoDialogAction(
-            onPressed: Get.back,
-            child: const Text('Okay'),
+      AlertDialog(
+          alignment: Alignment.center,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Dimens.twenty),
+            borderSide:const  BorderSide(color: AppColors.primaryColor)
           ),
-        ],
-      ),
+          backgroundColor: AppColors.primaryColor,
+          contentPadding: Dimens.edgeInsets16,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                assetName,
+                alignment: Alignment.center,
+                width: assetWidth,
+                height: assetHeight,
+              ),
+              Dimens.boxHeight20,
+              AppText(
+                text: title,
+                style: AppStyles.ubBlack0B0B18W700,
+                maxLines: titleMaxLine,
+              ),
+              Dimens.boxHeight10,
+              AppText(
+                text: subTitle,
+                style: AppStyles.ub5E5F60Grey14W400,
+                maxLines: subTitleMaxLine,
+              ),
+              Dimens.boxHeight16,
+              CustomButton(
+                title: buttonTitleText,
+                backGroundColor: AppColors.navyBlue,
+                onTap: onTapButton,
+              )
+            ],
+          )),
     );
   }
 
@@ -174,7 +207,7 @@ class Utility {
                   Dimens.boxHeight16,
                   AppText(
                     text: title,
-                    style: AppStyles.ubBlack0B0B18W600,
+                    style: AppStyles.ubBlack0B0B18W700,
                     maxLines: 1,
                   ),
                   Dimens.boxHeight16,

@@ -47,4 +47,5 @@ class CreateSitterProfileController extends GetxController {
   String? selectedGender = '';
   String? selectedYear = '';
   String? licenseHaveOrNot = '';
+  String? imageUrl = '';
 }

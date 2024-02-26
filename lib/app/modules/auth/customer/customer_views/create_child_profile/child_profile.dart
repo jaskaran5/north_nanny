@@ -17,8 +17,7 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'create_child_profile_view.dart';
 
 class ChildProfileView extends StatelessWidget {
-  ChildProfileView({super.key});
-  final selectedInterface = Get.arguments;
+  const ChildProfileView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(
@@ -34,8 +33,7 @@ class ChildProfileView extends StatelessWidget {
                   title: TranslationKeys.submit.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    Get.to(CreateChildProfileView(),
-                        arguments: selectedInterface);
+                    Get.to(const CreateChildProfileView(),);
                   },
                 ),
                 Dimens.boxHeight10,
@@ -44,7 +42,6 @@ class ChildProfileView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
                   onTap: () {
-                    // RouteManagement.goToOffAllHome(selectedInterface);
 
                     RouteManagement.goToOffAllDashboard(isFromSetting: false);
                   },

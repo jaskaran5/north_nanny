@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -37,7 +38,7 @@ class ApiHelperImpl extends GetConnect implements ApiHelper {
             'Body: ${request.files?.toString() ?? ''}\n',
       );
 
-      print(
+      log(
         'REQUEST ║ ${request.method.toUpperCase()}\n'
         'url: ${request.url}\n'
         'Headers: ${request.headers}\n'

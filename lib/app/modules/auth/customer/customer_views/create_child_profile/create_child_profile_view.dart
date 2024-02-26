@@ -16,8 +16,7 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import '../../../nanny/signUp/signup_controller.dart';
 
 class CreateChildProfileView extends StatelessWidget {
-  CreateChildProfileView({super.key});
-  final selectedInterface = Get.arguments;
+  const CreateChildProfileView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(
@@ -31,7 +30,6 @@ class CreateChildProfileView extends StatelessWidget {
                 padding: Dimens.edgeInsetsT16R16,
                 child: GestureDetector(
                   onTap: () {
-                    // RouteManagement.goToOffAllHome(selectedInterface);
                     RouteManagement.goToOffAllDashboard(isFromSetting: false);
                   },
                   child: AppText(

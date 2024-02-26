@@ -7,6 +7,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
@@ -30,7 +31,7 @@ class ContactUsView extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppText(
-                    text: "Contact us",
+                    text: TranslationKeys.contactUs,
                     style: AppStyles.pdSemiBoldBlack24,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -38,7 +39,7 @@ class ContactUsView extends StatelessWidget {
                   SizedBox(
                     height: Get.height * .1,
                   ),
-             //======//
+                  //======//
                   /** Email  */
                   TextField(
                     controller: controller.emailTextEditingController,
@@ -51,8 +52,8 @@ class ContactUsView extends StatelessWidget {
                         padding: Dimens.edgeInsets12,
                         child: SvgPicture.asset(
                           Assets.iconsEmail,
-                          height: Dimens.twentyFour,
-                          width: Dimens.twentyFour,
+                          height: Dimens.twenty,
+                          width: Dimens.twenty,
                         ),
                       ),
                     ),
@@ -60,7 +61,7 @@ class ContactUsView extends StatelessWidget {
                     cursorWidth: Dimens.one,
                     style: AppStyles.ubBlack15W600,
                   ),
-                  const SizedBox(height: 20),
+                  Dimens.boxHeight16,
                   /** SUBJECT */
                   TextField(
                     controller: controller.subjectTextEditingController,
@@ -73,8 +74,8 @@ class ContactUsView extends StatelessWidget {
                         padding: Dimens.edgeInsets12,
                         child: SvgPicture.asset(
                           Assets.iconsDocumentText,
-                          height: Dimens.twentyFour,
-                          width: Dimens.twentyFour,
+                          height: Dimens.twenty,
+                          width: Dimens.twenty,
                         ),
                       ),
                     ),
@@ -82,25 +83,24 @@ class ContactUsView extends StatelessWidget {
                     cursorWidth: Dimens.one,
                     style: AppStyles.ubBlack15W600,
                   ),
-                  const SizedBox(height: 20),
+                  Dimens.boxHeight16,
 
                   /** MESSAGE */
                   TextField(
                     keyboardType: TextInputType.multiline,
                     controller: controller.messageTextEditingController,
-
-
                     maxLines: null,
                     minLines: 3,
                     decoration: customFieldDeco(
                       hintStyle: AppStyles.ubHintColor15W500,
                       hintText: TranslationKeys.message.tr,
                       prefixWidget: Padding(
-                        padding: Dimens.edgeInsets0.copyWith(bottom: Dimens.thirtyFive),
+                        padding: Dimens.edgeInsets0
+                            .copyWith(bottom: Dimens.thirtyFive),
                         child: SvgPicture.asset(
                           Assets.iconsAboutUs,
-                          height: Dimens.twentyFour,
-                          width: Dimens.twentyFour,
+                          height: Dimens.twenty,
+                          width: Dimens.twenty,
                         ),
                       ),
                     ),
@@ -116,6 +116,18 @@ class ContactUsView extends StatelessWidget {
                     title: TranslationKeys.submit.tr,
                     textColor: Colors.white,
                     backGroundColor: AppColors.navyBlue,
+                    onTap: () {
+                      Utility.showDialog(
+                          assetName: Assets.iconsSuccess,
+                          title: 'Thank You',
+                          subTitle: 'Your submission has been sent.',
+                          buttonTitleText: 'okay',
+                          assetWidth: Dimens.sixtyEight,
+                          assetHeight: Dimens.sixtyEight,
+                          titleMaxLine: 1,
+                          subTitleMaxLine: 1,
+                          onTapButton: Get.back);
+                    },
                   )
                 ],
               ),

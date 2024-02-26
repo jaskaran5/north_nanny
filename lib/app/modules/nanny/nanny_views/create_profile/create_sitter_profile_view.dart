@@ -13,6 +13,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
+import '../../../../widgets/custom_cache_network_image.dart';
 import '../services/services_view.dart';
 
 class CreateNannyProfileView extends StatelessWidget {
@@ -38,41 +39,68 @@ class CreateNannyProfileView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Stack(
-                      fit: StackFit.loose,
-                      alignment: Alignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Container(
+                    GestureDetector(
+                      onTap: () {},
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        fit: StackFit.passthrough,
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
                             height: Dimens.oneHundredTwenty,
                             width: Dimens.oneHundredTwenty,
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.circular(Dimens.twenty),
+                              BorderRadius.circular(Dimens.twenty),
+                              border: Border.all(
+                                color: AppColors.primaryColor,
+                                width: Dimens.three,
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.greyColor.withOpacity(0.1),
-                                  blurRadius: Dimens.ten,
-                                  blurStyle: BlurStyle.normal,
-                                ),
+                                  color:
+                                  AppColors.lightNavyBlue.withOpacity(.8),
+                                  blurRadius: Dimens.five,
+                                )
                               ],
                             ),
+                            child: controller.imageUrl?.isEmpty==true
+                                ? Padding(
+                              padding: Dimens.edgeInsets16,
+                              child: SvgPicture.asset(
+                                Assets.iconsProfile,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                                : CustomCacheNetworkImage(
+                              img: controller.imageUrl.toString(),
+                              size: Dimens.oneHundredTwenty,
+                              imageRadius: Dimens.eighteen,
+                              imageShape: BoxShape.rectangle,
+                            ),
                           ),
-                        ),
-                        SvgPicture.asset(
-                          Assets.iconsProfile,
-                          fit: BoxFit.contain,
-                        ),
-                        Positioned(
-                          top: -10,
-                          right: Dimens.eightyThree,
-                          child: SvgPicture.asset(
-                            Assets.iconsUpload,
-                            fit: BoxFit.contain,
+                          Positioned(
+                            top: -20,
+                            right: -30,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimens.ten),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                    AppColors.greyColor.withOpacity(0.05),
+                                    blurRadius: Dimens.fourteen,
+                                  ),
+                                ],
+                              ),
+                              child: SvgPicture.asset(
+                                Assets.iconsUpload,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Dimens.boxHeight10,
                     AppText(
