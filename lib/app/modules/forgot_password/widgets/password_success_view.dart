@@ -52,7 +52,7 @@ class PasswordSuccessView extends StatelessWidget {
                   title: TranslationKeys.backToLogIn.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    RouteManagement.goToLogIn();
+                    RouteManagement.goToOffAllLogIn();
                   },
                 ),
               ],

@@ -13,27 +13,23 @@ class CustomChildAgeGenderTile extends StatelessWidget {
       {super.key, required this.age, required this.gender});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
+  Widget build(BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           AppText(
-            text: "Age $age" ?? '',
+            text: "Age $age",
             style: AppStyles.ub5E5F60Grey12W500,
           ),
-          Padding(
-            padding: Dimens.edgeInsets8_0,
-            child: CustomDot(
-              size: Dimens.three,
-              color: AppColors.greyColor,
-            ),
+          Dimens.boxWidth4,
+          CustomDot(
+            size: Dimens.three,
+            color: AppColors.greyColor,
           ),
+          Dimens.boxWidth4,
           AppText(
-            text: gender ?? '',
+            text: gender ,
             style: AppStyles.ub5E5F60Grey12W500,
           ),
         ],
-      ),
-    );
-  }
+      );
 }

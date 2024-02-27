@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../res/constants/assets.dart';
@@ -34,62 +35,62 @@ class SettingController extends GetxController {
 
   final data = [
     {
-      "name": 'Favorites',
+      "name": TranslationKeys.favorites.tr,
       "icon": Assets.iconsHeartOutline,
       "trallingIcon": Assets.iconsNext,
     },
     {
-      "name": 'Manage child profile ',
+      "name": TranslationKeys.mangeChildProfile.tr,
       "icon": Assets.iconsBabyBoy,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": 'Payment method',
+      "name": TranslationKeys.paymentMethod.tr,
       "icon": Assets.iconsCard,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": 'Change password',
+      "name": TranslationKeys.changePassword.tr,
       "icon": Assets.iconsLock,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": 'About us',
+      "name": TranslationKeys.aboutUs.tr,
       "icon": Assets.iconsAboutUs,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "Invite a friend",
+      "name": TranslationKeys.inviteAFriend.tr,
       "icon": Assets.iconsProfileAdd,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "Contact us",
+      "name": TranslationKeys.contactUs.tr,
       "icon": Assets.iconsHeadPhone,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "Rate app",
+      "name": TranslationKeys.rateApp.tr,
       "icon": Assets.iconsBlackStar,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "FAQ",
+      "name": TranslationKeys.fAQ.tr,
       "icon": Assets.iconsMessageQuestion,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "Terms & Conditions",
+      "name": TranslationKeys.termAndConditions.tr,
       "icon": Assets.iconsDocumentText,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": " Privacy Policy",
+      "name": TranslationKeys.privacyPolicy.tr,
       "icon": Assets.iconsShieldSecurity,
       "trallingIcon": Assets.iconsNext
     },
     {
-      "name": "Logout",
+      "name": TranslationKeys.logOut.tr,
       "icon": Assets.iconsLogout,
       "trallingIcon": Assets.iconsNext
     },
@@ -123,8 +124,31 @@ class SettingController extends GetxController {
     }
   ].obs;
 
+  /// card list.
+  List cardList = [
+    {
+      'asset': Assets.iconsMasterCard,
+      'accountNumber': "9587 5498 8569 7569",
+      'cardType': 'Master Card',
+      'isSelected': true,
+    },
+    {
+      'asset': Assets.iconsVisa,
+      'accountNumber': "9587 5498 8569 7569",
+      'cardType': 'Visa',
+      'isSelected': false,
+    }
+  ];
+
   /// REDIRECT TO COMMON WEB VIEW
   redirectToCommonWebView() {
     Get.to(() => const CommonWebView());
   }
+
+  /// invite friend list to do
+  var inviteList = [
+    'Download the Northshore Nanny app using your unique link below',
+    'Create an account on the app',
+    'Accept a job!',
+  ];
 }

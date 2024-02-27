@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/add_payment_method/add_payment_method.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -10,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../navigators/routes_management.dart';
 import '../../res/theme/colors.dart';
 import '../../res/theme/styles.dart';
 import '../../widgets/app_text.dart';
@@ -292,13 +292,18 @@ class ScheduleNannyView extends StatelessWidget {
                   onChanged: (value) {},
                   baseTextStyle: AppStyles.ubHintColor15W500,
                   prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                  items: const ['Select all','Alexander', 'Oliver', 'add',],
+                  items: const [
+                    'Select all',
+                    'Alexander',
+                    'Oliver',
+                    'add',
+                  ],
                   itemBuilderPhysics: const ScrollPhysics(),
                   maxHeight: Dimens.twoHundred,
                   itemBuilder: (context, item, isSelected) {
                     return Visibility(
-                      visible: item!="add",
-                      replacement:  Padding(
+                      visible: item != "add",
+                      replacement: Padding(
                         padding: Dimens.edgeInsets16,
                         child: Center(
                           child: AppText(
@@ -361,9 +366,9 @@ class ScheduleNannyView extends StatelessWidget {
                       )
                     ],
                   ),
-                  child:const CustomBookingReceiptTile(
+                  child: const CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    receiptDetailsList:  [
+                    receiptDetailsList: [
                       'Housekeeping',
                       'Driving',
                       '2 children',
@@ -372,7 +377,12 @@ class ScheduleNannyView extends StatelessWidget {
                     shoBorder: false,
                     showHeader: false,
                     totalPriceReceived: 112,
-                    receiptPricesList: [10,10,23,92,],
+                    receiptPricesList: [
+                      10,
+                      10,
+                      23,
+                      92,
+                    ],
                   ),
                 ),
                 Dimens.boxHeight16,
@@ -380,7 +390,28 @@ class ScheduleNannyView extends StatelessWidget {
                   title: TranslationKeys.confirmBooking.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    Get.to(const AddPaymentMethod());
+                    RouteManagement.goToAddPaymentMethodScreen(
+                      isComeFromNannyProfile: true,
+                      buttonText: TranslationKeys.submit.tr,
+                      onTapButton: () {
+                        RouteManagement.goToSuccessView(
+                          buttonText: TranslationKeys.backToHome.tr,
+                          successSvg: Assets.iconsSuccess,
+                          header: TranslationKeys.nannyRequested.tr,
+                          headerStyle: AppStyles.ubDarkBlackColor24W700,
+                          subHeader: TranslationKeys.notificationNannyAccept.tr,
+                          onTapButton: () {
+                            RouteManagement.goToOffAllDashboard(
+                                isFromSetting: false);
+                          },
+                          subTitleStyle: AppStyles.ubGrey16W500,
+                          subHeaderMaxLines: 2,
+                          headerMaxLines: 2,
+                          successImage: '',
+                          sendTipText: false,
+                        );
+                      },
+                    );
                   },
                 ),
               ],

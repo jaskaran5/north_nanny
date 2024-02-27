@@ -25,3 +25,11 @@ enum HourlyChildrenRateList {
   twoChildren,
   oneChild,
 }
+
+enum BookingDetailStatus {
+  present,
+  past,
+  review,
+  complete,
+  now,
+}

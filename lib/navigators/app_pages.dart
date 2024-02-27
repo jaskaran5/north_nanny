@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
@@ -17,6 +16,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/password_changed.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/contact_us.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/faq.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/components/invite_a_friend.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/components/add_child_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/components/edit_child_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_binding.dart';
@@ -34,6 +34,7 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_pr
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
+import '../app/modules/auth/customer/customer_views/create_profile/create_profile_view.dart';
 import '../app/modules/auth/nanny/signUp/sign_up_binding.dart';
 import '../app/modules/customer/my_profile/my_profile.dart';
 import '../app/modules/customer/my_profile/widgets/edit_profile.dart';
@@ -241,15 +242,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: EditChildProfileView.new,
       binding: ManageChildProfileBinding(),
+    ),
 
-      /*-** commited code --?? 
-      /** CreateProfileView */
-      // GetPage<CreateProfileView>(
-      //   name: Routes.createProfileView,
-      //   transitionDuration: transitionDuration,
-      //   page: CreateProfileView.new,
-      //   binding: SignUpBinding(),
-      //   transition: Transition.rightToLeft,
+    /** CreateProfileView */
+    GetPage<CreateProfileView>(
+      name: Routes.createProfileView,
+      transitionDuration: transitionDuration,
+      page: CreateProfileView.new,
+      binding: SignUpBinding(),
+      transition: Transition.rightToLeft,
     ),
     /** My-Profile-View */
     GetPage<MyProfileView>(
@@ -265,6 +266,14 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: EditProfileView.new,
       binding: MyProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    /** InviteAFriend-View */
+    GetPage<InviteAFriendView>(
+      name: Routes.inviteAFriendView,
+      transitionDuration: transitionDuration,
+      page: InviteAFriendView.new,
+      binding: SettingBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

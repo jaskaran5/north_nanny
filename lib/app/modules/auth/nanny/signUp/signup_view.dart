@@ -260,7 +260,7 @@ class SignUpView extends StatelessWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Get.focusScope?.unfocus();
-                                RouteManagement.goToLogIn();
+                                RouteManagement.goToOffAllLogIn();
                               },
                           ),
                         ],

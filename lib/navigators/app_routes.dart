@@ -29,6 +29,7 @@ class Routes {
   static const String createProfileView = Paths.createProfile;
   static const String myProfileView = Paths.myProfile;
   static const String ediProfileView = Paths.ediProfileView;
+  static const String inviteAFriendView = Paths.inviteAFriendView;
 }
 
 /// Paths give to the route.
@@ -61,4 +62,5 @@ class Paths {
   static const String createProfile = '/create-Profile';
   static const String myProfile = '/myProfile-view';
   static const String ediProfileView = '/EditProfile-view';
+  static const String inviteAFriendView = '/InviteAFriend-view';
 }

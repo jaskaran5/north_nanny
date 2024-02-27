@@ -117,11 +117,13 @@ class NewPasswordView extends StatelessWidget {
                         headerStyle: AppStyles.ubDarkBlackColor26W700,
                         subHeader: TranslationKeys.passwordChangeSuccess.tr,
                         onTapButton: () {
-                          RouteManagement.goToLogIn();
+                          RouteManagement.goToOffAllLogIn();
                         },
                         subTitleStyle: AppStyles.ubGreyA116W500,
                         subHeaderMaxLines: 2,
-                        headerMaxLines: 1, successImage: '', sendTipText: false,
+                        headerMaxLines: 1,
+                        successImage: '',
+                        sendTipText: false,
                       );
                     },
                   ),

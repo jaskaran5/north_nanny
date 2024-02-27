@@ -19,34 +19,39 @@ class CustomDotText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: Dimens.edgeInsets0_8,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      padding: Dimens.edgeInsets8,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Padding(
+            padding: Dimens.edgeInsetsT5,
+            child: CustomDot(
+              size: Dimens.four,
+              color: AppColors.blackColor,
+            ),
+          ),
+          Dimens.boxWidth8,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CustomDot(
-                size: Dimens.four,
-                color: AppColors.blackColor,
-              ),
-              Dimens.boxWidth4,
-
-              // Text("asdfadsf"),
               AppText(
                 text: heading,
-                style: AppStyles.b0b0Urban14w600,
+                style: AppStyles.ubBlack14W600,
+                maxLines: 1,
+                textAlign: TextAlign.left,
+              ),
+              Dimens.boxHeight5,
+              SizedBox(
+                width: Dimens.twoHundredSeventy,
+                child: AppText(
+                  text: description,
+                  style: AppStyles.ubGrey12W500,
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
-          ),
-          Dimens.boxHeight10,
-          Padding(
-            padding: EdgeInsets.only(left: Dimens.ten),
-            child: AppText(
-              text: description,
-              style: AppStyles.ub5E5F60Grey12W500,
-              textAlign: TextAlign.left,
-            ),
           ),
         ],
       ),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_dot.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -56,7 +60,9 @@ class CalenderView extends StatelessWidget {
                         markerMargin: Dimens.edgeInsets4,
                         markersAlignment: Alignment.center,
                       ),
-                      firstDay: DateTime.now(),
+                      firstDay: DateTime(
+                        DateTime.now().year,
+                      ),
                       lastDay: DateTime.utc(
                         2050,
                       ),
@@ -75,7 +81,8 @@ class CalenderView extends StatelessWidget {
                           controller.selectedDay == day,
                       focusedDay: controller.selectedDay,
                       eventLoader: (day) {
-                        return day.day.isEven
+                        return day.day == DateTime.now().day ||
+                                day.day == DateTime.now().day - 1
                             ? [
                                 '.',
                               ]
@@ -83,9 +90,19 @@ class CalenderView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight32,
-                    controller.selectedDay.day.isEven
+                    controller.selectedDay.day == DateTime.now().day ||
+                            controller.selectedDay.day == DateTime.now().day - 1
                         ? GestureDetector(
                             onTap: () {
+                              if (!Get.isRegistered<
+                                  BookingDetailController>()) {
+                                BookingDetailBinding().dependencies();
+                              }
+                              Get.find<BookingDetailController>()
+                                      .bookingDetailStatus =
+                                  controller.selectedDay.day == DateTime.now().day
+                                      ? BookingDetailStatus.present
+                                      : BookingDetailStatus.past;
                               Get.to(const BookingDetailView());
                             },
                             child: Container(
@@ -168,18 +185,36 @@ class CalenderView extends StatelessWidget {
                                           height: Dimens.one,
                                         ),
                                         Dimens.boxHeight16,
-                                        AppText(
-                                          text: '• HouseKeeping, driving',
-                                          style: AppStyles.ubGrey15W500,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.start,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomDot(
+                                                size: Dimens.four,
+                                                color: AppColors.blackColor),
+                                            Dimens.boxWidth4,
+                                            AppText(
+                                              text: 'HouseKeeping, driving',
+                                              style: AppStyles.ubGrey15W500,
+                                              maxLines: 1,
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
                                         ),
                                         Dimens.boxHeight16,
-                                        AppText(
-                                          text: '• 2 children',
-                                          style: AppStyles.ubGrey15W500,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.start,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomDot(
+                                                size: Dimens.four,
+                                                color: AppColors.blackColor),
+                                            Dimens.boxWidth4,
+                                            AppText(
+                                              text: '2 children',
+                                              style: AppStyles.ubGrey15W500,
+                                              maxLines: 1,
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),

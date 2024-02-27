@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_faq_tile.dart';
 
@@ -14,8 +14,8 @@ class FAQView extends StatelessWidget {
       init: SettingController(),
       builder: (controller) {
         return Scaffold(
-            appBar:const  CustomAppbarWidget(
-              title: "FAQ",
+            appBar: CustomAppbarWidget(
+              title: TranslationKeys.fAQ.tr,
             ),
             backgroundColor: Colors.white.withOpacity(.99),
             body: ListView.builder(

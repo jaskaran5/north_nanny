@@ -8,17 +8,23 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../res/theme/colors.dart';
 import '../../widgets/custom_text_field.dart';
 
 class AddPaymentMethod extends StatelessWidget {
-  const AddPaymentMethod({super.key});
+  const AddPaymentMethod({super.key, required this.isComeFromNannyProfile, required this.buttonTitle, required this.onTapButton});
+  final bool isComeFromNannyProfile;
+  final String buttonTitle;
+  final Function() onTapButton;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const CustomAppbarWidget(),
+        appBar: CustomAppbarWidget(
+          title: !isComeFromNannyProfile
+              ? TranslationKeys.addPaymentMethod.tr
+              : '',
+        ),
         body: Padding(
           padding: Dimens.edgeInsets16,
           child: GestureDetector(
@@ -33,20 +39,22 @@ class AddPaymentMethod extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppText(
-                          text: TranslationKeys.addPaymentMethod.tr,
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                          style: AppStyles.pdSemiBoldBlack24,
-                        ),
-                        Dimens.boxHeight10,
-                        AppText(
-                          text: TranslationKeys.cardWillCharged.tr,
-                          maxLines: 2,
-                          textAlign: TextAlign.start,
-                          style: AppStyles.ubGrey16W400,
-                        ),
-                        Dimens.boxHeight16,
+                        if (isComeFromNannyProfile) ...[
+                          AppText(
+                            text: TranslationKeys.addPaymentMethod.tr,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            style: AppStyles.pdSemiBoldBlack24,
+                          ),
+                          Dimens.boxHeight10,
+                          AppText(
+                            text: TranslationKeys.cardWillCharged.tr,
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                            style: AppStyles.ubGrey16W400,
+                          ),
+                          Dimens.boxHeight16,
+                        ],
                         TextField(
                           maxLines: 1,
                           minLines: 1,
@@ -132,26 +140,9 @@ class AddPaymentMethod extends StatelessWidget {
                   ),
                 ),
                 CustomButton(
-                  title: TranslationKeys.submit.tr,
+                  title: buttonTitle,
                   backGroundColor: AppColors.navyBlue,
-                  onTap: () {
-                    RouteManagement.goToSuccessView(
-                      buttonText: TranslationKeys.backToHome.tr,
-                      successSvg: Assets.iconsSuccess,
-                      header: TranslationKeys.nannyRequested.tr,
-                      headerStyle: AppStyles.ubDarkBlackColor24W700,
-                      subHeader: TranslationKeys.notificationNannyAccept.tr,
-                      onTapButton: () {
-                        RouteManagement.goToOffAllDashboard(
-                            isFromSetting: false);
-                      },
-                      subTitleStyle: AppStyles.ubGrey16W500,
-                      subHeaderMaxLines: 2,
-                      headerMaxLines: 2,
-                      successImage: '',
-                      sendTipText: false,
-                    );
-                  },
+                  onTap:onTapButton,
                 ),
               ],
             ),

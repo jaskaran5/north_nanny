@@ -18,6 +18,7 @@ class HomeCustomListView extends StatelessWidget {
     required this.isHeartTapped,
     required this.heartSvg,
     required this.onTapHeartIcon,
+    this.onTapRating,
   });
 
   final String image;
@@ -29,6 +30,7 @@ class HomeCustomListView extends StatelessWidget {
   final List<String> servicesList;
   final bool isHeartTapped;
   final Function() onTapHeartIcon;
+  final Function()? onTapRating;
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -96,22 +98,25 @@ class HomeCustomListView extends StatelessWidget {
                           ),
                         ),
                         Dimens.boxHeight4,
-                        Row(
-                          children: [
-                            SvgPicture.asset(Assets.iconsStar),
-                            RichText(
-                              text: TextSpan(
-                                text: '$rating ',
-                                style: AppStyles.ubBlack12W500,
-                                children: [
-                                  TextSpan(
-                                    text: reviews,
-                                    style: AppStyles.ubGrey12W400,
-                                  ),
-                                ],
+                        GestureDetector(
+                          onTap: onTapRating,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(Assets.iconsStar),
+                              RichText(
+                                text: TextSpan(
+                                  text: '$rating ',
+                                  style: AppStyles.ubBlack12W500,
+                                  children: [
+                                    TextSpan(
+                                      text: reviews,
+                                      style: AppStyles.ubGrey12W400,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Dimens.boxHeight4,
                         SizedBox(
@@ -131,6 +136,7 @@ class HomeCustomListView extends StatelessWidget {
                 SizedBox(
                   height: Dimens.thirty,
                   child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     children: List.generate(
                       servicesList.length,

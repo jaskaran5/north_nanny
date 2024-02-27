@@ -24,9 +24,13 @@ class Assets {
   static const String iconsCircleTick = 'assets/icons/circle_tick.svg';
   static const String iconsClipboardText = 'assets/icons/clipboard-text.svg';
   static const String iconsClock = 'assets/icons/clock.svg';
+  static const String iconsCopy = 'assets/icons/copy.svg';
+  static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
+  static const String iconsDollarCircle = 'assets/icons/dollar_circle.svg';
   static const String iconsDoller = 'assets/icons/doller.svg';
   static const String iconsDownArrow = 'assets/icons/down_arrow.svg';
+  static const String iconsEditChild = 'assets/icons/edit_child.svg';
   static const String iconsEmail = 'assets/icons/email.svg';
   static const String iconsFacebook = 'assets/icons/facebook.svg';
   static const String iconsFillterIcon = 'assets/icons/fillter_icon.svg';
@@ -80,6 +84,7 @@ class Assets {
   static const String iconsRemove = 'assets/icons/Remove.svg';
   static const String iconsRemoveBottomSheet = 'assets/icons/remove_bottom_sheet.svg';
   static const String iconsRight = 'assets/icons/right.svg';
+  static const String iconsRightGrey = 'assets/icons/right_grey.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';

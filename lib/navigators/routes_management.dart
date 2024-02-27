@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/payment_details/custom_payment_details_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/success_un_success.dart';
+import '../app/modules/add_payment_method/add_payment_method.dart';
 import 'app_routes.dart';
 
 abstract class RouteManagement {
@@ -25,7 +27,7 @@ abstract class RouteManagement {
   }
 
   /// Go to the LogIn Screen
-  static void goToLogIn() {
+  static void goToOffAllLogIn() {
     Get.offAllNamed<void>(
       Routes.logIn,
     );
@@ -178,6 +180,61 @@ abstract class RouteManagement {
         sendTipText: sendTipText,
         successImage: successImage,
       ),
+    );
+  }
+
+  /// Go to the Success  Screen
+  static void goToCustomPaymentView({
+    required var paymentDetails,
+    required String appBarTitle,
+    required String addNewCardButtonTitle,
+    required Color addNewCardButtonBackgroundColor,
+    required Function()? onTapDeleteButton,
+    String? submitButtonTitle,
+    Color? submitButtonBackgroundColor,
+    required Function()? onTapAddNewCardButton,
+    Function()? onTapSubmitButton,
+    required bool showDeleteButton,
+    TextStyle? addNewCardButtonStyle,
+    TextStyle? submitButtonStyle,
+  }) {
+    Get.to(
+      () => CustomPaymentDetails(
+        paymentDetails: paymentDetails,
+        appBarTitle: appBarTitle,
+        addNewCardButtonTitle: addNewCardButtonTitle,
+        addNewCardButtonBackgroundColor: addNewCardButtonBackgroundColor,
+        onTapAddNewCardButton: onTapAddNewCardButton,
+        submitButtonTitle: submitButtonTitle ?? '',
+        submitButtonBackgroundColor: submitButtonBackgroundColor,
+        onTapSubmitButton: onTapSubmitButton,
+        onTapDeleteButton: onTapDeleteButton,
+        showDeleteButton: showDeleteButton,
+        addNewCardButtonStyle: addNewCardButtonStyle,
+        submitButtonStyle: submitButtonStyle,
+      ),
+    );
+  }
+
+  /// go To add Payment Method View.
+  static void goToAddPaymentMethodScreen({
+    required bool isComeFromNannyProfile,
+    required String buttonText,
+    required Function() onTapButton,
+  }) {
+    Get.to(
+      () => AddPaymentMethod(
+        isComeFromNannyProfile: isComeFromNannyProfile,
+        buttonTitle: buttonText,
+        onTapButton: onTapButton,
+      ),
+    );
+  }
+
+  /// Go to Invite A Friend view  Screen
+  static void goToInviteAFriendView() {
+    Get.toNamed(
+      Routes.inviteAFriendView,
     );
   }
 }

@@ -3,16 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/widgets/custom_home_list.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/search_view/search_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
+import '../../../widgets/review_custom_bottom_sheet.dart';
 import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {
@@ -202,17 +205,37 @@ class HomeView extends StatelessWidget {
                 )
               : Padding(
                   padding: Dimens.edgeInsets16,
-                  child: HomeCustomListView(
-                    description:
-                        'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
-                    image: Assets.iconsImage,
-                    name: 'Christina Wang',
-                    rating: '4.5',
-                    reviews: '(21 reviews)',
-                    servicesList: controller.homeCustomList,
-                    isHeartTapped: false,
-                    heartSvg: Assets.iconsHeartOutline,
-                    onTapHeartIcon: () {},
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const NannyProfileView());
+                    },
+                    child: HomeCustomListView(
+                      description:
+                          'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
+                      image: Assets.iconsImage,
+                      name: 'Christina Wang',
+                      rating: '4.5',
+                      reviews: '(21 reviews)',
+                      servicesList: controller.homeCustomList,
+                      isHeartTapped: false,
+                      heartSvg: Assets.iconsHeartOutline,
+                      onTapHeartIcon: () {},
+                      onTapRating: () {
+                        Utility.openBottomSheet(
+                          const CustomReviewBottomSheet(
+                            totalReviews: '21',
+                            totalReviewsRating: 4.5,
+                            reviewsList: [
+                              'Michael Johnson',
+                              'Giorgio Chiellini',
+                              'Michael Johnson',
+                              'Alex Morgan',
+                              'Giorgio Chiellini'
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
         ),

@@ -86,10 +86,22 @@ class AppStyles {
     color: AppColors.lightNavyBlue,
     fontSize: Dimens.twelve,
   );
+  static TextStyle ubBBD7F4lightNavyBlue12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.colorBBD7F4lightNavyBlue,
+    fontSize: Dimens.twelve,
+  );
   static TextStyle ubLightNavy10W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
     color: AppColors.lightNavyBlue,
+    fontSize: Dimens.ten,
+  );
+  static TextStyle ubNavyBlue10W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.navyBlue,
     fontSize: Dimens.ten,
   );
   static TextStyle ubBlack15W600 = TextStyle(
@@ -250,6 +262,12 @@ class AppStyles {
     fontSize: Dimens.twentyFour,
     color: AppColors.blackColor,
   );
+  static TextStyle ubColorFFF24W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twentyFour,
+    color: AppColors.primaryColor,
+  );
   static TextStyle ubBlack16W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -267,6 +285,12 @@ class AppStyles {
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.eighteen,
     color: AppColors.blackColor,
+  );
+  static TextStyle ubNavyBlue18W600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.eighteen,
+    color: AppColors.navyBlue,
   );
   static TextStyle ubBlack0B0B18W700 = TextStyle(
     fontWeight: FontWeight.w700,
@@ -406,6 +430,12 @@ class AppStyles {
   );
   static TextStyle ubNavyBlue16W700 = TextStyle(
     fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.sixteen,
+    color: AppColors.navyBlue,
+  );
+  static TextStyle ubNavyBlue16W600 = TextStyle(
+    fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.sixteen,
     color: AppColors.navyBlue,

@@ -64,6 +64,9 @@ class RatingReviewView extends StatelessWidget {
         title: TranslationKeys.submit.tr,
         backGroundColor: AppColors.navyBlue,
         textColor: AppColors.primaryColor,
+        onTap: () {
+          Get.back();
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

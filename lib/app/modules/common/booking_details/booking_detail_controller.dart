@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../../res/constants/assets.dart';
+import '../../../utils/enums.dart';
+
 class BookingDetailController extends GetxController {
   bool isExpandChildren = false;
 
@@ -24,4 +27,22 @@ class BookingDetailController extends GetxController {
     getTotalPrice();
     super.onInit();
   }
+
+  List cardList = [
+    {
+      'asset': Assets.iconsMasterCard,
+      'accountNumber': "9587 5498 8569 7569",
+      'cardType': 'Master Card',
+      'isSelected': true,
+    },
+    {
+      'asset': Assets.iconsVisa,
+      'accountNumber': "9587 5498 8569 7569",
+      'cardType': 'Visa',
+      'isSelected': false,
+    }
+  ];
+
+  /// check status
+  late BookingDetailStatus bookingDetailStatus;
 }
