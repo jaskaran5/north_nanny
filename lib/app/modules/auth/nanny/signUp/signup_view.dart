@@ -78,19 +78,27 @@ class SignUpView extends StatelessWidget {
                             style: AppStyles.ubBlack15W600,
                           ),
                           Dimens.boxHeight16,
+
+                          /** PASSWORD */
                           TextField(
+                            obscureText: controller.isPswdVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
                             minLines: 1,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
-                              suffix: Padding(
-                                padding: Dimens.edgeInsets12,
-                                child: SvgPicture.asset(
-                                  Assets.iconsShowPassword,
-                                  height: Dimens.ten,
-                                  width: Dimens.ten,
+                              suffix: GestureDetector(
+                                onTap: controller.updatePswdVisibility,
+                                child: Padding(
+                                  padding: Dimens.edgeInsets12,
+                                  child: SvgPicture.asset(
+                                    controller.isConfirmPswdVisible.value
+                                        ? Assets.iconsShowPassword
+                                        : Assets.iconsShowPassword,
+                                    height: Dimens.ten,
+                                    width: Dimens.ten,
+                                  ),
                                 ),
                               ),
                               prefixWidget: Padding(
@@ -109,7 +117,10 @@ class SignUpView extends StatelessWidget {
                             cursorWidth: Dimens.one,
                           ),
                           Dimens.boxHeight16,
+
+                          /** CONFIRM PASSWORD */
                           TextField(
+                            obscureText: controller.isConfirmPswdVisible.value,
                             controller:
                                 controller.confirmPasswordTextEditingController,
                             maxLines: 1,
@@ -124,12 +135,17 @@ class SignUpView extends StatelessWidget {
                                   width: Dimens.ten,
                                 ),
                               ),
-                              suffix: Padding(
-                                padding: Dimens.edgeInsets12,
-                                child: SvgPicture.asset(
-                                  Assets.iconsShowPassword,
-                                  height: Dimens.ten,
-                                  width: Dimens.ten,
+                              suffix: GestureDetector(
+                                onTap: controller.updateConfirmPswdVisibility,
+                                child: Padding(
+                                  padding: Dimens.edgeInsets12,
+                                  child: SvgPicture.asset(
+                                    controller.isConfirmPswdVisible.value
+                                        ? Assets.iconsShowPassword
+                                        : Assets.iconsShowPassword,
+                                    height: Dimens.ten,
+                                    width: Dimens.ten,
+                                  ),
                                 ),
                               ),
                             ),
@@ -204,18 +220,7 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(const CommonWebView()
-                                                  // PrivacyPolicyView(
-                                                  //   appBarTitle: TranslationKeys
-                                                  //       .privacyPolicy.tr,
-                                                  //   privacyText:
-                                                  //       ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                                                  //   privacySecondText:
-                                                  //       '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
-                                                  //   headingText:
-                                                  //       'It was popularised in the 1960s with',
-                                                  // ),
-                                                  );
+                                              Get.to(const CommonWebView());
                                             },
                                         ),
                                       ],
@@ -230,6 +235,9 @@ class SignUpView extends StatelessWidget {
                             ],
                           ),
                           Dimens.boxHeight32,
+
+                          /** REGISTER BUTTON */
+
                           CustomButton(
                             title: TranslationKeys.register.tr,
                             backGroundColor: AppColors.navyBlue,
@@ -238,7 +246,7 @@ class SignUpView extends StatelessWidget {
 
                               if (controller.loginType.value ==
                                   StringConstants.customer) {
-                                RouteManagement.goToCreateProfile();
+                                RouteManagement.goToCreateCustomerProfile();
                               } else {
                                 RouteManagement.goToCreateNannyProfile();
                               }
@@ -248,6 +256,8 @@ class SignUpView extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  /** ALREADY HAVE ACCOUNT */
                   Center(
                     child: RichText(
                       text: TextSpan(

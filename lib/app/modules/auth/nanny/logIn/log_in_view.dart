@@ -223,7 +223,7 @@ class LogInView extends StatelessWidget {
                     child: RichText(
                       text: TextSpan(
                         text: TranslationKeys.doNotHaveAnAccount.tr,
-                        style: AppStyles.ubGrey15W500,
+                        style: AppStyles.ubPurple15W500,
                         children: [
                           TextSpan(
                             text: TranslationKeys.registerNow.tr,

@@ -17,8 +17,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 
 import '../create_child_profile/child_profile.dart';
 
-class CreateProfileView extends StatelessWidget {
-  const CreateProfileView({super.key});
+class CreateCustomerProfileView extends StatelessWidget {
+  const CreateCustomerProfileView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder<SignupViewController>(
         builder: (controller) => Scaffold(

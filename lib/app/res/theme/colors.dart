@@ -39,4 +39,5 @@ class AppColors {
   static const Color d8E6F6BorderColor = Color(0xffD8E6F6);
   static const Color fC3030RedColor = Color(0xffFC3030);
   static const Color fFEAEARedColor = Color(0xffFFEAEA);
+  static const Color purpleColor646FA4 = Color(0xff646FA4);
 }

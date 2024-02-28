@@ -34,7 +34,7 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_pr
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
-import '../app/modules/auth/customer/customer_views/create_profile/create_profile_view.dart';
+import '../app/modules/auth/customer/customer_views/create_profile/create_customer_profile_view.dart';
 import '../app/modules/auth/nanny/signUp/sign_up_binding.dart';
 import '../app/modules/customer/my_profile/my_profile.dart';
 import '../app/modules/customer/my_profile/widgets/edit_profile.dart';
@@ -244,14 +244,14 @@ class AppPages {
       binding: ManageChildProfileBinding(),
     ),
 
-    /** CreateProfileView */
-    GetPage<CreateProfileView>(
-      name: Routes.createProfileView,
-      transitionDuration: transitionDuration,
-      page: CreateProfileView.new,
-      binding: SignUpBinding(),
-      transition: Transition.rightToLeft,
-    ),
+    // /** CreateProfileView */
+    // GetPage<CreateProfileView>(
+    //   name: Routes.createProfileView,
+    //   transitionDuration: transitionDuration,
+    //   page: CreateProfileView.new,
+    //   binding: SignUpBinding(),
+    //   transition: Transition.rightToLeft,
+    // ),
     /** My-Profile-View */
     GetPage<MyProfileView>(
       name: Routes.myProfileView,
@@ -275,6 +275,15 @@ class AppPages {
       page: InviteAFriendView.new,
       binding: SettingBinding(),
       transition: Transition.rightToLeft,
+    ),
+
+    /** CRETAE CUSTOMER PROFILE-VIEW */
+    GetPage<CreateCustomerProfileView>(
+      name: Routes.createCustomerProfileView,
+      transitionDuration: transitionDuration,
+      page: CreateCustomerProfileView.new,
+      binding: SettingBinding(),
+      transition: Transition.leftToRight,
     ),
   ];
 }

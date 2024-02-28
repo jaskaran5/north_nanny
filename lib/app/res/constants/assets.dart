@@ -86,6 +86,7 @@ class Assets {
   static const String iconsRight = 'assets/icons/right.svg';
   static const String iconsRightGrey = 'assets/icons/right_grey.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
+
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';
   static const String iconsSettingOutline = 'assets/icons/setting_outline.svg';

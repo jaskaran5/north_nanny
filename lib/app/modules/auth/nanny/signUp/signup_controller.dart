@@ -11,6 +11,11 @@ class SignupViewController extends GetxController {
   RxString loginType = ''.obs;
   String imageUrl = '';
 
+  RxBool isPswdVisible = false.obs;
+  RxBool isConfirmPswdVisible = false.obs;
+
+  RxBool isAcceptTerms = false.obs;
+
   @override
   void onInit() async {
     getLoginType();
@@ -53,6 +58,23 @@ class SignupViewController extends GetxController {
   /// storeGenderValue
   void setGenderValue(String gender) {
     selectedGender = gender;
+    update();
+  }
+
+  updatePswdVisibility() {
+    isPswdVisible.value = !isPswdVisible.value;
+    update();
+  }
+
+  /// confirm password visibility
+  updateConfirmPswdVisibility() {
+    isConfirmPswdVisible.value = !isConfirmPswdVisible.value;
+    update();
+  }
+
+  /// ACCEPT TERMS AND CONDITIONS
+  toggleIsAcceptTerms() {
+    isAcceptTerms.value = !isAcceptTerms.value;
     update();
   }
 

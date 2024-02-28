@@ -61,10 +61,10 @@ abstract class RouteManagement {
     );
   }
 
-  /// Go to the  create  Profile  Screen
-  static void goToCreateProfile() {
+  /// Go to the  create  Profile CUSTOMER Screen
+  static void goToCreateCustomerProfile() {
     Get.toNamed<void>(
-      Routes.createProfileView,
+      Routes.createCustomerProfileView,
     );
   }
 

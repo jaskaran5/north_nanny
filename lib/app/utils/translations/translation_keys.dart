@@ -182,8 +182,10 @@ class TranslationKeys {
   static const String editChildProfile = 'editChildProfile';
   static const String update = 'update';
   static const String delete = 'delete';
-  static const String sendUniqueReferralLinkNanny = 'sendUniqueReferralLinkNanny';
-  static const String sendUniqueReferralLinkCustomer = 'sendUniqueReferralLinkCustomer';
+  static const String sendUniqueReferralLinkNanny =
+      'sendUniqueReferralLinkNanny';
+  static const String sendUniqueReferralLinkCustomer =
+      'sendUniqueReferralLinkCustomer';
   static const String whatInviteFriendNeedToDo = 'whatInviteFriendNeedToDo';
   static const String sendReferralLink = 'sendReferralLink';
   static const String youWantToLeave = 'youWantToLeave';

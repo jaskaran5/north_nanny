@@ -16,8 +16,8 @@ class CommonWebView extends StatefulWidget {
 class _CommonWebViewState extends State<CommonWebView> {
   late final WebViewController controller;
 
-  var loadingPercentage = 0;
-  var error = false;
+  // var loadingPercentage = 0;
+  // var error = false;
 
   @override
   void initState() {
@@ -29,25 +29,15 @@ class _CommonWebViewState extends State<CommonWebView> {
       NavigationDelegate(
         onPageStarted: (String url) {
           log("on page started called ");
-          setState(() {
-            loadingPercentage = 0;
-          });
         },
         onProgress: (int progress) {
           log("progress is:-->> $progress");
-          setState(() {
-            loadingPercentage = progress;
-          });
         },
-        onPageFinished: (String url) {
+        onPageFinished: (String url) {},
+        // onWebResourceError: (WebResourceError error) =>
+        // setState(() => = true
 
-          log("on page finished called");
-          setState(() {
-            loadingPercentage = 100;
-          });
-        },
-        onWebResourceError: (WebResourceError error) =>
-            setState(() => this.error = true),
+        // ),
         onNavigationRequest: (NavigationRequest request) =>
             NavigationDecision.navigate,
       ),
@@ -57,8 +47,6 @@ class _CommonWebViewState extends State<CommonWebView> {
 
   @override
   Widget build(BuildContext context) {
-
-
     // if (Constants.privacyPolicy.isEmpty || error == true) {
     //   return const Center(child: Text("Error."));
     // }

@@ -9,9 +9,9 @@ var en = <String, String>{
   TranslationKeys.helloRegistration: 'Hell0! Register to get started',
   TranslationKeys.creatingAnAccount:
       'Create an account by filling in the information below',
-  TranslationKeys.enterEmail: 'Enter Email',
-  TranslationKeys.enterPassword: 'Enter Password',
-  TranslationKeys.confirmPassword: 'Confirm Password',
+  TranslationKeys.enterEmail: 'Enter email',
+  TranslationKeys.enterPassword: 'Enter password',
+  TranslationKeys.confirmPassword: 'Confirm password',
   TranslationKeys.bySignUp: 'By signing up, you are agreeing to our ',
   TranslationKeys.termAndConditions: 'Terms & Conditions ',
   TranslationKeys.and: 'and ',
