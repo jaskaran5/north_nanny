@@ -19,6 +19,9 @@ class AppStyles {
     fontSize: Dimens.twentyFour,
     color: AppColors.blackColor,
   );
+
+
+
   static TextStyle pdBlack22W600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyPlayfairDisplay,
@@ -62,6 +65,30 @@ class AppStyles {
     color: AppColors.primaryColor,
     fontSize: Dimens.fifteen,
   );
+
+  static TextStyle ubGrey10w400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.hintColor,
+    fontSize: Dimens.ten,
+  );
+
+  static TextStyle ubGrey3b3c42f10w400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.greyColor3B3C42,
+    fontSize: Dimens.ten,
+  );
+
+
+  static TextStyle ubGrey3b3c42f10w600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    color: AppColors.greyColor3B3C42,
+    fontSize: Dimens.ten,
+  );
+
+
   static TextStyle ubWhite10700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,
@@ -373,6 +400,13 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     fontFamily: AppConstants.fontFamilyUrbanist,
     fontSize: Dimens.fifteen,
+    color: AppColors.purpleLightColor8F94AE,
+  );
+
+  static TextStyle ubPurpleLight12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
     color: AppColors.purpleLightColor8F94AE,
   );
 

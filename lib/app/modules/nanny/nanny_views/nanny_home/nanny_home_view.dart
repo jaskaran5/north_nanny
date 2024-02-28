@@ -11,9 +11,11 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/theme/styles.dart';
 import '../../../../widgets/app_text.dart';
+import '../../../common/booking_details/booking_detail_view.dart';
 
 class NannyHomeView extends StatelessWidget {
   const NannyHomeView({super.key});
@@ -141,36 +143,44 @@ class NannyHomeView extends StatelessWidget {
                   child: ListView(
                     children: List.generate(
                       controller.homeList.length,
-                      (index) => CustomNannyHomeTile(
-                        day: controller.homeList[index]['day'].toString(),
-                        dateFormatInMonthYearDayOfWeek:
-                            controller.homeList[index]['date'].toString(),
-                        timing: controller.homeList[index]['totalTiming']
-                            .toString(),
-                        totalPrice:
-                            controller.homeList[index]['totalPrice'].toString(),
-                        image: Assets.iconsImage,
-                        name: controller.homeList[index]['userName'].toString(),
-                        rating: controller.homeList[index]['totalRating']
-                            .toString(),
-                        reviews: controller.homeList[index]['totalReview']
-                            .toString(),
-                        servicesList: controller.servicesList,
-                        onTapRating: () {
-                          Utility.openBottomSheet(
-                            const CustomReviewBottomSheet(
-                              totalReviews: '21',
-                              totalReviewsRating: 4.5,
-                              reviewsList: [
-                                'Michael Johnson',
-                                'Giorgio Chiellini',
-                                'Michael Johnson',
-                                'Alex Morgan',
-                                'Giorgio Chiellini'
-                              ],
-                            ),
-                          );
+                      (index) => GestureDetector(
+
+                        onTap: (){
+
+                         RouteManagement.goToNannyBookingView();
+
                         },
+                        child: CustomNannyHomeTile(
+                          day: controller.homeList[index]['day'].toString(),
+                          dateFormatInMonthYearDayOfWeek:
+                              controller.homeList[index]['date'].toString(),
+                          timing: controller.homeList[index]['totalTiming']
+                              .toString(),
+                          totalPrice:
+                              controller.homeList[index]['totalPrice'].toString(),
+                          image: Assets.iconsImage,
+                          name: controller.homeList[index]['userName'].toString(),
+                          rating: controller.homeList[index]['totalRating']
+                              .toString(),
+                          reviews: controller.homeList[index]['totalReview']
+                              .toString(),
+                          servicesList: controller.servicesList,
+                          onTapRating: () {
+                            Utility.openBottomSheet(
+                              const CustomReviewBottomSheet(
+                                totalReviews: '21',
+                                totalReviewsRating: 4.5,
+                                reviewsList: [
+                                  'Michael Johnson',
+                                  'Giorgio Chiellini',
+                                  'Michael Johnson',
+                                  'Alex Morgan',
+                                  'Giorgio Chiellini'
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

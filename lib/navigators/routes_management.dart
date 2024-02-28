@@ -237,4 +237,11 @@ abstract class RouteManagement {
       Routes.inviteAFriendView,
     );
   }
+
+  /// Go to nanny booking details  Screen
+  static void goToNannyBookingView() {
+    Get.toNamed(
+      Routes.bookingDetailsView,
+    );
+  }
 }

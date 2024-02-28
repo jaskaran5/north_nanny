@@ -124,6 +124,8 @@ class BookingDetailView extends StatelessWidget {
                 secondButtonStyle: AppStyles.ubWhite14700,
               );
             });
+
+
           }
         },
         builder: (controller) => Scaffold(
@@ -210,11 +212,16 @@ class BookingDetailView extends StatelessWidget {
                   CustomBookingServiceTile(
                     serviceHeader: 'Service Type',
                     serviceDetailsList: [
-                      Services.homeWorkHelp.serviceName,
-                      Services.driving.serviceName,
+                      "Housekeeping",
+                      "Driving"
+
+                      //
+                      // Services.homeWorkHelp.serviceName,
+                      // Services.driving.serviceName,
                     ],
                   ),
                   Dimens.boxHeight16,
+                  ///CHILDREN PROFILE
                   CustomBookingChildrenTile(
                     childrenHeader: 'Children Profile',
                     childrenDetailsList: const [

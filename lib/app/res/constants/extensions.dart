@@ -56,7 +56,7 @@ extension BottomTabName on BottomTabs {
 extension ServiceName on Services {
   String get serviceName {
     switch (this) {
-      case Services.houseKeeping:
+      case Services.housekeeping:
         return TranslationKeys.houseKeeping;
       case Services.driving:
         return TranslationKeys.driving;
@@ -73,7 +73,7 @@ extension ServiceName on Services {
 
   String get servicesSvg {
     switch (this) {
-      case Services.houseKeeping:
+      case Services.housekeeping:
         return Assets.iconsHouseKeeping;
       case Services.driving:
         return Assets.iconsStaringWheel;
@@ -90,7 +90,7 @@ extension ServiceName on Services {
 
   String get serviceDescription {
     switch (this) {
-      case Services.houseKeeping:
+      case Services.housekeeping:
         return 'This service includes, but is not limited to the following household chores: dishes, laundry, floors, countertops, and general tidying up.';
       case Services.driving:
         return 'This service includes school, camp, club, and sport pick-ups/drop-offs. (Only nannies who have proven that they have a driver’s license will be eligible for this service).';

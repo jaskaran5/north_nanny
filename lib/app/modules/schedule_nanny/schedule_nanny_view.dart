@@ -116,7 +116,7 @@ class ScheduleNannyView extends StatelessWidget {
                                 ),
                                 Dimens.boxHeight8,
                                 AppText(
-                                  text: '10:00 Am to 05:00 PM',
+                                  text: '10:00 AM to 05:00 PM',
                                   style: AppStyles.ubBlack14W700,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,

@@ -7,6 +7,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class WaitingApprovalView extends StatelessWidget {
   const WaitingApprovalView({super.key});
@@ -14,33 +15,39 @@ class WaitingApprovalView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         body: Padding(
           padding: Dimens.edgeInsets16,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(Assets.iconsTimer),
-                Dimens.boxHeight10,
-                AppText(
-                  text: TranslationKeys.waitingForApproval.tr,
-                  style: AppStyles.ubBlack24W700,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                ),
-                Dimens.boxHeight10,
-                AppText(
-                  text: TranslationKeys.submissionPendingForApproval.tr,
-                  style: AppStyles.ubGrey16W500,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                ),
-                Dimens.boxHeight8,
-                AppText(
-                  text: TranslationKeys.administrationReviewOrApproveIt.tr,
-                  style: AppStyles.ubGrey16W500,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                ),
-              ],
+          child: GestureDetector(
+            onTap: (){
+              RouteManagement.goChooseBabySitter();
+
+            },
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(Assets.iconsTimer),
+                  Dimens.boxHeight10,
+                  AppText(
+                    text: TranslationKeys.waitingForApproval.tr,
+                    style: AppStyles.ubBlack24W700,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ),
+                  Dimens.boxHeight10,
+                  AppText(
+                    text: TranslationKeys.submissionPendingForApproval.tr,
+                    style: AppStyles.ubGrey16W500,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ),
+                  Dimens.boxHeight8,
+                  AppText(
+                    text: TranslationKeys.administrationReviewOrApproveIt.tr,
+                    style: AppStyles.ubGrey16W500,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

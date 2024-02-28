@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_binding.dart';
@@ -145,6 +148,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: FilterView.new,
       binding: FilterBinding(),
+      transition: Transition.rightToLeft,
+    ),
+/// BOOKING DETAILS VIEW
+
+    GetPage<BookingDetailView>(
+      name: Routes.bookingDetailsView,
+      transitionDuration: transitionDuration,
+      page: BookingDetailView.new,
+      binding: BookingDetailBinding(),
       transition: Transition.rightToLeft,
     ),
 

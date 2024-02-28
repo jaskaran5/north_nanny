@@ -109,24 +109,32 @@ class ChatView extends StatelessWidget {
                       child: Visibility(
                         visible: true,
                         replacement: const Center(),
-                        child: ListView.builder(
-                          reverse: true,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return controller.chatMessageList[index]
-                                        ['senderType'] ==
-                                    'parents'
-                                ? ReceiverTile(
-                                    title: controller.chatMessageList[index]
-                                            ['message'] ??
-                                        "message",
-                                  )
-                                : SenderTile(
-                                    title: controller.chatMessageList[index]
-                                            ['message'] ??
-                                        'title',
-                                  );
-                          },
+                        child: Column(
+                          children: [
+
+                            Container(height: 20,child: Text("Today",style: AppStyles.ubPurpleLight12W400,),),
+                            Expanded(
+                              child: ListView.builder(
+                                reverse: true,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return controller.chatMessageList[index]
+                                              ['senderType'] ==
+                                          'parents'
+                                      ? ReceiverTile(
+                                          title: controller.chatMessageList[index]
+                                                  ['message'] ??
+                                              "message",
+                                        )
+                                      : SenderTile(
+                                          title: controller.chatMessageList[index]
+                                                  ['message'] ??
+                                              'title',
+                                        );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

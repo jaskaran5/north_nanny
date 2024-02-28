@@ -290,13 +290,13 @@ Widget availabilityView({required DateTime selectedDate}) => Padding(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                        text: 'Februaery 2024 Friday',
+                        text: 'February 2024, Friday',
                         style: AppStyles.ubGrey12W400,
                         maxLines: 1,
                         textAlign: TextAlign.start),
                     Dimens.boxHeight8,
                     AppText(
-                      text: '10:00 Am to 05:00 PM',
+                      text: '10:00 AM to 05:00 PM',
                       style: AppStyles.ubBlack14W700,
                       maxLines: 1,
                       textAlign: TextAlign.start,

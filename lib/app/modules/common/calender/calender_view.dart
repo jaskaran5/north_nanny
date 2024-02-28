@@ -133,7 +133,7 @@ class CalenderView extends StatelessWidget {
                                               .padLeft(2, '0'),
                                           dateFormatInMonthYearDayOfWeek:
                                               'Februaery 2024 Friday',
-                                          timing: '10:00 Am to 05:00 PM',
+                                          timing: '10:00 AM to 05:00 PM',
                                           totalPrice: '112',
                                         ),
                                         Dimens.boxHeight16,
@@ -150,7 +150,7 @@ class CalenderView extends StatelessWidget {
                                                 color: AppColors.blackColor),
                                             Dimens.boxWidth4,
                                             AppText(
-                                              text: 'HouseKeeping, driving',
+                                              text: 'Housekeeping, driving',
                                               style: AppStyles.ubGrey15W500,
                                               maxLines: 1,
                                               textAlign: TextAlign.start,

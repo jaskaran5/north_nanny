@@ -87,7 +87,7 @@ class TranslationKeys {
   static const String driverLicense = 'driverLicense';
   static const String tellUsAboutYourSelf = 'tellUsAboutYourSelf';
   static const String selectServices = 'selectServices';
-  static const String houseKeeping = 'houseKeeping';
+  static const String houseKeeping = 'housekeeping';
   static const String driving = 'driving';
   static const String petCare = 'petCare';
   static const String homeWorkHelp = 'homeWorkHelp';

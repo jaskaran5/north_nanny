@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomBookingChildrenTile extends StatelessWidget {
@@ -72,6 +74,11 @@ class CustomBookingChildrenTile extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
+                            Divider(
+                              height: Dimens.one,
+                              color: AppColors.hintColor,
+                            ),
                             ListTile(
                               title: AppText(
                                 text: '• Allergies/Dietary Restrictions',
@@ -89,7 +96,7 @@ class CustomBookingChildrenTile extends StatelessWidget {
                             Dimens.boxHeight8,
                             ListTile(
                               title: AppText(
-                                text: '• Medical Conditions',
+                                text: TranslationKeys.medicalCondition.tr,
                                 style: AppStyles.ubBlack12W600,
                                 maxLines: 1,
                                 textAlign: TextAlign.start,

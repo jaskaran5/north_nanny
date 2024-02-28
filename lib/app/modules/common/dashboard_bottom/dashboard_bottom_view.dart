@@ -9,6 +9,8 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
+import '../../../res/constants/string_contants.dart';
+
 class DashboardBottomView extends StatelessWidget {
   const DashboardBottomView({super.key});
   @override
@@ -75,7 +77,14 @@ class DashboardBottomView extends StatelessWidget {
               ),
               backgroundColor: AppColors.primaryColor,
             ),
-            body: controller.bottomBarScreenList
-                .elementAt(controller.selectedTabIndex.value)),
+            body:
+            (controller.loginType == StringConstants.customer)?
+
+            controller.bottomBarScreenListCustomer
+                .elementAt(controller.selectedTabIndex.value)
+
+        :   controller.bottomBarScreenListNanny
+                .elementAt(controller.selectedTabIndex.value))
+
       );
 }

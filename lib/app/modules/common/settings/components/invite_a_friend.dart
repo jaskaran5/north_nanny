@@ -67,7 +67,10 @@ class InviteAFriendView extends StatelessWidget {
                 CustomButton(
                   title: TranslationKeys.sendReferralLink.tr,
                   backGroundColor: AppColors.navyBlue,
-                  onTap: () {},
+                  onTap: () {
+                    // Share.share('Hello Welcome to Nanny', subject: 'https://northshore-nanny-app.com');
+
+                  },
                 ),
                 Dimens.boxHeight10,
               ],

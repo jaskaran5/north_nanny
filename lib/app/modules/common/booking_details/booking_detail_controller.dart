@@ -44,5 +44,5 @@ class BookingDetailController extends GetxController {
   ];
 
   /// check status
-  late BookingDetailStatus bookingDetailStatus;
+  late BookingDetailStatus bookingDetailStatus=BookingDetailStatus.present ;
 }

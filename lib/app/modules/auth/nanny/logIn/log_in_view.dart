@@ -157,7 +157,10 @@ class LogInView extends StatelessWidget {
                           CustomButton(
                             title: TranslationKeys.signIn.tr,
                             backGroundColor: AppColors.navyBlue,
-                            onTap: () {},
+                            onTap: () {
+
+                              RouteManagement.goToOffAllDashboard(isFromSetting: false);
+                            },
                           ),
                         ],
                       ),

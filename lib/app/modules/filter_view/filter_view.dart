@@ -259,6 +259,8 @@ class FilterView extends StatelessWidget {
                     ),
                   ),
                   Dimens.boxHeight26,
+
+                  /** Date and time **/
                   AppText(
                     text: TranslationKeys.dateAndTime.tr,
                     style: AppStyles.ubBlack16W700,
@@ -434,7 +436,7 @@ class FilterView extends StatelessWidget {
                               Dimens.boxWidth10,
                               AppText(
                                 text:
-                                    '${controller.selectedDate.day.toString().padLeft(2, '0')}/${controller.selectedDate.month.toString().padLeft(2, '0')}/${controller.selectedDate.year}',
+                                    '${controller.selectedDate.month.toString().padLeft(2, '0')}/${controller.selectedDate.day.toString().padLeft(2, '0')}/${controller.selectedDate.year}',
                                 style: AppStyles.ubHintColor15W500,
                                 maxLines: 1,
                               ),

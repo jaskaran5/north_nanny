@@ -9,7 +9,7 @@ enum BottomTabs {
 }
 
 enum Services {
-  houseKeeping,
+  housekeeping,
   driving,
   petCare,
   homeWorkHelp,

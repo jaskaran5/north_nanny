@@ -11,6 +11,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_child_profile_tile.dart';
 
+
+//** this is  Manage child profile screen
 class ManageChildProfileView extends StatelessWidget {
   const ManageChildProfileView({super.key});
 
