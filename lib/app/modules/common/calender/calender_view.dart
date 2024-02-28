@@ -9,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_date_format_tile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_dot.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -100,7 +101,8 @@ class CalenderView extends StatelessWidget {
                               }
                               Get.find<BookingDetailController>()
                                       .bookingDetailStatus =
-                                  controller.selectedDay.day == DateTime.now().day
+                                  controller.selectedDay.day ==
+                                          DateTime.now().day
                                       ? BookingDetailStatus.present
                                       : BookingDetailStatus.past;
                               Get.to(const BookingDetailView());
@@ -125,59 +127,14 @@ class CalenderView extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                AppText(
-                                                  text: controller
-                                                      .selectedDay.day
-                                                      .toString()
-                                                      .padLeft(2, '0'),
-                                                  style:
-                                                      AppStyles.ubBlack30W600,
-                                                  maxLines: 1,
-                                                ),
-                                                Dimens.boxWidth16,
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    AppText(
-                                                        text:
-                                                            'Februaery 2024 Friday',
-                                                        style: AppStyles
-                                                            .ubGrey12W400,
-                                                        maxLines: 1,
-                                                        textAlign:
-                                                            TextAlign.start),
-                                                    Dimens.boxHeight8,
-                                                    AppText(
-                                                      text:
-                                                          '10:00 Am to 05:00 PM',
-                                                      style: AppStyles
-                                                          .ubBlack14W700,
-                                                      maxLines: 1,
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            AppText(
-                                              text: '\$112',
-                                              style: AppStyles.ubBlack16W700,
-                                              maxLines: 1,
-                                            ),
-                                          ],
+                                        CustomDateFormatTile(
+                                          day: controller.selectedDay.day
+                                              .toString()
+                                              .padLeft(2, '0'),
+                                          dateFormatInMonthYearDayOfWeek:
+                                              'Februaery 2024 Friday',
+                                          timing: '10:00 Am to 05:00 PM',
+                                          totalPrice: '112',
                                         ),
                                         Dimens.boxHeight16,
                                         Divider(
