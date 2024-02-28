@@ -33,7 +33,10 @@ class SettingController extends GetxController {
     update();
   }
 
-  final data = [
+
+  /// CUSTOMER SETTING LIST
+
+  final customerSettingList = [
     {
       "name": TranslationKeys.favorites.tr,
       "icon": Assets.iconsHeartOutline,
@@ -95,6 +98,73 @@ class SettingController extends GetxController {
       "trallingIcon": Assets.iconsNext
     },
   ];
+
+/// NANNY SETTING LIST
+
+    final nannySettingList = [
+      {
+        "name": TranslationKeys.favorites.tr,
+        "icon": Assets.iconsHeartOutline,
+        "trallingIcon": Assets.iconsNext,
+      },
+      {
+        "name": TranslationKeys.mangeChildProfile.tr,
+        "icon": Assets.iconsBabyBoy,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.paymentMethod.tr,
+        "icon": Assets.iconsCard,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.changePassword.tr,
+        "icon": Assets.iconsLock,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.aboutUs.tr,
+        "icon": Assets.iconsAboutUs,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.inviteAFriend.tr,
+        "icon": Assets.iconsProfileAdd,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.contactUs.tr,
+        "icon": Assets.iconsHeadPhone,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.rateApp.tr,
+        "icon": Assets.iconsBlackStar,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.fAQ.tr,
+        "icon": Assets.iconsMessageQuestion,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.termAndConditions.tr,
+        "icon": Assets.iconsDocumentText,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.privacyPolicy.tr,
+        "icon": Assets.iconsShieldSecurity,
+        "trallingIcon": Assets.iconsNext
+      },
+      {
+        "name": TranslationKeys.logOut.tr,
+        "icon": Assets.iconsLogout,
+        "trallingIcon": Assets.iconsNext
+      },
+    ];
+
+
 
   RxList faqlist = [
     {

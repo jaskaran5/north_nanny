@@ -46,7 +46,7 @@ class SettingView extends StatelessWidget {
                           subtitle: "example@gmail.com",
                           img: "",
                           trailingIcon:
-                              controller.data[0]["trallingIcon"].toString()),
+                              controller.customerSettingList[0]["trallingIcon"].toString()),
                       listOfTiles(context, controller),
                     ],
                   ),
@@ -113,13 +113,13 @@ class SettingView extends StatelessWidget {
               ));
             }
           },
-          text: controller.data[index]["name"].toString(),
-          leadingIcon: controller.data[index]["icon"].toString(),
-          trallingIcon: controller.data[index]["trallingIcon"].toString(),
+          text: controller.customerSettingList[index]["name"].toString(),
+          leadingIcon: controller.customerSettingList[index]["icon"].toString(),
+          trallingIcon: controller.customerSettingList[index]["trallingIcon"].toString(),
         );
       },
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: controller.data.length,
+      itemCount: controller.customerSettingList.length,
       shrinkWrap: true,
     );
   }
