@@ -369,6 +369,13 @@ class AppStyles {
     color: AppColors.purpleColor646FA4,
   );
 
+  static TextStyle ubPurpleLight15W500 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fifteen,
+    color: AppColors.purpleLightColor8F94AE,
+  );
+
   static TextStyle ubNavyBlue14W700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,

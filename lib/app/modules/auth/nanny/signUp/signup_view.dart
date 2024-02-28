@@ -262,7 +262,7 @@ class SignUpView extends StatelessWidget {
                     child: RichText(
                       text: TextSpan(
                         text: TranslationKeys.alreadyHaveAccount.tr,
-                        style: AppStyles.ubGrey15W500,
+                        style: AppStyles.ubPurpleLight15W500,
                         children: [
                           TextSpan(
                             text: TranslationKeys.signIn.tr,

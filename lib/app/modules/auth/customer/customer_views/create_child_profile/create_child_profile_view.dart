@@ -41,9 +41,11 @@ class CreateChildProfileView extends StatelessWidget {
                 ),
               ),
             ],
+
+            /** LINEAR INDICATOR */
             bottom: LinearProgressIndicator(
               backgroundColor: AppColors.lightNavyBlue,
-              value: 0.4,
+              value: controller.linearIndicatorValue.value,
               minHeight: Dimens.three,
               color: AppColors.navyBlue,
             ),

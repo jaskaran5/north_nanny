@@ -29,11 +29,18 @@ class ChildProfileView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                /** SUBMIT BUTTON */
                 CustomButton(
                   title: TranslationKeys.submit.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    Get.to(const CreateChildProfileView(),);
+                    controller.updateNoOfChildren(
+                        val: int.parse(controller
+                            .noOfChildrenTextEditingController.text
+                            .trim()));
+                    Get.to(
+                      const CreateChildProfileView(),
+                    );
                   },
                 ),
                 Dimens.boxHeight10,
@@ -42,7 +49,6 @@ class ChildProfileView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
                   onTap: () {
-
                     RouteManagement.goToOffAllDashboard(isFromSetting: false);
                   },
                 ),
@@ -76,6 +82,8 @@ class ChildProfileView extends StatelessWidget {
                       style: AppStyles.ubGrey16W400,
                     ),
                     Dimens.boxHeight20,
+
+                    /** NO OF CHILDREN TEXTFIELD */
                     TextField(
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,

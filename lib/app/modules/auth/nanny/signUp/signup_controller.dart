@@ -16,6 +16,9 @@ class SignupViewController extends GetxController {
 
   RxBool isAcceptTerms = false.obs;
 
+  RxInt noOfChild = 1.obs;
+  RxDouble linearIndicatorValue = 0.0.obs;
+
   @override
   void onInit() async {
     getLoginType();
@@ -30,6 +33,15 @@ class SignupViewController extends GetxController {
     update();
   }
 
+  /// UPDATE NO OF CHILDREN
+
+  updateNoOfChildren({val}) {
+    noOfChild.value = val;
+
+    updateLinearIndicator();
+    update();
+  }
+
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();
@@ -37,7 +49,7 @@ class SignupViewController extends GetxController {
   final lastNameTextEditingController = TextEditingController();
   final phoneNumberTextEditingController = TextEditingController();
   final locationTextEditingController = TextEditingController();
-  final noOfChildrenTextEditingController = TextEditingController();
+  final noOfChildrenTextEditingController = TextEditingController(text: "1");
   final childNameTextEditingController = TextEditingController();
   final childAgeTextEditingController = TextEditingController();
   final allergiesTextEditingController = TextEditingController();
@@ -76,6 +88,15 @@ class SignupViewController extends GetxController {
   toggleIsAcceptTerms() {
     isAcceptTerms.value = !isAcceptTerms.value;
     update();
+  }
+
+  /// UPDATE LINER INDICATOR
+  updateLinearIndicator() {
+    linearIndicatorValue.value =
+        double.parse((1 / noOfChild.value).toStringAsFixed(3));
+    update();
+
+    log("linear indicator value is :-->> ${linearIndicatorValue.value}");
   }
 
   /// method used to pick the Image from gallery

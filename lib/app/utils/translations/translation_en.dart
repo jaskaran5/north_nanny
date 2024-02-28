@@ -60,7 +60,7 @@ var en = <String, String>{
   TranslationKeys.skip: 'Skip',
   TranslationKeys.skipForNow: 'Skip for Now',
   TranslationKeys.createChildProfile: 'Create Child Profile',
-  TranslationKeys.nameOfChild: 'Name of Child',
+  TranslationKeys.nameOfChild: 'Name of child',
   TranslationKeys.ageOfChild: 'Age of Child',
   TranslationKeys.allergiesDietaryRestriction: 'Allergies/dietary restrictions',
   TranslationKeys.medicalCondition: 'Medical Conditions',
