@@ -33,3 +33,13 @@ enum BookingDetailStatus {
   complete,
   now,
 }
+
+enum NannyBookingDetailStatus {
+  present,
+  accepted,
+  onMyWay,
+  arrived,
+  endJob,
+  waitingForApproval,
+  reviewComplete,
+}

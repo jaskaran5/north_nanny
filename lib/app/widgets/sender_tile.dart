@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_receiver_chat_time_tile.dart';
 
 import 'custom_sender_chat_time_tile.dart';
 

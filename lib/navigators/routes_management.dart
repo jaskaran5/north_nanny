@@ -241,7 +241,7 @@ abstract class RouteManagement {
   /// Go to nanny booking details  Screen
   static void goToNannyBookingView() {
     Get.toNamed(
-      Routes.bookingDetailsView,
+      Routes.nannyBookingDetailsView,
     );
   }
 }

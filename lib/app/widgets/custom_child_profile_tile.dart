@@ -19,18 +19,20 @@ class CustomChildProfileTile extends StatelessWidget {
       margin: Dimens.edgeInsetsB16,
       padding: Dimens.edgeInsets10,
       decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(
-            Dimens.fourteen,
-          ),
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.blackColor.withOpacity(.058),
-                blurRadius: Dimens.ten)
-          ],),
+        color: AppColors.primaryColor,
+        borderRadius: BorderRadius.circular(
+          Dimens.fourteen,
+        ),
+        boxShadow: [
+          BoxShadow(
+              color: AppColors.blackColor.withOpacity(.058),
+              blurRadius: Dimens.ten)
+        ],
+      ),
       width: Get.width,
       child: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: Dimens.edgeInsetsL6,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -9,11 +10,13 @@ class CustomDotText extends StatelessWidget {
   final String description;
 
   final String heading;
+  final TextStyle? headingStyle;
 
   const CustomDotText({
     super.key,
     required this.heading,
     required this.description,
+    this.headingStyle,
   });
 
   @override
@@ -31,24 +34,27 @@ class CustomDotText extends StatelessWidget {
               color: AppColors.blackColor,
             ),
           ),
-          Dimens.boxWidth8,
+          Dimens.boxWidth2, // boxWidth8 changes to boxWidth2
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               AppText(
                 text: heading,
-                style: AppStyles.ubBlack14W600,
+                style: headingStyle ?? AppStyles.ubBlack14W600,
                 maxLines: 1,
                 textAlign: TextAlign.left,
               ),
               Dimens.boxHeight5,
-              SizedBox(
-                width: Dimens.twoHundredSeventy,
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: Get.width * .7,
+                ),
                 child: AppText(
                   text: description,
                   style: AppStyles.ubGrey12W500,
                   textAlign: TextAlign.left,
+                  maxLines: 10,
                 ),
               ),
             ],

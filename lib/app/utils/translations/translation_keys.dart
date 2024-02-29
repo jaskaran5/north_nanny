@@ -191,6 +191,9 @@ class TranslationKeys {
   static const String youWantToLeave = 'youWantToLeave';
   static const String cancel = 'cancel';
   static const String available = 'available';
+  static const String unAvailable = 'unAvailable';
   static const String totalEarning = 'totalEarning';
   static const String bookingRequests = 'bookingRequests';
+  static const String reject = 'reject';
+  static const String accept = 'accept';
 }

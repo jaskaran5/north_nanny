@@ -109,45 +109,74 @@ class Utility {
     required int titleMaxLine,
     required int subTitleMaxLine,
     required Function() onTapButton,
+    required bool isImage,
+    required bool showCrossSvg,
+    Color? buttonColor,
+    TextStyle? buttonStyle,
   }) async {
     await Get.dialog(
-      AlertDialog(
-          alignment: Alignment.center,
-          shape: OutlineInputBorder(
+      Padding(
+        padding: Dimens.edgeInsetsL16R16,
+        child: Center(
+          child: Material(
+            color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(Dimens.twenty),
-            borderSide:const  BorderSide(color: AppColors.primaryColor)
+            child: Container(
+              padding: Dimens.edgeInsets16,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(Dimens.twenty),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (showCrossSvg) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: SvgPicture.asset(
+                                Assets.iconsRemoveBottomSheet)),
+                      ],
+                    ),
+                    Dimens.boxHeight2,
+                  ],
+                  isImage
+                      ? Image.asset(assetName)
+                      : SvgPicture.asset(
+                          assetName,
+                          alignment: Alignment.center,
+                          width: assetWidth,
+                          height: assetHeight,
+                        ),
+                  Dimens.boxHeight20,
+                  AppText(
+                    text: title,
+                    style: AppStyles.ubBlack0B0B18W700,
+                    maxLines: titleMaxLine,
+                  ),
+                  Dimens.boxHeight10,
+                  AppText(
+                    text: subTitle,
+                    style: AppStyles.ub5E5F60Grey14W400,
+                    maxLines: subTitleMaxLine,
+                  ),
+                  Dimens.boxHeight16,
+                  CustomButton(
+                    title: buttonTitleText,
+                    backGroundColor: buttonColor ?? AppColors.navyBlue,
+                    titleStyle: buttonStyle,
+                    onTap: onTapButton,
+                  ),
+                ],
+              ),
+            ),
           ),
-          backgroundColor: AppColors.primaryColor,
-          contentPadding: Dimens.edgeInsets16,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset(
-                assetName,
-                alignment: Alignment.center,
-                width: assetWidth,
-                height: assetHeight,
-              ),
-              Dimens.boxHeight20,
-              AppText(
-                text: title,
-                style: AppStyles.ubBlack0B0B18W700,
-                maxLines: titleMaxLine,
-              ),
-              Dimens.boxHeight10,
-              AppText(
-                text: subTitle,
-                style: AppStyles.ub5E5F60Grey14W400,
-                maxLines: subTitleMaxLine,
-              ),
-              Dimens.boxHeight16,
-              CustomButton(
-                title: buttonTitleText,
-                backGroundColor: AppColors.navyBlue,
-                onTap: onTapButton,
-              )
-            ],
-          )),
+        ),
+      ),
     );
   }
 

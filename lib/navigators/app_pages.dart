@@ -3,7 +3,6 @@ import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/cho
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
@@ -34,6 +33,8 @@ import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dar
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
@@ -150,13 +151,23 @@ class AppPages {
       binding: FilterBinding(),
       transition: Transition.rightToLeft,
     ),
-/// BOOKING DETAILS VIEW
+
+    /// BOOKING DETAILS VIEW
 
     GetPage<BookingDetailView>(
       name: Routes.bookingDetailsView,
       transitionDuration: transitionDuration,
       page: BookingDetailView.new,
       binding: BookingDetailBinding(),
+      transition: Transition.rightToLeft,
+    ),
+
+    /// Nanny BOOKING DETAILS VIEW.
+    GetPage<NannyBookingDetailView>(
+      name: Routes.nannyBookingDetailsView,
+      transitionDuration: transitionDuration,
+      page: NannyBookingDetailView.new,
+      binding: NannyBookingDetailBinding(),
       transition: Transition.rightToLeft,
     ),
 

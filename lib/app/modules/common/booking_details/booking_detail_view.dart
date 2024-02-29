@@ -7,8 +7,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/booking_details/book
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/send_tip_view/send_tip_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/enums.dart';
@@ -19,7 +17,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_children_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_detail.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_receipt_tile.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_booking_review.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_bookng_service_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
@@ -273,11 +270,6 @@ class BookingDetailView extends StatelessWidget {
                         RouteManagement.goToRatingReviewScreen();
                       },
                     ),
-                  ],
-                  if (controller.bookingDetailStatus ==
-                      BookingDetailStatus.review) ...[
-                    const CustomBookingReview(
-                        reviewsList: ['Christon Wang.F', 'Michal Johnson']),
                   ],
                   if (controller.bookingDetailStatus ==
                       BookingDetailStatus.now) ...[

@@ -118,15 +118,18 @@ class ContactUsView extends StatelessWidget {
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
                       Utility.showDialog(
-                          assetName: Assets.iconsSuccess,
-                          title: 'Thank You',
-                          subTitle: 'Your submission has been sent.',
-                          buttonTitleText: 'okay',
-                          assetWidth: Dimens.sixtyEight,
-                          assetHeight: Dimens.sixtyEight,
-                          titleMaxLine: 1,
-                          subTitleMaxLine: 1,
-                          onTapButton: Get.back);
+                        assetName: Assets.iconsSuccess,
+                        title: 'Thank You',
+                        subTitle: 'Your submission has been sent.',
+                        buttonTitleText: 'okay',
+                        assetWidth: Dimens.sixtyEight,
+                        assetHeight: Dimens.sixtyEight,
+                        titleMaxLine: 1,
+                        subTitleMaxLine: 1,
+                        onTapButton: Get.back,
+                        isImage: false,
+                        showCrossSvg: false,
+                      );
                     },
                   )
                 ],

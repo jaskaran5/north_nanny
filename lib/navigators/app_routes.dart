@@ -31,6 +31,7 @@ class Routes {
   static const String ediProfileView = Paths.ediProfileView;
   static const String inviteAFriendView = Paths.inviteAFriendView;
   static const String bookingDetailsView = Paths.bookingDetailsView;
+  static const String nannyBookingDetailsView = Paths.nannyBookingDetailsView;
   static const String createCustomerProfileView =
       Paths.createCustomerProfileView;
 }
@@ -67,6 +68,7 @@ class Paths {
   static const String ediProfileView = '/EditProfile-view';
   static const String inviteAFriendView = '/InviteAFriend-view';
   static const String bookingDetailsView = '/booking-details-view';
+  static const String nannyBookingDetailsView = '/Nanny-booking-details-view';
   static const String createCustomerProfileView =
       '/create-customer-profile-view-';
 }

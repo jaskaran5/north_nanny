@@ -76,6 +76,7 @@ class Assets {
   static const String iconsNotification = 'assets/icons/notification.svg';
   static const String iconsNotificationFill = 'assets/icons/notification_fill.svg';
   static const String iconsNotificationOutline = 'assets/icons/notification_outline.svg';
+  static const String iconsOutlineInfoCircle = 'assets/icons/outline_info_circle.svg';
   static const String iconsPersonalcard = 'assets/icons/personalcard.svg';
   static const String iconsPetThumb = 'assets/icons/pet_thumb.svg';
   static const String iconsPhone = 'assets/icons/phone.svg';
@@ -86,7 +87,6 @@ class Assets {
   static const String iconsRight = 'assets/icons/right.svg';
   static const String iconsRightGrey = 'assets/icons/right_grey.svg';
   static const String iconsSadEmoji = 'assets/icons/sad_emoji.svg';
-
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String iconsSettingFilled = 'assets/icons/setting_filled.svg';
   static const String iconsSettingOutline = 'assets/icons/setting_outline.svg';

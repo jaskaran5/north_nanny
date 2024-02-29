@@ -73,6 +73,7 @@ class Dimens {
   static final double hundredForty = 140.sp;
   static final double hundredFortyFive = 145.sp;
   static final double oneHundredFifty = 150.sp;
+  static final double oneHundredSixty = 160.sp;
   static final double oneHundredSeventy = 170.sp;
   static final double oneHundredEightyTwo = 182.sp;
   static final double oneHundredNinety = 190.sp;

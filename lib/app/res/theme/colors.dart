@@ -8,6 +8,7 @@ class AppColors {
   static const Color darkBlackColor = Color(0xff1E232C);
   static const Color navyBlue = Color(0xff134373);
   static const Color navyBlue3288DE = Color(0xff3288DE);
+  static const Color trackColorDCDFEB = Color(0xffDCDFEB);
 
   static const Color lightNavyBlue = Color(0xffDDEBF9);
   static const Color colorBBD7F4lightNavyBlue = Color(0xffBBD7F4);
@@ -31,6 +32,7 @@ class AppColors {
   static const Color trackerBackgroundColor = Color(0xff1B60A5);
   static const Color settingBackgroundColor = Color(0xff99ABC6);
   static const Color fFC107YellowColor = Color(0xffFFC107);
+  static const Color f7D901YellowColor = Color(0xffF7D901);
   static const Color dEDFE0GreyColor = Color(0xffDEDFE0);
   static const Color f5F4F6GreyColor = Color(0xffF5F4F6);
   static const Color greyColor134373 = Color(0xff134373);
@@ -43,6 +45,4 @@ class AppColors {
 
   static const Color purpleLightColor8F94AE = Color(0xff8F94AE);
   static const Color greyColor3B3C42 = Color(0xff3B3C42);
-
-
 }

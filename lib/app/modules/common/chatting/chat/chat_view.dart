@@ -112,7 +112,7 @@ class ChatView extends StatelessWidget {
                         child: Column(
                           children: [
 
-                            Container(height: 20,child: Text("Today",style: AppStyles.ubPurpleLight12W400,),),
+                            SizedBox(height: 20,child: Text("Today",style: AppStyles.ubPurpleLight12W400,),),
                             Expanded(
                               child: ListView.builder(
                                 reverse: true,

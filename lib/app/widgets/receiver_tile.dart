@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 
 import 'custom_receiver_chat_time_tile.dart';
 
@@ -12,10 +11,9 @@ class ReceiverTile extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
-
-        padding: EdgeInsets.symmetric(vertical: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 10, right: 50),
@@ -36,7 +34,9 @@ class ReceiverTile extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            const CustomReceiverChatTimeTile(text: "7:31 PM",)
+            const CustomReceiverChatTimeTile(
+              text: "7:31 PM",
+            )
           ],
         ),
       ),

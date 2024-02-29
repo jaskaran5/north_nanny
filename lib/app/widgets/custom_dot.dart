@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 
 class CustomDot extends StatelessWidget {
   final double size;

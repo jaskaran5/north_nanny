@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/widgets/custom_nanny_home_tile.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
@@ -15,7 +18,6 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/theme/styles.dart';
 import '../../../../widgets/app_text.dart';
-import '../../../common/booking_details/booking_detail_view.dart';
 
 class NannyHomeView extends StatelessWidget {
   const NannyHomeView({super.key});
@@ -63,13 +65,17 @@ class NannyHomeView extends StatelessWidget {
                           },
                           activeColor: AppColors.navyBlue,
                           thumbColor: AppColors.primaryColor,
-                          trackColor: AppColors.lightNavyBlue,
+                          trackColor: AppColors.trackColorDCDFEB,
                         ),
                       ),
                       Dimens.boxHeight2,
                       AppText(
-                        text: TranslationKeys.available.tr,
-                        style: AppStyles.ubNavyBlue10W400,
+                        text: controller.isSwitchOn
+                            ? TranslationKeys.available.tr
+                            : TranslationKeys.unAvailable.tr,
+                        style: controller.isSwitchOn
+                            ? AppStyles.ubNavyBlue10W400
+                            : AppStyles.ubGrey10W400,
                         maxLines: 1,
                       ),
                     ],
@@ -145,6 +151,16 @@ class NannyHomeView extends StatelessWidget {
                       controller.homeList.length,
                       (index) => GestureDetector(
                         onTap: () {
+<<<<<<< HEAD
+=======
+                          if (!Get.isRegistered<
+                              NannyBookingDetailController>()) {
+                            NannyBookingDetailBinding().dependencies();
+                          }
+                          Get.find<NannyBookingDetailController>()
+                                  .nannyBookingDetailStatus =
+                              NannyBookingDetailStatus.present;
+>>>>>>> 3d5063f (made the nanny booking detail and review)
                           RouteManagement.goToNannyBookingView();
                         },
                         child: CustomNannyHomeTile(

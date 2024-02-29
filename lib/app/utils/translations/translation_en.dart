@@ -177,6 +177,9 @@ var en = <String, String>{
   TranslationKeys.cancel: 'Cancel',
   TranslationKeys.price: 'Price:',
   TranslationKeys.available: 'Available ',
+  TranslationKeys.unAvailable: 'Unavailable',
   TranslationKeys.totalEarning: 'Total earnings',
   TranslationKeys.bookingRequests: 'Booking Requests',
+  TranslationKeys.reject: 'Reject',
+  TranslationKeys.accept: 'Accept',
 };
