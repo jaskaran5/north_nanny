@@ -8,6 +8,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 
 import '../../../res/constants/string_contants.dart';
 import '../../customer/home/home_view.dart';
+import '../../nanny/nanny_views/nanny_calender_view/nanny_calender_view.dart';
 import '../../nanny/nanny_views/nanny_home/nanny_home_view.dart';
 
 class DashboardBottomController extends GetxController {
@@ -57,7 +58,7 @@ class DashboardBottomController extends GetxController {
     const NannyHomeView(),
     const RecentChatView(),
     const NotificationView(),
-    const CalenderView(),
+    const NannyCalenderView(),
     const SettingView(),
   ];
 }

@@ -212,7 +212,9 @@ class NannyBookingDetailView extends StatelessWidget {
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
-                      NannyBookingDetailStatus.reviewComplete) ...[
+                          NannyBookingDetailStatus.reviewComplete ||
+                      controller.nannyBookingDetailStatus ==
+                          NannyBookingDetailStatus.past) ...[
                     const CustomBookingReview(
                       reviewsList: ['Christon Wang.F', 'Michal Johnson'],
                     ),

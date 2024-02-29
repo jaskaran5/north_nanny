@@ -151,8 +151,6 @@ class NannyHomeView extends StatelessWidget {
                       controller.homeList.length,
                       (index) => GestureDetector(
                         onTap: () {
-<<<<<<< HEAD
-=======
                           if (!Get.isRegistered<
                               NannyBookingDetailController>()) {
                             NannyBookingDetailBinding().dependencies();
@@ -160,7 +158,7 @@ class NannyHomeView extends StatelessWidget {
                           Get.find<NannyBookingDetailController>()
                                   .nannyBookingDetailStatus =
                               NannyBookingDetailStatus.present;
->>>>>>> 3d5063f (made the nanny booking detail and review)
+
                           RouteManagement.goToNannyBookingView();
                         },
                         child: CustomNannyHomeTile(

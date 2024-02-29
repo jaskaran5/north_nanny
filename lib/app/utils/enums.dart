@@ -42,4 +42,5 @@ enum NannyBookingDetailStatus {
   endJob,
   waitingForApproval,
   reviewComplete,
+  past,
 }
