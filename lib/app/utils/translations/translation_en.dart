@@ -70,7 +70,7 @@ var en = <String, String>{
   TranslationKeys.nameOfCollege: 'Name of College',
   TranslationKeys.driverLicense: 'Driver’s License (Optional)',
   TranslationKeys.tellUsAboutYourSelf: 'Tell Us About Yourself!',
-  TranslationKeys.bankDetails: 'Bank Details',
+  TranslationKeys.bankDetails: 'Bank details',
   TranslationKeys.bankName: 'Bank name',
   TranslationKeys.addBank: 'Add Bank',
   TranslationKeys.accountHolderName: 'Account holder name',

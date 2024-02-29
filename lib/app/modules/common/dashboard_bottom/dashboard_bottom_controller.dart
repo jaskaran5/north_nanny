@@ -1,5 +1,3 @@
-
-
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_view.dart';
@@ -17,20 +15,20 @@ class DashboardBottomController extends GetxController {
 
   var bottomTabList = BottomTabs.values;
 
-
   RxInt selectedTabIndex = 0.obs;
 
   set selectedBottomTab(int value) {
     selectedTabIndex.value = value;
     update();
   }
-  String loginType = '';
 
+  String loginType = '';
 
   checkLoginType() {
     loginType = Storage.getValue(StringConstants.loginType);
     update();
   }
+
   @override
   void onInit() {
     super.onInit();
@@ -62,5 +60,4 @@ class DashboardBottomController extends GetxController {
     const CalenderView(),
     const SettingView(),
   ];
-
 }

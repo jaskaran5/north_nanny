@@ -17,6 +17,7 @@ class BankDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       GetBuilder<CreateSitterProfileController>(
+        init: CreateSitterProfileController(),
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(

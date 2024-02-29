@@ -144,11 +144,8 @@ class NannyHomeView extends StatelessWidget {
                     children: List.generate(
                       controller.homeList.length,
                       (index) => GestureDetector(
-
-                        onTap: (){
-
-                         RouteManagement.goToNannyBookingView();
-
+                        onTap: () {
+                          RouteManagement.goToNannyBookingView();
                         },
                         child: CustomNannyHomeTile(
                           day: controller.homeList[index]['day'].toString(),
@@ -156,10 +153,11 @@ class NannyHomeView extends StatelessWidget {
                               controller.homeList[index]['date'].toString(),
                           timing: controller.homeList[index]['totalTiming']
                               .toString(),
-                          totalPrice:
-                              controller.homeList[index]['totalPrice'].toString(),
+                          totalPrice: controller.homeList[index]['totalPrice']
+                              .toString(),
                           image: Assets.iconsImage,
-                          name: controller.homeList[index]['userName'].toString(),
+                          name:
+                              controller.homeList[index]['userName'].toString(),
                           rating: controller.homeList[index]['totalRating']
                               .toString(),
                           reviews: controller.homeList[index]['totalReview']

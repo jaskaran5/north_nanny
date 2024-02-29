@@ -3,6 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/bank_detail_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/nanny_update_bank_details_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -38,16 +42,31 @@ class SettingView extends StatelessWidget {
                         maxLines: 1,
                       ),
                       Dimens.boxHeight20,
-                      CustomSettingProfileTile(
-                          onTap: () {
-                            RouteManagement.goToMyProfileView();
-                          },
-                          title: "Michael Jorden",
-                          subtitle: "example@gmail.com",
-                          img: "",
-                          trailingIcon:
-                              controller.customerSettingList[0]["trallingIcon"].toString()),
-                      listOfTiles(context, controller),
+                      (controller.loginType.value == StringConstants.customer)
+                          ? CustomSettingProfileTile(
+                              onTap: () {
+                                RouteManagement.goToMyProfileView();
+                              },
+                              title: "Michael Jorden",
+                              subtitle: "example@gmail.com",
+                              img: "",
+                              trailingIcon: controller.customerSettingList[0]
+                                      ["trallingIcon"]
+                                  .toString())
+                          : CustomSettingProfileTile(
+                              onTap: () {
+                                Get.to(() => const NannyProfileView());
+                                ();
+                              },
+                              title: "nanny Jorden",
+                              subtitle: "nanny@gmail.com",
+                              img: "",
+                              trailingIcon: controller.customerSettingList[0]
+                                      ["trallingIcon"]
+                                  .toString()),
+                      (controller.loginType.value == StringConstants.customer)
+                          ? customerListOfTiles(context, controller)
+                          : nannyListOfTiles(context, controller),
                     ],
                   ),
                 ),
@@ -57,8 +76,8 @@ class SettingView extends StatelessWidget {
     );
   }
 
-  //===========list of itmes =======//
-  Widget listOfTiles(context, controller) {
+  //===========list of itmes CUSTOMER=======//
+  Widget customerListOfTiles(context, controller) {
     return ListView.builder(
       itemBuilder: (context, index) {
         return CustomSettingItemTile(
@@ -115,11 +134,76 @@ class SettingView extends StatelessWidget {
           },
           text: controller.customerSettingList[index]["name"].toString(),
           leadingIcon: controller.customerSettingList[index]["icon"].toString(),
-          trallingIcon: controller.customerSettingList[index]["trallingIcon"].toString(),
+          trallingIcon:
+              controller.customerSettingList[index]["trallingIcon"].toString(),
         );
       },
       physics: const NeverScrollableScrollPhysics(),
       itemCount: controller.customerSettingList.length,
+      shrinkWrap: true,
+    );
+  }
+
+  //===========list of itmes NANNY=======//
+  Widget nannyListOfTiles(context, controller) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return CustomSettingItemTile(
+          onTap: () {
+            log("index: $index");
+            if (index == 0) {
+              Get.to(const NannyUpdateSettingBankDetailsView());
+              /** BANK DETAILS */
+            } else if (index == 1) {
+              /** CHANGE PASSWORD */
+
+              RouteManagement.goToChnagePasswordScreen();
+            } else if (index == 2) {
+              /**  ABOUT US */
+
+              controller.redirectToCommonWebView();
+            } else if (index == 3) {
+              /** INVITE A FIREND  */
+
+              RouteManagement.goToInviteAFriendView();
+            } else if (index == 4) {
+              /** CONTACT US */
+
+              RouteManagement.goToContactUs();
+            } else if (index == 5) {
+              /** RATE A APP */
+
+              RouteManagement.goToRatingReviewScreen();
+            } else if (index == 6) {
+              /** FAQ */
+
+              RouteManagement.goToFAQ();
+            } else if (index == 7) {
+              /** TERMS AND CONDITIONS */
+
+              controller.redirectToCommonWebView();
+            } else if (index == 8) {
+              /** PRIVACY POLICY */
+
+              controller.redirectToCommonWebView();
+            } else if (index == 9) {
+              /** LOG OUT */
+
+              Utility.openBottomSheet(CustomLogOut(
+                onTapLogOut: () {
+                  RouteManagement.goToOffAllLogIn();
+                },
+              ));
+            }
+          },
+          text: controller.nannySettingList[index]["name"].toString(),
+          leadingIcon: controller.nannySettingList[index]["icon"].toString(),
+          trallingIcon:
+              controller.nannySettingList[index]["trallingIcon"].toString(),
+        );
+      },
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: controller.nannySettingList.length,
       shrinkWrap: true,
     );
   }

@@ -27,4 +27,21 @@ class NannyProfileController extends GetxController {
     TranslationKeys.services.tr,
     TranslationKeys.availability.tr
   ];
+
+  List nannyMyProfileData = [
+    {"name ": "My Nanny Profile"},
+    {"gender ": "Female"},
+    {"age ": "40"},
+    {"experience ": "7+ yrs"},
+    {
+      "about ":
+          "Dedicated nanny providing loving Care and guidance to littleones. Experienced in nurturing children's development andensuring a safe, happy environment."
+    },
+    {"colleage ": "Hebrew Theological College"},
+    {"high school ": "Austin Community Academy High School"},
+    {"location": "Chicago, Naperville"},
+    {"phone": "985 968 8745"},
+    {"driverLicense": "Yes"},
+    {"refrerrelBonus": "5"},
+  ];
 }

@@ -149,7 +149,7 @@ class CustomNannyHomeTile extends StatelessWidget {
                 ),
               ),
             ),
-            Dimens.boxHeight14,
+            Dimens.boxHeight8,
             Divider(
               color: AppColors.lightNavyBlue,
               height: Dimens.one,
