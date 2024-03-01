@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -16,7 +17,14 @@ class InviteAFriendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<SettingController>(builder: (controller) {
+      GetBuilder<SettingController>(
+        init: SettingController(),
+
+      //     initState: (_) {
+      //   Get.find<SettingController>().getAndUpdateLoginType();
+      // },
+
+          builder: (controller) {
         return Scaffold(
           appBar: const CustomAppbarWidget(),
           floatingActionButtonLocation:
@@ -69,7 +77,6 @@ class InviteAFriendView extends StatelessWidget {
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
                     // Share.share('Hello Welcome to Nanny', subject: 'https://northshore-nanny-app.com');
-
                   },
                 ),
                 Dimens.boxHeight10,
@@ -89,14 +96,17 @@ class InviteAFriendView extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
                 Dimens.boxHeight16,
+
                 AppText(
-                  text: TranslationKeys.sendUniqueReferralLinkCustomer.tr,
+                  text:(controller.loginType.value == StringConstants.customer)? TranslationKeys.sendUniqueReferralLinkCustomer.tr:'Send this unique referral link out to your friends! For each friend that joins the app, you will get a \$5 reward.',
                   style: AppStyles.ubGrey16W400,
                   textAlign: TextAlign.start,
                 ),
                 Dimens.boxHeight24,
                 AppText(
-                  text: TranslationKeys.whatInviteFriendNeedToDo.tr,
+                  text:
+
+                  TranslationKeys.whatInviteFriendNeedToDo.tr,
                   style: AppStyles.ubNavyBlue18W600,
                   maxLines: 1,
                   textAlign: TextAlign.start,

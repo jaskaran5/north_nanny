@@ -249,13 +249,14 @@ class NannyProfileView extends StatelessWidget {
                     servicesView(
                         rateList: controller.priceList,
                         isComeFromSetting: isComeFromSetting),
-                    CustomButton(
-                      backGroundColor: AppColors.navyBlue,
-                      title: 'Edit services',
-                      onTap: () {
-                        Get.to(const NannyEditServicesView());
-                      },
-                    ),
+                    if (isComeFromSetting)
+                      CustomButton(
+                        backGroundColor: AppColors.navyBlue,
+                        title: 'Edit services',
+                        onTap: () {
+                          Get.to(const NannyEditServicesView());
+                        },
+                      ),
                   ],
                   if (controller.selectedIndex == 2) ...[
                     availabilityView(

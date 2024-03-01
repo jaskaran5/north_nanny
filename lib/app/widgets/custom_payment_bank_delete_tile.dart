@@ -8,16 +8,18 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomPaymentBankDeleteTile extends StatelessWidget {
   final String accountNumber;
-  final String assest;
+  final String asset;
   final String cardType;
+  final String userName;
   final Function() onTapButton;
 
   const CustomPaymentBankDeleteTile({
     super.key,
     required this.accountNumber,
-    required this.assest,
+    required this.asset,
     required this.cardType,
     required this.onTapButton,
+    required this.userName,
   });
 
   @override
@@ -26,12 +28,14 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
       padding: Dimens.edgeInsetsL12T6R12B6,
       margin: Dimens.edgeInsetsB16,
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(Dimens.twelve),
-        boxShadow: [
-          BoxShadow(color: AppColors.lightNavyBlue.withOpacity(.8),blurRadius: Dimens.six,),
-        ]
-      ),
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(Dimens.twelve),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.lightNavyBlue.withOpacity(.8),
+              blurRadius: Dimens.six,
+            ),
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -46,7 +50,7 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
                   color: AppColors.colorEEF5FCLightNavyBlue,
                   borderRadius: BorderRadius.circular(Dimens.ten),
                 ),
-                child: SvgPicture.asset(assest),
+                child: SvgPicture.asset(asset),
               ),
               Dimens.boxWidth10,
               Column(
@@ -58,10 +62,20 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
                     style: AppStyles.ubBlack16W600,
                   ),
                   Dimens.boxHeight4,
-                  AppText(
-                    text: cardType,
-                    maxLines: 1,
-                    style: AppStyles.ubGrey12W500,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppText(
+                        text: '$cardType  ',
+                        maxLines: 1,
+                        style: AppStyles.ubGrey12W500,
+                      ),
+                      AppText(
+                        text: '| $userName',
+                        maxLines: 1,
+                        style: AppStyles.ubGrey12W500,
+                      )
+                    ],
                   )
                 ],
               ),

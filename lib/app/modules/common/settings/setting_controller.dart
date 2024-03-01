@@ -18,6 +18,12 @@ class SettingController extends GetxController {
   RxBool isExpand = false.obs;
   RxString loginType = ''.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    getAndUpdateLoginType();
+  }
+
   getAndUpdateLoginType() async {
     loginType.value = await Storage.getValue(StringConstants.loginType);
 

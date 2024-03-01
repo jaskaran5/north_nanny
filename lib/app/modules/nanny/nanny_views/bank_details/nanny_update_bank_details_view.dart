@@ -30,9 +30,10 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return CustomPaymentBankDeleteTile(
                     accountNumber: "XXXXXXXXXX9586",
-                    assest: Assets.iconsRedBank,
-                    cardType: "VISA",
+                    asset: Assets.iconsAmericanBank,
+                    cardType: "Bank of America ",
                     onTapButton: () {},
+                    userName: '  Cristina Wang',
                   );
                 },
               ),

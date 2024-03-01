@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/bank_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/nanny_update_bank_details_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
