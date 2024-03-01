@@ -17,7 +17,7 @@ class WaitingApprovalView extends StatelessWidget {
           padding: Dimens.edgeInsets16,
           child: GestureDetector(
             onTap: (){
-              RouteManagement.goChooseBabySitter();
+              RouteManagement.goToOffAllLogIn();
 
             },
             child: Center(

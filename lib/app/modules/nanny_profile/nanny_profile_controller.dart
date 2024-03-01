@@ -44,4 +44,7 @@ class NannyProfileController extends GetxController {
     {"driverLicense": "Yes"},
     {"refrerrelBonus": "5"},
   ];
+
+  /// used to set the referral
+  bool? isReferral = false;
 }

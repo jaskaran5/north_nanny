@@ -196,6 +196,45 @@ class MyProfileView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Dimens.boxHeight24,
+                      Row(
+                        children: [
+                          Container(
+                            height: Dimens.forty,
+                            width: Dimens.forty,
+                            padding: Dimens.edgeInsets10,
+                            decoration: BoxDecoration(
+                              color: AppColors.lightNavyBlue,
+                              borderRadius: BorderRadius.circular(Dimens.eight),
+                            ),
+                            child: SvgPicture.asset(
+                              Assets.iconsDollarCircle,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.navyBlue,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                          Dimens.boxWidth10,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              AppText(
+                                text: TranslationKeys.referralEarned.tr,
+                                style: AppStyles.ubBlack14W600,
+                                maxLines: 1,
+                              ),
+                              Dimens.boxHeight4,
+                              AppText(
+                                text: '\$5.00',
+                                style: AppStyles.ubGrey14W500,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

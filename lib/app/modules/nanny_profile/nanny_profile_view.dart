@@ -392,6 +392,7 @@ Widget availabilityView(
             ),
             child: TableCalendar(
               sixWeekMonthsEnforced: true,
+              // availableGestures: AvailableGestures.none,
               startingDayOfWeek: StartingDayOfWeek.monday,
               daysOfWeekStyle: DaysOfWeekStyle(
                 weekdayStyle: AppStyles.ubHintColor13W500,

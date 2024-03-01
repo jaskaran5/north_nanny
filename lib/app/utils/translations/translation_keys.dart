@@ -196,4 +196,6 @@ class TranslationKeys {
   static const String bookingRequests = 'bookingRequests';
   static const String reject = 'reject';
   static const String accept = 'accept';
+  static const String useReferralBonus = 'useReferralBonus';
+  static const String referralEarned = 'referralEarned';
 }
