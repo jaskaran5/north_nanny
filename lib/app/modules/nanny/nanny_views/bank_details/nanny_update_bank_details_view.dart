@@ -32,8 +32,7 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                     accountNumber: "XXXXXXXXXX9586",
                     asset: Assets.iconsAmericanBank,
                     cardType: "Bank of America ",
-                    onTapButton: () {},
-                    userName: '  Cristina Wang',
+                    onTapButton: () {}, userName: 'Cristina Wang',
                   );
                 },
               ),
