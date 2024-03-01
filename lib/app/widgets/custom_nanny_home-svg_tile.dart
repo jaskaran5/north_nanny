@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -22,7 +23,12 @@ class CustomNannySvgTile extends StatelessWidget {
             assetName,
             height: Dimens.twentyFour,
             width: Dimens.twentyFour,
+            colorFilter: const ColorFilter.mode(
+              AppColors.greyColor,
+              BlendMode.srcIn,
+            ),
           ),
+          Dimens.boxWidth10,
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,6 +39,7 @@ class CustomNannySvgTile extends StatelessWidget {
                 maxLines: 1,
                 textAlign: TextAlign.left,
               ),
+              Dimens.boxHeight4,
               AppText(
                 text: aboutHeading,
                 style: AppStyles.ubBlack14W600,

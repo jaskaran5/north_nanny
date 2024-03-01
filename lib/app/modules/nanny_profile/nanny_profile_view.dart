@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile_view/nanny_edit_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_select_services/nanny_edit_services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/schedule_nanny/schedule_nanny_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -14,35 +16,41 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home-svg_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../widgets/custom_bottom_sheet.dart';
+import '../../widgets/custom_text_field.dart';
+import '../../widgets/houry_rate_view.dart';
 
 class NannyProfileView extends StatelessWidget {
-  const NannyProfileView({super.key});
+  const NannyProfileView(
+      {super.key, required this.isComeFromSetting, required this.appBarTitle});
+  final bool isComeFromSetting;
+  final String appBarTitle;
 
   @override
   Widget build(BuildContext context) => GetBuilder(
-      init: NannyProfileController(),
-      builder: (controller) {
-        return Scaffold(
+        init: NannyProfileController(),
+        builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
-            title: TranslationKeys.nannyProfile.tr,
+            title: appBarTitle,
             centerTitle: true,
             actions: [
-              GestureDetector(
-                onTap: () {
-                  controller.isFavorite = !controller.isFavorite;
-                  controller.update();
-                },
-                child: Padding(
-                  padding: Dimens.edgeInsetsL16R16,
-                  child: SvgPicture.asset(controller.isFavorite
-                      ? Assets.iconsHeartFilled
-                      : Assets.iconsHeartOutline),
+              if (!isComeFromSetting)
+                GestureDetector(
+                  onTap: () {
+                    controller.isFavorite = !controller.isFavorite;
+                    controller.update();
+                  },
+                  child: Padding(
+                    padding: Dimens.edgeInsetsL16R16,
+                    child: SvgPicture.asset(controller.isFavorite
+                        ? Assets.iconsHeartFilled
+                        : Assets.iconsHeartOutline),
+                  ),
                 ),
-              ),
             ],
           ),
           backgroundColor: AppColors.profileBackgroundColor,
@@ -53,7 +61,9 @@ class NannyProfileView extends StatelessWidget {
                 children: [
                   CustomNannyProfileView(
                     nannyName: 'Christina Wang',
-                    servicesList: controller.homeCustomList,
+                    servicesList: isComeFromSetting
+                        ? ['Gender: Female', 'Age: 40', 'Experience: 7+ yrs']
+                        : controller.homeCustomList,
                     totalRating: 4.5,
                     totalReview: 12,
                   ),
@@ -98,23 +108,171 @@ class NannyProfileView extends StatelessWidget {
                     ),
                   ),
                   Dimens.boxHeight20,
-                  controller.selectedIndex == 0
-                      ? const CustomAbout(
-                          aboutNanny:
-                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.\n \n I have very Strong communication and instructional skill; patience and i have a Degree.')
-                      : controller.selectedIndex == 1
-                          ? servicesView(rateList: controller.priceList)
-                          : availabilityView(
-                              selectedDate: controller.selectedDate),
+                  if (controller.selectedIndex == 0) ...[
+                    const CustomAbout(
+                        aboutNanny:
+                            'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.\n \n I have very Strong communication and instructional skill; patience and i have a Degree.'),
+                    Dimens.boxHeight20,
+                    if (!isComeFromSetting) ...[
+                      Padding(
+                        padding: Dimens.edgeInsetsL16R16,
+                        child: HourlyRateView(
+                          showShadow: false,
+                          borderRadius: Dimens.ten,
+                        ),
+                      )
+                    ],
+                    if (isComeFromSetting) ...[
+                      Container(
+                        padding: Dimens.edgeInsets16,
+                        margin: Dimens.edgeInsetsL16R16,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(
+                            Dimens.eight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.lightNavyBlue.withOpacity(.8),
+                              blurRadius: Dimens.five,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText(
+                              text: 'Education',
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
+                              style: AppStyles.ubBlack14W700,
+                            ),
+                            Dimens.boxHeight14,
+                            const CustomNannySvgTile(
+                              assetName: Assets.iconsHouse,
+                              heading: 'High school',
+                              aboutHeading:
+                                  'Austin Community Academy High School',
+                            ),
+                            Dimens.boxHeight14,
+                            const CustomNannySvgTile(
+                              assetName: Assets.iconsBuilding,
+                              heading: 'College',
+                              aboutHeading: 'Hebrew Theological College',
+                            ),
+                            Dimens.boxHeight14,
+                          ],
+                        ),
+                      ),
+                      Dimens.boxHeight20,
+                      Container(
+                        padding: Dimens.edgeInsets16,
+                        width: Get.width,
+                        margin: Dimens.edgeInsetsL16R16,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(
+                            Dimens.eight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.lightNavyBlue.withOpacity(.8),
+                              blurRadius: Dimens.five,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const CustomNannySvgTile(
+                              assetName: Assets.iconsLocationDot,
+                              heading: 'Location',
+                              aboutHeading: 'Chicago, Naperville',
+                            ),
+                            Dimens.boxHeight14,
+                            const CustomNannySvgTile(
+                              assetName: Assets.iconsPhone,
+                              heading: 'Phone number',
+                              aboutHeading: '985 968 8745',
+                            ),
+                            Dimens.boxHeight14,
+                            const CustomNannySvgTile(
+                              assetName: Assets.iconsPersonalcard,
+                              heading: 'Driver’s license',
+                              aboutHeading: 'Yes',
+                            ),
+                            Dimens.boxHeight14,
+                          ],
+                        ),
+                      ),
+                      Dimens.boxHeight20,
+                      Container(
+                        padding: Dimens.edgeInsets16,
+                        margin: Dimens.edgeInsetsL16R16,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(
+                            Dimens.eight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.lightNavyBlue.withOpacity(.8),
+                              blurRadius: Dimens.five,
+                            ),
+                          ],
+                        ),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomNannySvgTile(
+                              assetName: Assets.iconsDollarCircle,
+                              heading: 'Referral bonus earned ',
+                              aboutHeading: '\$5.00',
+                            ),
+                          ],
+                        ),
+                      ),
+                      Dimens.boxHeight20,
+                      CustomButton(
+                        backGroundColor: AppColors.navyBlue,
+                        title: TranslationKeys.editProfile.tr,
+                        onTap: () {
+                          Get.to(const NannyEditProfileView());
+                        },
+                      ),
+                    ],
+                  ],
+                  if (controller.selectedIndex == 1) ...[
+                    servicesView(
+                        rateList: controller.priceList,
+                        isComeFromSetting: isComeFromSetting),
+                    CustomButton(
+                      backGroundColor: AppColors.navyBlue,
+                      title: 'Edit services',
+                      onTap: () {
+                        Get.to(const NannyEditServicesView());
+                      },
+                    ),
+                  ],
+                  if (controller.selectedIndex == 2) ...[
+                    availabilityView(
+                        selectedDate: controller.selectedDate,
+                        isComeFromSetting: isComeFromSetting),
+                  ],
                 ],
               ),
             ),
           ),
-        );
-      });
+        ),
+      );
 }
 
-Widget servicesView({List<String>? rateList}) => Padding(
+Widget servicesView(
+        {List<String>? rateList, required bool isComeFromSetting}) =>
+    Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -172,23 +330,29 @@ Widget servicesView({List<String>? rateList}) => Padding(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AppText(
-                          text: '${rateList?[index].toString()}',
-                          style: AppStyles.ubNavyBlue16W700,
-                          maxLines: 1,
-                        ),
-                        Dimens.boxWidth10,
+                        if (!isComeFromSetting) ...[
+                          AppText(
+                            text: '${rateList?[index].toString()}',
+                            style: AppStyles.ubNavyBlue16W700,
+                            maxLines: 1,
+                          ),
+                          Dimens.boxWidth10,
+                        ],
                         GestureDetector(
                           onTap: () {
-                            Get.bottomSheet(
-                              CustomBottomSheet(
-                                heading: Services.values[index].serviceName.tr,
-                                description: Services
-                                    .values[index].serviceDescription.tr,
-                                headingSvg: Assets.iconsRemoveBottomSheet,
-                              ),
-                              barrierColor: AppColors.greyColor.withOpacity(.2),
-                            );
+                            if (!isComeFromSetting) {
+                              Get.bottomSheet(
+                                CustomBottomSheet(
+                                  heading:
+                                      Services.values[index].serviceName.tr,
+                                  description: Services
+                                      .values[index].serviceDescription.tr,
+                                  headingSvg: Assets.iconsRemoveBottomSheet,
+                                ),
+                                barrierColor:
+                                    AppColors.greyColor.withOpacity(.2),
+                              );
+                            }
                           },
                           child: SvgPicture.asset(
                             Assets.iconsInfoCircle,
@@ -205,7 +369,9 @@ Widget servicesView({List<String>? rateList}) => Padding(
       ),
     );
 
-Widget availabilityView({required DateTime selectedDate}) => Padding(
+Widget availabilityView(
+        {required DateTime selectedDate, required bool isComeFromSetting}) =>
+    Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -276,42 +442,173 @@ Widget availabilityView({required DateTime selectedDate}) => Padding(
               ],
             ),
             child: Row(
-              // mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppText(
-                  text: selectedDate.day.toString().padLeft(2, '0'),
-                  style: AppStyles.ubBlack30W600,
-                  maxLines: 1,
-                ),
-                Dimens.boxWidth16,
-                Column(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                        text: 'February 2024, Friday',
-                        style: AppStyles.ubGrey12W400,
-                        maxLines: 1,
-                        textAlign: TextAlign.start),
-                    Dimens.boxHeight8,
-                    AppText(
-                      text: '10:00 AM to 05:00 PM',
-                      style: AppStyles.ubBlack14W700,
+                      text: selectedDate.day.toString().padLeft(2, '0'),
+                      style: AppStyles.ubBlack30W600,
                       maxLines: 1,
-                      textAlign: TextAlign.start,
-                    )
+                    ),
+                    Dimens.boxWidth16,
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                            text: 'February 2024, Friday',
+                            style: AppStyles.ubGrey12W400,
+                            maxLines: 1,
+                            textAlign: TextAlign.start),
+                        Dimens.boxHeight8,
+                        AppText(
+                          text: '10:00 AM to 05:00 PM',
+                          style: AppStyles.ubBlack14W700,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                        )
+                      ],
+                    ),
                   ],
                 ),
+                if (isComeFromSetting) ...[
+                  PopupMenuButton(
+                    padding: Dimens.edgeInsets4,
+                    position: PopupMenuPosition.under,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.six),
+                    ),
+                    icon: SvgPicture.asset(Assets.iconsMore),
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          child: Text(
+                            "Edit ",
+                            maxLines: 1,
+                            style: AppStyles.ubGreen05B016Color12W500,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: Text(
+                            "Delete",
+                            style: AppStyles.ubFc3030RedColor12W500,
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ];
+                    },
+                  ),
+                ],
               ],
             ),
           ),
           Dimens.boxHeight20,
           CustomButton(
-            title: TranslationKeys.bookSitter.tr,
+            title: isComeFromSetting
+                ? 'Add availability'
+                : TranslationKeys.bookSitter.tr,
             backGroundColor: AppColors.navyBlue,
             onTap: () {
-              Get.to(const ScheduleNannyView());
+              if (isComeFromSetting) {
+                Get.dialog(
+                  Center(
+                    child: Padding(
+                      padding: Dimens.edgeInsetsL16R16,
+                      child: Material(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(Dimens.twenty),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(Dimens.twenty),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: Dimens.edgeInsets10,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    AppText(
+                                      text: 'Add availability',
+                                      maxLines: 1,
+                                      textAlign: TextAlign.left,
+                                      style: AppStyles.ubBlack16W700,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      child: SvgPicture.asset(
+                                        Assets.iconsRemoveBottomSheet,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                color: AppColors.lightNavyBlue,
+                                height: Dimens.one,
+                              ),
+                              Dimens.boxHeight14,
+                              Padding(
+                                padding: Dimens.edgeInsets16,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      maxLines: 1,
+                                      minLines: 1,
+                                      decoration: customFieldDeco(
+                                        hintText: 'Start time',
+                                      ),
+                                      cursorColor: AppColors.blackColor,
+                                      cursorWidth: Dimens.one,
+                                      style: AppStyles.ubBlack15W600,
+                                    ),
+                                    Dimens.boxHeight14,
+                                    TextField(
+                                      maxLines: 1,
+                                      minLines: 1,
+                                      decoration: customFieldDeco(
+                                        hintText: 'End time',
+                                      ),
+                                      cursorColor: AppColors.blackColor,
+                                      cursorWidth: Dimens.one,
+                                      style: AppStyles.ubBlack15W600,
+                                    ),
+                                    Dimens.boxHeight14,
+                                    CustomButton(
+                                      backGroundColor: AppColors.navyBlue,
+                                      title: TranslationKeys.submit.tr,
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                    ),
+                                    Dimens.boxHeight10,
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                Get.to(const ScheduleNannyView());
+              }
             },
           ),
         ],

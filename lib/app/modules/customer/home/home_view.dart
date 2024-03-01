@@ -207,7 +207,10 @@ class HomeView extends StatelessWidget {
                   padding: Dimens.edgeInsets16,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const NannyProfileView());
+                      Get.to(() => NannyProfileView(
+                            isComeFromSetting: false,
+                            appBarTitle: TranslationKeys.nannyProfile.tr,
+                          ),);
                     },
                     child: HomeCustomListView(
                       description:

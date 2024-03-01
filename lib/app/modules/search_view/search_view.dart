@@ -79,7 +79,10 @@ class SearchView extends StatelessWidget {
                           3,
                           (index) => GestureDetector(
                             onTap: () {
-                            Get.to( const NannyProfileView());
+                              Get.to(NannyProfileView(
+                                isComeFromSetting: false,
+                                appBarTitle: TranslationKeys.nannyProfile.tr,
+                              ),);
                             },
                             child: const ShortDetailProfileView(
                               nannyName: 'Chirstina Wang',

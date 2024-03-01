@@ -6,7 +6,6 @@ import '../res/theme/dimens.dart';
 import '../res/theme/styles.dart';
 import '../utils/translations/translation_keys.dart';
 import 'app_text.dart';
-import 'houry_rate_view.dart';
 
 class CustomAbout extends StatelessWidget {
   const CustomAbout({super.key, required this.aboutNanny});
@@ -40,14 +39,6 @@ class CustomAbout extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
               ],
-            ),
-          ),
-          Dimens.boxHeight20,
-          Padding(
-            padding: Dimens.edgeInsetsL16R16,
-            child: HourlyRateView(
-              showShadow: false,
-              borderRadius: Dimens.ten,
             ),
           ),
         ],

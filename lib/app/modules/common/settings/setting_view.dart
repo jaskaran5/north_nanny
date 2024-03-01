@@ -55,7 +55,7 @@ class SettingView extends StatelessWidget {
                                   .toString())
                           : CustomSettingProfileTile(
                               onTap: () {
-                                Get.to(() => const NannyProfileView());
+                                Get.to(() =>  NannyProfileView(isComeFromSetting: true, appBarTitle: TranslationKeys.myProfile.tr,),);
                                 ();
                               },
                               title: "nanny Jorden",

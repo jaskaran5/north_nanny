@@ -34,7 +34,7 @@ class NannyBookingDetailView extends StatelessWidget {
         },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
-            title: TranslationKeys.bankDetails.tr,
+            title: TranslationKeys.bookingDetails.tr,
           ),
           body: Padding(
             padding: Dimens.edgeInsets16,
