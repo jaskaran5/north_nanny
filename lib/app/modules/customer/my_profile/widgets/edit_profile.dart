@@ -107,6 +107,7 @@ class EditProfileView extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         Dimens.boxHeight26,
+                        /** first name */
                         TextField(
                           controller: controller.firstNameTextEditingController,
                           maxLines: 1,
@@ -128,6 +129,8 @@ class EditProfileView extends StatelessWidget {
                           keyboardType: TextInputType.text,
                         ),
                         Dimens.boxHeight20,
+
+                        /** Last Name */
                         TextField(
                           controller: controller.lastNameTextEditingController,
                           maxLines: 1,
@@ -149,6 +152,8 @@ class EditProfileView extends StatelessWidget {
                           keyboardType: TextInputType.text,
                         ),
                         Dimens.boxHeight20,
+
+                        /**PHONE NUMBER */
                         TextField(
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -174,6 +179,8 @@ class EditProfileView extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                         ),
                         Dimens.boxHeight20,
+
+                        /** SELECT LOCATION */
                         TextField(
                           controller: controller.locationTextEditingController,
                           maxLines: 1,
@@ -207,6 +214,8 @@ class EditProfileView extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                /** SAVE BUTTON */
                 CustomButton(
                   title: TranslationKeys.save.tr,
                   backGroundColor: AppColors.navyBlue,

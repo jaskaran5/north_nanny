@@ -51,7 +51,7 @@ class CreateNannyProfileView extends StatelessWidget {
                             width: Dimens.oneHundredTwenty,
                             decoration: BoxDecoration(
                               borderRadius:
-                              BorderRadius.circular(Dimens.twenty),
+                                  BorderRadius.circular(Dimens.twenty),
                               border: Border.all(
                                 color: AppColors.primaryColor,
                                 width: Dimens.three,
@@ -59,25 +59,25 @@ class CreateNannyProfileView extends StatelessWidget {
                               boxShadow: [
                                 BoxShadow(
                                   color:
-                                  AppColors.lightNavyBlue.withOpacity(.8),
+                                      AppColors.lightNavyBlue.withOpacity(.8),
                                   blurRadius: Dimens.five,
                                 )
                               ],
                             ),
-                            child: controller.imageUrl?.isEmpty==true
+                            child: controller.imageUrl?.isEmpty == true
                                 ? Padding(
-                              padding: Dimens.edgeInsets16,
-                              child: SvgPicture.asset(
-                                Assets.iconsProfile,
-                                fit: BoxFit.contain,
-                              ),
-                            )
+                                    padding: Dimens.edgeInsets16,
+                                    child: SvgPicture.asset(
+                                      Assets.iconsProfile,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  )
                                 : CustomCacheNetworkImage(
-                              img: controller.imageUrl.toString(),
-                              size: Dimens.oneHundredTwenty,
-                              imageRadius: Dimens.eighteen,
-                              imageShape: BoxShape.rectangle,
-                            ),
+                                    img: controller.imageUrl.toString(),
+                                    size: Dimens.oneHundredTwenty,
+                                    imageRadius: Dimens.eighteen,
+                                    imageShape: BoxShape.rectangle,
+                                  ),
                           ),
                           Positioned(
                             top: -20,
@@ -88,7 +88,7 @@ class CreateNannyProfileView extends StatelessWidget {
                                 boxShadow: [
                                   BoxShadow(
                                     color:
-                                    AppColors.greyColor.withOpacity(0.05),
+                                        AppColors.greyColor.withOpacity(0.05),
                                     blurRadius: Dimens.fourteen,
                                   ),
                                 ],
@@ -423,6 +423,8 @@ class CreateNannyProfileView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight20,
+
+                    /** TELL US ABOUT YOURSELF */
                     TextField(
                       controller: controller.tellUsTextEditingController,
                       maxLines: 4,
@@ -444,11 +446,39 @@ class CreateNannyProfileView extends StatelessWidget {
                       keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
+
+                    /** REFFREEL CODE*/
+                    TextField(
+                      controller: controller.highSchoolTextEditingController,
+                      maxLines: 1,
+                      minLines: 1,
+                      decoration: customFieldDeco(
+                        hintText: "Enter referral code (optional)",
+                        prefixWidget: Padding(
+                          padding: Dimens.edgeInsets12,
+                          child: SvgPicture.asset(
+                            Assets.iconsReferrel,
+                            height: Dimens.ten,
+                            width: Dimens.ten,
+                          ),
+                        ),
+                      ),
+                      cursorColor: AppColors.navyBlue,
+                      cursorWidth: Dimens.one,
+                      style: AppStyles.ubBlack15W600,
+                      keyboardType: TextInputType.text,
+                    ),
+                    Dimens.boxHeight20,
+
+                    /** CONTINUE */
+
                     CustomButton(
                       title: TranslationKeys.continueWord.tr,
                       backGroundColor: AppColors.navyBlue,
                       onTap: () {
-                        Get.to(const ServicesView(),);
+                        Get.to(
+                          const ServicesView(),
+                        );
                       },
                     ),
                   ],

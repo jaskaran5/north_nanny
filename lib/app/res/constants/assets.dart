@@ -82,6 +82,7 @@ class Assets {
   static const String iconsPhone = 'assets/icons/phone.svg';
   static const String iconsProfile = 'assets/icons/profile.svg';
   static const String iconsProfileAdd = 'assets/icons/profile_add.svg';
+  static const String iconsReferrel = 'assets/icons/referrel.svg';
   static const String iconsRemove = 'assets/icons/Remove.svg';
   static const String iconsRemoveBottomSheet = 'assets/icons/remove_bottom_sheet.svg';
   static const String iconsRight = 'assets/icons/right.svg';

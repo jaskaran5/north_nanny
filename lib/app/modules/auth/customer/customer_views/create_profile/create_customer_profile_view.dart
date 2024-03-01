@@ -16,6 +16,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 
 import '../create_child_profile/child_profile.dart';
+
 //asdf
 class CreateCustomerProfileView extends StatelessWidget {
   const CreateCustomerProfileView({super.key});
@@ -144,6 +145,8 @@ class CreateCustomerProfileView extends StatelessWidget {
                       keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
+
+                    /** LAST NAME */
                     TextField(
                       controller: controller.lastNameTextEditingController,
                       maxLines: 1,
@@ -165,6 +168,8 @@ class CreateCustomerProfileView extends StatelessWidget {
                       keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
+
+                    /**PHONE NUMBER */
                     TextField(
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -189,6 +194,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                       keyboardType: TextInputType.phone,
                     ),
                     Dimens.boxHeight20,
+                    /** LOCATION */
                     TextField(
                       controller: controller.locationTextEditingController,
                       maxLines: 1,
@@ -218,6 +224,8 @@ class CreateCustomerProfileView extends StatelessWidget {
                       keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
+
+                    /** GENDER SELECT */
                     AppDropdown(
                       selectedItem: controller.selectedGender?.isEmpty == true
                           ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
@@ -266,6 +274,29 @@ class CreateCustomerProfileView extends StatelessWidget {
                         );
                       },
                       itemBuilderPhysics: const NeverScrollableScrollPhysics(),
+                    ),
+                    Dimens.boxHeight20,
+
+                    /** REFFREEL CODE*/
+                    TextField(
+                      controller: controller.referrelCodeTextEditingController,
+                      maxLines: 1,
+                      minLines: 1,
+                      decoration: customFieldDeco(
+                        hintText: "Enter referral code (optional)",
+                        prefixWidget: Padding(
+                          padding: Dimens.edgeInsets12,
+                          child: SvgPicture.asset(
+                            Assets.iconsReferrel,
+                            height: Dimens.ten,
+                            width: Dimens.ten,
+                          ),
+                        ),
+                      ),
+                      cursorColor: AppColors.navyBlue,
+                      cursorWidth: Dimens.one,
+                      style: AppStyles.ubBlack15W600,
+                      keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
                   ],

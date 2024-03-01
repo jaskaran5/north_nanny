@@ -55,6 +55,7 @@ class SignupViewController extends GetxController {
   final allergiesTextEditingController = TextEditingController();
   final medicalConditionTextEditingController = TextEditingController();
   final anyThingTextEditingController = TextEditingController();
+  final referrelCodeTextEditingController = TextEditingController();
 
   /// check box true or false.
   bool? isBoxChecked = false;
