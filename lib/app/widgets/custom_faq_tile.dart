@@ -22,43 +22,55 @@ class CustomFAQTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Container(
-        height: isExpand ? 100 : 51.0,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15.0),
-            border: Border.all(
-                color: isExpand ? AppColors.navyBlue : Colors.white, width: 2)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      padding: Dimens.edgeInsets10,
+      margin: Dimens.edgeInsetsB10,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(Dimens.sixteen),
+          border: Border.all(
+              color: isExpand ? AppColors.navyBlue : Colors.white,
+              width: Dimens.two,),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.lightNavyBlue.withOpacity(.8),
+              blurRadius: Dimens.seven,
+            )
+          ],),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                AppText(
-                  text: title,
-                  style: AppStyles.ubBlack16W600,
+              AppText(
+                text: title,
+                style: AppStyles.ubBlack16W600,
+                textAlign: TextAlign.center,
+              ),
+              GestureDetector(
+                onTap: onTap,
+                child: SvgPicture.asset(
+                  isExpand
+                      ? Assets.iconsMinusCirlce
+                      : Assets.iconsAddCircle,
+                  height: Dimens.twenty,
+                  width: Dimens.twenty,
                 ),
-                GestureDetector(
-                  onTap: onTap,
-                  child: SvgPicture.asset(
-                    isExpand ? Assets.iconsMinusCirlce : Assets.iconsAddCircle,
-                    height: Dimens.twenty,
-                    width: Dimens.twenty,
-                  ),
-                ),
-              ]),
-              Visibility(
-                  visible: isExpand,
-                  child: Text(
-                    subtitle,
-                    style: AppStyles.ub5E5F60Grey14W400,
-                  ))
+              ),
             ],
           ),
-        ),
+          isExpand?Dimens.boxHeight8:Dimens.box0,
+          Visibility(
+            visible: isExpand,
+            child: Text(
+              subtitle,
+              style: AppStyles.ub5E5F60Grey14W400,
+              textAlign: TextAlign.left,
+            ),
+          ),
+        ],
       ),
     );
   }
