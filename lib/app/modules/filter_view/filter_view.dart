@@ -33,6 +33,9 @@ class FilterView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomButton(
+                  onTap: () {
+                    Get.back();
+                  },
                   height: Dimens.fiftyThree,
                   width: Dimens.oneHundredFifty,
                   borderRadius: Dimens.twelve,
@@ -41,6 +44,9 @@ class FilterView extends StatelessWidget {
                   textColor: AppColors.navyBlue,
                 ),
                 CustomButton(
+                  onTap: () {
+                    Get.back();
+                  },
                   height: Dimens.fiftyThree,
                   width: Dimens.oneHundredFifty,
                   borderRadius: Dimens.twelve,

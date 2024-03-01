@@ -44,7 +44,7 @@ class EditChildProfileView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Dimens.boxHeight32,
+                          Dimens.boxHeight10,
                           TextField(
                             controller:
                                 controller.childNameTextEditingController,
@@ -223,13 +223,17 @@ class EditChildProfileView extends StatelessWidget {
                         title: TranslationKeys.delete.tr,
                         backGroundColor: AppColors.fFEAEARedColor,
                         titleStyle: AppStyles.fC3030RedColorUrban15w600,
-                        onTap: () {},
+                        onTap: () {
+                          Get.back();
+                        },
                       ),
                       Dimens.boxHeight10,
                       CustomButton(
                         title: TranslationKeys.update.tr,
                         backGroundColor: AppColors.navyBlue,
-                        onTap: () {},
+                        onTap: () {
+                          Get.back();
+                        },
                       ),
                     ],
                   ),
