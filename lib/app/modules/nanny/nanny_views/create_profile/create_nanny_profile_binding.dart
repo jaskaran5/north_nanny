@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 
 class CreateNannyProfileBinding extends Bindings {
   @override

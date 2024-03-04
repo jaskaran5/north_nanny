@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -10,7 +10,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import '../waiting_approval/waiting_approval_view.dart';
+import '../../../../../navigators/routes_management.dart';
 
 class BankDetailsView extends StatelessWidget {
   const BankDetailsView({super.key});
@@ -22,6 +22,14 @@ class BankDetailsView extends StatelessWidget {
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(
             title: TranslationKeys.bankDetails.tr,
+            onBackPress: () {
+              Get.focusScope?.unfocus();
+              Get.back();
+              controller.bankNameTextEditingController.clear();
+              controller.holderNameTextEditingController.clear();
+              controller.accountNumberTextEditingController.clear();
+              controller.routingNumberTextEditingController.clear();
+            },
           ),
           body: GestureDetector(
             onTap: () {
@@ -134,9 +142,7 @@ class BankDetailsView extends StatelessWidget {
                     title: TranslationKeys.addBank.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      Get.to(
-                        const WaitingApprovalView(),
-                      );
+                      controller.bankDetailValidator();
                     },
                   ),
                 ),
@@ -146,8 +152,10 @@ class BankDetailsView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
                   onTap: () {
-                    Get.to(
-                      const WaitingApprovalView(),
+                    RouteManagement.goToOffAllWaitingApprovalView();
+                    Future.delayed(
+                      const Duration(seconds: 5),
+                      () => RouteManagement.goToOffAllLogIn(),
                     );
                   },
                 ),

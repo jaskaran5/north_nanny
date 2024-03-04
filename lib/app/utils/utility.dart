@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
@@ -382,4 +386,97 @@ class Utility {
 //     },
 //   );
 // }
+
+  static Future<void> showImagePicker({
+    required Function(File image) onGetImage,
+  }) {
+    return showModalBottomSheet<void>(
+      context: Get.context!,
+      builder: (_) {
+        return Padding(
+          padding: Dimens.edgeInsets10,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    getImage(source: ImageSource.gallery).then((v) {
+                      if (v != null) {
+                        onGetImage(v);
+                        Get.back();
+                      }
+                    });
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.image,
+                        size: Dimens.sixty,
+                      ),
+                      Dimens.boxHeight10,
+                      Text(
+                        TranslationKeys.gallery.tr,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.ubBlack16W700,
+                        maxLines: 1,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    getImage(source: ImageSource.camera).then((v) {
+                      if (v != null) {
+                        onGetImage(v);
+                        Get.back();
+                      }
+                    });
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.camera,
+                        size: Dimens.sixty,
+                      ),
+                      Dimens.boxHeight10,
+                      Text(
+                        TranslationKeys.camera.tr,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.ubBlack16W700,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<File?> getImage({required ImageSource source}) async {
+    // File? croppedFile;
+    File? image;
+
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.pickImage(
+      source: source,
+      imageQuality: 70,
+    );
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+    }
+
+    return image;
+  }
 }

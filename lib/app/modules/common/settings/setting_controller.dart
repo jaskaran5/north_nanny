@@ -37,7 +37,7 @@ class SettingController extends GetxController {
   /// Go to Rating and Review  Screen
   redirectToPasswordChangedScreen() {
     Get.toNamed(
-      Routes.passwordChnagedView,
+      Routes.passwordChangedView,
     );
   }
 

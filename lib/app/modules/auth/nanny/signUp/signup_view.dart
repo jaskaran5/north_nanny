@@ -88,7 +88,7 @@ class SignUpView extends StatelessWidget {
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
                               suffix: GestureDetector(
-                                onTap: controller.updatePswdVisibility,
+                                onTap: controller.updatePasswordVisibility,
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
@@ -136,7 +136,7 @@ class SignUpView extends StatelessWidget {
                                 ),
                               ),
                               suffix: GestureDetector(
-                                onTap: controller.updateConfirmPswdVisibility,
+                                onTap: controller.updateConfirmPasswordVisibility,
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
@@ -233,12 +233,6 @@ class SignUpView extends StatelessWidget {
                             onTap: () async {
                               Get.focusScope?.unfocus();
                               controller.registerValidation();
-                              // if (controller.loginType.value ==
-                              //     StringConstants.customer) {
-                              //   RouteManagement.goToCreateCustomerProfile();
-                              // } else {
-                              //   RouteManagement.goToCreateNannyProfile();
-                              // }
                             },
                           ),
                         ],

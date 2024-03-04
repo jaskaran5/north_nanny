@@ -6,9 +6,10 @@ import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
-import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
+import '../../../../../navigators/routes_management.dart';
 import '../../../../utils/custom_toast.dart';
+import '../../../../utils/validators.dart';
 
 class SignupViewController extends GetxController {
   RxString loginType = ''.obs;
@@ -60,7 +61,6 @@ class SignupViewController extends GetxController {
   final anyThingTextEditingController = TextEditingController();
   final referrelCodeTextEditingController = TextEditingController();
 
-
   /// gender list.
   List<String> genderList = GenderConstant.values
       .map((e) => e.genderName.capitalizeFirst.toString())
@@ -75,13 +75,13 @@ class SignupViewController extends GetxController {
     update();
   }
 
-  updatePswdVisibility() {
+  updatePasswordVisibility() {
     isPasswdVisible.value = !isPasswdVisible.value;
     update();
   }
 
   /// confirm password visibility
-  updateConfirmPswdVisibility() {
+  updateConfirmPasswordVisibility() {
     isConfirmPasswdVisible.value = !isConfirmPasswdVisible.value;
     update();
   }
@@ -101,30 +101,20 @@ class SignupViewController extends GetxController {
     log("linear indicator value is :-->> ${linearIndicatorValue.value}");
   }
 
-  /// method used to pick the Image from gallery
-  // pickImageFromGallery() async {
-  //   XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //
-  //   if (image != null) {
-  //     log("check image is not null -->$editPickedImage");
-  //     var file = File(image.path);
-  //     editPickedImage = file.path;
-  //     update();
-  //     log("check image is -->$editPickedImage");
-  //   } else {
-  //     log("check image is  null -->$editPickedImage");
-  //   }
-  // }
-
   /// signup validation
   Future<void> registerValidation() async {
     bool isValidate = Validator.instance.signUpValidator(
-      emailTextEditingController.text,
-      passwordTextEditingController.text,
-      confirmPasswordTextEditingController.text,
-      isAcceptTerms.value ,
+      emailTextEditingController.text.trim(),
+      passwordTextEditingController.text.trim(),
+      confirmPasswordTextEditingController.text.trim(),
+      isAcceptTerms.value,
     );
     if (isValidate) {
+      if (loginType.value == StringConstants.customer) {
+        RouteManagement.goToCreateCustomerProfile();
+      } else {
+        RouteManagement.goToCreateNannyProfile();
+      }
     } else {
       toast(msg: Validator.instance.error, isError: true);
     }

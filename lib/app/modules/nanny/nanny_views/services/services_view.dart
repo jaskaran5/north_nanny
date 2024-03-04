@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -12,7 +12,6 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import '../pricing/pricing_view.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -23,6 +22,10 @@ class ServicesView extends StatelessWidget {
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.selectServices.tr,
+            onBackPress: () {
+              controller.selectedServices.clear();
+              Get.back();
+            },
           ),
           bottomSheet: Container(
             padding: Dimens.edgeInsetsL16R16B20,
@@ -30,7 +33,7 @@ class ServicesView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.to(const PricingView(),);
+                controller.servicesValidator();
               },
             ),
           ),

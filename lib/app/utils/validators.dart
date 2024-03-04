@@ -22,6 +22,10 @@ class Validator {
     if (email.isEmpty) {
       error = "Please enter email";
       return false;
+    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(email.trim())) {
+      error = "Please enter valid email";
+      return false;
     } else if (password.isEmpty) {
       error = "Please enter password";
       return false;
@@ -76,12 +80,16 @@ class Validator {
     }
   }
 
-  //==========foget passcode ===//
-  bool forgetpasswordValidator(
+  //==========forgot passcode ===//
+  bool forgotPasswordValidator(
     String email,
   ) {
     if (email.isEmpty) {
       error = "Please enter email";
+      return false;
+    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(email.trim())) {
+      error = "Please enter valid email";
       return false;
     } else {
       return true;
@@ -173,15 +181,11 @@ class Validator {
     }
   }
 
-  bool changePasswrdValidator(
-    String password,
-    String newPassword,
-    String confrimPassword,
-  ) {
-    if (password.isEmpty) {
-      error = "Please enter your Password ";
-      return false;
-    } else if (newPassword.isEmpty) {
+  bool changePasswordValidator({
+    required String newPassword,
+    required String confirmPassword,
+  }) {
+    if (newPassword.isEmpty) {
       error = "Please enter your New Password";
       return false;
     } else if (newPassword.length > 15) {
@@ -202,41 +206,85 @@ class Validator {
     } else if (!RegExp(r'(?=.*?[!@#\$&*~])').hasMatch(newPassword.trim())) {
       error = 'Password must contain at least one special character (!@#\$&*~)';
       return false;
-    } else if (confrimPassword.isEmpty) {
-      error = "Please enter your Confrim Password ";
+    } else if (confirmPassword.isEmpty) {
+      error = "Please enter your Confirm Password ";
       return false;
-    } else if (newPassword != confrimPassword) {
-      error = "Confrim Password is not match";
+    } else if (newPassword != confirmPassword) {
+      error = "Confirm Password is not match";
       return false;
     } else {
       return true;
     }
   }
 
-  //==========foget passcode ===//
-  bool createProfileValidator(
-    //     String image,
-    String name,
-    String ft,
-    String inches,
-    String username,
-  ) {
-/*if(image.isEmpty){
-  error = "Plaese add your image";
-  return false;
-}
-     else*/
-    if (name.isEmpty) {
-      error = "Please enter your name ";
+  //==========create nanny Profile ===//
+  bool createNannyProfileValidator({
+    required String image,
+    required String firstname,
+    required String lastName,
+    required String experience,
+    required String highSchoolName,
+    required String phoneNumber,
+    required String collegeName,
+    required String age,
+  }) {
+    if (image.isEmpty) {
+      error = "Please add your image";
       return false;
-    } else if (ft.isEmpty) {
-      error = "ft is empty";
+    } else if (firstname.isEmpty) {
+      error = "Please enter your first name ";
       return false;
-    } else if (inches.isEmpty) {
-      error = "inches is empty";
+    } else if (lastName.isEmpty) {
+      error = "Please enter your last name";
       return false;
-    } else if (username.isEmpty) {
-      error = "username is empty";
+    } else if (age.isEmpty) {
+      error = "Please enter your age";
+      return false;
+    } else if (phoneNumber.isEmpty) {
+      error = "Please enter your phone number";
+      return false;
+    } else if (experience.isEmpty) {
+      error = "Please enter your experience";
+      return false;
+    } else if (highSchoolName.isEmpty) {
+      error = "Please enter your high school name";
+      return false;
+    } else if (collegeName.isEmpty) {
+      error = "Please enter your college name";
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /// select services validator
+  services({required List<dynamic> servicesList}) {
+    if (servicesList.isEmpty) {
+      error = 'Please choose at least one service';
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /// bank detail validator.
+  bankDetailValidator({
+    required String bankName,
+    required String accountHolderName,
+    required String accountNumber,
+    required String routingNumber,
+  }) {
+    if (bankName.isEmpty) {
+      error = 'Please enter your bank name';
+      return false;
+    } else if (accountHolderName.isEmpty) {
+      error = 'Please enter your  account name';
+      return false;
+    } else if (accountNumber.isEmpty) {
+      error = 'Please enter your  account number';
+      return false;
+    } else if (routingNumber.isEmpty) {
+      error = 'Please enter your  routing number';
       return false;
     } else {
       return true;
