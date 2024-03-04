@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -81,7 +80,7 @@ class SignUpView extends StatelessWidget {
 
                           /** PASSWORD */
                           TextField(
-                            obscureText: controller.isPswdVisible.value,
+                            obscureText: controller.isPasswdVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
@@ -93,9 +92,9 @@ class SignUpView extends StatelessWidget {
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-                                    controller.isPswdVisible.value
-                                        ? Assets.iconsShow
-                                        : Assets.iconsHide,
+                                    controller.isPasswdVisible.value
+                                        ? Assets.iconsHide
+                                        : Assets.iconsShow,
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),
@@ -120,7 +119,8 @@ class SignUpView extends StatelessWidget {
 
                           /** CONFIRM PASSWORD */
                           TextField(
-                            obscureText: controller.isConfirmPswdVisible.value,
+                            obscureText:
+                                controller.isConfirmPasswdVisible.value,
                             controller:
                                 controller.confirmPasswordTextEditingController,
                             maxLines: 1,
@@ -140,9 +140,9 @@ class SignUpView extends StatelessWidget {
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-                                    controller.isConfirmPswdVisible.value
-                                        ? Assets.iconsShow
-                                        : Assets.iconsHide,
+                                    controller.isConfirmPasswdVisible.value
+                                        ? Assets.iconsHide
+                                        : Assets.iconsShow,
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),
@@ -163,9 +163,9 @@ class SignUpView extends StatelessWidget {
                                 height: Dimens.twenty,
                                 width: Dimens.twenty,
                                 child: Checkbox(
-                                  value: controller.isBoxChecked,
+                                  value: controller.isAcceptTerms.value,
                                   activeColor: AppColors.navyBlue,
-                                  onChanged: (value) {},
+                                  onChanged: controller.toggleIsAcceptTerms,
                                   shape: ContinuousRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                       Dimens.four,
@@ -196,8 +196,7 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(const CommonWebView()
-                                                  );
+                                              Get.to(const CommonWebView());
                                             },
                                         ),
                                         TextSpan(
@@ -233,13 +232,13 @@ class SignUpView extends StatelessWidget {
                             backGroundColor: AppColors.navyBlue,
                             onTap: () async {
                               Get.focusScope?.unfocus();
-
-                              if (controller.loginType.value ==
-                                  StringConstants.customer) {
-                                RouteManagement.goToCreateCustomerProfile();
-                              } else {
-                                RouteManagement.goToCreateNannyProfile();
-                              }
+                              controller.registerValidation();
+                              // if (controller.loginType.value ==
+                              //     StringConstants.customer) {
+                              //   RouteManagement.goToCreateCustomerProfile();
+                              // } else {
+                              //   RouteManagement.goToCreateNannyProfile();
+                              // }
                             },
                           ),
                         ],

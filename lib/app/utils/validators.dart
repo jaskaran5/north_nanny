@@ -17,6 +17,7 @@ class Validator {
     String email,
     String password,
     String confPassword,
+    bool isCheckedTermAndCondition,
   ) {
     if (email.isEmpty) {
       error = "Please enter email";
@@ -47,6 +48,9 @@ class Validator {
       return false;
     } else if (password != confPassword) {
       error = "confirm password is not matched";
+      return false;
+    } else if (isCheckedTermAndCondition == false) {
+      error = "please accept terms & conditions";
       return false;
     } else {
       return true;

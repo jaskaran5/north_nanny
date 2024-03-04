@@ -13,20 +13,12 @@ class LogInController extends GetxController {
     // checkIsNanny();
     super.onInit();
   }
-
+  /// check user Type.
   checkLoginType() {
     loginType = Storage.getValue(StringConstants.loginType);
     update();
   }
 
-  /// check user Type.
-  // checkIsNanny() async {
-  //   isNannyView = Utility.isNannyInterFace();
-  //   debugPrint('bool:$isNannyView ${  Utility.isNannyInterFace()}');
-  //   update();
-  // }
-
-  // bool? isNannyView;
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();

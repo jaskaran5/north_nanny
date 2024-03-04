@@ -6,62 +6,65 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 void toast({required String msg, bool isError = false}) {
   BotToast.cleanAll();
   BotToast.showCustomText(
-      duration: const Duration(seconds: 2),
-      toastBuilder: (cancelFunc) => Align(
-            alignment: const Alignment(0, 0.8),
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              margin: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      blurRadius: 4.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(
-                        0.0,
-                        2.0,
-                      ),
-                    )
-                  ]),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: isError
-                              ? Colors.red.withOpacity(0.2)
-                              : Colors.green.withOpacity(0.2),
-                        ),
-                        child: Icon(
-                          isError ? Icons.error : Icons.done_all,
-                          color: isError ? Colors.red : Colors.green,
-                        ),
-                      ),
-                      Dimens.boxWidth10,
-                      Flexible(
-                        child: Text(
-                          msg,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: isError ? Colors.red : Colors.green,
-                          ),
-                        ),
-                      ),
-                      Dimens.boxWidth10,
-                    ],
+    duration: const Duration(seconds: 2),
+    toastBuilder: (cancelFunc) => Align(
+      alignment: Alignment(Dimens.zero, 0.8),
+      child: Container(
+        padding: Dimens.edgeInsets8,
+        margin: EdgeInsets.symmetric(horizontal: Dimens.fifteen),
+        decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(Dimens.ten),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.hintColor.withOpacity(0.3),
+                blurRadius: Dimens.four,
+                spreadRadius: Dimens.zero,
+                offset: Offset(
+                  Dimens.zero,
+                  Dimens.two,
+                ),
+              )
+            ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: Dimens.edgeInsets8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimens.ten),
+                    color: isError
+                        ? AppColors.fC3030RedColor.withOpacity(0.2)
+                        : AppColors.greenColor05B016.withOpacity(0.2),
                   ),
-                ],
-              ),
+                  child: Icon(
+                    isError ? Icons.error : Icons.done_all,
+                    color: isError ? AppColors.fC3030RedColor : AppColors.greenColor05B016,
+                  ),
+                ),
+                Dimens.boxWidth10,
+                Flexible(
+                  child: Text(
+                    msg,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: Dimens.fifteen,
+                      fontWeight: FontWeight.w600,
+                      color: isError
+                          ? AppColors.fC3030RedColor
+                          : AppColors.greenColor05B016,
+                    ),
+                  ),
+                ),
+                Dimens.boxWidth10,
+              ],
             ),
-          ));
+          ],
+        ),
+      ),
+    ),
+  );
 }
