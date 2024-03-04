@@ -4,7 +4,7 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_pr
 class CreateNannyProfileBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CreateSitterProfileController>(
-        () => CreateSitterProfileController());
+    Get.lazyPut<CreateNannyProfileController>(
+        () => CreateNannyProfileController());
   }
 }

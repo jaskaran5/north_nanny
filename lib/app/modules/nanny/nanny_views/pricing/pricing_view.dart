@@ -15,7 +15,7 @@ class PricingView extends StatelessWidget {
   const PricingView({super.key});
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<CreateSitterProfileController>(
+      GetBuilder<CreateNannyProfileController>(
         builder: (controller) => Scaffold(
           appBar: const CustomAppbarWidget(),
           bottomSheet: Container(

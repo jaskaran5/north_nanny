@@ -18,7 +18,7 @@ class ServicesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<CreateSitterProfileController>(
+      GetBuilder<CreateNannyProfileController>(
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.selectServices.tr,

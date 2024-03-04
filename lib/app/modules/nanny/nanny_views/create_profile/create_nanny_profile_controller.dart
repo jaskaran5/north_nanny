@@ -10,7 +10,7 @@ import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
 import '../../../../../navigators/routes_management.dart';
 
-class CreateSitterProfileController extends GetxController {
+class CreateNannyProfileController extends GetxController {
   /// create nanny profile controllers.
   final firstNameTextEditingController = TextEditingController();
   final lastNameTextEditingController = TextEditingController();

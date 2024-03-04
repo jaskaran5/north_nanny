@@ -16,8 +16,8 @@ class BankDetailsView extends StatelessWidget {
   const BankDetailsView({super.key});
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<CreateSitterProfileController>(
-        init: CreateSitterProfileController(),
+      GetBuilder<CreateNannyProfileController>(
+        init: CreateNannyProfileController(),
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(

@@ -22,7 +22,7 @@ class CreateNannyProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<CreateSitterProfileController>(
+      GetBuilder<CreateNannyProfileController>(
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(
