@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -52,6 +55,7 @@ class LogInView extends StatelessWidget {
                             maxLines: 1,
                           ),
                           Dimens.boxHeight32,
+                          /** EMAIL============= */
                           TextField(
                             controller: controller.emailTextEditingController,
                             maxLines: 1,
@@ -72,19 +76,33 @@ class LogInView extends StatelessWidget {
                             style: AppStyles.ubBlack15W600,
                           ),
                           Dimens.boxHeight16,
+
+                          /** PASSWORD ============ */
                           TextField(
+                            obscureText: controller.isPswdVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
                             minLines: 1,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
-                              suffix: Padding(
-                                padding: Dimens.edgeInsets12,
-                                child: SvgPicture.asset(
-                                  Assets.iconsShowPassword,
-                                  height: Dimens.ten,
-                                  width: Dimens.ten,
+                              suffix: GestureDetector(
+                                onTap: () {
+                                  controller.togglePassword();
+                                },
+                                child: Padding(
+                                  padding: Dimens.edgeInsets12,
+                                  child: controller.isPswdVisible.value
+                                      ? SvgPicture.asset(
+                                          Assets.iconsShowPassword,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
+                                        )
+                                      : SvgPicture.asset(
+                                          Assets.iconsHidePassword,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
+                                        ),
                                 ),
                               ),
                               prefixWidget: Padding(
@@ -112,28 +130,58 @@ class LogInView extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    height: Dimens.twenty,
-                                    width: Dimens.twenty,
-                                    child: Checkbox(
-                                      value: controller.isRememberMe,
-                                      activeColor: AppColors.navyBlue,
-                                      onChanged: (value) {},
-                                      shape: ContinuousRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          Dimens.four,
-                                        ),
-                                        side: BorderSide(
-                                          color: AppColors.checkBoxBorderColor,
-                                          width: Dimens.one,
-                                        ),
+                                  /** CHECK BOX */
+
+                                  Checkbox(
+                                    value: controller.rememberMe.value,
+                                    onChanged: (value) {
+                                      log("is remember me :-->> $value");
+                                      controller.toggleRememberMe(
+                                        val: value,
+                                      );
+                                    },
+                                    shape: ContinuousRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        Dimens.four,
                                       ),
                                       side: BorderSide(
                                         color: AppColors.checkBoxBorderColor,
                                         width: Dimens.one,
                                       ),
                                     ),
+                                    side: BorderSide(
+                                      color: AppColors.checkBoxBorderColor,
+                                      width: Dimens.one,
+                                    ),
                                   ),
+
+                                  // SizedBox(
+                                  //   height: Dimens.twenty,
+                                  //   width: Dimens.twenty,
+                                  //   child: Checkbox(
+                                  //     value: controller.isRememberMe,
+                                  //     activeColor: AppColors.navyBlue,
+                                  //     onChanged: (value) {
+                                  //       controller.toggleRememberMe(
+                                  //         val: value,
+                                  //       );
+                                  //     },
+                                  //     shape: ContinuousRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(
+                                  //         Dimens.four,
+                                  //       ),
+                                  //       side: BorderSide(
+                                  //         color: AppColors.checkBoxBorderColor,
+                                  //         width: Dimens.one,
+                                  //       ),
+                                  //     ),
+                                  //     side: BorderSide(
+                                  //       color: AppColors.checkBoxBorderColor,
+                                  //       width: Dimens.one,
+                                  //     ),
+                                  //   ),
+                                  // ),
+
                                   Dimens.boxWidth8,
                                   AppText(
                                     text: TranslationKeys.rememberMe.tr,
@@ -158,8 +206,9 @@ class LogInView extends StatelessWidget {
                             title: TranslationKeys.signIn.tr,
                             backGroundColor: AppColors.navyBlue,
                             onTap: () {
+                              controller.onClickOnLogin();
 
-                              RouteManagement.goToOffAllDashboard(isFromSetting: false);
+                              // RouteManagement.goToOffAllDashboard(isFromSetting: false);
                             },
                           ),
                         ],

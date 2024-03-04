@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
 class LogInController extends GetxController {
   String loginType = '';
+
+  RxBool isPswdVisible = false.obs;
+  RxBool rememberMe = false.obs;
+
   @override
   void onInit() {
     checkLoginType();
@@ -19,12 +24,17 @@ class LogInController extends GetxController {
     update();
   }
 
-  /// check user Type.
-  // checkIsNanny() async {
-  //   isNannyView = Utility.isNannyInterFace();
-  //   debugPrint('bool:$isNannyView ${  Utility.isNannyInterFace()}');
-  //   update();
-  // }
+  /// ---------- TOOGLE  PASSWORD----------
+  togglePassword() {
+    isPswdVisible.value = !isPswdVisible.value;
+    update();
+  }
+
+  /// ---------- TOOGLE  REMEMBER ME----------
+  toggleRememberMe({val}) {
+    rememberMe.value = val;
+    update();
+  }
 
   // bool? isNannyView;
   final emailTextEditingController = TextEditingController();
@@ -39,10 +49,14 @@ class LogInController extends GetxController {
         emailTextEditingController.text.trim(),
         passwordTextEditingController.text.trim());
 
-    // if (valid) {
-    //   await loginApi();
-    // } else {
-    //   toast(msg: Validator.instance.error, isError: true);
-    // }
+    if (valid) {
+      await loginApi();
+    } else {
+      showToast(
+        message: Validator.instance.error,
+      );
+    }
   }
+
+  loginApi() {}
 }

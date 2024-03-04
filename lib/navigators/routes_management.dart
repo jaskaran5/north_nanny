@@ -244,4 +244,11 @@ abstract class RouteManagement {
       Routes.nannyBookingDetailsView,
     );
   }
+
+  /// Go to GoogleMap  Screen
+  static void goToGoogleMapScreen() {
+    Get.toNamed(
+      Routes.googleMapView,
+    );
+  }
 }

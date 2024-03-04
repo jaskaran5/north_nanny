@@ -58,6 +58,7 @@ class CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onDoubleTap: null,
       onTap: (widget.loading ?? false) ? null : widget.onTap,
       child: Container(
         width: widget.width ?? Dimens.threeHundredThirtyOne,

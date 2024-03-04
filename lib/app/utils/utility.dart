@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -8,6 +9,14 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
+
+import 'dart:io';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:get/get.dart';
 
 class Utility {
   const Utility._();
@@ -326,60 +335,88 @@ class Utility {
     if (Get.isSnackbarOpen) Get.back<void>();
   }
 
-  /// Show a message to the user.
-  ///
-  /// [message] : Message you need to show to the user.
-  /// [type] : Type of the message for different background color.
-  /// [onTap] : An event for onTap.
-  /// [actionName] : The name for the action.
+  /// SHOW IMAGE PICKER
+  static Future<void> showImagePicker({
+    required Function(File image) onGetImage,
+  }) {
+    return showModalBottomSheet<void>(
+      context: Get.context!,
+      builder: (_) {
+        return Padding(
+          padding: Dimens.edgeInsets10,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    getImage(source: 2).then((v) {
+                      if (v != null) {
+                        onGetImage(v);
+                        Get.back();
+                      }
+                    });
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.image,
+                        size: Dimens.sixty,
+                      ),
+                      Dimens.boxHeight10,
+                      Text("Gallery",
+                          textAlign: TextAlign.center,
+                          style: AppStyles.b0b0fairPlay15w600)
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    getImage().then((v) {
+                      if (v != null) {
+                        onGetImage(v);
+                        Get.back();
+                      }
+                    });
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.camera, size: Dimens.sixty),
+                      Dimens.boxHeight10,
+                      Text("Camera",
+                          textAlign: TextAlign.center,
+                          style: AppStyles.b0b0fairPlay15w600)
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-// static void showMessage({
-//   String? message,
-//   MessageType type = MessageType.information,
-//   Function()? onTap,
-//   String? actionName,
-// }) {
-//   if (message == null || message.isEmpty) return;
-//   closeDialog();
-//   closeSnackbar();
-//   var backgroundColor = Colors.black;
-//   switch (type) {
-//     case MessageType.error:
-//       backgroundColor = Colors.red;
-//       break;
-//     case MessageType.information:
-//       backgroundColor = Colors.blue;
-//       break;
-//     case MessageType.success:
-//       backgroundColor = Colors.green;
-//       break;
-//     default:
-//       backgroundColor = Colors.black;
-//       break;
-//   }
-//   Future.delayed(
-//     const Duration(seconds: 0),
-//     () {
-//       Get.rawSnackbar(
-//         messageText: Text(
-//           message,
-//           style: Styles.white16,
-//         ),
-//         mainButton: actionName != null
-//             ? TextButton(
-//                 onPressed: onTap ?? Get.back,
-//                 child: Text(
-//                   actionName,
-//                   style: Styles.white16,
-//                 ),
-//               )
-//             : null,
-//         backgroundColor: backgroundColor,
-//         margin: Dimens.edgeInsets10,
-//         borderRadius: Dimens.ten + Dimens.five,
-//         snackStyle: SnackStyle.FLOATING,
-//       );
-//     },
-//   );
-// }
+  static Future<File?> getImage({int source = 1}) async {
+    // File? croppedFile;
+    File? image;
+
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.pickImage(
+      source: source == 1 ? ImageSource.camera : ImageSource.gallery,
+      imageQuality: 60,
+    );
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+    }
+
+    return image;
+  }
 }

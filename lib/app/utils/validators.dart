@@ -54,10 +54,7 @@ class Validator {
   }
 
   //==========login===//
-  bool loginValidator(
-    String email,
-    String password,
-  ) {
+  bool loginValidator(String email, String password) {
     if (email.trim().isEmpty) {
       error = "Please enter email";
       return false;
@@ -66,6 +63,14 @@ class Validator {
       return false;
     } else if (password.trim().isEmpty) {
       error = "Please enter password";
+      return false;
+    } else if (password.trim().length < 8) {
+      error = "Password length should be minimum 8";
+      return false;
+    } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$')
+        .hasMatch(password.trim())) {
+      error =
+          "Password should contain at least 1 alphabet, 1 number, and 1 special character";
       return false;
     } else {
       return true;
@@ -233,6 +238,30 @@ class Validator {
       return false;
     } else if (username.isEmpty) {
       error = "username is empty";
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /// * CREATE CUSTOMER PROFILE VALIDATORS---------------->>>>>>>>>>>>>>.
+  bool customerCreateProfileValidator({
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    String? coordinates,
+  }) {
+    if (firstName!.isEmpty) {
+      error = "Please enter First Name";
+      return false;
+    } else if (lastName!.isEmpty) {
+      error = "Please enter Last Name";
+      return false;
+    } else if (phoneNumber!.isEmpty) {
+      error = "Please enter Phone Number";
+      return false;
+    } else if (coordinates!.isEmpty) {
+      error = "Please Select Your Location";
       return false;
     } else {
       return true;

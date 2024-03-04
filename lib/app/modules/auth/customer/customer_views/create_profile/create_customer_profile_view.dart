@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +16,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../create_child_profile/child_profile.dart';
 
@@ -35,9 +38,12 @@ class CreateCustomerProfileView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.to(
-                  const ChildProfileView(),
-                );
+                controller.customerSignUpValidation();
+
+                // Get.to(
+
+                // const ChildProfileView(),
+                // );
               },
             ),
           ),
@@ -52,7 +58,10 @@ class CreateCustomerProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        controller.onClickOnProfilePic();
+                        log("on click on upload pics:--> ");
+                      },
                       child: Stack(
                         clipBehavior: Clip.none,
                         fit: StackFit.passthrough,
@@ -196,6 +205,11 @@ class CreateCustomerProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     /** LOCATION */
                     TextField(
+                      onTap: () {
+                        RouteManagement.goToGoogleMapScreen();
+                        log("on clcik on location textfields ");
+                      },
+                      readOnly: true,
                       controller: controller.locationTextEditingController,
                       maxLines: 1,
                       minLines: 1,

@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'api_helper.dart';
 
 class ApiHelperImpl extends GetConnect implements ApiHelper {
-
   @override
   void onInit() {
-    httpClient.baseUrl = StringConstants.baseUrl;
+    httpClient.baseUrl = ApiUrls.baseUrl;
     httpClient.timeout = StringConstants.timeout;
 
     addRequestModifier();

@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_binding.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_controller.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_screen.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
@@ -306,6 +309,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: CreateCustomerProfileView.new,
       binding: SettingBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** REDIRECT TO GOOGLE MAP SCREEN */
+    GetPage<CurrentLocationGoogleMap>(
+      name: Routes.googleMapView,
+      transitionDuration: transitionDuration,
+      page: CurrentLocationGoogleMap.new,
+      binding: GoogleMapBinding(),
       transition: Transition.leftToRight,
     ),
   ];
