@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -13,15 +15,14 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import '../../../../widgets/custom_cache_network_image.dart';
-import '../services/services_view.dart';
+import '../../../../utils/phone_number_formate.dart';
 
 class CreateNannyProfileView extends StatelessWidget {
   const CreateNannyProfileView({super.key});
 
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<CreateSitterProfileController>(
+      GetBuilder<CreateNannyProfileController>(
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(
@@ -40,7 +41,9 @@ class CreateNannyProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        controller.pickImage();
+                      },
                       child: Stack(
                         clipBehavior: Clip.none,
                         fit: StackFit.passthrough,
@@ -72,11 +75,15 @@ class CreateNannyProfileView extends StatelessWidget {
                                       fit: BoxFit.contain,
                                     ),
                                   )
-                                : CustomCacheNetworkImage(
-                                    img: controller.imageUrl.toString(),
-                                    size: Dimens.oneHundredTwenty,
-                                    imageRadius: Dimens.eighteen,
-                                    imageShape: BoxShape.rectangle,
+                                : ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.twenty),
+                                    child: Image.file(
+                                      File(controller.imageUrl ?? ''),
+                                      height: Dimens.oneHundredTwenty,
+                                      width: Dimens.oneHundredTwenty,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                           ),
                           Positioned(
@@ -104,9 +111,7 @@ class CreateNannyProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight10,
                     AppText(
-                      text:
-                          '${TranslationKeys.profilePicture.tr} (${TranslationKeys.optional.tr})'
-                              .tr,
+                      text: TranslationKeys.profilePicture.tr.tr,
                       style: AppStyles.ubGrey15W500,
                       maxLines: 1,
                       textAlign: TextAlign.center,
@@ -172,16 +177,19 @@ class CreateNannyProfileView extends StatelessWidget {
                       cursorColor: AppColors.navyBlue,
                       cursorWidth: Dimens.one,
                       style: AppStyles.ubBlack15W600,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
+                      maxLength: 2,
                     ),
                     Dimens.boxHeight20,
                     TextField(
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(14),
+                        PhoneNumberFormatter(),
                       ],
                       controller: controller.phoneNumberTextEditingController,
                       maxLines: 1,
                       minLines: 1,
+                      maxLength: 14,
                       decoration: customFieldDeco(
                         hintText: '000 000 0000',
                         prefixWidget: Padding(
@@ -440,6 +448,7 @@ class CreateNannyProfileView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      maxLength: 100,
                       cursorColor: AppColors.navyBlue,
                       cursorWidth: Dimens.one,
                       style: AppStyles.ubBlack15W600,
@@ -449,7 +458,7 @@ class CreateNannyProfileView extends StatelessWidget {
 
                     /** REFFREEL CODE*/
                     TextField(
-                      controller: controller.highSchoolTextEditingController,
+                      controller: controller.referralTextEditingController,
                       maxLines: 1,
                       minLines: 1,
                       decoration: customFieldDeco(
@@ -476,9 +485,7 @@ class CreateNannyProfileView extends StatelessWidget {
                       title: TranslationKeys.continueWord.tr,
                       backGroundColor: AppColors.navyBlue,
                       onTap: () {
-                        Get.to(
-                          const ServicesView(),
-                        );
+                        controller.profileValidator();
                       },
                     ),
                   ],

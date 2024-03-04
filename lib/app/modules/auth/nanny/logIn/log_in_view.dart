@@ -86,23 +86,12 @@ class LogInView extends StatelessWidget {
                             minLines: 1,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
-                              suffix: GestureDetector(
-                                onTap: () {
-                                  controller.togglePassword();
-                                },
-                                child: Padding(
-                                  padding: Dimens.edgeInsets12,
-                                  child: controller.isPswdVisible.value
-                                      ? SvgPicture.asset(
-                                          Assets.iconsShowPassword,
-                                          height: Dimens.ten,
-                                          width: Dimens.ten,
-                                        )
-                                      : SvgPicture.asset(
-                                          Assets.iconsHidePassword,
-                                          height: Dimens.ten,
-                                          width: Dimens.ten,
-                                        ),
+                              suffix: Padding(
+                                padding: Dimens.edgeInsets12,
+                                child: SvgPicture.asset(
+                                  Assets.iconsShow,
+                                  height: Dimens.ten,
+                                  width: Dimens.ten,
                                 ),
                               ),
                               prefixWidget: Padding(

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,8 @@ import 'package:northshore_nanny_flutter/app/utils/initializers.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 
-
-
 void main() async {
   await _setup();
-
 
   runApp(const MyApp());
 }
@@ -18,8 +16,7 @@ void main() async {
 //
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
-     await GetStorage.init();
-
+  await GetStorage.init();
 }
 
 class MyApp extends StatefulWidget {
@@ -35,14 +32,14 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
         child: GetMaterialApp(
+          builder: BotToastInit(),
+          navigatorObservers: [BotToastNavigatorObserver()],
           debugShowCheckedModeBanner: false,
           locale: const Locale('en'),
           theme: ThemeData(

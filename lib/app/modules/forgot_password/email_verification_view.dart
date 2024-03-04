@@ -8,7 +8,6 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -17,6 +16,7 @@ class EmailVerificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GetBuilder<ForgotPasswordController>(
+        init: ForgotPasswordController(),
         builder: (controller) => Scaffold(
           appBar: const CustomAppbarWidget(),
           body: GestureDetector(
@@ -61,14 +61,15 @@ class EmailVerificationView extends StatelessWidget {
                   Dimens.boxHeight24,
                   PinCodeTextField(
                     appContext: Get.context!,
-                    length: 4,
+                    length: controller.otpLength,
                     keyboardType: TextInputType.phone,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     cursorColor: AppColors.navyBlue,
                     cursorWidth: Dimens.one,
                     autoDismissKeyboard: true,
+                    autoDisposeControllers: false,
                     textInputAction: TextInputAction.next,
-                    // controller: controller.otpTextEditingController,
+                    controller: controller.otpTextEditingController,
                     textStyle: AppStyles.ubBlack18W600,
                     pinTheme: PinTheme(
                       borderRadius: BorderRadius.circular(
@@ -107,8 +108,7 @@ class EmailVerificationView extends StatelessWidget {
                     title: TranslationKeys.submit.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      Get.focusScope?.unfocus();
-                      RouteManagement.goToCreateNewPassword();
+                      controller.otpValidator();
                     },
                   ),
                 ],

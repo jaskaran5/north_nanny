@@ -1,9 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
+
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -52,24 +51,25 @@ class Utils {
         align: Alignment.center,
         toastBuilder: (void Function() cancelFunc) {
           return Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            margin: const EdgeInsets.symmetric(horizontal: 60),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.five),
+            ),
+            margin: EdgeInsets.symmetric(horizontal: Dimens.sixty),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: Dimens.edgeInsets10,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(
-                    height: 50,
-                    width: 50,
+                  SizedBox(
+                    height: Dimens.fifty,
+                    width: Dimens.fifty,
                     child: Center(
                       child: CircularProgressIndicator(
                         backgroundColor: AppColors.chatTimeColor,
-                        valueColor:
-                            AlwaysStoppedAnimation(AppColors.primaryColor),
-                        strokeWidth: 7,
+                        valueColor: const AlwaysStoppedAnimation(
+                            AppColors.primaryColor),
+                        strokeWidth: Dimens.seven,
                       ),
                     ),
                   ),
@@ -77,7 +77,7 @@ class Utils {
                   Expanded(
                       child: AppText(
                     text: message ?? "Please wait...",
-                    textSize: 16.sp,
+                    textSize: Dimens.sixteen,
                     color: AppColors.blackColor,
                   ))
                 ],
@@ -92,7 +92,7 @@ class Utils {
   }
 
   static void printLog(dynamic log, {String tag = "log---->"}) {
-    print("\n/***********\n\n $tag $log \n\n*************/\n");
+    printLog("\n/***********\n\n $tag $log \n\n*************/\n");
   }
 
   static void hideKeyboard(context) {

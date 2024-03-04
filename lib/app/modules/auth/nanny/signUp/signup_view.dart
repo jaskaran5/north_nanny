@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -81,7 +80,7 @@ class SignUpView extends StatelessWidget {
 
                           /** PASSWORD */
                           TextField(
-                            obscureText: controller.isPswdVisible.value,
+                            obscureText: controller.isPasswdVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
@@ -89,13 +88,13 @@ class SignUpView extends StatelessWidget {
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
                               suffix: GestureDetector(
-                                onTap: controller.updatePswdVisibility,
+                                onTap: controller.updatePasswordVisibility,
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-                                    controller.isConfirmPswdVisible.value
-                                        ? Assets.iconsShowPassword
-                                        : Assets.iconsShowPassword,
+                                    controller.isPasswdVisible.value
+                                        ? Assets.iconsHide
+                                        : Assets.iconsShow,
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),
@@ -120,7 +119,8 @@ class SignUpView extends StatelessWidget {
 
                           /** CONFIRM PASSWORD */
                           TextField(
-                            obscureText: controller.isConfirmPswdVisible.value,
+                            obscureText:
+                                controller.isConfirmPasswdVisible.value,
                             controller:
                                 controller.confirmPasswordTextEditingController,
                             maxLines: 1,
@@ -136,13 +136,13 @@ class SignUpView extends StatelessWidget {
                                 ),
                               ),
                               suffix: GestureDetector(
-                                onTap: controller.updateConfirmPswdVisibility,
+                                onTap: controller.updateConfirmPasswordVisibility,
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-                                    controller.isConfirmPswdVisible.value
-                                        ? Assets.iconsShowPassword
-                                        : Assets.iconsShowPassword,
+                                    controller.isConfirmPasswdVisible.value
+                                        ? Assets.iconsHide
+                                        : Assets.iconsShow,
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),
@@ -163,9 +163,9 @@ class SignUpView extends StatelessWidget {
                                 height: Dimens.twenty,
                                 width: Dimens.twenty,
                                 child: Checkbox(
-                                  value: controller.isBoxChecked,
+                                  value: controller.isAcceptTerms.value,
                                   activeColor: AppColors.navyBlue,
-                                  onChanged: (value) {},
+                                  onChanged: controller.toggleIsAcceptTerms,
                                   shape: ContinuousRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                       Dimens.four,
@@ -196,18 +196,7 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(const CommonWebView()
-                                                  // TermAndCondition(
-                                                  //   appBarTitle: TranslationKeys
-                                                  //       .termAndConditions.tr,
-                                                  //   termsText:
-                                                  //       ''''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                                                  //   termsSecondText:
-                                                  //       '• It was popularised in the 1960s with the release of Letraset sheets containing  • Lorem Ipsum passages, and more recently with desktop publishingLorem Ipsum passages, and more recently with desktop publishingLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.',
-                                                  //   headingText:
-                                                  //       'It was popularised in the 1960s with',
-                                                  // ),
-                                                  );
+                                              Get.to(const CommonWebView());
                                             },
                                         ),
                                         TextSpan(
@@ -243,13 +232,7 @@ class SignUpView extends StatelessWidget {
                             backGroundColor: AppColors.navyBlue,
                             onTap: () async {
                               Get.focusScope?.unfocus();
-
-                              if (controller.loginType.value ==
-                                  StringConstants.customer) {
-                                RouteManagement.goToCreateCustomerProfile();
-                              } else {
-                                RouteManagement.goToCreateNannyProfile();
-                              }
+                              controller.registerValidation();
                             },
                           ),
                         ],

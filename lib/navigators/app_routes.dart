@@ -9,9 +9,11 @@ class Routes {
   static const String emailVerification = Paths.emailVerification;
   static const String newPasswordView = Paths.newPasswordView;
   static const String changePasswordView = Paths.changePasswordView;
-  static const String passwordChnagedView = Paths.passwordChnagedView;
-  static const String passwordSuccessView = Paths.passwordSuccessView;
+  static const String passwordChangedView = Paths.passwordChangedView;
   static const String createNannyProfile = Paths.createNannyProfile;
+  static const String selectServicesView = Paths.selectServicesView;
+  static const String pricingView = Paths.pricingView;
+  static const String bankDetailsView = Paths.bankDetailsView;
   static const String home = Paths.home;
   static const String filterView = Paths.filterView;
   static const String recentChat = Paths.recentChat;
@@ -48,9 +50,11 @@ class Paths {
   static const String emailVerification = '/Email-Verification-view';
   static const String newPasswordView = '/New-password-view';
   static const String changePasswordView = '/change-password-view';
-  static const String passwordChnagedView = '/password-chnaged-view';
-  static const String passwordSuccessView = '/Password-SuccessView';
+  static const String passwordChangedView = '/password-chnaged-view';
   static const String createNannyProfile = '/CreateNannyProfileView';
+  static const String selectServicesView = '/Select-Services-view';
+  static const String pricingView = '/Pricing-view';
+  static const String bankDetailsView = '/BankDetails-view';
   static const String home = '/home';
   static const String filterView = '/filter-View';
   static const String recentChat = '/recentChat';

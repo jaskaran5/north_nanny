@@ -11,7 +11,6 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
@@ -72,7 +71,7 @@ class ForgotPasswordView extends StatelessWidget {
                     title: TranslationKeys.sendCode.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      RouteManagement.goToEmailVerification();
+                      controller.emailValidator();
                     },
                   ),
                 ],

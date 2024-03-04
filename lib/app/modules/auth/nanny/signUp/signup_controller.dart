@@ -16,6 +16,10 @@ import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
+import '../../../../../navigators/routes_management.dart';
+import '../../../../utils/custom_toast.dart';
+import '../../../../utils/validators.dart';
+
 class SignupViewController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
   RxString loginType = ''.obs;
@@ -27,6 +31,8 @@ class SignupViewController extends GetxController {
 
   RxBool isPswdVisible = false.obs;
   RxBool isConfirmPswdVisible = false.obs;
+  RxBool isPasswdVisible = true.obs;
+  RxBool isConfirmPasswdVisible = true.obs;
 
   RxBool isAcceptTerms = false.obs;
 
@@ -48,6 +54,7 @@ class SignupViewController extends GetxController {
   }
 
   /// GET LOGIN TYPE
+  /// check user type.
   getLoginType() async {
     loginType.value = await Storage.getValue(StringConstants.loginType);
 
@@ -59,7 +66,6 @@ class SignupViewController extends GetxController {
   ///
 
   /// UPDATE NO OF CHILDREN
-
   updateNoOfChildren({val}) {
     noOfChild.value = val;
 
@@ -98,9 +104,6 @@ class SignupViewController extends GetxController {
   final anyThingTextEditingController = TextEditingController();
   final referrelCodeTextEditingController = TextEditingController();
 
-  /// check box true or false.
-  bool? isBoxChecked = false;
-
   /// gender list.
   List<String> genderList = GenderConstant.values
       .map((e) => e.genderName.capitalizeFirst.toString())
@@ -115,20 +118,20 @@ class SignupViewController extends GetxController {
     update();
   }
 
-  updatePswdVisibility() {
-    isPswdVisible.value = !isPswdVisible.value;
+  updatePasswordVisibility() {
+    isPasswdVisible.value = !isPasswdVisible.value;
     update();
   }
 
   /// confirm password visibility
-  updateConfirmPswdVisibility() {
-    isConfirmPswdVisible.value = !isConfirmPswdVisible.value;
+  updateConfirmPasswordVisibility() {
+    isConfirmPasswdVisible.value = !isConfirmPasswdVisible.value;
     update();
   }
 
   /// ACCEPT TERMS AND CONDITIONS
-  toggleIsAcceptTerms() {
-    isAcceptTerms.value = !isAcceptTerms.value;
+  toggleIsAcceptTerms(bool? value) {
+    isAcceptTerms.value = value ?? false;
     update();
   }
 
@@ -217,5 +220,24 @@ class SignupViewController extends GetxController {
     }, retryFunction: () {
       createCustomerProfileSignUp();
     });
+  }
+
+  /// signup validation
+  Future<void> registerValidation() async {
+    bool isValidate = Validator.instance.signUpValidator(
+      emailTextEditingController.text.trim(),
+      passwordTextEditingController.text.trim(),
+      confirmPasswordTextEditingController.text.trim(),
+      isAcceptTerms.value,
+    );
+    if (isValidate) {
+      if (loginType.value == StringConstants.customer) {
+        RouteManagement.goToCreateCustomerProfile();
+      } else {
+        RouteManagement.goToCreateNannyProfile();
+      }
+    } else {
+      toast(msg: Validator.instance.error, isError: true);
+    }
   }
 }

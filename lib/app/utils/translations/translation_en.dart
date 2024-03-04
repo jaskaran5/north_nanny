@@ -184,4 +184,6 @@ var en = <String, String>{
   TranslationKeys.accept: 'Accept',
   TranslationKeys.useReferralBonus: 'Use referral bonus \$5',
   TranslationKeys.referralEarned: 'Referral bonus earned ',
+  TranslationKeys.gallery: 'Gallery ',
+  TranslationKeys.camera: 'Camera ',
 };

@@ -16,7 +16,7 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home-svg_tile.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 

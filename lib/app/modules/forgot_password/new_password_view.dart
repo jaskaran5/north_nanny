@@ -11,13 +11,13 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class NewPasswordView extends StatelessWidget {
   const NewPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) => GetBuilder<ForgotPasswordController>(
+        init: ForgotPasswordController(),
         builder: (controller) => Scaffold(
           appBar: const CustomAppbarWidget(),
           body: GestureDetector(
@@ -48,9 +48,10 @@ class NewPasswordView extends StatelessWidget {
                   ),
                   Dimens.boxHeight32,
                   TextField(
-                    // controller: controller.newPasswordTextEditingController,
+                    controller: controller.newPasswordTextEditingController,
                     maxLines: 1,
                     minLines: 1,
+                    obscureText: controller.isVisibleNewPassword,
                     decoration: customFieldDeco(
                       hintText: TranslationKeys.enterNewPassword.tr,
                       prefixWidget: Padding(
@@ -61,12 +62,17 @@ class NewPasswordView extends StatelessWidget {
                           width: Dimens.ten,
                         ),
                       ),
-                      suffix: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(
-                          Assets.iconsShowPassword,
-                          height: Dimens.ten,
-                          width: Dimens.ten,
+                      suffix: GestureDetector(
+                        onTap: controller.isNewPasswordVisible,
+                        child: Padding(
+                          padding: Dimens.edgeInsets12,
+                          child: SvgPicture.asset(
+                            controller.isVisibleNewPassword
+                                ? Assets.iconsHide
+                                : Assets.iconsShow,
+                            height: Dimens.ten,
+                            width: Dimens.ten,
+                          ),
                         ),
                       ),
                     ),
@@ -76,9 +82,10 @@ class NewPasswordView extends StatelessWidget {
                   ),
                   Dimens.boxHeight16,
                   TextField(
-                    // controller: controller.confirmPasswordTextEditingController,
+                    controller: controller.confirmPasswordTextEditingController,
                     maxLines: 1,
                     minLines: 1,
+                    obscureText: controller.isVisibleConfirmPassword,
                     decoration: customFieldDeco(
                       hintText: TranslationKeys.confirmNewPassword.tr,
                       prefixWidget: Padding(
@@ -89,12 +96,17 @@ class NewPasswordView extends StatelessWidget {
                           width: Dimens.ten,
                         ),
                       ),
-                      suffix: Padding(
-                        padding: Dimens.edgeInsets12,
-                        child: SvgPicture.asset(
-                          Assets.iconsShowPassword,
-                          height: Dimens.ten,
-                          width: Dimens.ten,
+                      suffix: GestureDetector(
+                        onTap: controller.isConfirmPasswordVisible,
+                        child: Padding(
+                          padding: Dimens.edgeInsets12,
+                          child: SvgPicture.asset(
+                            controller.isVisibleConfirmPassword
+                                ? Assets.iconsHide
+                                : Assets.iconsShow,
+                            height: Dimens.ten,
+                            width: Dimens.ten,
+                          ),
                         ),
                       ),
                     ),
@@ -109,22 +121,7 @@ class NewPasswordView extends StatelessWidget {
                     title: TranslationKeys.changePassword.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      Get.focusScope?.unfocus();
-                      RouteManagement.goToSuccessView(
-                        buttonText: TranslationKeys.backToLogIn.tr,
-                        successSvg: Assets.iconsSuccess,
-                        header: TranslationKeys.passwordChanged.tr,
-                        headerStyle: AppStyles.ubDarkBlackColor26W700,
-                        subHeader: TranslationKeys.passwordChangeSuccess.tr,
-                        onTapButton: () {
-                          RouteManagement.goToOffAllLogIn();
-                        },
-                        subTitleStyle: AppStyles.ubGreyA116W500,
-                        subHeaderMaxLines: 2,
-                        headerMaxLines: 1,
-                        successImage: '',
-                        sendTipText: false,
-                      );
+                      controller.changePasswordValidator();
                     },
                   ),
                 ],

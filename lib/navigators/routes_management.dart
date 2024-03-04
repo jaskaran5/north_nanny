@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/payment_details/custom_payment_details_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/success_un_success.dart';
 import '../app/modules/add_payment_method/add_payment_method.dart';
+import '../app/modules/nanny/nanny_views/waiting_approval/waiting_approval_view.dart';
 import 'app_routes.dart';
 
 abstract class RouteManagement {
@@ -58,6 +59,34 @@ abstract class RouteManagement {
   static void goToCreateNannyProfile() {
     Get.toNamed<void>(
       Routes.createNannyProfile,
+    );
+  }
+
+  /// go To service screen from create sitter profile.
+  static void goToSelectServicesView() {
+    Get.toNamed<void>(
+      Routes.selectServicesView,
+    );
+  }
+
+  /// go To Pricing screen from select services .
+  static void goToPricingView() {
+    Get.toNamed<void>(
+      Routes.pricingView,
+    );
+  }
+
+  /// go To BankDetail screen from pricing services .
+  static void goToBankDetailView() {
+    Get.toNamed<void>(
+      Routes.bankDetailsView,
+    );
+  }
+
+  /// go To waitingApproval screen from select services .
+  static void goToOffAllWaitingApprovalView() {
+    Get.offAll(
+      () => const WaitingApprovalView(),
     );
   }
 
@@ -123,7 +152,7 @@ abstract class RouteManagement {
   }
 
   /// Go to Rating and Review  Screen
-  static void goToChnagePasswordScreen() {
+  static void goToChangePasswordScreen() {
     Get.toNamed(
       Routes.changePasswordView,
     );

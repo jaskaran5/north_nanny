@@ -35,9 +35,12 @@ import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dar
 
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_sitter_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/bank_detail_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/pricing/pricing_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/services/services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
@@ -49,7 +52,7 @@ import '../app/modules/forgot_password/email_verification_view.dart';
 import '../app/modules/forgot_password/forgot_password_binding.dart';
 import '../app/modules/forgot_password/forgot_password_view.dart';
 import '../app/modules/forgot_password/new_password_view.dart';
-import '../app/modules/nanny/nanny_views/create_profile/create_sitter_profile_view.dart';
+import '../app/modules/nanny/nanny_views/create_profile/create_nanny_profile_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -133,8 +136,29 @@ class AppPages {
       binding: CreateNannyProfileBinding(),
       transition: Transition.rightToLeft,
     ),
+    GetPage<ServicesView>(
+      name: Routes.selectServicesView,
+      transitionDuration: transitionDuration,
+      page: ServicesView.new,
+      binding: CreateNannyProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<PricingView>(
+      name: Routes.pricingView,
+      transitionDuration: transitionDuration,
+      page: PricingView.new,
+      binding: CreateNannyProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage<BankDetailsView>(
+      name: Routes.bankDetailsView,
+      transitionDuration: transitionDuration,
+      page: BankDetailsView.new,
+      binding: CreateNannyProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage<PasswordChangesView>(
-      name: Routes.passwordChnagedView,
+      name: Routes.passwordChangedView,
       transitionDuration: transitionDuration,
       page: PasswordChangesView.new,
       binding: SettingBinding(),

@@ -198,4 +198,7 @@ class TranslationKeys {
   static const String accept = 'accept';
   static const String useReferralBonus = 'useReferralBonus';
   static const String referralEarned = 'referralEarned';
+  static const String gallery = 'gallery';
+  static const String camera = 'camera';
+
 }

@@ -108,7 +108,7 @@ class SettingView extends StatelessWidget {
                 showDeleteButton: true,
               );
             } else if (index == 3) {
-              RouteManagement.goToChnagePasswordScreen();
+              RouteManagement.goToChangePasswordScreen();
             } else if (index == 4) {
               controller.redirectToCommonWebView();
             } else if (index == 5) {
@@ -156,7 +156,7 @@ class SettingView extends StatelessWidget {
             } else if (index == 1) {
               /** CHANGE PASSWORD */
 
-              RouteManagement.goToChnagePasswordScreen();
+              RouteManagement.goToChangePasswordScreen();
             } else if (index == 2) {
               /**  ABOUT US */
 

@@ -19,6 +19,7 @@ class LogInController extends GetxController {
     super.onInit();
   }
 
+  /// check user Type.
   checkLoginType() {
     loginType = Storage.getValue(StringConstants.loginType);
     update();
