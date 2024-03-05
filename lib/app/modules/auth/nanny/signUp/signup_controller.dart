@@ -258,7 +258,12 @@ class SignupViewController extends GetxController {
 
   /// * ------------>>>>>>>>>>>>>>>>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REGISTER API <<<<<<<<<<<<<<<<<<<<<<<<<--------
 
-  Future<void> registerApi({required int type}) async {
+  Future<void> registerApi({required int type}) async {   if (Storage.hasData(StringConstants.token)) {
+    Storage.removeValue(StringConstants.token);
+  }
+
+
+
     //  String? deviceToken = await FirebaseMessaging.instance.getToken();
     String deviceToken = 'devicetokenfirebaseneeded';
 

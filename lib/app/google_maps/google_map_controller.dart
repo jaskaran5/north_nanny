@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
 class GoogleMapViewController extends GetxController {
@@ -76,13 +78,43 @@ class GoogleMapViewController extends GetxController {
     update();
   }
 
-  saveLocationCoordinates() {
-    Get.find<SignupViewController>()
-        .updateLocationTextField(
-            position:
-                "${currentLatLng.value!.latitude},${currentLatLng.value!.longitude}")
-        .then((value) {
-      Get.back();
-    });
+  Future<String> getAddressFromCoordinates(
+      double latitude, double longitude) async {
+    try {
+      List<Placemark> placeMarks =
+          await placemarkFromCoordinates(latitude, longitude);
+      Placemark place = placeMarks[0];
+      String formattedAddress =
+          "${place.street}, ${place.locality}, ${place.country}";
+
+      return formattedAddress;
+    } catch (e) {
+      log("Error: $e");
+      return '';
+    }
+  }
+
+  saveLocationCoordinates() async {
+    var logInType = await Storage.getValue(StringConstants.loginType);
+    var address = await getAddressFromCoordinates(
+        currentLatLng.value?.latitude ?? 0.0,
+        currentLatLng.value?.longitude ?? 0.0);
+    if (logInType == StringConstants.customer) {
+      Get.find<SignupViewController>()
+          .updateLocationTextField(
+        position: address,
+      )
+          .then((value) {
+        Get.back();
+      });
+    } else if (logInType == StringConstants.nanny) {
+      Get.find<CreateNannyProfileController>()
+          .updateLocationTextField(
+        formatAddress: address,
+      )
+          .then((value) {
+        Get.back();
+      });
+    }
   }
 }

@@ -15,6 +15,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
+import '../../../../../navigators/routes_management.dart';
 import '../../../../utils/phone_number_formate.dart';
 
 class CreateNannyProfileView extends StatelessWidget {
@@ -67,7 +68,8 @@ class CreateNannyProfileView extends StatelessWidget {
                                 )
                               ],
                             ),
-                            child: controller.imageUrl?.isEmpty == true
+                            child: controller.pickedImage == null ||
+                                    controller.pickedImage?.path.isEmpty == true
                                 ? Padding(
                                     padding: Dimens.edgeInsets16,
                                     child: SvgPicture.asset(
@@ -79,7 +81,7 @@ class CreateNannyProfileView extends StatelessWidget {
                                     borderRadius:
                                         BorderRadius.circular(Dimens.twenty),
                                     child: Image.file(
-                                      File(controller.imageUrl ?? ''),
+                                      File(controller.pickedImage?.path ?? ''),
                                       height: Dimens.oneHundredTwenty,
                                       width: Dimens.oneHundredTwenty,
                                       fit: BoxFit.cover,
@@ -258,6 +260,10 @@ class CreateNannyProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     TextField(
+                      onTap: () {
+                        RouteManagement.goToGoogleMapScreen();
+                      },
+                      readOnly: true,
                       controller: controller.locationTextEditingController,
                       maxLines: 1,
                       minLines: 1,

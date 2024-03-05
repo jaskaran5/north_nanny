@@ -1,16 +1,27 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
 import '../../../../../navigators/routes_management.dart';
+import '../../../../data/api/api_helper.dart';
+import '../../../../res/constants/api_urls.dart';
+import '../../../../res/constants/app_constants.dart';
+import '../../../../res/constants/string_contants.dart';
+import '../../../../utils/app_utils.dart';
 
 class CreateNannyProfileController extends GetxController {
+  final ApiHelper _apiHelper = ApiHelper.to;
+
   /// create nanny profile controllers.
   final firstNameTextEditingController = TextEditingController();
   final lastNameTextEditingController = TextEditingController();
@@ -54,15 +65,15 @@ class CreateNannyProfileController extends GetxController {
   String? licenseHaveOrNot = '';
 
   /// used to store the value of image from camera or galley.
-  String? imageUrl = '';
+  File? pickedImage;
 
   /// method used to pick the Image from gallery
   pickImage() async {
     Utility.showImagePicker(
       onGetImage: (image) {
         if (image.path.isNotEmpty) {
-          log("check image is not null -->$image");
-          imageUrl = image.path;
+          log("check image is not null -->${image.path}");
+          pickedImage = image;
           update();
           log("check image is -->$image");
         } else {
@@ -75,7 +86,7 @@ class CreateNannyProfileController extends GetxController {
   /// create Profile Validator
   profileValidator() {
     bool isValidate = Validator.instance.createNannyProfileValidator(
-      image: imageUrl ?? '',
+      image: pickedImage?.path ?? '',
       firstname: firstNameTextEditingController.text.trim(),
       lastName: lastNameTextEditingController.text.trim(),
       experience: selectedYear ?? '',
@@ -83,15 +94,71 @@ class CreateNannyProfileController extends GetxController {
       phoneNumber: phoneNumberTextEditingController.text.trim(),
       collegeName: collegeTextEditingController.text.trim(),
       age: ageTextEditingController.text.trim(),
+      location: locationTextEditingController.text.trim(),
+      aboutYourSelf: tellUsTextEditingController.text.trim(),
     );
     if (isValidate) {
-      RouteManagement.goToSelectServicesView();
+      createProfile();
     } else {
       toast(msg: Validator.instance.error, isError: true);
     }
   }
 
-  // ---------------------- Select Services view --------------------------------------
+  /// post api for create nanny profile
+  Future<void> createProfile() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      FormData body = FormData({
+        if (pickedImage != null)
+          'Image': MultipartFile(pickedImage!.path,
+              filename: pickedImage!.path.split('/').last),
+        "FirstName": firstNameTextEditingController.text.trim(),
+        "LastName": lastNameTextEditingController.text.trim(),
+        'Age': ageTextEditingController.text.trim(),
+        "MobileNumber": phoneNumberTextEditingController.text.trim(),
+        if (selectedGender?.isNotEmpty == true)
+          "Gender": selectedGender?.toLowerCase() == 'male'
+              ? 1
+              : selectedGender?.toLowerCase() == "female"
+                  ? 2
+                  : 0,
+        "Location": locationTextEditingController.text.trim(),
+        "Latitude": Storage.getValue(StringConstants.latitude).toString(),
+        "Longitude": Storage.getValue(StringConstants.longitude).toString(),
+        'Experience': selectedYear,
+        'NameOfHighSchool': highSchoolTextEditingController.text.trim(),
+        'NameOfCollage': collegeTextEditingController.text.trim(),
+        if (licenseHaveOrNot?.isNotEmpty == true)
+          'IsDrivingLicense':
+              licenseHaveOrNot?.toLowerCase() == 'true' ? true : false,
+        'AboutMe': tellUsTextEditingController.text.trim(),
+        if (referralTextEditingController.text.isNotEmpty)
+          "ReferralCode": referralTextEditingController.text.trim()
+      });
+
+      log(body.fields.toString());
+      log("auth token:-->> ${Storage.getValue(StringConstants.token)}");
+
+      _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(
+          (value) {
+        printInfo(info: "create Nanny profile response value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          RouteManagement.goToSelectServicesView();
+          toast(msg: response.message.toString(), isError: false);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "CREATE Nanny PROFILE API ISSUE $s");
+    }
+  }
+
+  /// ---------------------- Select Services view --------------------------------------
 
   /// used to see the services list.
   List<Services> servicesList = Services.values;
@@ -104,9 +171,37 @@ class CreateNannyProfileController extends GetxController {
     bool isValidate =
         Validator.instance.services(servicesList: selectedServices);
     if (isValidate) {
-      RouteManagement.goToPricingView();
+      selectServices();
     } else {
       toast(msg: Validator.instance.error, isError: true);
+    }
+  }
+
+  /// post api for select services
+  Future<void> selectServices() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        'services': selectedServices,
+      };
+
+      log("body:$body");
+
+      _apiHelper.postApi(ApiUrls.addOrEditServices, body).futureValue((value) {
+        printInfo(info: "Select Services  Nanny profile response value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          RouteManagement.goToPricingView();
+          toast(msg: response.message.toString(), isError: false);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Select Services  Nanny  API ISSUE $s");
     }
   }
 
@@ -126,13 +221,62 @@ class CreateNannyProfileController extends GetxController {
       routingNumber: routingNumberTextEditingController.text.trim(),
     );
     if (isValidate) {
-      RouteManagement.goToOffAllWaitingApprovalView();
-      Future.delayed(
-        const Duration(seconds: 5),
-        () => RouteManagement.goToOffAllLogIn(),
-      );
+      postBankDetails(isComeFromSkip: false);
     } else {
       toast(msg: Validator.instance.error, isError: true);
     }
+  }
+
+  /// post api for bank details.
+  Future<void> postBankDetails({required bool isComeFromSkip}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      dynamic body;
+      if (isComeFromSkip) {
+        body = {
+          'isSkipBankDetail': isComeFromSkip,
+        };
+      } else {
+        body = {
+          'isSkipBankDetail': isComeFromSkip,
+          'bankName': bankNameTextEditingController.text.trim(),
+          'accountHolderName': holderNameTextEditingController.text.trim(),
+          'accountNumber': accountNumberTextEditingController.text.trim(),
+          'routingNumber': routingNumberTextEditingController.text.trim(),
+        };
+      }
+
+      log("body of bank details :$body");
+
+      _apiHelper.postApi(ApiUrls.addOrEditBankDetails, body).futureValue(
+          (value) {
+        printInfo(
+            info: "Post bank details Nanny profile response value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          if (isComeFromSkip) {
+            RouteManagement.goToOffAllWaitingApprovalView();
+          } else {
+            RouteManagement.goToOffAllWaitingApprovalView();
+          }
+          toast(msg: response.message.toString(), isError: false);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "post Bank details  Nanny  API ISSUE $s");
+    }
+  }
+
+  /// -------->>>>>>>>>> UPDATE LOCATION <<<<<<<<<<---------
+  Future<void> updateLocationTextField({
+    required String formatAddress,
+  }) async {
+    locationTextEditingController.text = formatAddress;
+    update();
   }
 }
