@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +15,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-import '../../../nanny/signUp/signup_controller.dart';
 
 class CreateChildProfileView extends StatelessWidget {
   const CreateChildProfileView({super.key});

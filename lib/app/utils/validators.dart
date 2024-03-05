@@ -128,12 +128,12 @@ class Validator {
 
   //==========contact US  ===//
   bool contactUsValidator(
-    String name,
+    String email,
     String subject,
     String message,
   ) {
-    if (name.isEmpty) {
-      error = "Please enter your name ";
+    if (email.isEmpty) {
+      error = "Please enter your email ";
       return false;
     } else if (subject.isEmpty) {
       error = "Please enter your Subject";

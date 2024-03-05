@@ -7,7 +7,6 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
@@ -117,19 +116,7 @@ class ContactUsView extends StatelessWidget {
                     textColor: Colors.white,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      Utility.showDialog(
-                        assetName: Assets.iconsSuccess,
-                        title: 'Thank You',
-                        subTitle: 'Your submission has been sent.',
-                        buttonTitleText: 'okay',
-                        assetWidth: Dimens.sixtyEight,
-                        assetHeight: Dimens.sixtyEight,
-                        titleMaxLine: 1,
-                        subTitleMaxLine: 1,
-                        onTapButton: Get.back,
-                        isImage: false,
-                        showCrossSvg: false,
-                      );
+                      controller.contactUsValidator();
                     },
                   )
                 ],

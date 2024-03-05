@@ -54,7 +54,12 @@ class SettingView extends StatelessWidget {
                                   .toString())
                           : CustomSettingProfileTile(
                               onTap: () {
-                                Get.to(() =>  NannyProfileView(isComeFromSetting: true, appBarTitle: TranslationKeys.myProfile.tr,),);
+                                Get.to(
+                                  () => NannyProfileView(
+                                    isComeFromSetting: true,
+                                    appBarTitle: TranslationKeys.myProfile.tr,
+                                  ),
+                                );
                                 ();
                               },
                               title: "nanny Jorden",
@@ -76,7 +81,7 @@ class SettingView extends StatelessWidget {
   }
 
   //===========list of itmes CUSTOMER=======//
-  Widget customerListOfTiles(context, controller) {
+  Widget customerListOfTiles(context, SettingController controller) {
     return ListView.builder(
       itemBuilder: (context, index) {
         return CustomSettingItemTile(
@@ -126,7 +131,7 @@ class SettingView extends StatelessWidget {
             } else if (index == 11) {
               Utility.openBottomSheet(CustomLogOut(
                 onTapLogOut: () {
-                  RouteManagement.goToOffAllLogIn();
+                  controller.logOutApi();
                 },
               ));
             }
@@ -144,7 +149,7 @@ class SettingView extends StatelessWidget {
   }
 
   //===========list of itmes NANNY=======//
-  Widget nannyListOfTiles(context, controller) {
+  Widget nannyListOfTiles(context, SettingController controller) {
     return ListView.builder(
       itemBuilder: (context, index) {
         return CustomSettingItemTile(
@@ -190,7 +195,7 @@ class SettingView extends StatelessWidget {
 
               Utility.openBottomSheet(CustomLogOut(
                 onTapLogOut: () {
-                  RouteManagement.goToOffAllLogIn();
+                  controller.logOutApi();
                 },
               ));
             }

@@ -13,7 +13,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-import 'create_child_profile_view.dart';
 
 class ChooseChildProfileView extends StatelessWidget {
   const ChooseChildProfileView({super.key});

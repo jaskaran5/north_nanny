@@ -34,10 +34,10 @@ class LogInController extends GetxController {
 
   checkAndRemoveAuthToken() {
     if (Storage.hasData(StringConstants.token)) {
-      print("has token-----");
+      log("has token-----");
       Storage.removeValue(StringConstants.token);
     } else {
-      print("doesnt have auth token======");
+      log("doesnt have auth token======");
     }
   }
 
