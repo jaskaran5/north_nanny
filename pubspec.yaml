@@ -65,6 +65,7 @@ dependencies:
   permission_handler: ^11.3.0
   location: ^5.0.3
   geocoding: ^2.2.0
+  lottie: ^3.1.0
 #  share_plus: 7.2.1
 
 dev_dependencies:
@@ -93,6 +94,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/animation/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

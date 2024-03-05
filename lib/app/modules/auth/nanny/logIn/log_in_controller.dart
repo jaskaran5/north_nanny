@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/customer_login_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
@@ -26,9 +27,6 @@ class LogInController extends GetxController {
   @override
   void onInit() {
     checkLoginType();
-    checkAndRemoveAuthToken();
-
-    // checkIsNanny();
     super.onInit();
   }
 
@@ -105,11 +103,14 @@ class LogInController extends GetxController {
       printInfo(info: "login up controller form data: $body");
 
       _apiHelper.postApi(ApiUrls.customerLogin, body).futureValue((value) {
-        var res = LoginResponseDataModel.fromJson(value);
-        if (res.response == AppConstants.apiResponseSuccess) {
-          Storage.saveValue(StringConstants.token, res.data!.token);
-          if (res.data?.user?.userType == 1) {
-          } else if (res.data?.user?.userType == 2) {
+        if (userType == 2) {
+          /******* NANNY ----------->>>>>>>> */
+          var res = LoginResponseDataModel.fromJson(value);
+          if (res.response == AppConstants.apiResponseSuccess) {
+            Storage.saveValue(StringConstants.token, res.data!.token);
+            // if (res.data?.user?.userType == 1) {
+            // } else if (res.data?.user?.userType == 2) {
+
             if (res.data?.user?.isProfileCreated == false) {
               RouteManagement.goToCreateNannyProfile();
             } else if (res.data?.user?.isServicesCreated == false) {
@@ -123,10 +124,28 @@ class LogInController extends GetxController {
             } else {
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
             }
+            // }
+            toast(msg: res.message!, isError: false);
+          } else {
+            toast(msg: res.message!, isError: true);
           }
-          toast(msg: res.message!, isError: false);
-        } else {
-          toast(msg: res.message!, isError: true);
+        } else if (userType == 1) {
+          /******* CUSTOMER ----------->>>>>>>> */
+          var res = CustomerLoginResponseModel.fromJson(value);
+
+          if (res.response == AppConstants.apiResponseSuccess) {
+            if (res.data?.user?.isProfileCreated == false) {
+              /** PROFILE is not created */
+
+              RouteManagement.goToCreateCustomerProfile();
+            } else {
+              if (res.data?.user?.isChildAdded == false) {
+                RouteManagement.goToChooseChildProfileView();
+              }
+            }
+          } else {
+            RouteManagement.goToOffAllDashboard(isFromSetting: false);
+          }
         }
       }, onError: (error) {
         toast(msg: error!, isError: true);
