@@ -29,10 +29,7 @@ class Validator {
     } else if (password.isEmpty) {
       error = "Please enter password";
       return false;
-    } else if (password.length > 15) {
-      error = "Password maximum length 15 character";
-      return false;
-    } else if (password.trim().length < 6) {
+    }  else if (password.trim().length < 8) {
       error = "Password must be 8 Characters long";
       return false;
     } else if (!RegExp(r'(?=.*?[A-Z])').hasMatch(password.trim())) {
@@ -232,6 +229,8 @@ class Validator {
     required String phoneNumber,
     required String collegeName,
     required String age,
+    required String location,
+    required String aboutYourSelf,
   }) {
     if (image.isEmpty) {
       error = "Please add your image";
@@ -248,6 +247,9 @@ class Validator {
     } else if (phoneNumber.isEmpty) {
       error = "Please enter your phone number";
       return false;
+    } else if (location.isEmpty) {
+      error = "Please select your location ";
+      return false;
     } else if (experience.isEmpty) {
       error = "Please enter your experience";
       return false;
@@ -256,6 +258,9 @@ class Validator {
       return false;
     } else if (collegeName.isEmpty) {
       error = "Please enter your college name";
+      return false;
+    }else if (aboutYourSelf.isEmpty) {
+      error = "Please tell us about yourself";
       return false;
     } else {
       return true;

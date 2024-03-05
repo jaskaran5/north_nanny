@@ -88,6 +88,10 @@ abstract class RouteManagement {
     Get.offAll(
       () => const WaitingApprovalView(),
     );
+    Future.delayed(
+      const Duration(seconds: 5),
+      () => RouteManagement.goToOffAllLogIn(),
+    );
   }
 
   /// Go to the  create  Profile CUSTOMER Screen

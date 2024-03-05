@@ -149,34 +149,6 @@ class LogInView extends StatelessWidget {
                                       width: Dimens.one,
                                     ),
                                   ),
-
-                                  // SizedBox(
-                                  //   height: Dimens.twenty,
-                                  //   width: Dimens.twenty,
-                                  //   child: Checkbox(
-                                  //     value: controller.isRememberMe,
-                                  //     activeColor: AppColors.navyBlue,
-                                  //     onChanged: (value) {
-                                  //       controller.toggleRememberMe(
-                                  //         val: value,
-                                  //       );
-                                  //     },
-                                  //     shape: ContinuousRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(
-                                  //         Dimens.four,
-                                  //       ),
-                                  //       side: BorderSide(
-                                  //         color: AppColors.checkBoxBorderColor,
-                                  //         width: Dimens.one,
-                                  //       ),
-                                  //     ),
-                                  //     side: BorderSide(
-                                  //       color: AppColors.checkBoxBorderColor,
-                                  //       width: Dimens.one,
-                                  //     ),
-                                  //   ),
-                                  // ),
-
                                   Dimens.boxWidth8,
                                   AppText(
                                     text: TranslationKeys.rememberMe.tr,
@@ -202,8 +174,6 @@ class LogInView extends StatelessWidget {
                             backGroundColor: AppColors.navyBlue,
                             onTap: () {
                               controller.onClickOnLogin();
-
-                              // RouteManagement.goToOffAllDashboard(isFromSetting: false);
                             },
                           ),
                         ],

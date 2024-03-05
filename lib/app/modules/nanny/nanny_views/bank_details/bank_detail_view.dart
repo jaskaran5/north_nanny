@@ -152,11 +152,8 @@ class BankDetailsView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
                   onTap: () {
-                    RouteManagement.goToOffAllWaitingApprovalView();
-                    Future.delayed(
-                      const Duration(seconds: 5),
-                      () => RouteManagement.goToOffAllLogIn(),
-                    );
+                    controller.postBankDetails(isComeFromSkip: true);
+
                   },
                 ),
                 Dimens.boxHeight32,

@@ -121,48 +121,54 @@ class SignupViewController extends GetxController {
     if (Storage.hasData(StringConstants.token)) {
       Storage.removeValue(StringConstants.token);
     }
-    //  String? deviceToken = await FirebaseMessaging.instance.getToken();
-    String deviceToken = 'devicetokenfirebaseneeded';
-
-    try {
-      if (!(await Utils.hasNetwork())) {
-        return;
+    Future<void> registerApi({required int type}) async {
+      if (Storage.hasData(StringConstants.token)) {
+        Storage.removeValue(StringConstants.token);
       }
 
-      var body = {
-        "email": emailTextEditingController.text.trim(),
-        "password": passwordTextEditingController.text.trim(),
-        "deviceToken": deviceToken,
-        "deviceType": Platform.isAndroid ? "android" : "ios",
-        "userType": type,
-        // "latitude": Storage.getValue(StringConstants.latitude) ??
-        //     currentLatLng.value!.latitude.toString(),
-        // "longitude": Storage.getValue(StringConstants.longitude) ??
-        //     currentLatLng.value!.longitude.toString()
-      };
+      //  String? deviceToken = await FirebaseMessaging.instance.getToken();
+      String deviceToken = 'devicetokenfirebaseneeded';
 
-      printInfo(info: "sign up controller form data: $body");
-
-      _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
-        var res = RegisterModelResponseJson.fromJson(value);
-
-        if (res.response == AppConstants.apiResponseSuccess) {
-          Storage.saveValue(StringConstants.token, res.data!.token);
-          toast(msg: res.message!, isError: false);
-          if (type == 1) {
-            RouteManagement.goToCreateCustomerProfile();
-          } else if (type == 2) {
-            RouteManagement.goToCreateNannyProfile();
-          }
-        } else {
-          toast(msg: res.message!, isError: true);
+      try {
+        if (!(await Utils.hasNetwork())) {
+          return;
         }
-      }, onError: (error) {
-        toast(msg: error!, isError: true);
-      }, retryFunction: () {});
-    } catch (e, s) {
-      toast(msg: e.toString(), isError: true);
-      log("SignUp Api have some issue please check $s ");
+
+        var body = {
+          "email": emailTextEditingController.text.trim(),
+          "password": passwordTextEditingController.text.trim(),
+          "deviceToken": deviceToken,
+          "deviceType": Platform.isAndroid ? "android" : "ios",
+          "userType": type,
+          // "latitude": Storage.getValue(StringConstants.latitude) ??
+          //     currentLatLng.value!.latitude.toString(),
+          // "longitude": Storage.getValue(StringConstants.longitude) ??
+          //     currentLatLng.value!.longitude.toString()
+        };
+
+        printInfo(info: "sign up controller form data: $body");
+
+        _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
+          var res = RegisterModelResponseJson.fromJson(value);
+
+          if (res.response == AppConstants.apiResponseSuccess) {
+            Storage.saveValue(StringConstants.token, res.data!.token);
+            toast(msg: res.message!, isError: false);
+            if (type == 1) {
+              RouteManagement.goToCreateCustomerProfile();
+            } else if (type == 2) {
+              RouteManagement.goToCreateNannyProfile();
+            }
+          } else {
+            toast(msg: res.message!, isError: true);
+          }
+        }, onError: (error) {
+          toast(msg: error!, isError: true);
+        }, retryFunction: () {});
+      } catch (e, s) {
+        toast(msg: e.toString(), isError: true);
+        log("SignUp Api have some issue please check $s ");
+      }
     }
   }
 }
