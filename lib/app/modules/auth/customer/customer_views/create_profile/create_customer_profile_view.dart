@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_customer_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -24,7 +25,9 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 class CreateCustomerProfileView extends StatelessWidget {
   const CreateCustomerProfileView({super.key});
   @override
-  Widget build(BuildContext context) => GetBuilder<SignupViewController>(
+  Widget build(BuildContext context) =>
+      GetBuilder<CreateCustomerProfileController>(
+        init: CreateCustomerProfileController(),
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppbarWidget(
@@ -38,6 +41,7 @@ class CreateCustomerProfileView extends StatelessWidget {
               title: TranslationKeys.continueWord.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
                 controller.customerSignUpValidation();
 
                 // Get.to(

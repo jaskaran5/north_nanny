@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/create_child_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -20,7 +21,8 @@ import '../../../nanny/signUp/signup_controller.dart';
 class CreateChildProfileView extends StatelessWidget {
   const CreateChildProfileView({super.key});
   @override
-  Widget build(BuildContext context) => GetBuilder<SignupViewController>(
+  Widget build(BuildContext context) =>
+      GetBuilder<CreateChildProfileController>(
         builder: (controller) => Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: CustomAppbarWidget(
@@ -61,14 +63,8 @@ class CreateChildProfileView extends StatelessWidget {
                 title: TranslationKeys.continueWord.tr,
                 backGroundColor: AppColors.navyBlue,
                 onTap: () {
-                  if (controller.currentIndex < controller.noOfChild.value) {
-                    controller.updateController();
-                    log(controller.currentIndex.toString());
+                  controller.addChildValidation(context);
 
-                    controller.updateLinearIndicatorValueWhenDataFilled();
-                  } else {
-                    RouteManagement.goToOffAllDashboard(isFromSetting: false);
-                  }
                   // print(controller.currentIndex);
                   // RouteManagement.goToOffAllHome(selectedInterface);
                   // RouteManagement.goToOffAllDashboard(isFromSetting: false);

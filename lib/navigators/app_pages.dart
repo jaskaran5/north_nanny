@@ -3,6 +3,10 @@ import 'package:northshore_nanny_flutter/app/google_maps/google_map_binding.dart
 import 'package:northshore_nanny_flutter/app/google_maps/google_map_screen.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/choose_baby_sitter/choose_baby_sitter_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/choose_child_profile.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/create_child_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/create_child_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_customer_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
@@ -341,6 +345,33 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: CurrentLocationGoogleMap.new,
       binding: GoogleMapBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ CREATE CUSTOMER PROFILE -------  */
+    GetPage<CreateCustomerProfileView>(
+      name: Routes.createCustomerProfileView,
+      transitionDuration: transitionDuration,
+      page: CreateCustomerProfileView.new,
+      binding: CreateCustomerProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ CHOOSE CHILD PROFILE -------  */
+    GetPage<ChooseChildProfileView>(
+      name: Routes.chooseChildProfileView,
+      transitionDuration: transitionDuration,
+      page: ChooseChildProfileView.new,
+      binding: CreateChildProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ CREATE CHILD NUMBER -------  */
+    GetPage<CreateChildProfileView>(
+      name: Routes.createChildProfileView,
+      transitionDuration: transitionDuration,
+      page: CreateChildProfileView.new,
+      binding: CreateChildProfileBinding(),
       transition: Transition.leftToRight,
     ),
   ];

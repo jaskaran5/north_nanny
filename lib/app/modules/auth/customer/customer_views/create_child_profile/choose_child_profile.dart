@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/create_child_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -13,13 +13,14 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
 import 'create_child_profile_view.dart';
 
-class ChildProfileView extends StatelessWidget {
-  const ChildProfileView({super.key});
+class ChooseChildProfileView extends StatelessWidget {
+  const ChooseChildProfileView({super.key});
   @override
-  Widget build(BuildContext context) => GetBuilder<SignupViewController>(
+  Widget build(BuildContext context) =>
+      GetBuilder<CreateChildProfileController>(
+        init: CreateChildProfileController(),
         builder: (controller) => Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: const CustomAppbarWidget(),
@@ -38,9 +39,10 @@ class ChildProfileView extends StatelessWidget {
                         val: int.parse(controller
                             .noOfChildrenTextEditingController.text
                             .trim()));
-                    Get.to(
-                      const CreateChildProfileView(),
-                    );
+
+                    // Get.to(
+                    //   const CreateChildProfileView(),
+                    // );
                   },
                 ),
                 Dimens.boxHeight10,

@@ -1,9 +1,11 @@
 class ApiUrls {
   const ApiUrls._();
 
-  static const String baseUrl = "http://api.northshore.harishparas.com/";
+  static const String baseUrl = "https://api.northshore.harishparas.com/";
   static const String customerLogin = "api/User/LogIn";
   static const String customerSignup = "api/User/SignUp";
+  static const String addChild = "api/UserDashBoard/AddChild";
+
   static const String customerVerifyOtp = "api/User/VerifyOtp";
   static const String customerForgotPassword = "api/User/ForgotPassword";
 

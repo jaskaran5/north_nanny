@@ -14,9 +14,19 @@ class LogInController extends GetxController {
   @override
   void onInit() {
     checkLoginType();
+    checkAndRemoveAuthToken();
 
     // checkIsNanny();
     super.onInit();
+  }
+
+  checkAndRemoveAuthToken() {
+    if (Storage.hasData(StringConstants.token)) {
+      print("has token-----");
+      Storage.removeValue(StringConstants.token);
+    } else {
+      print("doesnt have auth token======");
+    }
   }
 
   /// check user Type.
@@ -53,10 +63,7 @@ class LogInController extends GetxController {
     if (valid) {
       await loginApi();
     } else {
-      toast(
-        msg: Validator.instance.error,
-        isError: true
-      );
+      toast(msg: Validator.instance.error, isError: true);
     }
   }
 

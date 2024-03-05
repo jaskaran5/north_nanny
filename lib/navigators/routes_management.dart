@@ -280,4 +280,18 @@ abstract class RouteManagement {
       Routes.googleMapView,
     );
   }
+
+  /// Go to Choose child  Screen
+  static void goToChooseChildProfileView() {
+    Get.toNamed(
+      Routes.chooseChildProfileView,
+    );
+  }
+
+  /// Go to Choose child  Screen
+  static void goToAddChildProfileView() {
+    Get.toNamed(
+      Routes.createChildProfileView,
+    );
+  }
 }
