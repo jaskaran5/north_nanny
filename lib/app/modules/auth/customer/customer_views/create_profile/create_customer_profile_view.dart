@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
@@ -17,8 +19,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
-import '../create_child_profile/child_profile.dart';
 
 //asdf
 class CreateCustomerProfileView extends StatelessWidget {
@@ -31,7 +31,7 @@ class CreateCustomerProfileView extends StatelessWidget {
             title: TranslationKeys.createProfile.tr,
             toUpperCaseTitle: false,
           ),
-          bottomSheet: Container(
+          floatingActionButton: Container(
             color: Colors.white,
             padding: Dimens.edgeInsetsL16R16B16,
             child: CustomButton(
@@ -47,6 +47,24 @@ class CreateCustomerProfileView extends StatelessWidget {
               },
             ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          // bottomSheet: Container(
+          //   color: Colors.white,
+          //   padding: Dimens.edgeInsetsL16R16B16,
+          //   child: CustomButton(
+          //     title: TranslationKeys.continueWord.tr,
+          //     backGroundColor: AppColors.navyBlue,
+          //     onTap: () {
+          //       controller.customerSignUpValidation();
+
+          //       // Get.to(
+
+          //       // const ChildProfileView(),
+          //       // );
+          //     },
+          //   ),
+          // ),
           body: GestureDetector(
             onTap: () {
               Get.focusScope?.unfocus();
@@ -85,19 +103,30 @@ class CreateCustomerProfileView extends StatelessWidget {
                                 )
                               ],
                             ),
-                            child: controller.imageUrl.isEmpty
-                                ? Padding(
-                                    padding: Dimens.edgeInsets16,
-                                    child: SvgPicture.asset(
-                                      Assets.iconsProfile,
-                                      fit: BoxFit.contain,
+                            child: controller.pickedImage == null
+                                ? controller.imageUrl.isEmpty
+                                    ? Padding(
+                                        padding: Dimens.edgeInsets16,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsProfile,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
+                                    : CustomCacheNetworkImage(
+                                        img: controller.imageUrl,
+                                        size: Dimens.oneHundredTwenty,
+                                        imageRadius: Dimens.eighteen,
+                                        imageShape: BoxShape.rectangle,
+                                      )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      Dimens.twenty,
                                     ),
-                                  )
-                                : CustomCacheNetworkImage(
-                                    img: controller.imageUrl,
-                                    size: Dimens.oneHundredTwenty,
-                                    imageRadius: Dimens.eighteen,
-                                    imageShape: BoxShape.rectangle,
+                                    child: Image.file(
+                                      File(controller.pickedImage!.path
+                                          .toString()),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                           ),
                           Positioned(
@@ -182,7 +211,10 @@ class CreateCustomerProfileView extends StatelessWidget {
                     TextField(
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(14),
+                        PhoneNumberFormatter(),
                       ],
+                      onChanged: (value) {},
                       controller: controller.phoneNumberTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -203,7 +235,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                       keyboardType: TextInputType.phone,
                     ),
                     Dimens.boxHeight20,
-                    /** LOCATION */
+                    /** ------------------------------->>>>>>>>>>>>>>>>>>> LOCATION */
                     TextField(
                       onTap: () {
                         RouteManagement.goToGoogleMapScreen();
@@ -291,7 +323,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
 
-                    /** REFFREEL CODE*/
+                    /**------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REFFREEL CODE ---------------------------*/
                     TextField(
                       controller: controller.referrelCodeTextEditingController,
                       maxLines: 1,
@@ -312,7 +344,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                       style: AppStyles.ubBlack15W600,
                       keyboardType: TextInputType.text,
                     ),
-                    Dimens.boxHeight20,
+                    Dimens.boxHeight70,
                   ],
                 ),
               ),

@@ -3,22 +3,24 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/connect.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
-import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_child_profile/child_profile.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
-import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../../../navigators/routes_management.dart';
 import '../../../../utils/custom_toast.dart';
-import '../../../../utils/validators.dart';
 
 class SignupViewController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -45,6 +47,8 @@ class SignupViewController extends GetxController {
   RxString coordinates = "".obs;
 
   File? pickedImage;
+
+  Rxn<LatLng> currentLatLng = Rxn(const LatLng(0, 0));
 
   @override
   void onInit() async {
@@ -85,6 +89,8 @@ class SignupViewController extends GetxController {
     Utility.showImagePicker(
       onGetImage: (image) {
         log("picker image is :-->> ${image.path}");
+        pickedImage = image;
+        update();
       },
     );
   }
@@ -168,26 +174,9 @@ class SignupViewController extends GetxController {
 
       /// sign up api
     } else {
-      showToast(
-        message: Validator.instance.error,
-      );
+      toast(msg: Validator.instance.error, isError: true);
     }
   }
-
-  /// method used to pick the Image from gallery
-  // pickImageFromGallery() async {
-  //   XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //
-  //   if (image != null) {
-  //     log("check image is not null -->$editPickedImage");
-  //     var file = File(image.path);
-  //     editPickedImage = file.path;
-  //     update();
-  //     log("check image is -->$editPickedImage");
-  //   } else {
-  //     log("check image is  null -->$editPickedImage");
-  //   }
-  // }
 
   updateController() {
     currentIndex++;
@@ -195,31 +184,49 @@ class SignupViewController extends GetxController {
   }
 
   /// Create Customer profile API=========== >>>>>>>>>>>>>
-  createCustomerProfileSignUp() async {
-    FormData formData = FormData({
-      'Image': pickedImage?.path ?? '',
-      "FirstName": firstNameTextEditingController.text.trim(),
-      "LastName": lastNameTextEditingController.text.trim(),
-      "phoneNumber": phoneNumberTextEditingController.text.trim(),
-      "gender": selectedGender == 'Male'
-          ? 1
-          : selectedGender == "Female"
-              ? 2
-              : 0,
-      "Latitude": firstNameTextEditingController.text.trim(),
-      "Logngitude": firstNameTextEditingController.text.trim(),
-      "Location": firstNameTextEditingController.text.trim(),
-      "ReferralCode": referrelCodeTextEditingController.text.trim()
-    });
-
-    _apiHelper.postApi(ApiUrls.customerCreateProfile, formData).futureValue(
-        (value) {
-      if (value['status'] == 200) {
-        var respose = RegisterModelResponseJson.fromJson(value);
+  Future<void> createCustomerProfileSignUp() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
       }
-    }, retryFunction: () {
-      createCustomerProfileSignUp();
-    });
+      FormData body = FormData({
+        if (pickedImage != null)
+          'Image': MultipartFile(pickedImage!.path,
+              filename: pickedImage!.path.split('/').last),
+
+        "FirstName": firstNameTextEditingController.text.trim(),
+        "LastName": lastNameTextEditingController.text.trim(),
+        "phoneNumber": phoneNumberTextEditingController.text.trim(),
+        "gender": selectedGender == 'Male'
+            ? 1
+            : selectedGender == "Female"
+                ? 2
+                : 0,
+        "Latitude":
+            locationTextEditingController.text.split(',').first.toString(),
+        "Logngitude":
+            locationTextEditingController.text.split(',').last.toString(),
+        // "Location": firstNameTextEditingController.text.trim(),
+        "ReferralCode": referrelCodeTextEditingController.text.trim()
+      });
+
+      print(body.fields.toString());
+      print("auth token:-->> ${Storage.getValue(StringConstants.token)}");
+
+      _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(
+          (value) {
+        printInfo(info: "create customer profile response value $value");
+
+        // if (value['status'] == 200) {
+        //   var respose = RegisterModelResponseJson.fromJson(value);
+        // }
+      }, retryFunction: () {
+        createCustomerProfileSignUp();
+      });
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "CREATE PROFILE API ISSUE");
+    }
   }
 
   /// signup validation
@@ -232,12 +239,73 @@ class SignupViewController extends GetxController {
     );
     if (isValidate) {
       if (loginType.value == StringConstants.customer) {
-        RouteManagement.goToCreateCustomerProfile();
+        registerApi(type: 1);
       } else {
         RouteManagement.goToCreateNannyProfile();
       }
     } else {
       toast(msg: Validator.instance.error, isError: true);
     }
+  }
+
+  /// LOCATION CHECK
+  Future<void> locationCheck() async {
+    if ((Storage.getValue(StringConstants.latitude) == null) ||
+        (Storage.getValue(StringConstants.longitude) == null)) {
+      Tuple2<LatLng, String>? tuple2 = await Utils.getCurrentLocation();
+      if (tuple2 != null) {
+        currentLatLng.value = tuple2.item1;
+      }
+    }
+  }
+
+  /// * ------------>>>>>>>>>>>>>>>>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REGISTER API <<<<<<<<<<<<<<<<<<<<<<<<<--------
+
+  Future<void> registerApi({required int type}) async {
+    //  String? deviceToken = await FirebaseMessaging.instance.getToken();
+    String deviceToken = 'devicetokenfirebaseneeded';
+
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      var body = {
+        "email": emailTextEditingController.text.trim(),
+        "password": passwordTextEditingController.text.trim(),
+        "deviceToken": deviceToken,
+        "deviceType": Platform.isAndroid ? "android" : "ios",
+        "userType": type,
+        "latitude": Storage.getValue(StringConstants.latitude) ??
+            currentLatLng.value!.latitude.toString(),
+        "longitude": Storage.getValue(StringConstants.longitude) ??
+            currentLatLng.value!.longitude.toString()
+      };
+
+      printInfo(info: "sign up controller formdata: $body");
+
+      _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
+        var res = RegisterModelResponseJson.fromJson(value);
+
+        if (res.response == AppConstants.apiResponseSuccess) {
+          Storage.saveValue(StringConstants.token, res.data!.token);
+          toast(msg: res.message!, isError: false);
+          RouteManagement.goToCreateCustomerProfile();
+        } else {
+          toast(msg: res.message!, isError: true);
+        }
+      }, onError: (error) {
+        toast(msg: error!, isError: true);
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      log("SignUp Api have some issue please check ");
+    }
+  }
+
+  /// -------->>>>>>>>>> UPDATE LOCATION <<<<<<<<<<---------
+  Future<void> updateLocationTextField({required String position}) async {
+    locationTextEditingController.text = position;
+    update();
   }
 }

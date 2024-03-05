@@ -7,5 +7,6 @@ void showToast({required String message, Color? color}) {
       backgroundColor: color ?? Colors.black,
       msg: message,
       toastLength: Toast.LENGTH_LONG,
+    
       timeInSecForIosWeb: 1);
 }

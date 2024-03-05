@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
-
 import '../../res/constants/string_contants.dart';
 import 'errors/api_error.dart';
 
@@ -38,7 +37,8 @@ abstract class ApiResponse {
               throw ApiError(
                 type: ErrorType.response,
                 error: res['msg']?.toString() ??
-                    (res['message']?.toString() ?? StringConstants.unknownError),
+                    (res['message']?.toString() ??
+                        StringConstants.unknownError),
               );
             }
           }
@@ -58,6 +58,9 @@ abstract class ApiResponse {
             type: ErrorType.unauthorize,
             error: res['msg']?.toString() ?? StringConstants.unAuthorize,
           );
+        } else if (status.code == HttpStatus.badRequest) {
+          throw const ApiError(
+              type: ErrorType.badRequest, error: StringConstants.badRequest);
         } else {
           throw ApiError(
             type: ErrorType.response,

@@ -1,16 +1,20 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
 class GoogleMapViewController extends GetxController {
-  LatLng currentPosition = const LatLng(0.0, 0.0);
+  Rxn<LatLng> currentLatLng = Rxn(LatLng(
+      Storage.getValue(StringConstants.latitude),
+      Storage.getValue(StringConstants.longitude)));
 
-  RxDouble currentLat = 30.7046.obs;
-  RxDouble currentLong = 76.7179.obs;
-
-  late GoogleMapController googleMapController;
+  final Completer<GoogleMapController> googleMapController =
+      Completer<GoogleMapController>();
 
   @override
   void onInit() {
@@ -26,8 +30,7 @@ class GoogleMapViewController extends GetxController {
   }
 
   updateCurrentPosition({required double latitude, required double longitude}) {
-    currentLat.value = latitude;
-    currentLong.value = longitude;
+    currentLatLng.value = LatLng(latitude, longitude);
 
     update();
   }
@@ -69,7 +72,17 @@ class GoogleMapViewController extends GetxController {
   }
 
   initilizedGoogleMapController({contro}) {
-    googleMapController = contro;
+    googleMapController.complete(contro);
     update();
+  }
+
+  saveLocationCoordinates() {
+    Get.find<SignupViewController>()
+        .updateLocationTextField(
+            position:
+                "${currentLatLng.value!.latitude},${currentLatLng.value!.longitude}")
+        .then((value) {
+      Get.back();
+    });
   }
 }

@@ -27,6 +27,8 @@ class ApiHelperImpl extends GetConnect implements ApiHelper {
   void addRequestModifier() {
     httpClient.addRequestModifier<dynamic>((request) {
       if (Storage.hasData(StringConstants.token)) {
+        printInfo(
+            info: "auth token:-->> ${Storage.getValue(StringConstants.token)}");
         request.headers['Authorization'] =
             'Bearer ${Storage.getValue(StringConstants.token)}';
       }

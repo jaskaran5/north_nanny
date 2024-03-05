@@ -1,26 +1,36 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
+import 'package:mime/mime.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/dialog_utils.dart';
+import 'package:permission_handler/permission_handler.dart' as permission;
+import 'package:tuple/tuple.dart';
 
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_inkwell_widget.dart';
 
 class Utils {
   Utils._();
 
-  // static Future<bool> hasNetwork({bool? showToast}) async {
-  //   var connectivityResult = await (Connectivity().checkConnectivity());
-  //   if (connectivityResult == ConnectivityResult.none) {
-  //     toast(msg: "Please check your Internet Connection", isError: true);
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
+  static Future<bool> hasNetwork({bool? showToast}) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      toast(msg: "Please check your Internet Connection", isError: true);
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   static bool emailValidation(String email) {
     Pattern pattern =
@@ -103,13 +113,14 @@ class Utils {
     closeDialog();
 
     Get.dialog(
+      barrierDismissible: false,
       const Center(
-          child: SizedBox(
-              height: 150, width: 150, child: CircularProgressIndicator()
+          child:
+              SizedBox(height: 50, width: 50, child: CircularProgressIndicator()
 
-              //  Image.asset('assets/icons/new_app_logo.png')
+                  //  Image.asset('assets/icons/new_app_logo.png')
 
-              )),
+                  )),
       name: 'loadingDialog',
     );
   }
@@ -194,4 +205,64 @@ class Utils {
               ),
         ),
       );
+
+  static Future<Tuple2<map.LatLng, String>?> getCurrentLocation() async {
+    try {
+      final permissionStatus = await getlocationPermissionStatus();
+      if (permissionStatus) {
+        var location = await Geolocator.getCurrentPosition(
+          desiredAccuracy:
+              LocationAccuracy.high, //    forceAndroidLocationManager: true,
+        );
+
+        Storage.saveValue(
+            StringConstants.latitude, location.latitude.toString());
+        Storage.saveValue(
+            StringConstants.latitude, location.longitude.toString());
+
+        printLog(location.latitude);
+        printLog(location.longitude);
+        hideLoader();
+        // return Tuple2<map.LatLng, String>(map.LatLng(location.latitude, location.longitude), address);
+      } else {
+        hideLoader();
+        return null;
+      }
+    } catch (e) {
+      //    hideLoader();
+      return null;
+    }
+    return null;
+  }
+
+  static Future<bool> getlocationPermissionStatus() async {
+    try {
+      var permissionStatus = await permission.Permission.location.request();
+      if (permissionStatus == permission.PermissionStatus.granted) {
+        return true;
+      } else if (permissionStatus == permission.PermissionStatus.denied) {
+        return false;
+      } else if (permissionStatus ==
+          permission.PermissionStatus.permanentlyDenied) {
+        hideLoader();
+        await DialogUtils.openSettingsDialog(
+            context: Get.context!,
+            onAccept: () async {
+              Get.back();
+              var res = await permission.openAppSettings();
+              if (res) {
+                getCurrentLocation();
+              }
+            });
+
+        // errorredSnackBar("App location permission is denied forever, Please enable it first");
+        return false;
+      } else {
+        // errorredSnackBar("Location permission is need to run this app");
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }

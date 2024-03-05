@@ -10,22 +10,22 @@ class StringConstants {
   static const String noInternet =
       'No internet connection. Please connect to the internet and try again.';
 
-        static const String unAuthorize =
-      'UnAuthorize';
+  static const String unAuthorize = 'UnAuthorize';
 
-        static const String unknownError =
-      'UnKnown Error';
+  static const String unknownError = 'UnKnown Error';
 
+  static const String badRequest = 'Bad Request. Please check your fields';
 
-    static const String baseUrl = 'baseUrl';
-
-
+  static const String baseUrl = 'baseUrl';
 
   static const timeout = Duration(seconds: 30);
   static const String token = 'authToken';
   static const String loginType = 'loginType';
   static const String nanny = 'nanny';
   static const String customer = 'customer';
+  static const String deviceType = 'deviceType';
+  static const String deviceToken = 'deviceToken';
 
-
+  static const String latitude = 'latitude';
+  static const String longitude = 'longitude';
 }

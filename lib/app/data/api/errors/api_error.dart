@@ -17,6 +17,10 @@ enum ErrorType {
   /// Default error type, Some other Error. In this case, you can
   /// use the ApiError.error if it is not null.
   unknownError,
+
+  /// code syntax error
+  ///
+  badRequest
 }
 
 /// ApiError describes the error info  when request failed.

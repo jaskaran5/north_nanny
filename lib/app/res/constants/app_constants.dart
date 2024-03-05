@@ -9,7 +9,7 @@ class AppConstants {
   static const String appName = 'NorthShore Nanny';
   static const String fontFamilyPlayfairDisplay = 'PlayfairDisplay';
   static const String fontFamilyUrbanist = 'Urbanist';
-
+  static const int apiResponseSuccess = 1;
 
   static const Duration timeOutDuration = Duration(seconds: 60);
 }

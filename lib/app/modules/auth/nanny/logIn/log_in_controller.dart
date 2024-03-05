@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
@@ -53,8 +54,9 @@ class LogInController extends GetxController {
     if (valid) {
       await loginApi();
     } else {
-      showToast(
-        message: Validator.instance.error,
+      toast(
+        msg: Validator.instance.error,
+        isError: true
       );
     }
   }
