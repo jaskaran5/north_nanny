@@ -86,6 +86,10 @@ class CreateCustomerProfileController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
+
+      var lat = Storage.getValue(StringConstants.latitude);
+      var lang = Storage.getValue(StringConstants.longitude);
+
       FormData body = FormData({
         if (pickedImage != null)
           'Image': MultipartFile(pickedImage!.path,
@@ -94,15 +98,10 @@ class CreateCustomerProfileController extends GetxController {
         "FirstName": firstNameTextEditingController.text.trim(),
         "LastName": lastNameTextEditingController.text.trim(),
         "phoneNumber": phoneNumberTextEditingController.text.trim(),
-        "gender": selectedGender == 'Male'
-            ? 1
-            : selectedGender == "Female"
-                ? 2
-                : 0,
-        "Latitude":
-            locationTextEditingController.text.split(',').first.toString(),
-        "Logngitude":
-            locationTextEditingController.text.split(',').last.toString(),
+        if (selectedGender!.isNotEmpty)
+          "gender": selectedGender == 'Male' ? 1 : 2,
+        "Latitude": lat.toString(),
+        "Logngitude": lang.toString(),
         // "Location": firstNameTextEditingController.text.trim(),
         "ReferralCode": referrelCodeTextEditingController.text.trim()
       });

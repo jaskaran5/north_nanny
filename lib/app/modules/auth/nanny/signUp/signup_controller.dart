@@ -121,54 +121,49 @@ class SignupViewController extends GetxController {
     if (Storage.hasData(StringConstants.token)) {
       Storage.removeValue(StringConstants.token);
     }
-    Future<void> registerApi({required int type}) async {
-      if (Storage.hasData(StringConstants.token)) {
-        Storage.removeValue(StringConstants.token);
+
+    //  String? deviceToken = await FirebaseMessaging.instance.getToken();
+    String deviceToken = 'devicetokenfirebaseneeded';
+
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
       }
 
-      //  String? deviceToken = await FirebaseMessaging.instance.getToken();
-      String deviceToken = 'devicetokenfirebaseneeded';
+      var body = {
+        "email": emailTextEditingController.text.trim(),
+        "password": passwordTextEditingController.text.trim(),
+        "deviceToken": deviceToken,
+        "deviceType": Platform.isAndroid ? "android" : "ios",
+        "userType": type,
+        // "latitude": Storage.getValue(StringConstants.latitude) ??
+        //     currentLatLng.value!.latitude.toString(),
+        // "longitude": Storage.getValue(StringConstants.longitude) ??
+        //     currentLatLng.value!.longitude.toString()
+      };
 
-      try {
-        if (!(await Utils.hasNetwork())) {
-          return;
-        }
+      printInfo(info: "sign up controller form data: $body");
 
-        var body = {
-          "email": emailTextEditingController.text.trim(),
-          "password": passwordTextEditingController.text.trim(),
-          "deviceToken": deviceToken,
-          "deviceType": Platform.isAndroid ? "android" : "ios",
-          "userType": type,
-          // "latitude": Storage.getValue(StringConstants.latitude) ??
-          //     currentLatLng.value!.latitude.toString(),
-          // "longitude": Storage.getValue(StringConstants.longitude) ??
-          //     currentLatLng.value!.longitude.toString()
-        };
+      _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
+        var res = RegisterModelResponseJson.fromJson(value);
 
-        printInfo(info: "sign up controller form data: $body");
-
-        _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
-          var res = RegisterModelResponseJson.fromJson(value);
-
-          if (res.response == AppConstants.apiResponseSuccess) {
-            Storage.saveValue(StringConstants.token, res.data!.token);
-            toast(msg: res.message!, isError: false);
-            if (type == 1) {
-              RouteManagement.goToCreateCustomerProfile();
-            } else if (type == 2) {
-              RouteManagement.goToCreateNannyProfile();
-            }
-          } else {
-            toast(msg: res.message!, isError: true);
+        if (res.response == AppConstants.apiResponseSuccess) {
+          Storage.saveValue(StringConstants.token, res.data!.token);
+          toast(msg: res.message!, isError: false);
+          if (type == 1) {
+            RouteManagement.goToCreateCustomerProfile();
+          } else if (type == 2) {
+            RouteManagement.goToCreateNannyProfile();
           }
-        }, onError: (error) {
-          toast(msg: error!, isError: true);
-        }, retryFunction: () {});
-      } catch (e, s) {
-        toast(msg: e.toString(), isError: true);
-        log("SignUp Api have some issue please check $s ");
-      }
+        } else {
+          toast(msg: res.message!, isError: true);
+        }
+      }, onError: (error) {
+        toast(msg: error!, isError: true);
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      log("SignUp Api have some issue please check $s ");
     }
   }
 }
