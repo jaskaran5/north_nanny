@@ -5,12 +5,26 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
+import '../../../../navigators/routes_management.dart';
+import '../../../data/api/api_helper.dart';
+import '../../../models/register_response_model.dart';
+import '../../../res/constants/api_urls.dart';
+import '../../../res/constants/app_constants.dart';
 import '../../../res/constants/assets.dart';
+import '../../../res/theme/dimens.dart';
+import '../../../utils/app_utils.dart';
+import '../../../utils/utility.dart';
 
 class SettingController extends GetxController {
+  final ApiHelper _apiHelper = ApiHelper.to;
+
+  /// ------------ contact us textEditing controllers ------------------//
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController subjectTextEditingController = TextEditingController();
   TextEditingController messageTextEditingController = TextEditingController();
@@ -247,4 +261,84 @@ class SettingController extends GetxController {
     'Create an account on the app',
     'Accept a job!',
   ];
+
+  /// validator for contact us
+  contactUsValidator() {
+    bool isValidate = Validator.instance.contactUsValidator(
+      emailTextEditingController.text.trim(),
+      subjectTextEditingController.text.trim(),
+      messageTextEditingController.text.trim(),
+    );
+    if (isValidate) {
+      postContactUsData();
+    } else {
+      toast(msg: Validator.instance.error, isError: true);
+    }
+  }
+
+  /// post api to upload contact us
+  postContactUsData() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      var body = {
+        'email': emailTextEditingController.text.trim(),
+        "subject": subjectTextEditingController.text.trim(),
+        "message": messageTextEditingController.text.trim()
+      };
+
+      log("Contact Us body :$body");
+
+      _apiHelper.postApi(ApiUrls.contactUs, body).futureValue((value) {
+        printInfo(info: "Contact Us response value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          Utility.showDialog(
+            assetName: Assets.iconsSuccess,
+            title: 'Thank You',
+            subTitle: 'Your submission has been sent.',
+            buttonTitleText: 'okay',
+            assetWidth: Dimens.sixtyEight,
+            assetHeight: Dimens.sixtyEight,
+            titleMaxLine: 1,
+            subTitleMaxLine: 1,
+            onTapButton: Get.back,
+            isImage: false,
+            showCrossSvg: false,
+          );
+          toast(msg: response.message.toString(), isError: false);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Contact Us post  API ISSUE $s");
+    }
+  }
+
+  /// log out api
+  logOutApi() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      _apiHelper.postApi(ApiUrls.customerLogOut, null).futureValue((value) {
+        printInfo(info: "log out value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          RouteManagement.goToOffAllLogIn();
+          toast(msg: response.message.toString(), isError: false);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "log out  post API ISSUE $s");
+    }
+  }
 }

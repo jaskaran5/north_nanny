@@ -10,7 +10,6 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import '../../../../../navigators/routes_management.dart';
 
 class BankDetailsView extends StatelessWidget {
   const BankDetailsView({super.key});

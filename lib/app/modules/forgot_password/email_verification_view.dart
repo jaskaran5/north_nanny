@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/forgot_password/forgot_password_controller.dart';
@@ -99,6 +100,10 @@ class EmailVerificationView extends StatelessWidget {
                         TextSpan(
                           text: TranslationKeys.reSendOtp.tr,
                           style: AppStyles.ubNavyBlue15W700,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              controller.postOtpApi(isComeFromResend: true);
+                            },
                         ),
                       ],
                     ),

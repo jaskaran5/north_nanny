@@ -12,11 +12,17 @@ class ApiUrls {
   static const String customerResetPassword = "api/User/ResetPassword";
 
   static const String customerCreateProfile = "api/User/CreateProfile";
+  static const String contactUs = "api/UserDashBoard/ContactUs";
+  static const String verifyOtp = "api/User/VerifyOtp";
+  static const String resetPassWord = "api/User/ResetPassword";
+  static const String forgotPassword = "api/User/ForgotPassword";
 
   static const String customerLogOut = "api/User/LogOut";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
 
-  static const String addOrEditServices = 'api/NannyDashBoard/AddOrEditServices';
-  static const String addOrEditBankDetails = 'api/NannyDashBoard/AddOrEditBankDetail';
+  static const String addOrEditServices =
+      'api/NannyDashBoard/AddOrEditServices';
+  static const String addOrEditBankDetails =
+      'api/NannyDashBoard/AddOrEditBankDetail';
 }
