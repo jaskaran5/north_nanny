@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -61,7 +63,7 @@ class CreateChildProfileView extends StatelessWidget {
                 onTap: () {
                   if (controller.currentIndex < controller.noOfChild.value) {
                     controller.updateController();
-                    print(controller.currentIndex);
+                    log(controller.currentIndex.toString());
 
                     controller.updateLinearIndicatorValueWhenDataFilled();
                   } else {

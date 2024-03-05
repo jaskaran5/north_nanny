@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
 class LogInController extends GetxController {
   String loginType = '';
 
-  RxBool isPswdVisible = false.obs;
+  RxBool isPasswordVisible = false.obs;
   RxBool rememberMe = false.obs;
 
   @override
@@ -28,7 +27,7 @@ class LogInController extends GetxController {
 
   /// ---------- TOOGLE  PASSWORD----------
   togglePassword() {
-    isPswdVisible.value = !isPswdVisible.value;
+    isPasswordVisible.value = !isPasswordVisible.value;
     update();
   }
 

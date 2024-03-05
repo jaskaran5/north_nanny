@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/connect.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
@@ -31,8 +30,6 @@ class SignupViewController extends GetxController {
 
   // RxString selectedGender=''.obs;
 
-  RxBool isPswdVisible = false.obs;
-  RxBool isConfirmPswdVisible = false.obs;
   RxBool isPasswdVisible = true.obs;
   RxBool isConfirmPasswdVisible = true.obs;
 
@@ -210,8 +207,8 @@ class SignupViewController extends GetxController {
         "ReferralCode": referrelCodeTextEditingController.text.trim()
       });
 
-      print(body.fields.toString());
-      print("auth token:-->> ${Storage.getValue(StringConstants.token)}");
+      log(body.fields.toString());
+      log("auth token:-->> ${Storage.getValue(StringConstants.token)}");
 
       _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(
           (value) {
@@ -225,7 +222,7 @@ class SignupViewController extends GetxController {
       });
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
-      printError(info: "CREATE PROFILE API ISSUE");
+      printError(info: "CREATE PROFILE API ISSUE $s");
     }
   }
 
@@ -241,7 +238,7 @@ class SignupViewController extends GetxController {
       if (loginType.value == StringConstants.customer) {
         registerApi(type: 1);
       } else {
-        RouteManagement.goToCreateNannyProfile();
+        registerApi(type: 2);
       }
     } else {
       toast(msg: Validator.instance.error, isError: true);
@@ -276,13 +273,13 @@ class SignupViewController extends GetxController {
         "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": type,
-        "latitude": Storage.getValue(StringConstants.latitude) ??
-            currentLatLng.value!.latitude.toString(),
-        "longitude": Storage.getValue(StringConstants.longitude) ??
-            currentLatLng.value!.longitude.toString()
+        // "latitude": Storage.getValue(StringConstants.latitude) ??
+        //     currentLatLng.value!.latitude.toString(),
+        // "longitude": Storage.getValue(StringConstants.longitude) ??
+        //     currentLatLng.value!.longitude.toString()
       };
 
-      printInfo(info: "sign up controller formdata: $body");
+      printInfo(info: "sign up controller form data: $body");
 
       _apiHelper.postApi(ApiUrls.customerSignup, body).futureValue((value) {
         var res = RegisterModelResponseJson.fromJson(value);
@@ -290,7 +287,11 @@ class SignupViewController extends GetxController {
         if (res.response == AppConstants.apiResponseSuccess) {
           Storage.saveValue(StringConstants.token, res.data!.token);
           toast(msg: res.message!, isError: false);
-          RouteManagement.goToCreateCustomerProfile();
+          if (type == 1) {
+            RouteManagement.goToCreateCustomerProfile();
+          } else if (type == 2) {
+            RouteManagement.goToCreateNannyProfile();
+          }
         } else {
           toast(msg: res.message!, isError: true);
         }
@@ -299,7 +300,7 @@ class SignupViewController extends GetxController {
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
-      log("SignUp Api have some issue please check ");
+      log("SignUp Api have some issue please check $s ");
     }
   }
 

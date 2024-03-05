@@ -3,6 +3,8 @@
 A new Flutter project.
 
 ## Getting Started
+customer =1
+nanny =2
 
 This project is a starting point for a Flutter application.
 

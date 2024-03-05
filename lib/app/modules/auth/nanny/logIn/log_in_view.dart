@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -79,7 +78,7 @@ class LogInView extends StatelessWidget {
 
                           /** PASSWORD ============ */
                           TextField(
-                            obscureText: controller.isPswdVisible.value,
+                            obscureText: controller.isPasswordVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
@@ -87,17 +86,15 @@ class LogInView extends StatelessWidget {
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.enterPassword.tr,
                               suffix: GestureDetector(
-                                onTap: (){
-
+                                onTap: () {
                                   controller.togglePassword();
                                 },
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-controller.isPswdVisible.value
-                                         ? Assets.iconsHide
+                                    controller.isPasswordVisible.value
+                                        ? Assets.iconsHide
                                         : Assets.iconsShow,
-                           
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),

@@ -7,28 +7,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
-import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
 
-import 'dart:io';
-import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:get/get.dart';
 
 class Utility {
   const Utility._();
 
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
-  static bool? isNannyInterFace() {
-    return null;
-  }
 
   /// Returns true if the internet connection is available.
   // static Future<bool> get isNetworkAvailable async {

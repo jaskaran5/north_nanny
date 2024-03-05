@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_response.dart';
 import 'package:northshore_nanny_flutter/app/data/api/errors/api_error.dart';
 import 'package:northshore_nanny_flutter/app/data/api/interface_controller/api_interface_controller.dart';
-import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/loading_dialog.dart';
