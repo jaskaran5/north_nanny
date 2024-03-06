@@ -28,6 +28,7 @@ class LogInController extends GetxController {
   void onInit() {
     checkLoginType();
     super.onInit();
+    checkSavedSession();
   }
 
   checkAndRemoveAuthToken() {
@@ -36,6 +37,30 @@ class LogInController extends GetxController {
       Storage.removeValue(StringConstants.token);
     } else {
       log("doesnt have auth token======");
+    }
+  }
+
+  /// SAVE REMEMBER ME DATA
+  saveRememberMeValue() {
+    if (rememberMe.value) {
+      Storage.saveValue(
+          StringConstants.email, emailTextEditingController.text.trim());
+      Storage.saveValue(
+          StringConstants.pswd, passwordTextEditingController.text.trim());
+    } else {
+      Storage.removeValue(
+        StringConstants.email,
+      );
+      Storage.removeValue(StringConstants.pswd);
+    }
+  }
+
+  checkSavedSession() {
+    if (Storage.hasData(StringConstants.email)) {
+      emailTextEditingController.text = Storage.getValue(StringConstants.email);
+      passwordTextEditingController.text =
+          Storage.getValue(StringConstants.pswd);
+      update();
     }
   }
 
@@ -103,6 +128,7 @@ class LogInController extends GetxController {
       printInfo(info: "login up controller form data: $body");
 
       _apiHelper.postApi(ApiUrls.customerLogin, body).futureValue((value) {
+        saveRememberMeValue();
         if (userType == 2) {
           /******* NANNY ----------->>>>>>>> */
           var res = LoginResponseDataModel.fromJson(value);
@@ -134,14 +160,17 @@ class LogInController extends GetxController {
           var res = CustomerLoginResponseModel.fromJson(value);
 
           if (res.response == AppConstants.apiResponseSuccess) {
+            Storage.saveValue(StringConstants.token, res.data?.token);
             if (res.data?.user?.isProfileCreated == false) {
               /** PROFILE is not created */
 
               RouteManagement.goToCreateCustomerProfile();
             } else {
-              if (res.data?.user?.isChildAdded == false) {
+              if (res.data?.user?.isSkipChildDetails == true) {
+                RouteManagement.goToOffAllDashboard(isFromSetting: false);
+              } else if (res.data?.user?.isChildAdded == false) {
                 RouteManagement.goToChooseChildProfileView();
-              }
+              } else {}
             }
           } else {
             RouteManagement.goToOffAllDashboard(isFromSetting: false);

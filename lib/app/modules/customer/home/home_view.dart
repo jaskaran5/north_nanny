@@ -194,23 +194,25 @@ class HomeView extends StatelessWidget {
           ),
           body: controller.isGoogleMap.value
               ? GoogleMap(
-                  mapType: MapType.hybrid,
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(37.42796133580664, -122.085749655962),
                     zoom: 14.4746,
                   ),
-                  onMapCreated: (GoogleMapController contro) {
-                    controller.googleMapController.complete(contro);
+                  markers: controller.markers,
+                  onMapCreated: (contro) {
+                    controller.onMapCreated(controller: contro);
                   },
                 )
               : Padding(
                   padding: Dimens.edgeInsets16,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => NannyProfileView(
-                            isComeFromSetting: false,
-                            appBarTitle: TranslationKeys.nannyProfile.tr,
-                          ),);
+                      Get.to(
+                        () => NannyProfileView(
+                          isComeFromSetting: false,
+                          appBarTitle: TranslationKeys.nannyProfile.tr,
+                        ),
+                      );
                     },
                     child: HomeCustomListView(
                       description:

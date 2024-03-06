@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -13,8 +12,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
 
 class CreateChildProfileView extends StatelessWidget {
   const CreateChildProfileView({super.key});
@@ -32,7 +29,7 @@ class CreateChildProfileView extends StatelessWidget {
                   padding: Dimens.edgeInsetsT16R16,
                   child: GestureDetector(
                     onTap: () {
-                      RouteManagement.goToOffAllDashboard(isFromSetting: false);
+                      controller.skipChildApi();
                     },
                     child: AppText(
                       text: TranslationKeys.skip.tr,

@@ -1,11 +1,12 @@
-import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 
 class HomeController extends GetxController {
   RxBool showListView = false.obs;
   RxBool isGoogleMap = true.obs;
+  final Set<Marker> markers = {};
 
   List<String> homeCustomList = [
     'Distance: 3 miles',
@@ -13,8 +14,7 @@ class HomeController extends GetxController {
     'Experience: 7+ yrs'
   ];
 
-  final Completer<GoogleMapController> googleMapController =
-      Completer<GoogleMapController>();
+  late GoogleMapController googleMapController;
 
   static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -23,7 +23,10 @@ class HomeController extends GetxController {
 
   static const CameraPosition kLake = CameraPosition(
       bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
+      target: LatLng(
+        37.42796133580664,
+        -122.085749655962,
+      ),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
@@ -33,5 +36,20 @@ class HomeController extends GetxController {
     isGoogleMap.value = !isGoogleMap.value;
     showListView.value = !showListView.value;
     update();
+  }
+
+  /// *******---------------------------->>>>>>>>>>> ON MAP CREATED
+
+  void onMapCreated({required GoogleMapController controller}) async {
+    googleMapController = controller;
+
+    markers.add(
+      const Marker(
+        markerId: MarkerId("nanny"),
+        position: LatLng(37.42796133580664, -122.085749655962),
+        // icon: await BitmapDescriptor.fromAssetImage(
+        //     const ImageConfiguration(devicePixelRatio: 2.0), Assets.iconsMap),
+      ),
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
@@ -133,6 +132,15 @@ class CreateChildProfileController extends GetxController {
         Get.back();
         RouteManagement.goToOffAllDashboard(isFromSetting: false);
       }
+    }, retryFunction: () {});
+  }
+
+  /// ------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>----------------->>>>>>>>>>>>>>>  SKIP FOR NOW <<<<<<<<< ------------
+  skipChildApi() {
+    var listOfData = [];
+
+    _apiHelper.postApi(ApiUrls.addChild, listOfData).futureValue((value) {
+      RouteManagement.goToOffAllDashboard(isFromSetting: false);
     }, retryFunction: () {});
   }
 }

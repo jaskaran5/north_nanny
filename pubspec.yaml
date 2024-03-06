@@ -66,6 +66,7 @@ dependencies:
   location: ^5.0.3
   geocoding: ^2.2.0
   lottie: ^3.1.0
+  # insta_login: ^0.0.2
 #  share_plus: 7.2.1
 
 dev_dependencies:

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
+import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/dialog_utils.dart';
 import 'package:permission_handler/permission_handler.dart' as permission;
@@ -113,13 +115,14 @@ class Utils {
 
     Get.dialog(
       barrierDismissible: false,
-      const Center(
+      Center(
           child:
-              SizedBox(height: 50, width: 50, child: CircularProgressIndicator()
+              Lottie.asset(Assets.animationBabyLoader, height: 200, width: 200)
 
-                  //  Image.asset('assets/icons/new_app_logo.png')
+          // SizedBox(height: 50, width: 50, child: CircularProgressIndicator()
 
-                  )),
+          // )
+          ),
       name: 'loadingDialog',
     );
   }

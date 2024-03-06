@@ -30,7 +30,7 @@ class ContactUsView extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppText(
-                    text: TranslationKeys.contactUs,
+                    text: TranslationKeys.contactUs.tr,
                     style: AppStyles.pdSemiBoldBlack24,
                     maxLines: 1,
                     textAlign: TextAlign.start,

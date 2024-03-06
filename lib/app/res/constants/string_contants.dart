@@ -21,10 +21,14 @@ class StringConstants {
   static const timeout = Duration(seconds: 30);
   static const String token = 'authToken';
   static const String loginType = 'loginType';
+  static const String isLogin = 'isLogin';
+
   static const String nanny = 'nanny';
   static const String customer = 'customer';
   static const String deviceType = 'deviceType';
   static const String deviceToken = 'deviceToken';
+  static const String email = 'email';
+  static const String pswd = 'pswd';
 
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';

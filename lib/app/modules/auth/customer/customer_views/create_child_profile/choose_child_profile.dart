@@ -50,7 +50,7 @@ class ChooseChildProfileView extends StatelessWidget {
                   backGroundColor: AppColors.lightNavyBlue,
                   textColor: AppColors.navyBlue,
                   onTap: () {
-                    RouteManagement.goToOffAllDashboard(isFromSetting: false);
+                    controller.skipChildApi();
                   },
                 ),
               ],

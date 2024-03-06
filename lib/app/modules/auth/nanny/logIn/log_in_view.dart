@@ -78,7 +78,7 @@ class LogInView extends StatelessWidget {
 
                           /** PASSWORD ============ */
                           TextField(
-                            obscureText: controller.isPasswordVisible.value,
+                            obscureText: !controller.isPasswordVisible.value,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,

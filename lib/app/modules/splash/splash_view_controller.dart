@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'package:location/location.dart';
 import 'package:get/get.dart';
@@ -8,18 +7,25 @@ import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class SplashController extends GetxController {
+  RxBool isLogin = false.obs;
 
-    Location location = Location();
+  Location location = Location();
   bool _serviceEnabled = false;
   PermissionStatus _permissionGranted = PermissionStatus.denied;
   LocationData? _locationData;
   @override
   void onInit() {
     super.onInit();
-    
-    startOnInit();
 
-    
+    startOnInit();
+  }
+
+  checkSession() {
+    if (Storage.hasData(StringConstants.isLogin)) {
+      if (Storage.getValue(StringConstants.isLogin)) {
+        RouteManagement.goToOffAllDashboard(isFromSetting: false);
+      }
+    }
   }
 
   Future<void> getCurrentLocation() async {
@@ -45,35 +51,27 @@ class SplashController extends GetxController {
           }
         }
 
-
-          _locationData = await location.getLocation();
+        _locationData = await location.getLocation();
         log("Latitude: ${_locationData!.latitude}, Longitude: ${_locationData!.longitude}");
 
-        if( _locationData!=null){
-                 Storage.saveValue(StringConstants.latitude, _locationData!.latitude);
-        Storage.saveValue(StringConstants.longitude, _locationData!.longitude);
+        if (_locationData != null) {
+          Storage.saveValue(StringConstants.latitude, _locationData!.latitude);
+          Storage.saveValue(
+              StringConstants.longitude, _locationData!.longitude);
         }
-
-
-     
       } catch (e) {
         log("Error getting location: $e");
       }
     }
   }
 
-  
-
-    saveDeviceTypeAndToken() async {
+  saveDeviceTypeAndToken() async {
     if (GetPlatform.isAndroid) {
       Storage.saveValue(StringConstants.deviceType, 'android');
     } else if (GetPlatform.isIOS) {
       Storage.saveValue(StringConstants.deviceType, 'ios');
     }
-
   }
-
-
 
   // var isLoggedIn = false;
 
@@ -90,11 +88,10 @@ class SplashController extends GetxController {
     // }
   }
 
-
   @override
   void onReady() {
- saveDeviceTypeAndToken();
- getCurrentLocation();
+    saveDeviceTypeAndToken();
+    getCurrentLocation();
     super.onReady();
   }
 }
