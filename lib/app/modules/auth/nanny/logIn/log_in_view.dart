@@ -126,27 +126,35 @@ class LogInView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   /** CHECK BOX */
-
-                                  Checkbox(
-                                    value: controller.rememberMe.value,
-                                    onChanged: (value) {
-                                      log("is remember me :-->> $value");
-                                      controller.toggleRememberMe(
-                                        val: value,
-                                      );
-                                    },
-                                    shape: ContinuousRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        Dimens.four,
+                                  Container(
+                                    width: Dimens.twenty,
+                                    height: Dimens.twenty,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.four),
+                                    ),
+                                    child: Checkbox(
+                                      value: controller.rememberMe.value,
+                                      activeColor: AppColors.navyBlue,
+                                      onChanged: (value) {
+                                        log("is remember me :-->> $value");
+                                        controller.toggleRememberMe(
+                                          val: value,
+                                        );
+                                      },
+                                      shape: ContinuousRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          Dimens.four,
+                                        ),
+                                        side: BorderSide(
+                                          color: AppColors.checkBoxBorderColor,
+                                          width: Dimens.one,
+                                        ),
                                       ),
                                       side: BorderSide(
                                         color: AppColors.checkBoxBorderColor,
                                         width: Dimens.one,
                                       ),
-                                    ),
-                                    side: BorderSide(
-                                      color: AppColors.checkBoxBorderColor,
-                                      width: Dimens.one,
                                     ),
                                   ),
                                   Dimens.boxWidth8,

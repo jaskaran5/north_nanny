@@ -8,14 +8,13 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 class CustomCacheNetworkImage extends StatelessWidget {
   final String img;
   final double size;
-  final double? imageRadius;
-  final BoxShape? imageShape;
+  final double imageRadius;
+
   const CustomCacheNetworkImage({
     super.key,
     required this.img,
     required this.size,
-    required this.imageRadius,
-    required this.imageShape,
+      required this.imageRadius,
   });
 
   @override
@@ -37,8 +36,8 @@ class CustomCacheNetworkImage extends StatelessWidget {
               height: size,
               width: size,
               decoration: BoxDecoration(
-                shape: imageShape ?? BoxShape.circle,
-                borderRadius: BorderRadius.circular(imageRadius ?? Dimens.zero),
+
+                borderRadius: BorderRadius.circular(imageRadius),
                 image: DecorationImage(
                   image: imageProvider,
                   fit: BoxFit.cover,

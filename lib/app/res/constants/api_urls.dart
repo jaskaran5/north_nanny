@@ -16,7 +16,6 @@ class ApiUrls {
   static const String verifyOtp = "api/User/VerifyOtp";
   static const String resetPassWord = "api/User/ResetPassword";
   static const String forgotPassword = "api/User/ForgotPassword";
-
   static const String customerLogOut = "api/User/LogOut";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
@@ -25,4 +24,5 @@ class ApiUrls {
       'api/NannyDashBoard/AddOrEditServices';
   static const String addOrEditBankDetails =
       'api/NannyDashBoard/AddOrEditBankDetail';
+  static const String getNannyProfile = 'api/NannyDashBoard/MyProfile';
 }

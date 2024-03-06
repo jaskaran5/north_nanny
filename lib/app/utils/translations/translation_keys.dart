@@ -200,5 +200,17 @@ class TranslationKeys {
   static const String referralEarned = 'referralEarned';
   static const String gallery = 'gallery';
   static const String camera = 'camera';
+  static const String location = 'location';
+  static const String college = 'college';
+  static const String highSchool = 'highSchool';
+  static const String education = 'education';
+  static const String driversLicense = 'driversLicense';
+  static const String editServices = 'editServices';
+  static const String edit = 'edit';
+  static const String addAvailability = 'addAvailability';
+  static const String startTime = 'startTime';
+  static const String endTime = 'endTime';
+  static const String saveChanges = 'saveChanges';
+
 
 }

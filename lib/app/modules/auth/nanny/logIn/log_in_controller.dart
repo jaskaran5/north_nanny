@@ -67,6 +67,7 @@ class LogInController extends GetxController {
   /// check user Type.
   checkLoginType() {
     loginType = Storage.getValue(StringConstants.loginType);
+
     update();
   }
 
@@ -82,7 +83,6 @@ class LogInController extends GetxController {
     update();
   }
 
-  // bool? isNannyView;
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();
@@ -90,6 +90,7 @@ class LogInController extends GetxController {
   /// to check remember me enable or disable.
   bool? isRememberMe = false;
 
+  /// log in validation.
   Future<void> onClickOnLogin() async {
     bool valid = Validator.instance.loginValidator(
         emailTextEditingController.text.trim(),
@@ -106,6 +107,7 @@ class LogInController extends GetxController {
     }
   }
 
+  /// log in api for nanny and customer.
   loginApi({required int userType}) async {
     if (Storage.hasData(StringConstants.token)) {
       Storage.removeValue(StringConstants.token);
@@ -134,9 +136,6 @@ class LogInController extends GetxController {
           var res = LoginResponseDataModel.fromJson(value);
           if (res.response == AppConstants.apiResponseSuccess) {
             Storage.saveValue(StringConstants.token, res.data!.token);
-            // if (res.data?.user?.userType == 1) {
-            // } else if (res.data?.user?.userType == 2) {
-
             if (res.data?.user?.isProfileCreated == false) {
               RouteManagement.goToCreateNannyProfile();
             } else if (res.data?.user?.isServicesCreated == false) {
@@ -144,16 +143,17 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            } else if (res.data?.user?.isApproved == false ||
+            }
+            else if (res.data?.user?.isApproved == false ||
                 res.data?.user?.isSkipBankDetail == true) {
               RouteManagement.goToOffAllWaitingApprovalView();
-            } else {
+            }
+            else {
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
             }
-            // }
-            toast(msg: res.message!, isError: false);
+            toast(msg: res.message.toString(), isError: false);
           } else {
-            toast(msg: res.message!, isError: true);
+            toast(msg: res.message.toString(), isError: true);
           }
         } else if (userType == 1) {
           /******* CUSTOMER ----------->>>>>>>> */
@@ -177,7 +177,7 @@ class LogInController extends GetxController {
           }
         }
       }, onError: (error) {
-        toast(msg: error!, isError: true);
+        toast(msg: error.toString(), isError: true);
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);

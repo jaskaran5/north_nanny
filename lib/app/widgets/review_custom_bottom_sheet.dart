@@ -16,9 +16,9 @@ class CustomReviewBottomSheet extends StatelessWidget {
       required this.totalReviews,
       required this.totalReviewsRating,
       required this.reviewsList});
-  final String totalReviews;
+  final int totalReviews;
   final double totalReviewsRating;
-  final List<String> reviewsList;
+  final List<dynamic> reviewsList;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -58,74 +58,85 @@ class CustomReviewBottomSheet extends StatelessWidget {
               color: AppColors.dividerColor,
               height: Dimens.one,
             ),
-            Container(
-              margin: Dimens.edgeInsets16,
-              padding: Dimens.edgeInsets10,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimens.eight),
-                border: Border.all(
-                  color: AppColors.dividerColor,
-                  width: Dimens.one,
+            if (reviewsList.isEmpty) ...[
+              Dimens.boxHeight20,
+              Center(
+                  child: AppText(
+                text: TranslationKeys.noResultFound.tr,
+                style: AppStyles.ubNavyBlue30W600,
+              )),
+            ],
+            if (reviewsList.isNotEmpty) ...[
+              Container(
+                margin: Dimens.edgeInsets16,
+                padding: Dimens.edgeInsets10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimens.eight),
+                  border: Border.all(
+                    color: AppColors.dividerColor,
+                    width: Dimens.one,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RatingBar(
+                          ratingWidget: RatingWidget(
+                            full: SvgPicture.asset(Assets.iconsFullRating),
+                            half: SvgPicture.asset(Assets.iconsHalfRating),
+                            empty: SvgPicture.asset(Assets.iconsNoRating),
+                          ),
+                          onRatingUpdate: (value) {},
+                          allowHalfRating: true,
+                          initialRating: totalReviewsRating,
+                          itemPadding: Dimens.edgeInsets4,
+                          itemSize: Dimens.eighteen,
+                        ),
+                        Dimens.boxHeight8,
+                        AppText(
+                          text:
+                              '($totalReviews ${TranslationKeys.reviews.tr}) ',
+                          style: AppStyles.ubGrey12W400,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                    AppText(
+                      text: totalReviewsRating.toString(),
+                      style: AppStyles.ubNavyBlue30W600,
+                      maxLines: 1,
+                    ),
+                  ],
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RatingBar(
-                        ratingWidget: RatingWidget(
-                          full: SvgPicture.asset(Assets.iconsFullRating),
-                          half: SvgPicture.asset(Assets.iconsHalfRating),
-                          empty: SvgPicture.asset(Assets.iconsNoRating),
-                        ),
-                        onRatingUpdate: (value) {},
-                        allowHalfRating: true,
-                        initialRating: totalReviewsRating,
-                        itemPadding: Dimens.edgeInsets4,
-                        itemSize: Dimens.eighteen,
+              Expanded(
+                child: ListView(
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  children: List.generate(
+                    reviewsList.length,
+                    (index) => Padding(
+                      padding: Dimens.edgeInsets16,
+                      child: CustomRatingTile(
+                        reviewDate: '01/03/204',
+                        userImage: Assets.iconsImage,
+                        userName: reviewsList[index].toString(),
+                        ratingDescription:
+                            'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
+                        totalRating: 4.5,
+                        personRating: 4.5,
                       ),
-                      Dimens.boxHeight8,
-                      AppText(
-                        text: '($totalReviews ${TranslationKeys.reviews.tr}) ',
-                        style: AppStyles.ubGrey12W400,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                      ),
-                    ],
-                  ),
-                  AppText(
-                    text: totalReviewsRating.toString(),
-                    style: AppStyles.ubNavyBlue30W600,
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                children: List.generate(
-                  reviewsList.length,
-                  (index) => Padding(
-                    padding: Dimens.edgeInsets16,
-                    child: CustomRatingTile(
-                      reviewDate: '01/03/204',
-                      userImage: Assets.iconsImage,
-                      userName: reviewsList[index].toString(),
-                      ratingDescription:
-                          'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
-                      totalRating: 4.5,
-                      personRating: 4.5,
                     ),
                   ),
                 ),
               ),
-            ),
-            Dimens.boxHeight10,
+              Dimens.boxHeight10,
+            ]
           ],
         ),
       );

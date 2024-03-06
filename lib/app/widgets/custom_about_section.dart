@@ -17,6 +17,7 @@ class CustomAbout extends StatelessWidget {
         children: [
           Container(
             margin: Dimens.edgeInsetsL16R16,
+            width: Get.width,
             padding: Dimens.edgeInsets16,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,

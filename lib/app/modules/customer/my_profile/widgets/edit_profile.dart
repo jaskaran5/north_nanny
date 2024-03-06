@@ -70,7 +70,7 @@ class EditProfileView extends StatelessWidget {
                                         img: controller.imageUrl,
                                         size: Dimens.oneHundredTwenty,
                                         imageRadius: Dimens.eighteen,
-                                        imageShape: BoxShape.rectangle,
+
                                       ),
                               ),
                               Positioned(

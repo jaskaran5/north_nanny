@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile_view/nanny_edit_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
 import '../../../../res/constants/assets.dart';
@@ -15,6 +17,7 @@ import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_cache_network_image.dart';
 import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/custom_text_field.dart';
+import 'nanny_edit_profile_controller.dart';
 
 class NannyEditProfileView extends StatelessWidget {
   const NannyEditProfileView({super.key});
@@ -40,7 +43,9 @@ class NannyEditProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        controller.pickImage();
+                      },
                       child: Stack(
                         clipBehavior: Clip.none,
                         fit: StackFit.passthrough,
@@ -72,12 +77,25 @@ class NannyEditProfileView extends StatelessWidget {
                                       fit: BoxFit.contain,
                                     ),
                                   )
-                                : CustomCacheNetworkImage(
-                                    img: controller.imageUrl.toString(),
-                                    size: Dimens.oneHundredTwenty,
-                                    imageRadius: Dimens.eighteen,
-                                    imageShape: BoxShape.rectangle,
-                                  ),
+                                : controller.pickedImage == null ||
+                                        controller.pickedImage?.path.isEmpty ==
+                                            true
+                                    ? CustomCacheNetworkImage(
+                                        img: controller.imageUrl.toString(),
+                                        size: Dimens.oneHundredTwenty,
+                                        imageRadius: Dimens.eighteen,
+                                      )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                        child: Image.file(
+                                          File(controller.pickedImage?.path ??
+                                              ''),
+                                          height: Dimens.oneHundredTwenty,
+                                          width: Dimens.oneHundredTwenty,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                           ),
                           Positioned(
                             top: -20,
@@ -175,7 +193,8 @@ class NannyEditProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     TextField(
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(14),
+                        PhoneNumberFormatter(),
                       ],
                       controller: controller.phoneNumberTextEditingController,
                       maxLines: 1,
@@ -198,16 +217,19 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     AppDropdown(
-                      selectedItem: controller.selectedGender?.isEmpty == true
+                      selectedItem: controller.selectedGender?.isEmpty ==
+                                  true ||
+                              controller.selectedGender == null
                           ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
                           : controller.selectedGender,
                       onChanged: (value) {
                         controller.selectedGender = value.toString();
                         controller.update();
                       },
-                      baseTextStyle: controller.selectedGender?.isEmpty == true
+                      baseTextStyle: controller.selectedGender?.isEmpty == true ||
+                          controller.selectedGender == null
                           ? AppStyles.ubHintColor15W500
-                          : AppStyles.ubNavyBlue15W600,
+                          : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsGender),
                       items: controller.genderList,
                       itemBuilder: (context, item, isSelected) {
@@ -277,16 +299,16 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     AppDropdown(
-                      selectedItem: controller.selectedYear?.isEmpty == true
+                      selectedItem: controller.selectedYear?.isEmpty == true || controller.selectedYear==null
                           ? TranslationKeys.experience.tr
                           : controller.selectedYear,
                       onChanged: (value) {
                         controller.selectedYear = value.toString();
                         controller.update();
                       },
-                      baseTextStyle: controller.selectedYear?.isEmpty == true
+                      baseTextStyle: controller.selectedYear?.isEmpty == true || controller.selectedYear==null
                           ? AppStyles.ubHintColor15W500
-                          : AppStyles.ubNavyBlue15W600,
+                          : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
                       items: controller.experienceList,
                       itemBuilder: (context, item, isSelected) {
@@ -371,17 +393,20 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     AppDropdown(
-                      selectedItem: controller.licenseHaveOrNot?.isEmpty == true
-                          ? TranslationKeys.driverLicense.tr
-                          : controller.licenseHaveOrNot,
+                      selectedItem:
+                          controller.licenseHaveOrNot?.isEmpty == true ||
+                                  controller.licenseHaveOrNot == null
+                              ? TranslationKeys.driverLicense.tr
+                              : controller.licenseHaveOrNot,
                       onChanged: (value) {
                         controller.licenseHaveOrNot = value.toString();
                         controller.update();
                       },
                       baseTextStyle:
-                          controller.licenseHaveOrNot?.isEmpty == true
+                          controller.licenseHaveOrNot?.isEmpty == true ||
+                              controller.licenseHaveOrNot == null
                               ? AppStyles.ubHintColor15W500
-                              : AppStyles.ubNavyBlue15W600,
+                              : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsPersonalcard),
                       items: controller.licenseList,
                       itemBuilder: (context, item, isSelected) {
@@ -443,10 +468,10 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     CustomButton(
-                      title: 'Save Changes',
+                      title: TranslationKeys.saveChanges.tr,
                       backGroundColor: AppColors.navyBlue,
                       onTap: () {
-                        Get.back();
+                        controller.editProfileValidator();
                       },
                     ),
                   ],

@@ -298,4 +298,18 @@ abstract class RouteManagement {
       Routes.createChildProfileView,
     );
   }
+
+  /// Go to Edit Nanny Profile  View
+  static void goToEditNannyProfileView() {
+   Get.toNamed(
+     Routes.editNannyProfile,
+   );
+  }
+
+  /// Go to Edit Nanny Services  View
+  static void goToEditNannyServicesView() {
+    Get.toNamed(
+      Routes.editNannyServices,
+    );
+  }
 }

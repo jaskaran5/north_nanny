@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_select_services/nanny_edit_services_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
@@ -13,14 +12,15 @@ import '../../../../widgets/app_text.dart';
 import '../../../../widgets/custom_app_bar.dart';
 import '../../../../widgets/custom_bottom_sheet.dart';
 import '../../../../widgets/custom_button.dart';
+import 'nanny_edit_profile_controller.dart';
 
 class NannyEditServicesView extends StatelessWidget {
   const NannyEditServicesView({super.key});
 
   @override
   Widget build(BuildContext context) =>
-      GetBuilder<NannyEditSelectServicesController>(
-        init: NannyEditSelectServicesController(),
+      GetBuilder<NannyEditProfileController>(
+        init: NannyEditProfileController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.selectServices.tr,
@@ -28,10 +28,10 @@ class NannyEditServicesView extends StatelessWidget {
           bottomSheet: Container(
             padding: Dimens.edgeInsetsL16R16B20,
             child: CustomButton(
-              title: 'Save Changes',
+              title: TranslationKeys.saveChanges.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                Get.back();
+                controller.editServicesValidator();
               },
             ),
           ),

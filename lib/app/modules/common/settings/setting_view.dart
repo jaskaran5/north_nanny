@@ -60,11 +60,10 @@ class SettingView extends StatelessWidget {
                                     appBarTitle: TranslationKeys.myProfile.tr,
                                   ),
                                 );
-                                ();
                               },
-                              title: "nanny Jorden",
-                              subtitle: "nanny@gmail.com",
-                              img: "",
+                              title: controller.nannyName.value,
+                              subtitle: controller.nannyEmail.value,
+                              img: controller.nannyImage.value,
                               trailingIcon: controller.customerSettingList[0]
                                       ["trallingIcon"]
                                   .toString()),

@@ -42,6 +42,9 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_deta
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/pricing/pricing_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/services/services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
@@ -372,6 +375,24 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: CreateChildProfileView.new,
       binding: CreateChildProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ Edit Nanny profile -------  */
+    GetPage<NannyEditProfileView>(
+      name: Routes.editNannyProfile,
+      transitionDuration: transitionDuration,
+      page: NannyEditProfileView.new,
+      binding: NannyEditProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ Edit Nanny Services -------  */
+    GetPage<NannyEditServicesView>(
+      name: Routes.editNannyServices,
+      transitionDuration: transitionDuration,
+      page: NannyEditServicesView.new,
+      binding: NannyEditProfileBinding(),
       transition: Transition.leftToRight,
     ),
   ];

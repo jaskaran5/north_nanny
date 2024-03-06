@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
@@ -20,6 +23,7 @@ import '../../../res/constants/assets.dart';
 import '../../../res/theme/dimens.dart';
 import '../../../utils/app_utils.dart';
 import '../../../utils/utility.dart';
+import '../../nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_binding.dart';
 
 class SettingController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -36,6 +40,7 @@ class SettingController extends GetxController {
   void onInit() {
     super.onInit();
     getAndUpdateLoginType();
+    getNannyProfileApi();
   }
 
   getAndUpdateLoginType() async {
@@ -340,5 +345,32 @@ class SettingController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "log out  post API ISSUE $s");
     }
+  }
+
+  /// nanny Name
+  RxString nannyName = ''.obs;
+
+  /// nanny email
+  RxString nannyEmail = ''.obs;
+
+  /// nanny image
+  RxString nannyImage = ''.obs;
+
+  /// get nanny Profile Api
+  getNannyProfileApi() {
+    if (!Get.isRegistered<NannyProfileController>()) {
+      NannyProfileBinding().dependencies();
+    }
+    var controller = Get.find<NannyProfileController>();
+    controller.getProfile();
+    nannyImage.value = controller.profileData.data?.image ?? '';
+    nannyEmail.value = controller.profileData.data?.email ?? '';
+    nannyName.value = controller.profileData.data?.name ?? '';
+    if (!Get.isRegistered<NannyEditProfileController>()) {
+      NannyEditProfileBinding().dependencies();
+    }
+    Get.find<NannyEditProfileController>().getEditProfile();
+
+    update();
   }
 }

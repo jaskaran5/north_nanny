@@ -219,7 +219,7 @@ class NannyCalenderView extends StatelessWidget {
                                         onTap: () {
                                           Utility.openBottomSheet(
                                             const CustomReviewBottomSheet(
-                                              totalReviews: '21',
+                                              totalReviews: 21,
                                               totalReviewsRating: 4.5,
                                               reviewsList: [
                                                 'Michael Johnson',
@@ -243,7 +243,7 @@ class NannyCalenderView extends StatelessWidget {
                                                     AppStyles.ubLightNavy12W500,
                                                 children: [
                                                   TextSpan(
-                                                    text: '(21 review)',
+                                                    text: '(21 reviews)',
                                                     style: AppStyles
                                                         .ubLightNavy12W400,
                                                   ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile_view/nanny_edit_profile_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_select_services/nanny_edit_services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/schedule_nanny/schedule_nanny_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -12,12 +10,15 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../widgets/custom_bottom_sheet.dart';
@@ -60,12 +61,29 @@ class NannyProfileView extends StatelessWidget {
               child: Column(
                 children: [
                   CustomNannyProfileView(
-                    nannyName: 'Christina Wang',
-                    servicesList: isComeFromSetting
-                        ? ['Gender: Female', 'Age: 40', 'Experience: 7+ yrs']
-                        : controller.homeCustomList,
-                    totalRating: 4.5,
-                    totalReview: 12,
+                    imageUrl: controller.profileData.data?.image,
+                    nannyName: controller.profileData.data?.name.toString(),
+                    // servicesList: isComeFromSetting
+                    //     ? ['Gender: Female', 'Age: 40', 'Experience: 7+ yrs']
+                    //     : controller.homeCustomList,
+                    totalRating: controller.profileData.data?.rating,
+                    totalReview: controller.profileData.data?.reviewCount,
+                    nannyAge: controller.profileData.data?.age.toString(),
+                    nannyExperience: controller.profileData.data?.experience,
+                    nannyGender: controller.profileData.data?.gender == 1
+                        ? TranslationKeys.male.tr
+                        : controller.profileData.data?.gender == 2
+                            ? TranslationKeys.female.tr
+                            : '',
+                    onTapRating: () {
+                      Utility.openBottomSheet(CustomReviewBottomSheet(
+                          totalReviews:
+                              controller.profileData.data?.reviewCount ?? 0,
+                          totalReviewsRating:
+                              controller.profileData.data?.rating ?? 0.0,
+                          reviewsList:
+                              controller.profileData.data?.ratingList ?? []));
+                    },
                   ),
                   Dimens.boxHeight20,
                   Container(
@@ -109,9 +127,9 @@ class NannyProfileView extends StatelessWidget {
                   ),
                   Dimens.boxHeight20,
                   if (controller.selectedIndex == 0) ...[
-                    const CustomAbout(
-                        aboutNanny:
-                            'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.\n \n I have very Strong communication and instructional skill; patience and i have a Degree.'),
+                    CustomAbout(
+                      aboutNanny: controller.profileData.data?.about ?? '',
+                    ),
                     Dimens.boxHeight20,
                     if (!isComeFromSetting) ...[
                       Padding(
@@ -143,23 +161,27 @@ class NannyProfileView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppText(
-                              text: 'Education',
+                              text: TranslationKeys.education.tr,
                               maxLines: 1,
                               textAlign: TextAlign.start,
                               style: AppStyles.ubBlack14W700,
                             ),
                             Dimens.boxHeight14,
-                            const CustomNannySvgTile(
+                            CustomNannySvgTile(
                               assetName: Assets.iconsHouse,
-                              heading: 'High school',
-                              aboutHeading:
-                                  'Austin Community Academy High School',
+                              heading: TranslationKeys.highSchool.tr,
+                              aboutHeading: controller
+                                      .profileData.data?.highSchool
+                                      .toString() ??
+                                  '',
                             ),
                             Dimens.boxHeight14,
-                            const CustomNannySvgTile(
+                            CustomNannySvgTile(
                               assetName: Assets.iconsBuilding,
-                              heading: 'College',
-                              aboutHeading: 'Hebrew Theological College',
+                              heading: TranslationKeys.college.tr,
+                              aboutHeading: controller.profileData.data?.college
+                                      .toString() ??
+                                  '',
                             ),
                             Dimens.boxHeight14,
                           ],
@@ -186,24 +208,32 @@ class NannyProfileView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const CustomNannySvgTile(
+                            CustomNannySvgTile(
                               assetName: Assets.iconsLocationDot,
-                              heading: 'Location',
-                              aboutHeading: 'Chicago, Naperville',
+                              heading: TranslationKeys.location.tr,
+                              aboutHeading:
+                                  controller.profileData.data?.location ?? '',
                             ),
                             Dimens.boxHeight14,
-                            const CustomNannySvgTile(
+                            CustomNannySvgTile(
                               assetName: Assets.iconsPhone,
-                              heading: 'Phone number',
-                              aboutHeading: '985 968 8745',
+                              heading: TranslationKeys.phoneNumber.tr,
+                              aboutHeading:
+                                  controller.profileData.data?.mobileNo ?? '',
                             ),
                             Dimens.boxHeight14,
-                            const CustomNannySvgTile(
-                              assetName: Assets.iconsPersonalcard,
-                              heading: 'Driver’s license',
-                              aboutHeading: 'Yes',
-                            ),
-                            Dimens.boxHeight14,
+                            if (controller.profileData.data?.isDrivingLicence !=
+                                null) ...[
+                              CustomNannySvgTile(
+                                assetName: Assets.iconsPersonalcard,
+                                heading: TranslationKeys.driversLicense.tr,
+                                aboutHeading: controller
+                                        .profileData.data?.isDrivingLicence
+                                        .toString() ??
+                                    '',
+                              ),
+                              Dimens.boxHeight14,
+                            ],
                           ],
                         ),
                       ),
@@ -224,12 +254,12 @@ class NannyProfileView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomNannySvgTile(
                               assetName: Assets.iconsDollarCircle,
-                              heading: 'Referral bonus earned ',
+                              heading: TranslationKeys.referralEarned.tr,
                               aboutHeading: '\$5.00',
                             ),
                           ],
@@ -240,21 +270,22 @@ class NannyProfileView extends StatelessWidget {
                         backGroundColor: AppColors.navyBlue,
                         title: TranslationKeys.editProfile.tr,
                         onTap: () {
-                          Get.to(const NannyEditProfileView());
+                          RouteManagement.goToEditNannyProfileView();
                         },
                       ),
                     ],
                   ],
                   if (controller.selectedIndex == 1) ...[
                     servicesView(
-                        rateList: controller.priceList,
+                        // rateList: controller.priceList,
+                        servicesList: controller.profileData.data?.services,
                         isComeFromSetting: isComeFromSetting),
                     if (isComeFromSetting)
                       CustomButton(
                         backGroundColor: AppColors.navyBlue,
-                        title: 'Edit services',
+                        title: TranslationKeys.editServices.tr,
                         onTap: () {
-                          Get.to(const NannyEditServicesView());
+                          RouteManagement.goToEditNannyServicesView();
                         },
                       ),
                   ],
@@ -272,14 +303,16 @@ class NannyProfileView extends StatelessWidget {
 }
 
 Widget servicesView(
-        {List<String>? rateList, required bool isComeFromSetting}) =>
+        {List<String>? rateList,
+        List<String>? servicesList,
+        required bool isComeFromSetting}) =>
     Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-          Services.values.length,
+          servicesList?.length ?? 0,
           (index) => SizedBox(
             height: Dimens.seventy,
             child: Card(
@@ -314,12 +347,22 @@ Widget servicesView(
                             ),
                           ),
                           child: SvgPicture.asset(
-                            Services.values[index].servicesSvg,
+                            (Services.values
+                                    .firstWhereOrNull((element) =>
+                                        element.serviceName ==
+                                        servicesList?[index].toString())
+                                    ?.servicesSvg) ??
+                                Services.funActivityOutHouse.servicesSvg,
                           ),
                         ),
                         Dimens.boxWidth10,
                         AppText(
-                          text: Services.values[index].serviceName.tr,
+                          text: (Services.values
+                                  .firstWhereOrNull((element) =>
+                                      element.serviceName ==
+                                      servicesList?[index].toString())
+                                  ?.serviceName.tr) ??
+                              Services.funActivityOutHouse.serviceName.tr,
                           style: AppStyles.ubBlack14W600,
                           maxLines: 1,
                           textAlign: TextAlign.start,
@@ -489,7 +532,7 @@ Widget availabilityView(
                       return [
                         PopupMenuItem(
                           child: Text(
-                            "Edit ",
+                            TranslationKeys.edit.tr,
                             maxLines: 1,
                             style: AppStyles.ubGreen05B016Color12W500,
                             textAlign: TextAlign.left,
@@ -497,7 +540,7 @@ Widget availabilityView(
                         ),
                         PopupMenuItem(
                           child: Text(
-                            "Delete",
+                            TranslationKeys.delete.tr,
                             style: AppStyles.ubFc3030RedColor12W500,
                             textAlign: TextAlign.left,
                             maxLines: 1,
@@ -513,7 +556,7 @@ Widget availabilityView(
           Dimens.boxHeight20,
           CustomButton(
             title: isComeFromSetting
-                ? 'Add availability'
+                ? TranslationKeys.addAvailability.tr
                 : TranslationKeys.bookSitter.tr,
             backGroundColor: AppColors.navyBlue,
             onTap: () {
@@ -541,7 +584,7 @@ Widget availabilityView(
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     AppText(
-                                      text: 'Add availability',
+                                      text: TranslationKeys.addAvailability.tr,
                                       maxLines: 1,
                                       textAlign: TextAlign.left,
                                       style: AppStyles.ubBlack16W700,
@@ -572,7 +615,7 @@ Widget availabilityView(
                                       maxLines: 1,
                                       minLines: 1,
                                       decoration: customFieldDeco(
-                                        hintText: 'Start time',
+                                        hintText: TranslationKeys.startTime.tr,
                                       ),
                                       cursorColor: AppColors.blackColor,
                                       cursorWidth: Dimens.one,
@@ -583,7 +626,7 @@ Widget availabilityView(
                                       maxLines: 1,
                                       minLines: 1,
                                       decoration: customFieldDeco(
-                                        hintText: 'End time',
+                                        hintText: TranslationKeys.endTime.tr,
                                       ),
                                       cursorColor: AppColors.blackColor,
                                       cursorWidth: Dimens.one,
