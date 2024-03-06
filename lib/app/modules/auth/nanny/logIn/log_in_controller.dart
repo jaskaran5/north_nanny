@@ -22,7 +22,7 @@ class LogInController extends GetxController {
   String loginType = '';
 
   RxBool isPasswordVisible = false.obs;
-  RxBool rememberMe = false.obs;
+  RxBool rememberMe = true.obs;
 
   @override
   void onInit() {
@@ -143,12 +143,10 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            }
-            else if (res.data?.user?.isApproved == false ||
+            } else if (res.data?.user?.isApproved == false ||
                 res.data?.user?.isSkipBankDetail == true) {
               RouteManagement.goToOffAllWaitingApprovalView();
-            }
-            else {
+            } else {
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
             }
             toast(msg: res.message.toString(), isError: false);
