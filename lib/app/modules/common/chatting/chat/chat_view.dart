@@ -45,7 +45,7 @@ class ChatView extends StatelessWidget {
                               ),
                             ),
                             CustomCacheNetworkImage(
-                                img: '', size: Dimens.forty, imageRadius: null, imageShape: null,),
+                                img: '', size: Dimens.forty, imageRadius: Dimens.hundred,),
                             Dimens.boxWidth10,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

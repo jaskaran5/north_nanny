@@ -180,7 +180,7 @@ class NannyHomeView extends StatelessWidget {
                           onTapRating: () {
                             Utility.openBottomSheet(
                               const CustomReviewBottomSheet(
-                                totalReviews: '21',
+                                totalReviews: 21,
                                 totalReviewsRating: 4.5,
                                 reviewsList: [
                                   'Michael Johnson',

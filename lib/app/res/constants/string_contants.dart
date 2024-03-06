@@ -18,7 +18,7 @@ class StringConstants {
 
   static const String baseUrl = 'baseUrl';
 
-  static const timeout = Duration(seconds: 30);
+  static const timeout = Duration(seconds: 60);
   static const String token = 'authToken';
   static const String loginType = 'loginType';
   static const String nanny = 'nanny';

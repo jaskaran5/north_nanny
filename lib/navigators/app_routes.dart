@@ -37,6 +37,8 @@ class Routes {
   static const String googleMapView = Paths.googleMapView;
   static const String chooseChildProfileView = Paths.chooseChildProfileView;
   static const String createChildProfileView = Paths.createChildProfileView;
+  static const String editNannyProfile = Paths.editNannyProfile;
+  static const String editNannyServices = Paths.editNannyServices;
 
   static const String createCustomerProfileView =
       Paths.createCustomerProfileView;
@@ -80,6 +82,8 @@ class Paths {
   static const String googleMapView = '/google-map-view';
   static const String chooseChildProfileView = '/choose-child-profile-view';
   static const String createChildProfileView = '/create-child-profile-view';
+  static const String editNannyProfile = '/Edit-nanny-Profile-view';
+  static const String editNannyServices = '/Edit-nanny-Services-view';
 
   static const String createCustomerProfileView =
       '/create-customer-profile-view-';

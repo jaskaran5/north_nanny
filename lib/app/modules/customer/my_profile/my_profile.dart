@@ -85,7 +85,6 @@ class MyProfileView extends StatelessWidget {
                                 img: controller.imageUrl,
                                 size: Dimens.hundredTwo,
                                 imageRadius: Dimens.twenty,
-                                imageShape: BoxShape.rectangle,
                               ),
                       ),
                       Dimens.boxHeight16,

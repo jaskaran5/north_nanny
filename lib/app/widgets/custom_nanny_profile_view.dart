@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
 import '../res/constants/assets.dart';
 import '../res/theme/colors.dart';
@@ -17,9 +18,19 @@ class CustomNannyProfileView extends StatelessWidget {
     this.totalRating,
     this.onTapRating,
     this.totalReview,
+    this.nannyAge,
+    this.nannyGender,
+    this.nannyExperience,
+    this.distance,
+    this.imageUrl,
   });
   final List<String>? servicesList;
   final String? nannyName;
+  final String? distance;
+  final String? imageUrl;
+  final String? nannyAge;
+  final String? nannyGender;
+  final String? nannyExperience;
   final double? totalRating;
   final Function()? onTapRating;
   final int? totalReview;
@@ -43,12 +54,18 @@ class CustomNannyProfileView extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: CircleAvatar(
-                radius: Dimens.hundred,
-                backgroundImage: const AssetImage(
-                  Assets.iconsImage,
-                ),
-              ),
+              child: imageUrl?.isNotEmpty == true
+                  ? CustomCacheNetworkImage(
+                      img: imageUrl.toString(),
+                      size: Dimens.ninety,
+                      imageRadius:  Dimens.hundred,
+                    )
+                  : CircleAvatar(
+                      radius: Dimens.hundred,
+                      backgroundImage: const AssetImage(
+                        Assets.imagesUserAvatar,
+                      ),
+                    ),
             ),
             Dimens.boxHeight8,
             AppText(
@@ -85,30 +102,80 @@ class CustomNannyProfileView extends StatelessWidget {
             Dimens.boxHeight8,
             Container(
               height: Dimens.thirty,
-              // margin: Dimens.edgeInsetsL16R16,
               alignment: Alignment.center,
-              child: ListView(
-                // padding: Dimens.edgeInsetsL15,
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                  servicesList?.length ?? 0,
-                  (index) => Container(
-                    height: Dimens.twentyEight,
-                    padding: Dimens.edgeInsetsL12T6R12B6,
-                    margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.listColor,
-                      borderRadius: BorderRadius.circular(Dimens.eight),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (nannyGender?.isNotEmpty == true)
+                    Container(
+                      height: Dimens.twentyEight,
+                      padding: Dimens.edgeInsetsL12T6R12B6,
+                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.listColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                      ),
+                      child: AppText(
+                        text: ' ${TranslationKeys.gender.tr}: $nannyGender',
+                        style: AppStyles.ubGrey12W400,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    child: AppText(
-                      text: servicesList?[index].toString(),
-                      style: AppStyles.ubGrey12W400,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
+                  if (distance?.isNotEmpty == true)
+                    Container(
+                      height: Dimens.twentyEight,
+                      padding: Dimens.edgeInsetsL12T6R12B6,
+                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.listColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                      ),
+                      child: AppText(
+                        text: ' ${TranslationKeys.distance.tr}: $distance',
+                        style: AppStyles.ubGrey12W400,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                ),
+                  if (nannyAge?.isNotEmpty == true)
+                    Container(
+                      height: Dimens.twentyEight,
+                      padding: Dimens.edgeInsetsL12T6R12B6,
+                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.listColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                      ),
+                      child: AppText(
+                        text: ' ${TranslationKeys.age.tr}: $nannyAge',
+                        style: AppStyles.ubGrey12W400,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  if (nannyExperience?.isNotEmpty == true)
+                    Container(
+                      height: Dimens.twentyEight,
+                      padding: Dimens.edgeInsetsL12T6R12B6,
+                      // margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.listColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                      ),
+                      child: AppText(
+                        text:
+                            ' ${TranslationKeys.experience.tr}: $nannyExperience',
+                        style: AppStyles.ubGrey12W400,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
               ),
             ),
           ],
