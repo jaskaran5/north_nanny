@@ -7,6 +7,9 @@ void showToast({required String message, Color? color}) {
       backgroundColor: color ?? Colors.black,
       msg: message,
       toastLength: Toast.LENGTH_LONG,
-    
       timeInSecForIosWeb: 1);
+}
+
+String addStringsWithSpace(String str1, String str2) {
+  return '$str1 $str2';
 }

@@ -18,6 +18,8 @@ class GoogleMapViewController extends GetxController {
   final Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
 
+  RxBool isFromEdit = false.obs;
+
   @override
   void onInit() {
     getUserLocation().then((value) async {
@@ -94,6 +96,11 @@ class GoogleMapViewController extends GetxController {
     }
   }
 
+  updateIsFromData() {
+    isFromEdit.value = true;
+    update();
+  }
+
   saveLocationCoordinates() async {
     var logInType = await Storage.getValue(StringConstants.loginType);
     var address = await getAddressFromCoordinates(
@@ -116,5 +123,13 @@ class GoogleMapViewController extends GetxController {
         Get.back();
       });
     }
+  }
+
+  Future<String> getEditLocation() async {
+    var address = await getAddressFromCoordinates(
+        currentLatLng.value?.latitude ?? 0.0,
+        currentLatLng.value?.longitude ?? 0.0);
+
+    return address;
   }
 }

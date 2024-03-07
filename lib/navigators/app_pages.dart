@@ -31,7 +31,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/customer/my_profile/my_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_binding.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
@@ -52,8 +52,8 @@ import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.
 
 import '../app/modules/auth/customer/customer_views/create_profile/create_customer_profile_view.dart';
 import '../app/modules/auth/nanny/signUp/sign_up_binding.dart';
-import '../app/modules/customer/my_profile/my_profile.dart';
-import '../app/modules/customer/my_profile/widgets/edit_profile.dart';
+import '../app/modules/customer/customer_profile/customer_profile_view.dart';
+import '../app/modules/customer/customer_profile/widgets/edit_customer_profile.dart';
 import '../app/modules/forgot_password/email_verification_view.dart';
 import '../app/modules/forgot_password/forgot_password_binding.dart';
 import '../app/modules/forgot_password/forgot_password_view.dart';
@@ -309,11 +309,11 @@ class AppPages {
     //   transition: Transition.rightToLeft,
     // ),
     /** My-Profile-View */
-    GetPage<MyProfileView>(
+    GetPage<CustomerProfileView>(
       name: Routes.myProfileView,
       transitionDuration: transitionDuration,
-      page: MyProfileView.new,
-      binding: MyProfileBinding(),
+      page: CustomerProfileView.new,
+      binding: CustomerProfileBinding(),
       transition: Transition.rightToLeft,
     ),
     /** My-Profile-View */
@@ -321,7 +321,7 @@ class AppPages {
       name: Routes.ediProfileView,
       transitionDuration: transitionDuration,
       page: EditProfileView.new,
-      binding: MyProfileBinding(),
+      binding: CustomerProfileBinding(),
       transition: Transition.rightToLeft,
     ),
     /** InviteAFriend-View */

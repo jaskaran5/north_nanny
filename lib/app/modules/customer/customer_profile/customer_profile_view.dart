@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/customer/my_profile/my_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -11,17 +11,22 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
-class MyProfileView extends StatelessWidget {
-  const MyProfileView({super.key});
+class CustomerProfileView extends StatelessWidget {
+  const CustomerProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) => GetBuilder<MyProfileController>(
+  Widget build(BuildContext context) => GetBuilder<CustomerProfileController>(
+        init: CustomerProfileController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.myProfile.tr,
+            onBackPress: () {
+              Get.back(result: true);
+            },
           ),
+
+          //--------->>>>>>>>>> EDIT BUTTON <<<<<<<<<<<<<-----------------------
           bottomSheet: Container(
             padding: Dimens.edgeInsets16,
             color: Colors.transparent,
@@ -29,7 +34,8 @@ class MyProfileView extends StatelessWidget {
               title: TranslationKeys.editProfile.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                RouteManagement.goToEditProfileView();
+                controller.redirectToEditProfileScreen();
+                // RouteManagement.goToEditProfileView();
               },
             ),
           ),
@@ -76,26 +82,26 @@ class MyProfileView extends StatelessWidget {
                             )
                           ],
                         ),
-                        child: controller.imageUrl.isEmpty
+                        child: controller.customerImageUrl.value.isEmpty
                             ? Image.asset(
                                 Assets.iconsImage,
                                 fit: BoxFit.fill,
                               )
                             : CustomCacheNetworkImage(
-                                img: controller.imageUrl,
+                                img: controller.customerImageUrl.value,
                                 size: Dimens.hundredTwo,
                                 imageRadius: Dimens.twenty,
                               ),
                       ),
                       Dimens.boxHeight16,
                       AppText(
-                        text: controller.userName,
+                        text: controller.customerName.value,
                         style: AppStyles.ubBlack16W700,
                         maxLines: 1,
                       ),
                       Dimens.boxHeight10,
                       AppText(
-                        text: controller.userEmail,
+                        text: controller.customerEmail.value,
                         style: AppStyles.ubGrey14W500,
                         maxLines: 1,
                       ),
@@ -148,7 +154,7 @@ class MyProfileView extends StatelessWidget {
                               ),
                               Dimens.boxHeight4,
                               AppText(
-                                text: controller.userAddress,
+                                text: controller.customerAddress.value,
                                 style: AppStyles.ubGrey14W500,
                                 maxLines: 1,
                               ),
@@ -187,7 +193,7 @@ class MyProfileView extends StatelessWidget {
                               ),
                               Dimens.boxHeight4,
                               AppText(
-                                text: controller.userPhoneNumber,
+                                text: controller.customerPhoneNumber.value,
                                 style: AppStyles.ubGrey14W500,
                                 maxLines: 1,
                               ),
@@ -226,7 +232,7 @@ class MyProfileView extends StatelessWidget {
                               ),
                               Dimens.boxHeight4,
                               AppText(
-                                text: '\$5.00',
+                                text: '\$ ${controller.referralEarned.value}',
                                 style: AppStyles.ubGrey14W500,
                                 maxLines: 1,
                               ),

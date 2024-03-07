@@ -11,7 +11,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_child_profile_tile.dart';
 
-
 //** this is  Manage child profile screen
 class ManageChildProfileView extends StatelessWidget {
   const ManageChildProfileView({super.key});
@@ -19,6 +18,7 @@ class ManageChildProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ManageChildProfileController>(
+      init: ManageChildProfileController(),
       builder: (controller) {
         return Scaffold(
           appBar: CustomAppbarWidget(
@@ -28,10 +28,19 @@ class ManageChildProfileView extends StatelessWidget {
           body: Padding(
             padding: Dimens.edgeInsets16,
             child: ListView.builder(
-              itemCount: 2,
+              itemCount: controller.childList.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return CustomChildProfileTile(
+                  aboutChild: controller.childList[index].aboutChild!,
+                  allergies: controller
+                      .childList[index].allergiesDietaryAndRestrictions!,
+                  childAge: controller.childList[index].age!,
+                  childGender: controller.childList[index].gender.toString(),
+                  childIdl: controller.childList[index].childId.toString(),
+                  childName: controller.childList[index].name!,
+                  medicalCondition:
+                      controller.childList[index].medicalCondition!,
                   onTap: () {
                     log("click on redirect to edit child screen");
                     controller.redirectToEditChildScreen();

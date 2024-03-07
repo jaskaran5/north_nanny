@@ -115,9 +115,7 @@ class Utils {
 
     Get.dialog(
       barrierDismissible: false,
-      Center(
-          child:
-              Lottie.asset(Assets.animationBabyLoader, height: 200, width: 200)
+      Center(child: Lottie.asset(Assets.animationBabyLoader)
 
           // SizedBox(height: 50, width: 50, child: CircularProgressIndicator()
 

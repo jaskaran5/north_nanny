@@ -9,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart'
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_setting_item_tile.dart';
@@ -44,10 +45,13 @@ class SettingView extends StatelessWidget {
                       (controller.loginType.value == StringConstants.customer)
                           ? CustomSettingProfileTile(
                               onTap: () {
-                                RouteManagement.goToMyProfileView();
+                                controller.redirectToCustomerProfileScreen();
+                                // RouteManagement.goToMyProfileView();
                               },
-                              title: "Michael Jorden",
-                              subtitle: "example@gmail.com",
+                              title: addStringsWithSpace(
+                                  controller.customerFirstName.value,
+                                  controller.customerLastName.value),
+                              subtitle: controller.customerEmail.value,
                               img: "",
                               trailingIcon: controller.customerSettingList[0]
                                       ["trallingIcon"]

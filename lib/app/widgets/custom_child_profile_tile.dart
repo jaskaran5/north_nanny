@@ -11,7 +11,25 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_dot_text.dart';
 
 class CustomChildProfileTile extends StatelessWidget {
   final void Function()? onTap;
-  const CustomChildProfileTile({super.key, required this.onTap});
+  final String childIdl;
+  final String childName;
+  final String childAge;
+  final String childGender;
+  final String allergies;
+  final String medicalCondition;
+  final String aboutChild;
+
+  const CustomChildProfileTile({
+    super.key,
+    required this.onTap,
+    required this.childIdl,
+    required this.childName,
+    required this.childAge,
+    required this.childGender,
+    required this.allergies,
+    required this.medicalCondition,
+    required this.aboutChild,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +62,16 @@ class CustomChildProfileTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AppText(
-                        text: "Alexander",
+                        text: childName,
                         style: AppStyles.ubBlack16W700,
                         maxLines: 1,
                         textAlign: TextAlign.start,
                       ),
                       Dimens.boxHeight8,
-                      const CustomChildAgeGenderTile(
-                        age: "7",
-                        gender: "Male",
+                      CustomChildAgeGenderTile(
+                        age: childAge,
+                        gender:
+                            childGender.toString() == "1" ? "Male" : "Female",
                       )
                       // const Row(
                       //   children: [
@@ -82,15 +101,12 @@ class CustomChildProfileTile extends StatelessWidget {
                 ),
               ),
             ),
-            const CustomDotText(
+            CustomDotText(
                 heading: "Allergies/Dietary Restrictions",
-                description: "Wheat, Eggs, Tree nuts"),
-            const CustomDotText(
-                heading: "Medical Conditions", description: "Chickenpox"),
-            const CustomDotText(
-                heading: "Anything else?",
-                description:
-                    "Enthusiastic and imaginative child with a love for learning and creativity. Curious explorer who enjoys discovering new things and making friends. Eager participant ready to embark on exciting adventures in education and play."),
+                description: allergies),
+            CustomDotText(
+                heading: "Medical Conditions", description: medicalCondition),
+            CustomDotText(heading: "Anything else?", description: aboutChild),
           ],
         ),
       ),

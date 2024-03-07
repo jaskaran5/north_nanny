@@ -168,7 +168,9 @@ class LogInController extends GetxController {
                 RouteManagement.goToOffAllDashboard(isFromSetting: false);
               } else if (res.data?.user?.isChildAdded == false) {
                 RouteManagement.goToChooseChildProfileView();
-              } else {}
+              } else if (res.data?.user?.isChildAdded == true) {
+                RouteManagement.goToOffAllDashboard(isFromSetting: false);
+              }
             }
           } else {
             RouteManagement.goToOffAllDashboard(isFromSetting: false);

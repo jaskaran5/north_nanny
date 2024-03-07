@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/customer/my_profile/my_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/constants/assets.dart';
 import '../../../../res/theme/colors.dart';
@@ -19,7 +22,7 @@ class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) => GetBuilder<MyProfileController>(
+  Widget build(BuildContext context) => GetBuilder<CustomerProfileController>(
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.editProfile.tr,
@@ -34,7 +37,9 @@ class EditProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            controller.onClickOnProfilePic();
+                          },
                           child: Stack(
                             clipBehavior: Clip.none,
                             fit: StackFit.passthrough,
@@ -58,19 +63,33 @@ class EditProfileView extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                child: controller.imageUrl.isEmpty
-                                    ? Padding(
-                                        padding: Dimens.edgeInsets16,
-                                        child: SvgPicture.asset(
-                                          Assets.iconsProfile,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      )
-                                    : CustomCacheNetworkImage(
-                                        img: controller.imageUrl,
-                                        size: Dimens.oneHundredTwenty,
-                                        imageRadius: Dimens.eighteen,
 
+                                //*** ------------------------------------>>>>>>>>>>>>>>>>>>  PROFILE PIC */
+                                child: controller.pickedImage == null
+                                    ? controller.customerImageUrl.value.isEmpty
+                                        ? Padding(
+                                            padding: Dimens.edgeInsets16,
+                                            child: SvgPicture.asset(
+                                              Assets.iconsProfile,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          )
+                                        : CustomCacheNetworkImage(
+                                            img: controller
+                                                .customerImageUrl.value,
+                                            size: Dimens.oneHundredTwenty,
+                                            imageRadius: Dimens.eighteen,
+                                          )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                        child: Image.file(
+                                          File(controller.pickedImage?.path ??
+                                              ''),
+                                          height: Dimens.oneHundredTwenty,
+                                          width: Dimens.oneHundredTwenty,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                               ),
                               Positioned(
@@ -182,9 +201,13 @@ class EditProfileView extends StatelessWidget {
 
                         /** SELECT LOCATION */
                         TextField(
+                          readOnly: true,
                           controller: controller.locationTextEditingController,
                           maxLines: 1,
                           minLines: 1,
+                          onTap: () {
+                            RouteManagement.goToGoogleMapScreen();
+                          },
                           decoration: customFieldDeco(
                             hintText: TranslationKeys.selectLocation.tr,
                             prefixWidget: Padding(
@@ -220,7 +243,7 @@ class EditProfileView extends StatelessWidget {
                   title: TranslationKeys.save.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    Get.back();
+                    controller.updateCustomerData();
                   },
                 ),
               ],

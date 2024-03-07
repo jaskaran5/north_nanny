@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/customer_login_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
@@ -36,17 +38,28 @@ class SettingController extends GetxController {
   RxBool isExpand = false.obs;
   RxString loginType = ''.obs;
 
+  RxString customerFirstName = ''.obs;
+  RxString customerLastName = ''.obs;
+
+  RxString customerEmail = ''.obs;
+  RxString customerImg = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
     getAndUpdateLoginType();
-    getNannyProfileApi();
   }
 
   getAndUpdateLoginType() async {
     loginType.value = await Storage.getValue(StringConstants.loginType);
 
     log("login type is:-->> ${loginType.value}");
+
+    if (loginType.value == StringConstants.nanny) {
+      getNannyProfileApi();
+    } else if (loginType.value == StringConstants.customer) {
+      getCustomerProfileApi();
+    }
 
     update();
   }
@@ -372,5 +385,40 @@ class SettingController extends GetxController {
     Get.find<NannyEditProfileController>().getEditProfile();
 
     update();
+  }
+
+  /// GET CUSTOMER PROFILE API
+
+  getCustomerProfileApi() {
+    _apiHelper.getPosts(ApiUrls.customerGetProfile).futureValue(
+      (value) {
+        printInfo(info: "get customer profile api:-->> $value");
+
+        var res = CustomerProfileResponseModel.fromJson(value);
+
+        if (res.response == AppConstants.apiResponseSuccess) {
+          customerFirstName.value = res.customerProfileData!.firstName!;
+          customerLastName.value = res.customerProfileData!.lastName!;
+          customerEmail.value = res.customerProfileData!.email!;
+
+          customerImg.value = res.customerProfileData!.image!;
+
+          update();
+        }
+      },
+      retryFunction: () {
+        getCustomerProfileApi();
+      },
+    );
+  }
+
+  /// ********REDIRECT TO CUSTOMER PROFILE
+
+  redirectToCustomerProfileScreen() async {
+    bool check = await Get.toNamed(Routes.myProfileView);
+
+    if (check) {
+      getCustomerProfileApi();
+    }
   }
 }

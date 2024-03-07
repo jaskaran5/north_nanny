@@ -17,6 +17,8 @@ class ApiUrls {
   static const String resetPassWord = "api/User/ResetPassword";
   static const String forgotPassword = "api/User/ForgotPassword";
   static const String customerLogOut = "api/User/LogOut";
+  static const String customerGetProfile = "api/UserDashBoard/MyProfile";
+  static const String childList = "api/UserDashBoard/ChildList";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
 

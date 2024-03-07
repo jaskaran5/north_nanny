@@ -97,7 +97,7 @@ class CreateCustomerProfileController extends GetxController {
 
         "FirstName": firstNameTextEditingController.text.trim(),
         "LastName": lastNameTextEditingController.text.trim(),
-        "phoneNumber": phoneNumberTextEditingController.text.trim(),
+        "MobileNumber": phoneNumberTextEditingController.text.trim(),
         if (selectedGender!.isNotEmpty)
           "gender": selectedGender == 'Male' ? 1 : 2,
         "Latitude": lat.toString(),
