@@ -26,24 +26,27 @@ class ManageChildProfileView extends StatelessWidget {
             centerTitle: false,
           ),
           body: Padding(
-            padding: Dimens.edgeInsets16,
+            padding: EdgeInsets.fromLTRB(Dimens.sixteen, Dimens.sixteen,
+                Dimens.sixteen, Dimens.fiftyThree),
             child: ListView.builder(
               itemCount: controller.childList.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return CustomChildProfileTile(
-                  aboutChild: controller.childList[index].aboutChild!,
+                  aboutChild: controller.childList[index].aboutChild ?? '',
                   allergies: controller
                       .childList[index].allergiesDietaryAndRestrictions!,
-                  childAge: controller.childList[index].age!,
-                  childGender: controller.childList[index].gender.toString(),
+                  childAge: controller.childList[index].age ?? '',
+                  childGender: controller.childList[index].gender ?? '',
                   childIdl: controller.childList[index].childId.toString(),
                   childName: controller.childList[index].name!,
                   medicalCondition:
                       controller.childList[index].medicalCondition!,
                   onTap: () {
+                    controller.updateSelectedChild(
+                        id: controller.childList[index].childId!);
                     log("click on redirect to edit child screen");
-                    controller.redirectToEditChildScreen();
+                    controller.redirectToEditAndDeleteChildScreen(index: index);
                   },
                 );
               },

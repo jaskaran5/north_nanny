@@ -52,7 +52,7 @@ class SettingView extends StatelessWidget {
                                   controller.customerFirstName.value,
                                   controller.customerLastName.value),
                               subtitle: controller.customerEmail.value,
-                              img: "",
+                              img: controller.customerImg.value,
                               trailingIcon: controller.customerSettingList[0]
                                       ["trallingIcon"]
                                   .toString())

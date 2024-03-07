@@ -49,6 +49,9 @@ class CreateCustomerProfileController extends GetxController {
     Utility.showImagePicker(
       onGetImage: (image) {
         log("picker image is :-->> ${image.path}");
+
+        pickedImage = image;
+        update();
       },
     );
   }

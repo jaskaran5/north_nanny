@@ -14,8 +14,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 
 class EditChildProfileView extends StatelessWidget {
-  EditChildProfileView({super.key});
-  final selectedInterface = Get.arguments;
+  const EditChildProfileView({super.key});
+  // final selectedInterface = Get.arguments;
   @override
   Widget build(BuildContext context) =>
       GetBuilder<ManageChildProfileController>(
@@ -27,6 +27,11 @@ class EditChildProfileView extends StatelessWidget {
             toUpperCaseTitle: false,
             bottomHeight: Dimens.three,
             bottomWidth: Get.width,
+            onBackPress: () {
+              controller.clearTextFields().then((value) {
+                Get.back();
+              });
+            },
           ),
           body: GestureDetector(
             onTap: () {
@@ -92,15 +97,16 @@ class EditChildProfileView extends StatelessWidget {
                           ),
                           Dimens.boxHeight20,
                           AppDropdown(
-                            selectedItem: controller.selectedGender?.isEmpty ==
+                            selectedItem: controller
+                                        .selectedGender.value.isEmpty ==
                                     true
                                 ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
-                                : controller.selectedGender,
+                                : controller.selectedGender.value,
                             onChanged: (value) {
                               controller.setGenderValue(value.toString());
                             },
                             baseTextStyle:
-                                controller.selectedGender?.isEmpty == true
+                                controller.selectedGender.value.isEmpty == true
                                     ? AppStyles.ubHintColor15W500
                                     : null,
                             prefix: SvgPicture.asset(Assets.iconsGender),
@@ -122,7 +128,7 @@ class EditChildProfileView extends StatelessWidget {
                                           textAlign: TextAlign.start,
                                           style: AppStyles.ubNavyBlue15W600,
                                         ),
-                                        item == controller.selectedGender
+                                        item == controller.selectedGender.value
                                             ? SvgPicture.asset(
                                                 Assets.iconsCircleTick)
                                             : Dimens.box0,
@@ -224,7 +230,7 @@ class EditChildProfileView extends StatelessWidget {
                         backGroundColor: AppColors.fFEAEARedColor,
                         titleStyle: AppStyles.fC3030RedColorUrban15w600,
                         onTap: () {
-                          Get.back();
+                          controller.deleteChild();
                         },
                       ),
                       Dimens.boxHeight10,
@@ -232,7 +238,7 @@ class EditChildProfileView extends StatelessWidget {
                         title: TranslationKeys.update.tr,
                         backGroundColor: AppColors.navyBlue,
                         onTap: () {
-                          Get.back();
+                          controller.editAndUpdateChildApi();
                         },
                       ),
                     ],

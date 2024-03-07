@@ -119,7 +119,6 @@ class CreateCustomerProfileView extends StatelessWidget {
                                         img: controller.imageUrl,
                                         size: Dimens.oneHundredTwenty,
                                         imageRadius: Dimens.eighteen,
-
                                       )
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(

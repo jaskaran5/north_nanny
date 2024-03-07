@@ -13,8 +13,8 @@ class CustomChildProfileTile extends StatelessWidget {
   final void Function()? onTap;
   final String childIdl;
   final String childName;
-  final String childAge;
-  final String childGender;
+  final dynamic childAge;
+  final dynamic childGender;
   final String allergies;
   final String medicalCondition;
   final String aboutChild;
@@ -70,15 +70,14 @@ class CustomChildProfileTile extends StatelessWidget {
                       Dimens.boxHeight8,
                       CustomChildAgeGenderTile(
                         age: childAge,
-                        gender:
-                            childGender.toString() == "1" ? "Male" : "Female",
+                        gender: childGender != null
+                            ? childGender.toString() == "1"
+                                ? "Male"
+                                : childGender.toString() == "2"
+                                    ? "Female"
+                                    : ''
+                            : '',
                       )
-                      // const Row(
-                      //   children: [
-                      //     AppText(text: "NAME"),
-                      //     AppText(text: "NAME"),
-                      //   ],
-                      // ),
                     ],
                   ),
                   GestureDetector(

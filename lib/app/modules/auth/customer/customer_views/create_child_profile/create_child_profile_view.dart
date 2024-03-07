@@ -51,7 +51,7 @@ class CreateChildProfileView extends StatelessWidget {
               bottomHeight: Dimens.three,
               bottomWidth: Get.width,
             ),
-            bottomSheet: Container(
+            floatingActionButton: Container(
               color: AppColors.primaryColor,
               padding: Dimens.edgeInsetsL16R16B20,
               child: CustomButton(
@@ -66,210 +66,225 @@ class CreateChildProfileView extends StatelessWidget {
                 },
               ),
             ),
-            body: Column(
-              children: [
-                for (var i = 1; i <= controller.noOfChild.value; i++)
-                  i == controller.currentIndex.value
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.focusScope?.unfocus();
-                          },
-                          child: SafeArea(
-                            child: SingleChildScrollView(
-                              // reverse: true,
-                              child: Padding(
-                                padding: Dimens.edgeInsetsL16R16B16,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Dimens.boxHeight32,
-                                    TextField(
-                                      controller: controller
-                                          .childNameTextEditingController,
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      decoration: customFieldDeco(
-                                        hintText:
-                                            '${TranslationKeys.nameOfChild.tr} (${TranslationKeys.optional.tr})',
-                                        prefixWidget: Padding(
-                                          padding: Dimens.edgeInsets12,
-                                          child: SvgPicture.asset(
-                                            Assets.iconsUserTag,
-                                            height: Dimens.ten,
-                                            width: Dimens.ten,
-                                          ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            // bottomSheet:
+
+            //  Container(
+            //   color: AppColors.primaryColor,
+            //   padding: Dimens.edgeInsetsL16R16B20,
+            //   child: CustomButton(
+            //     title: TranslationKeys.continueWord.tr,
+            //     backGroundColor: AppColors.navyBlue,
+            //     onTap: () {
+            //       controller.addChildValidation(context);
+
+            //       // print(controller.currentIndex);
+            //       // RouteManagement.goToOffAllHome(selectedInterface);
+            //       // RouteManagement.goToOffAllDashboard(isFromSetting: false);
+            //     },
+            //   ),
+            // ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (var i = 1; i <= controller.noOfChild.value; i++)
+                    i == controller.currentIndex.value
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.focusScope?.unfocus();
+                            },
+                            child: Padding(
+                              padding: Dimens.edgeInsetsL16R16B16,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Dimens.boxHeight32,
+                                  TextField(
+                                    controller: controller
+                                        .childNameTextEditingController,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: customFieldDeco(
+                                      hintText:
+                                          '${TranslationKeys.nameOfChild.tr} (${TranslationKeys.optional.tr})',
+                                      prefixWidget: Padding(
+                                        padding: Dimens.edgeInsets12,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsUserTag,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
                                         ),
                                       ),
-                                      cursorColor: AppColors.blackColor,
-                                      cursorWidth: Dimens.one,
-                                      style: AppStyles.ubBlack15W600,
-                                      keyboardType: TextInputType.text,
                                     ),
-                                    Dimens.boxHeight20,
-                                    TextField(
-                                      controller: controller
-                                          .childAgeTextEditingController,
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      decoration: customFieldDeco(
-                                        hintText:
-                                            '${TranslationKeys.ageOfChild.tr} (${TranslationKeys.optional.tr})',
-                                        prefixWidget: Padding(
-                                          padding: Dimens.edgeInsets12,
-                                          child: SvgPicture.asset(
-                                            Assets.iconsCake,
-                                            height: Dimens.ten,
-                                            width: Dimens.ten,
-                                          ),
+                                    cursorColor: AppColors.blackColor,
+                                    cursorWidth: Dimens.one,
+                                    style: AppStyles.ubBlack15W600,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  Dimens.boxHeight20,
+                                  TextField(
+                                    controller: controller
+                                        .childAgeTextEditingController,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: customFieldDeco(
+                                      hintText:
+                                          '${TranslationKeys.ageOfChild.tr} (${TranslationKeys.optional.tr})',
+                                      prefixWidget: Padding(
+                                        padding: Dimens.edgeInsets12,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsCake,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
                                         ),
                                       ),
-                                      cursorColor: AppColors.blackColor,
-                                      cursorWidth: Dimens.one,
-                                      style: AppStyles.ubBlack15W600,
-                                      keyboardType: TextInputType.text,
                                     ),
-                                    Dimens.boxHeight20,
-                                    AppDropdown(
-                                      selectedItem: controller
-                                                  .selectedGender?.isEmpty ==
-                                              true
-                                          ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
-                                          : controller.selectedGender,
-                                      onChanged: (value) {
-                                        controller
-                                            .setGenderValue(value.toString());
-                                      },
-                                      baseTextStyle:
-                                          controller.selectedGender?.isEmpty ==
-                                                  true
-                                              ? AppStyles.ubHintColor15W500
-                                              : null,
-                                      prefix:
-                                          SvgPicture.asset(Assets.iconsGender),
-                                      items: controller.genderList,
-                                      itemBuilder: (context, item, isSelected) {
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: Dimens.edgeInsetsH20V15,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  AppText(
-                                                    text: item.toString().tr,
-                                                    maxLines: 1,
-                                                    textAlign: TextAlign.start,
-                                                    style: AppStyles
-                                                        .ubNavyBlue15W600,
-                                                  ),
-                                                  item ==
-                                                          controller
-                                                              .selectedGender
-                                                      ? SvgPicture.asset(Assets
-                                                          .iconsCircleTick)
-                                                      : Dimens.box0,
-                                                ],
-                                              ),
+                                    cursorColor: AppColors.blackColor,
+                                    cursorWidth: Dimens.one,
+                                    style: AppStyles.ubBlack15W600,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  Dimens.boxHeight20,
+                                  AppDropdown(
+                                    selectedItem: controller
+                                                .selectedGender?.isEmpty ==
+                                            true
+                                        ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
+                                        : controller.selectedGender,
+                                    onChanged: (value) {
+                                      controller
+                                          .setGenderValue(value.toString());
+                                    },
+                                    baseTextStyle:
+                                        controller.selectedGender?.isEmpty ==
+                                                true
+                                            ? AppStyles.ubHintColor15W500
+                                            : null,
+                                    prefix:
+                                        SvgPicture.asset(Assets.iconsGender),
+                                    items: controller.genderList,
+                                    itemBuilder: (context, item, isSelected) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsetsH20V15,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AppText(
+                                                  text: item.toString().tr,
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.start,
+                                                  style: AppStyles
+                                                      .ubNavyBlue15W600,
+                                                ),
+                                                item ==
+                                                        controller
+                                                            .selectedGender
+                                                    ? SvgPicture.asset(
+                                                        Assets.iconsCircleTick)
+                                                    : Dimens.box0,
+                                              ],
                                             ),
-                                            item != controller.genderList.last
-                                                ? Dimens.boxHeight2
-                                                : Dimens.box0,
-                                            item != controller.genderList.last
-                                                ? Divider(
-                                                    color:
-                                                        AppColors.dividerColor,
-                                                    height: Dimens.two,
-                                                  )
-                                                : Dimens.box0,
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                    Dimens.boxHeight20,
-                                    TextField(
-                                      controller: controller
-                                          .allergiesTextEditingController,
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      decoration: customFieldDeco(
-                                        hintText:
-                                            '${TranslationKeys.allergiesDietaryRestriction.tr} (${TranslationKeys.optional.tr})',
-                                        prefixWidget: Padding(
-                                          padding: Dimens.edgeInsets12,
-                                          child: SvgPicture.asset(
-                                            Assets.iconsSadEmoji,
-                                            height: Dimens.ten,
-                                            width: Dimens.ten,
                                           ),
+                                          item != controller.genderList.last
+                                              ? Dimens.boxHeight2
+                                              : Dimens.box0,
+                                          item != controller.genderList.last
+                                              ? Divider(
+                                                  color: AppColors.dividerColor,
+                                                  height: Dimens.two,
+                                                )
+                                              : Dimens.box0,
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  Dimens.boxHeight20,
+                                  TextField(
+                                    controller: controller
+                                        .allergiesTextEditingController,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: customFieldDeco(
+                                      hintText:
+                                          '${TranslationKeys.allergiesDietaryRestriction.tr} (${TranslationKeys.optional.tr})',
+                                      prefixWidget: Padding(
+                                        padding: Dimens.edgeInsets12,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsSadEmoji,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
                                         ),
                                       ),
-                                      cursorColor: AppColors.blackColor,
-                                      cursorWidth: Dimens.one,
-                                      style: AppStyles.ubBlack15W600,
-                                      keyboardType: TextInputType.text,
                                     ),
-                                    Dimens.boxHeight20,
-                                    TextField(
-                                      controller: controller
-                                          .medicalConditionTextEditingController,
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      decoration: customFieldDeco(
-                                        hintText:
-                                            '${TranslationKeys.medicalCondition.tr} (${TranslationKeys.optional.tr})',
-                                        prefixWidget: Padding(
-                                          padding: Dimens.edgeInsets12,
-                                          child: SvgPicture.asset(
-                                            Assets.iconsBrifecaseCross,
-                                            height: Dimens.ten,
-                                            width: Dimens.ten,
-                                          ),
+                                    cursorColor: AppColors.blackColor,
+                                    cursorWidth: Dimens.one,
+                                    style: AppStyles.ubBlack15W600,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  Dimens.boxHeight20,
+                                  TextField(
+                                    controller: controller
+                                        .medicalConditionTextEditingController,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: customFieldDeco(
+                                      hintText:
+                                          '${TranslationKeys.medicalCondition.tr} (${TranslationKeys.optional.tr})',
+                                      prefixWidget: Padding(
+                                        padding: Dimens.edgeInsets12,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsBrifecaseCross,
+                                          height: Dimens.ten,
+                                          width: Dimens.ten,
                                         ),
                                       ),
-                                      cursorColor: AppColors.navyBlue,
-                                      cursorWidth: Dimens.one,
-                                      style: AppStyles.ubBlack15W600,
-                                      keyboardType: TextInputType.text,
                                     ),
-                                    Dimens.boxHeight20,
-                                    TextField(
-                                      controller: controller
-                                          .anyThingTextEditingController,
-                                      maxLines: 4,
-                                      textAlign: TextAlign.start,
-                                      decoration: customFieldDeco(
-                                        hintText:
-                                            '${TranslationKeys.anythingElse.tr} (${TranslationKeys.optional.tr})',
-                                        prefixWidget: Padding(
-                                          padding: Dimens.edgeInsetsB55,
-                                          child: SvgPicture.asset(
-                                            Assets.iconsTaskSquare,
-                                            height: Dimens.eighteen,
-                                            width: Dimens.eighteen,
-                                            alignment: Alignment.topCenter,
-                                          ),
+                                    cursorColor: AppColors.navyBlue,
+                                    cursorWidth: Dimens.one,
+                                    style: AppStyles.ubBlack15W600,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  Dimens.boxHeight20,
+                                  TextField(
+                                    controller: controller
+                                        .anyThingTextEditingController,
+                                    maxLines: 4,
+                                    textAlign: TextAlign.start,
+                                    decoration: customFieldDeco(
+                                      hintText:
+                                          '${TranslationKeys.anythingElse.tr} (${TranslationKeys.optional.tr})',
+                                      prefixWidget: Padding(
+                                        padding: Dimens.edgeInsetsB55,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsTaskSquare,
+                                          height: Dimens.eighteen,
+                                          width: Dimens.eighteen,
+                                          alignment: Alignment.topCenter,
                                         ),
                                       ),
-                                      cursorColor: AppColors.navyBlue,
-                                      cursorWidth: Dimens.one,
-                                      style: AppStyles.ubBlack15W600,
-                                      keyboardType: TextInputType.text,
                                     ),
-                                    Dimens.boxHeight20,
-                                  ],
-                                ),
+                                    cursorColor: AppColors.navyBlue,
+                                    cursorWidth: Dimens.one,
+                                    style: AppStyles.ubBlack15W600,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  Dimens.boxHeight100,
+                                ],
                               ),
                             ),
-                          ),
-                        )
-                      : const SizedBox()
-              ],
+                          )
+                        : const SizedBox()
+                ],
+              ),
             )),
       );
 }

@@ -27,7 +27,7 @@ class FavoriteView extends StatelessWidget {
               description:
                   'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
               servicesList: const [
-                'Distance 10 miles',
+                'Distance: 10 miles',
                 'Age 23',
                 'Experience 7+'
               ],

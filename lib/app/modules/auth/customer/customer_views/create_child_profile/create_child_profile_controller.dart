@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/models/child_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
@@ -92,15 +94,15 @@ class CreateChildProfileController extends GetxController {
   /// * -------------->>>>>>>..          ADD CHILD API <<<<<<<<<<<<<<<< =========
   addChildApi(context) async {
     // Show CircularProgressIndicator while processing
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent user from dismissing dialog
-      builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false, // Prevent user from dismissing dialog
+    //   builder: (BuildContext context) {
+    //     return const Center(
+    //       child: CircularProgressIndicator(),
+    //     );
+    //   },
+    // );
 
     var listOfData = [
       {
@@ -118,21 +120,38 @@ class CreateChildProfileController extends GetxController {
     printInfo(info: "child data list:--> $listOfData");
 
     _apiHelper.postApi(ApiUrls.addChild, listOfData).futureValue((value) {
-      Get.back();
-      printInfo(info: "add child response model: ==>> $value");
+      var res = ChildResponseModel.fromJson(value);
 
-      if (currentIndex < noOfChild.value) {
-        updateController();
-        log(currentIndex.toString());
+      if (res.response == AppConstants.apiResponseSuccess) {
+        toast(msg: res.message!);
+        clearTextFields();
+        if (currentIndex < noOfChild.value) {
+          updateController();
+          log(currentIndex.toString());
 
-        updateLinearIndicatorValueWhenDataFilled();
+          updateLinearIndicatorValueWhenDataFilled();
 
-        Get.back();
-      } else {
-        Get.back();
-        RouteManagement.goToOffAllDashboard(isFromSetting: false);
+          // Get.back();
+        } else {
+          Get.back();
+          RouteManagement.goToOffAllDashboard(isFromSetting: false);
+        }
       }
+
+      // Get.back();
+      printInfo(info: "add child response model: ==>> $value");
     }, retryFunction: () {});
+  }
+
+  //clear text fields
+  clearTextFields() {
+    childNameTextEditingController.clear();
+    childAgeTextEditingController.clear();
+    selectedGender = '';
+    allergiesTextEditingController.clear();
+    medicalConditionTextEditingController.clear();
+    anyThingTextEditingController.clear();
+    update();
   }
 
   /// ------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>----------------->>>>>>>>>>>>>>>  SKIP FOR NOW <<<<<<<<< ------------

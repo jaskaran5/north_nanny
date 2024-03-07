@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-import 'package:northshore_nanny_flutter/app/models/customer_login_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';

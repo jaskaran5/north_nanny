@@ -43,11 +43,11 @@ class ChildListResponseModel {
 class ChildData {
   int? childId;
   String? name;
-  String? age;
-  int? gender;
-  String? allergiesDietaryAndRestrictions;
-  String? medicalCondition;
-  String? aboutChild;
+  dynamic age;
+  dynamic gender;
+  dynamic allergiesDietaryAndRestrictions;
+  dynamic medicalCondition;
+  dynamic aboutChild;
 
   ChildData({
     this.childId,
@@ -63,7 +63,7 @@ class ChildData {
         childId: json["childId"] ?? '',
         name: json["name"] ?? "",
         age: json["age"] ?? "",
-        gender: json["gender"] ?? "1",
+        gender: json["gender"],
         allergiesDietaryAndRestrictions:
             json["allergiesDietaryAndRestrictions"] ?? '',
         medicalCondition: json["medicalCondition"] ?? "",

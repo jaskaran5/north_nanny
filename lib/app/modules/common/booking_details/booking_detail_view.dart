@@ -108,7 +108,7 @@ class BookingDetailView extends StatelessWidget {
                     imageName: Assets.imagesStar,
                     showContentSvg: true,
                     message:
-                        'Your job has been successfully completed. Please rate your experience with this sitter',
+                        'Your job has been successfully completed.Please rate your experience with this sitter',
                   );
                 },
                 firstButtonBackgroundColor: AppColors.lightNavyBlue,
@@ -240,9 +240,9 @@ class BookingDetailView extends StatelessWidget {
                     description:
                         'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.',
                     servicesList: [
-                      'Distance 3 miles',
+                      'Distance: 3 miles',
                       'Age: 40',
-                      'Experience 10 yrs'
+                      'Experience: 10 yrs'
                     ],
                   ),
                   Dimens.boxHeight16,

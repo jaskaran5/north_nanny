@@ -93,7 +93,7 @@ class LogInView extends StatelessWidget {
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
                                     controller.isPasswordVisible
-                                        ? Assets.iconsHide
+                                        ? Assets.iconsShow
                                         : Assets.iconsHide,
                                     height: Dimens.ten,
                                     width: Dimens.ten,

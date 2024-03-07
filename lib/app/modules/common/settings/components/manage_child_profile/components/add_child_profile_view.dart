@@ -42,8 +42,9 @@ class AddChildProfileView extends StatelessWidget {
               title: "Add",
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                // RouteManagement.goToOffAllHome(selectedInterface);
-                RouteManagement.goToOffAllDashboard(isFromSetting: false);
+                controller.addChildValidation();
+                // // RouteManagement.goToOffAllHome(selectedInterface);
+                // RouteManagement.goToOffAllDashboard(isFromSetting: false);
               },
             ),
           ),
@@ -106,14 +107,15 @@ class AddChildProfileView extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       AppDropdown(
-                        selectedItem: controller.selectedGender?.isEmpty == true
+                        selectedItem: controller.selectedGender.value.isEmpty ==
+                                true
                             ? '${TranslationKeys.gender.tr} (${TranslationKeys.optional.tr})'
-                            : controller.selectedGender,
+                            : controller.selectedGender.value,
                         onChanged: (value) {
                           controller.setGenderValue(value.toString());
                         },
                         baseTextStyle:
-                            controller.selectedGender?.isEmpty == true
+                            controller.selectedGender.value.isEmpty == true
                                 ? AppStyles.ubHintColor15W500
                                 : null,
                         prefix: SvgPicture.asset(Assets.iconsGender),
@@ -135,7 +137,7 @@ class AddChildProfileView extends StatelessWidget {
                                       textAlign: TextAlign.start,
                                       style: AppStyles.ubNavyBlue15W600,
                                     ),
-                                    item == controller.selectedGender
+                                    item == controller.selectedGender.value
                                         ? SvgPicture.asset(
                                             Assets.iconsCircleTick)
                                         : Dimens.box0,

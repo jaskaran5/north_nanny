@@ -42,9 +42,9 @@ class CurrentLocationGoogleMap extends StatelessWidget {
           ),
         ),
         floatingActionButton: CustomButton(
-          titleStyle: AppStyles.navyBlue15UbW600,
+          titleStyle: AppStyles.fffUrban15w600,
           title: "Done",
-          backGroundColor: AppColors.navyBlue3288DE,
+          backGroundColor: AppColors.navyBlue,
           onTap: () {
             googleMapViewController.saveLocationCoordinates();
           },
