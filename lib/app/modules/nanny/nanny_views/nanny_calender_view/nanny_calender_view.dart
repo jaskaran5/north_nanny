@@ -64,7 +64,7 @@ class NannyCalenderView extends StatelessWidget {
                         DateTime.now().year,
                       ),
                       lastDay: DateTime.utc(
-                        2050,
+                        DateTime.now().year+100,
                       ),
                       headerStyle: HeaderStyle(
                         titleTextStyle: AppStyles.ubBlack18W600,

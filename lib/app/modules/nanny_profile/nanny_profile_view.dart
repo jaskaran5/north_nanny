@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/schedule_nanny/schedule_nanny_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -19,7 +20,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/custom_text_field.dart';
@@ -28,6 +29,7 @@ import '../../widgets/houry_rate_view.dart';
 class NannyProfileView extends StatelessWidget {
   const NannyProfileView(
       {super.key, required this.isComeFromSetting, required this.appBarTitle});
+
   final bool isComeFromSetting;
   final String appBarTitle;
 
@@ -291,8 +293,9 @@ class NannyProfileView extends StatelessWidget {
                   ],
                   if (controller.selectedIndex == 2) ...[
                     availabilityView(
-                        selectedDate: controller.selectedDate,
-                        isComeFromSetting: isComeFromSetting),
+                      isComeFromSetting: isComeFromSetting,
+                      controller: controller,
+                    ),
                   ],
                 ],
               ),
@@ -361,7 +364,8 @@ Widget servicesView(
                                   .firstWhereOrNull((element) =>
                                       element.serviceName ==
                                       servicesList?[index].toString())
-                                  ?.serviceName.tr) ??
+                                  ?.serviceName
+                                  .tr) ??
                               Services.funActivityOutHouse.serviceName.tr,
                           style: AppStyles.ubBlack14W600,
                           maxLines: 1,
@@ -414,7 +418,8 @@ Widget servicesView(
     );
 
 Widget availabilityView(
-        {required DateTime selectedDate, required bool isComeFromSetting}) =>
+        {required bool isComeFromSetting,
+        required NannyProfileController controller}) =>
     Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
@@ -423,6 +428,7 @@ Widget availabilityView(
         children: [
           Container(
             padding: Dimens.edgeInsets10,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(Dimens.eight),
@@ -433,44 +439,44 @@ Widget availabilityView(
                 )
               ],
             ),
-            child: TableCalendar(
-              sixWeekMonthsEnforced: true,
-              // availableGestures: AvailableGestures.none,
-              startingDayOfWeek: StartingDayOfWeek.monday,
-              daysOfWeekStyle: DaysOfWeekStyle(
-                weekdayStyle: AppStyles.ubHintColor13W500,
-                weekendStyle: AppStyles.ubHintColor13W500,
-              ),
-              calendarStyle: CalendarStyle(
-                defaultTextStyle: AppStyles.ubBlack15W600,
-                weekendTextStyle: AppStyles.ubBlack15W600,
-                outsideTextStyle: AppStyles.ubHintColor15W500,
-                todayDecoration: const BoxDecoration(
-                  color: AppColors.navyBlue,
-                  shape: BoxShape.circle,
-                ),
-                todayTextStyle: AppStyles.ubWhite15700,
-                selectedTextStyle: AppStyles.ubWhite15700,
-                selectedDecoration: const BoxDecoration(
-                  color: AppColors.navyBlue,
-                  shape: BoxShape.circle,
-                ),
-                markersMaxCount: 1,
-              ),
-              firstDay: DateTime.now(),
-              lastDay: DateTime.utc(
-                2050,
-              ),
-              headerStyle: HeaderStyle(
-                titleTextStyle: AppStyles.ubBlack18W600,
-                formatButtonVisible: false,
-                titleCentered: true,
-              ),
-              selectedDayPredicate: (day) => day == selectedDate,
-              onDaySelected: (selectedDay, focusedDay) {
-                selectedDate = selectedDay;
+            child: SfDateRangePicker(
+              selectionMode: DateRangePickerSelectionMode.range,
+              navigationMode: DateRangePickerNavigationMode.none,
+              onSelectionChanged: (DateRangePickerSelectionChangedArgs dateRangePickerSelectionChangedArgs) {
+                // DateFormat('yyy-MM-dd').format()
               },
-              focusedDay: selectedDate,
+              view: DateRangePickerView.month,
+              initialSelectedDate: controller.selectedDate,
+              allowViewNavigation: false,
+              backgroundColor: AppColors.primaryColor,
+              enablePastDates: false,
+              headerStyle: DateRangePickerHeaderStyle(
+                  textStyle: AppStyles.ubBlack18W600,
+                  backgroundColor: AppColors.primaryColor,
+                  textAlign: TextAlign.left),
+              minDate: DateTime.now(),
+              monthCellStyle: DateRangePickerMonthCellStyle(
+                disabledDatesTextStyle: AppStyles.ubHintColor13W500,
+                weekendTextStyle: AppStyles.ubHintColor15W500,
+                textStyle: AppStyles.ubBlack15W600,
+                todayTextStyle: AppStyles.ubNavyBlue15W600,
+                leadingDatesTextStyle: AppStyles.ubHintColor13W500,
+                trailingDatesTextStyle: AppStyles.ubHintColor13W500,
+                todayCellDecoration: const BoxDecoration(
+                    color: Colors.transparent, shape: BoxShape.circle),
+              ),
+              monthViewSettings: DateRangePickerMonthViewSettings(
+                showTrailingAndLeadingDates: true,
+                viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                  textStyle: AppStyles.ubGrey14W500,
+                ),
+              ),
+              initialDisplayDate: controller.selectedDate,
+              rangeSelectionColor: AppColors.lightNavyBlue,
+              startRangeSelectionColor: AppColors.navyBlue,
+              rangeTextStyle: AppStyles.ubBlack15W600,
+              endRangeSelectionColor: AppColors.navyBlue,
+              todayHighlightColor: AppColors.navyBlue,
             ),
           ),
           Dimens.boxHeight20,
@@ -494,7 +500,8 @@ Widget availabilityView(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      text: selectedDate.day.toString().padLeft(2, '0'),
+                      text: '01',
+                      // 'controller.selectedDate.first.day.toString().padLeft(2, '')',
                       style: AppStyles.ubBlack30W600,
                       maxLines: 1,
                     ),
@@ -624,6 +631,14 @@ Widget availabilityView(
                                     Dimens.boxHeight14,
                                     TextField(
                                       maxLines: 1,
+                                      readOnly: true,
+                                      onTap: () async {
+                                        var endValue = await showTimePicker(
+                                          context: Get.context!,
+                                          initialTime: TimeOfDay.now(),
+                                        );
+                                        print('value:$endValue');
+                                      },
                                       minLines: 1,
                                       decoration: customFieldDeco(
                                         hintText: TranslationKeys.endTime.tr,

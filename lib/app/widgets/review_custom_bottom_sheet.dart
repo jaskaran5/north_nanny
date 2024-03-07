@@ -10,6 +10,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rating_tile.dart';
 
+
 class CustomReviewBottomSheet extends StatelessWidget {
   const CustomReviewBottomSheet(
       {super.key,
@@ -123,12 +124,12 @@ class CustomReviewBottomSheet extends StatelessWidget {
                     (index) => Padding(
                       padding: Dimens.edgeInsets16,
                       child: CustomRatingTile(
-                        reviewDate: '01/03/204',
-                        userImage: Assets.iconsImage,
-                        userName: reviewsList[index].toString(),
+                        reviewDate: reviewsList[index].datetime?.toLocal() ?? '',
+                        userImage:  reviewsList[index].image,
+                        userName: reviewsList[index].name,
                         ratingDescription:
                             'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
-                        totalRating: 4.5,
+                        totalRating: totalReviewsRating,
                         personRating: 4.5,
                       ),
                     ),

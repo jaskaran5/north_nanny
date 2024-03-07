@@ -78,7 +78,7 @@ class LogInView extends StatelessWidget {
 
                           /** PASSWORD ============ */
                           TextField(
-                            obscureText: !controller.isPasswordVisible.value,
+                            obscureText: controller.isPasswordVisible,
                             controller:
                                 controller.passwordTextEditingController,
                             maxLines: 1,
@@ -92,9 +92,9 @@ class LogInView extends StatelessWidget {
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(
-                                    controller.isPasswordVisible.value
+                                    controller.isPasswordVisible
                                         ? Assets.iconsHide
-                                        : Assets.iconsShow,
+                                        : Assets.iconsHide,
                                     height: Dimens.ten,
                                     width: Dimens.ten,
                                   ),
