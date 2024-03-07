@@ -21,8 +21,8 @@ class LogInController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
   String loginType = '';
 
-  RxBool isPasswordVisible = false.obs;
-  RxBool rememberMe = true.obs;
+  bool isPasswordVisible = true;
+  RxBool rememberMe = false.obs;
 
   @override
   void onInit() {
@@ -57,6 +57,7 @@ class LogInController extends GetxController {
 
   checkSavedSession() {
     if (Storage.hasData(StringConstants.email)) {
+      rememberMe.value=true;
       emailTextEditingController.text = Storage.getValue(StringConstants.email);
       passwordTextEditingController.text =
           Storage.getValue(StringConstants.pswd);
@@ -73,7 +74,7 @@ class LogInController extends GetxController {
 
   /// ---------- TOOGLE  PASSWORD----------
   togglePassword() {
-    isPasswordVisible.value = !isPasswordVisible.value;
+    isPasswordVisible = !isPasswordVisible;
     update();
   }
 
@@ -143,10 +144,12 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            } else if (res.data?.user?.isApproved == false ||
-                res.data?.user?.isSkipBankDetail == true) {
-              RouteManagement.goToOffAllWaitingApprovalView();
-            } else {
+            }
+            // else if (res.data?.user?.isApproved == false ||
+            //     res.data?.user?.isSkipBankDetail == true) {
+            //   RouteManagement.goToOffAllWaitingApprovalView();
+            // }
+            else {
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
             }
             toast(msg: res.message.toString(), isError: false);

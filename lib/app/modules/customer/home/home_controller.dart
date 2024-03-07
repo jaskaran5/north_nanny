@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 
 class HomeController extends GetxController {
   RxBool showListView = false.obs;

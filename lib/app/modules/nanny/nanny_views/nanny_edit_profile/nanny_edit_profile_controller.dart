@@ -101,8 +101,8 @@ class NannyEditProfileController extends GetxController {
         printInfo(info: "Get Nanny profile response value $value");
         var response = MyProfileModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          // firstNameTextEditingController.text=response.data.
-          // lastNameTextEditingController.text=
+          firstNameTextEditingController.text = response.data?.firstName ?? '';
+          lastNameTextEditingController.text = response.data?.lastName ?? '';
           ageTextEditingController.text = response.data?.age.toString() ?? '';
           phoneNumberTextEditingController.text = response.data?.mobileNo ?? '';
           locationTextEditingController.text = response.data?.location ?? '';
