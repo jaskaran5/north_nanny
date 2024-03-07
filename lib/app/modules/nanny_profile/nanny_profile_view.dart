@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -19,7 +18,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
 import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/houry_rate_view.dart';
 
