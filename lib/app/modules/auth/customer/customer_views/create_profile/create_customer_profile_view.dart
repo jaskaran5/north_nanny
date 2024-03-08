@@ -240,7 +240,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                     /** ------------------------------->>>>>>>>>>>>>>>>>>> LOCATION */
                     TextField(
                       onTap: () {
-                        RouteManagement.goToGoogleMapScreen();
+                        RouteManagement.goToGoogleMapScreen(false);
                         log("on clcik on location textfields ");
                       },
                       readOnly: true,

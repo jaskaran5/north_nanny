@@ -19,6 +19,8 @@ class CustomerHomeController extends GetxController {
   RxBool isGoogleMap = true.obs;
   final Set<Marker> markers = {};
 
+  RxList homeNannyList = [].obs;
+
   List<String> homeCustomList = [
     'Distance: 3 miles',
     'Age: 40',
@@ -28,15 +30,15 @@ class CustomerHomeController extends GetxController {
   late GoogleMapController googleMapController;
 
   static const CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(30.7046, 76.7179),
     zoom: 14.4746,
   );
 
   static const CameraPosition kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(
-        37.42796133580664,
-        -122.085749655962,
+        30.7046,
+        76.7179,
       ),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
@@ -57,9 +59,10 @@ class CustomerHomeController extends GetxController {
     markers.add(
       Marker(
         markerId: const MarkerId("nanny"),
-        position: const LatLng(37.42796133580664, -122.085749655962),
+        position: const LatLng(30.7046, 76.7179),
         icon: await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(devicePixelRatio: 2.0), Assets.iconsMap),
+            const ImageConfiguration(devicePixelRatio: 2.0),
+            Assets.imagesNannyMapPin),
       ),
     );
   }
@@ -79,13 +82,13 @@ class CustomerHomeController extends GetxController {
 
   Future<void> setMarkers() async {
     final Uint8List defaultMarkerImage =
-        await getBytesFromAsset('assets/icons/image.png', Get.width ~/ 4);
-    const size = Size(50, 50);
+        await getBytesFromAsset(Assets.imagesNannyMapPin, Get.width ~/ 4);
+    const size = Size(200, 200);
     markers.addAll([
       Marker(
         icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
         markerId: const MarkerId("00"),
-        position: const LatLng(37.42796133580664, -122.085749655962),
+        position: const LatLng(30.7046, 76.7179),
       ),
       Marker(
         icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
@@ -101,7 +104,7 @@ class CustomerHomeController extends GetxController {
     await googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         const CameraPosition(
-          target: LatLng(37.42796133580664, -122.085749655962),
+          target: LatLng(30.7046, 76.7179),
           zoom: 13.4746,
         ),
       ),
@@ -114,10 +117,22 @@ class CustomerHomeController extends GetxController {
         return;
       }
 
-      _apiHelper.getPosts(ApiUrls.userDashBoard).futureValue((value) {
+      var body = {
+        "minMiles": 0,
+        "maxMiles": 0,
+        "minAge": 0,
+        "maxAge": 0,
+        "dateTime": "2024-03-08T05:51:50.263Z",
+        "gender": 0,
+        "name": "string"
+      };
+
+      _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
         var res = DashboardResponseModel.fromJson(value);
 
         if (res.response == AppConstants.apiResponseSuccess) {
+          homeNannyList.value = res.data ?? [];
+          update();
           // toast(msg: "");
         }
       }, retryFunction: getDashboardApi);

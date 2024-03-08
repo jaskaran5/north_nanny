@@ -261,7 +261,7 @@ class CreateNannyProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     TextField(
                       onTap: () {
-                        RouteManagement.goToGoogleMapScreen();
+                        RouteManagement.goToGoogleMapScreen(false);
                       },
                       readOnly: true,
                       controller: controller.locationTextEditingController,

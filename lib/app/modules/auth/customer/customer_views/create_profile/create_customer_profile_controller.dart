@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
@@ -25,7 +26,7 @@ class CreateCustomerProfileController extends GetxController {
   final locationTextEditingController = TextEditingController();
   final referrelCodeTextEditingController = TextEditingController();
 
-  File? pickedImage;
+  CroppedFile? pickedImage;
 
   String imageUrl = '';
   RxString coordinates = "".obs;

@@ -25,6 +25,8 @@ class SplashController extends GetxController {
       if (Storage.getValue(StringConstants.isLogin)) {
         RouteManagement.goToOffAllDashboard(isFromSetting: false);
       }
+    } else {
+      RouteManagement.goChooseBabySitter();
     }
   }
 
@@ -79,7 +81,9 @@ class SplashController extends GetxController {
     await Future.delayed(
       const Duration(seconds: 5),
     );
-    RouteManagement.goChooseBabySitter();
+
+    checkSession();
+
     // RouteManagement.goToOffAllHome(ChooseInterface.customer);
     // if (isLoggedIn) {
 

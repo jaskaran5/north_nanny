@@ -347,6 +347,7 @@ class SettingController extends GetxController {
         printInfo(info: "log out value $value");
         var response = RegisterModelResponseJson.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          Storage.removeValue(StringConstants.isLogin);
           RouteManagement.goToOffAllLogIn();
           toast(msg: response.message.toString(), isError: false);
         } else {

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/constants/assets.dart';
@@ -208,8 +210,19 @@ class EditProfileView extends StatelessWidget {
                           controller: controller.locationTextEditingController,
                           maxLines: 1,
                           minLines: 1,
-                          onTap: () {
-                            RouteManagement.goToGoogleMapScreen();
+                          onTap: () async {
+                            String? address = await Get.toNamed(
+                                    Routes.googleMapView,
+                                    arguments: true)
+                                ?.then((value) {
+                              return value;
+                            });
+                            log("new address is -->> $address");
+
+                            if (address != null) {
+                              controller.updateLocationAddress(
+                                  address: address);
+                            }
                           },
                           decoration: customFieldDeco(
                             hintText: TranslationKeys.selectLocation.tr,

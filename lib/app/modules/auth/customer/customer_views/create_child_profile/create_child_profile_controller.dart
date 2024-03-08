@@ -2,11 +2,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/child_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
@@ -134,6 +136,7 @@ class CreateChildProfileController extends GetxController {
           // Get.back();
         } else {
           Get.back();
+          Storage.saveValue(StringConstants.isLogin, true);
           RouteManagement.goToOffAllDashboard(isFromSetting: false);
         }
       }
@@ -159,6 +162,7 @@ class CreateChildProfileController extends GetxController {
     var listOfData = [];
 
     _apiHelper.postApi(ApiUrls.addChild, listOfData).futureValue((value) {
+      Storage.saveValue(StringConstants.isLogin, true);
       RouteManagement.goToOffAllDashboard(isFromSetting: false);
     }, retryFunction: () {});
   }

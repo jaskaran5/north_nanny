@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
@@ -69,7 +70,7 @@ class NannyEditProfileController extends GetxController {
   String? imageUrl = '';
 
   /// used to store the value of image from camera or galley.
-  File? pickedImage;
+  CroppedFile? pickedImage;
 
   /// method used to pick the Image from gallery
   pickImage() async {

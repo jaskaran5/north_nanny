@@ -11,14 +11,13 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_pr
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
 class GoogleMapViewController extends GetxController {
+  RxBool isFromEdit = false.obs;
   Rxn<LatLng> currentLatLng = Rxn(LatLng(
       Storage.getValue(StringConstants.latitude),
       Storage.getValue(StringConstants.longitude)));
 
   final Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
-
-  RxBool isFromEdit = false.obs;
 
   @override
   void onInit() {
@@ -30,6 +29,11 @@ class GoogleMapViewController extends GetxController {
         longitude: value.longitude,
       );
     });
+
+    isFromEdit.value = Get.arguments;
+
+    log("-----isfromEdit--->>>. ${isFromEdit.value}");
+    update();
     super.onInit();
   }
 

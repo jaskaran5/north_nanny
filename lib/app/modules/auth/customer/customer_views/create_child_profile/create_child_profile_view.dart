@@ -107,8 +107,7 @@ class CreateChildProfileView extends StatelessWidget {
                                     maxLines: 1,
                                     minLines: 1,
                                     decoration: customFieldDeco(
-                                      hintText:
-                                          '${TranslationKeys.nameOfChild.tr} (${TranslationKeys.optional.tr})',
+                                      hintText: TranslationKeys.nameOfChild.tr,
                                       prefixWidget: Padding(
                                         padding: Dimens.edgeInsets12,
                                         child: SvgPicture.asset(

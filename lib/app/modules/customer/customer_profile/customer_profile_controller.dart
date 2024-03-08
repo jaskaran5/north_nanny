@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
@@ -23,7 +24,7 @@ class CustomerProfileController extends GetxController {
   RxString customerName = ''.obs;
   RxString customerEmail = ''.obs;
   RxString referralEarned = '0'.obs;
-  File? pickedImage;
+  CroppedFile? pickedImage;
 
   RxString customerImageUrl =
       'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww'
@@ -170,5 +171,12 @@ class CustomerProfileController extends GetxController {
     if (check) {
       getCustomerProfileApi();
     }
+  }
+
+  /// update location
+
+  updateLocationAddress({required String address}) {
+    locationTextEditingController.text = address;
+    update();
   }
 }

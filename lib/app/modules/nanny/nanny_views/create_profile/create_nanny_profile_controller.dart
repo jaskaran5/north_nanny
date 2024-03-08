@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -65,7 +66,7 @@ class CreateNannyProfileController extends GetxController {
   String? licenseHaveOrNot = '';
 
   /// used to store the value of image from camera or galley.
-  File? pickedImage;
+  CroppedFile? pickedImage;
 
   /// method used to pick the Image from gallery
   pickImage() async {

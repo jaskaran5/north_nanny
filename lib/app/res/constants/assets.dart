@@ -113,6 +113,7 @@ class Assets {
   static const String iconsUserTag = 'assets/icons/user_tag.svg';
   static const String iconsVisa = 'assets/icons/visa.svg';
   static const String imagesMap = 'assets/images/map.png';
+  static const String imagesNannyMapPin = 'assets/images/nanny_map_pin.png';
   static const String imagesPinkHeart = 'assets/images/pink_heart.png';
   static const String imagesStar = 'assets/images/star.png';
   static const String imagesUserAvatar = 'assets/images/user_avatar.png';

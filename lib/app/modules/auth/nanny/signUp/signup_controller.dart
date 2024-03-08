@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
@@ -30,7 +32,7 @@ class SignupViewController extends GetxController {
 
   RxBool isAcceptTerms = false.obs;
 
-  File? pickedImage;
+  CroppedFile? pickedImage;
 
   Rxn<LatLng> currentLatLng = Rxn(const LatLng(0, 0));
 
@@ -123,7 +125,8 @@ class SignupViewController extends GetxController {
     }
 
     //  String? deviceToken = await FirebaseMessaging.instance.getToken();
-    String deviceToken = 'devicetokenfirebaseneeded';
+    final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
+    log("fcm token : $deviceToken");
 
     try {
       if (!(await Utils.hasNetwork())) {

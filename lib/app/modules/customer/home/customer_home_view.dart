@@ -195,7 +195,7 @@ class CustomerHomeView extends StatelessWidget {
           body: controller.isGoogleMap.value
               ? GoogleMap(
                   initialCameraPosition: const CameraPosition(
-                    target: LatLng(37.42796133580664, -122.085749655962),
+                    target: LatLng(30.7046, 76.7179),
                     zoom: 14.4746,
                   ),
                   markers: controller.markers,
@@ -203,46 +203,53 @@ class CustomerHomeView extends StatelessWidget {
                     controller.onMapCreated(controller: contro);
                   },
                 )
-              : Padding(
-                  padding: Dimens.edgeInsets16,
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => NannyProfileView(
-                          isComeFromSetting: false,
-                          appBarTitle: TranslationKeys.nannyProfile.tr,
+              : controller.homeNannyList.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No Nanny Nearby",
+                        style: AppStyles.b0b0fairPlay15w600,
+                      ),
+                    )
+                  : Padding(
+                      padding: Dimens.edgeInsets16,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => NannyProfileView(
+                              isComeFromSetting: false,
+                              appBarTitle: TranslationKeys.nannyProfile.tr,
+                            ),
+                          );
+                        },
+                        child: HomeCustomListView(
+                          description:
+                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
+                          image: Assets.iconsImage,
+                          name: 'Christina Wang',
+                          rating: '4.5',
+                          reviews: '(21 reviews)',
+                          servicesList: controller.homeCustomList,
+                          isHeartTapped: false,
+                          heartSvg: Assets.iconsHeartOutline,
+                          onTapHeartIcon: () {},
+                          onTapRating: () {
+                            Utility.openBottomSheet(
+                              const CustomReviewBottomSheet(
+                                totalReviews: 21,
+                                totalReviewsRating: 4.5,
+                                reviewsList: [
+                                  'Michael Johnson',
+                                  'Giorgio Chiellini',
+                                  'Michael Johnson',
+                                  'Alex Morgan',
+                                  'Giorgio Chiellini'
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                    child: HomeCustomListView(
-                      description:
-                          'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
-                      image: Assets.iconsImage,
-                      name: 'Christina Wang',
-                      rating: '4.5',
-                      reviews: '(21 reviews)',
-                      servicesList: controller.homeCustomList,
-                      isHeartTapped: false,
-                      heartSvg: Assets.iconsHeartOutline,
-                      onTapHeartIcon: () {},
-                      onTapRating: () {
-                        Utility.openBottomSheet(
-                          const CustomReviewBottomSheet(
-                            totalReviews: 21,
-                            totalReviewsRating: 4.5,
-                            reviewsList: [
-                              'Michael Johnson',
-                              'Giorgio Chiellini',
-                              'Michael Johnson',
-                              'Alex Morgan',
-                              'Giorgio Chiellini'
-                            ],
-                          ),
-                        );
-                      },
+                      ),
                     ),
-                  ),
-                ),
         ),
       );
 }

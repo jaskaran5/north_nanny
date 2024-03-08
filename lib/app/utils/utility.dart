@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -12,14 +13,10 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../res/theme/colors.dart';
 
-
-
-
 class Utility {
   const Utility._();
 
   static void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
-
 
   /// Returns true if the internet connection is available.
   // static Future<bool> get isNetworkAvailable async {
@@ -30,8 +27,6 @@ class Utility {
   //     ConnectivityResult.ethernet
   //   ].contains(result);
   // }
-
-
 
   static Future<T?> openBottomSheet<T>(
     Widget child, {
@@ -333,7 +328,7 @@ class Utility {
 
   /// SHOW IMAGE PICKER
   static Future<void> showImagePicker({
-    required Function(File image) onGetImage,
+    required Function(CroppedFile image) onGetImage,
   }) {
     return showModalBottomSheet<void>(
       context: Get.context!,
@@ -398,10 +393,8 @@ class Utility {
     );
   }
 
-  static Future<File?> getImage({int source = 1}) async {
-    // File? croppedFile;
-    File? image;
-
+  static Future<CroppedFile?> getImage({int source = 1}) async {
+    CroppedFile? croppedFile;
     final picker = ImagePicker();
 
     final pickedFile = await picker.pickImage(
@@ -410,9 +403,76 @@ class Utility {
     );
 
     if (pickedFile != null) {
-      image = File(pickedFile.path);
+      final image = File(pickedFile.path);
+
+      croppedFile = await ImageCropper().cropImage(
+        compressQuality: 50,
+        sourcePath: image.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+        ],
+        //   uiSettings: IOSUiSettings(
+        //     minimumAspectRatio: 0.1,
+        //     aspectRatioLockDimensionSwapEnabled: true,
+        //   ),
+      );
     }
 
-    return image;
+    return croppedFile;
   }
+
+  // static Future<File?> getImage({int source = 1}) async {
+  //   // File? croppedFile;
+  //   File? image;
+
+  //   final picker = ImagePicker();
+
+  //   final pickedFile = await picker.pickImage(
+  //     source: source == 1 ? ImageSource.camera : ImageSource.gallery,
+  //     imageQuality: 60,
+  //   );
+
+  //   if (pickedFile != null) {
+  //     image = File(pickedFile.path);
+
+  //     croppedFile = ImageCropper().cropImage(
+  //       compressQuality: 50,
+  //       sourcePath: image.path,
+  //       aspectRatioPresets: [
+  //         CropAspectRatioPreset.square,
+  //         CropAspectRatioPreset.ratio3x2,
+  //         CropAspectRatioPreset.original,
+  //         CropAspectRatioPreset.ratio4x3,
+  //         CropAspectRatioPreset.ratio16x9
+  //       ],
+  //       androidUiSettings: const AndroidUiSettings(
+  //         toolbarColor: Colors.transparent,
+  //         toolbarWidgetColor: Colors.transparent,
+  //         initAspectRatio: CropAspectRatioPreset.original,
+  //         lockAspectRatio: false,
+  //       ),
+  //       iosUiSettings: const IOSUiSettings(
+  //         minimumAspectRatio: 0.1,
+  //         aspectRatioLockDimensionSwapEnabled: true,
+  //       ),
+  //     );
+  //   }
+
+  //   return image;
+  // }
 }

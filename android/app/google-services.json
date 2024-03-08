@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833242348271",
+    "project_id": "northshore-nanny",
+    "storage_bucket": "northshore-nanny.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833242348271:android:27e017734af5a5a90e791a",
+        "android_client_info": {
+          "package_name": "com.northshore_nanny.northshore_nanny_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXzXwI0yPU4zM8RkO0pZ5NejekDmjzt9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

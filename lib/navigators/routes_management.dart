@@ -279,10 +279,8 @@ abstract class RouteManagement {
   }
 
   /// Go to GoogleMap  Screen
-  static void goToGoogleMapScreen() {
-    Get.toNamed(
-      Routes.googleMapView,
-    );
+  static void goToGoogleMapScreen(isFromEdit) {
+    Get.toNamed(Routes.googleMapView, arguments: isFromEdit);
   }
 
   /// Go to Choose child  Screen
@@ -301,9 +299,9 @@ abstract class RouteManagement {
 
   /// Go to Edit Nanny Profile  View
   static void goToEditNannyProfileView() {
-   Get.toNamed(
-     Routes.editNannyProfile,
-   );
+    Get.toNamed(
+      Routes.editNannyProfile,
+    );
   }
 
   /// Go to Edit Nanny Services  View

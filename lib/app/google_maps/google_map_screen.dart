@@ -46,7 +46,13 @@ class CurrentLocationGoogleMap extends StatelessWidget {
           title: "Done",
           backGroundColor: AppColors.navyBlue,
           onTap: () {
-            googleMapViewController.saveLocationCoordinates();
+            if (googleMapViewController.isFromEdit.value) {
+              googleMapViewController.getEditLocation().then((value) {
+                Get.back(result: value);
+              });
+            } else {
+              googleMapViewController.saveLocationCoordinates();
+            }
           },
         ));
   }

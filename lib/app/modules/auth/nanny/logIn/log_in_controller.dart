@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
@@ -57,7 +58,7 @@ class LogInController extends GetxController {
 
   checkSavedSession() {
     if (Storage.hasData(StringConstants.email)) {
-      rememberMe.value=true;
+      rememberMe.value = true;
       emailTextEditingController.text = Storage.getValue(StringConstants.email);
       passwordTextEditingController.text =
           Storage.getValue(StringConstants.pswd);
@@ -114,6 +115,8 @@ class LogInController extends GetxController {
       Storage.removeValue(StringConstants.token);
     }
     try {
+      final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
+      log("fcm token : $deviceToken");
       if (!(await Utils.hasNetwork())) {
         return;
       }
@@ -121,7 +124,7 @@ class LogInController extends GetxController {
       var body = {
         "email": emailTextEditingController.text.trim(),
         "password": passwordTextEditingController.text.trim(),
-        "deviceToken": 'nskkhdndniud',
+        "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": userType,
         "latitude": Storage.getValue(StringConstants.latitude).toString(),
@@ -144,12 +147,12 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            }
-            // else if (res.data?.user?.isApproved == false ||
-            //     res.data?.user?.isSkipBankDetail == true) {
-            //   RouteManagement.goToOffAllWaitingApprovalView();
-            // }
-            else {
+            } else if (res.data?.user?.isApproved == false ||
+                res.data?.user?.isSkipBankDetail == true) {
+              RouteManagement.goToOffAllWaitingApprovalView();
+            } else {
+              Storage.saveValue(StringConstants.isLogin, true);
+
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
             }
             toast(msg: res.message.toString(), isError: false);
@@ -160,6 +163,8 @@ class LogInController extends GetxController {
           /******* CUSTOMER ----------->>>>>>>> */
           var res = CustomerLoginResponseModel.fromJson(value);
 
+          log("login response : $res");
+
           if (res.response == AppConstants.apiResponseSuccess) {
             Storage.saveValue(StringConstants.token, res.data?.token);
             if (res.data?.user?.isProfileCreated == false) {
@@ -168,15 +173,17 @@ class LogInController extends GetxController {
               RouteManagement.goToCreateCustomerProfile();
             } else {
               if (res.data?.user?.isSkipChildDetails == true) {
+                Storage.saveValue(StringConstants.isLogin, true);
                 RouteManagement.goToOffAllDashboard(isFromSetting: false);
               } else if (res.data?.user?.isChildAdded == false) {
                 RouteManagement.goToChooseChildProfileView();
               } else if (res.data?.user?.isChildAdded == true) {
+                Storage.saveValue(StringConstants.isLogin, true);
                 RouteManagement.goToOffAllDashboard(isFromSetting: false);
               }
             }
           } else {
-            RouteManagement.goToOffAllDashboard(isFromSetting: false);
+            toast(msg: res.message!, isError: true);
           }
         }
       }, onError: (error) {
