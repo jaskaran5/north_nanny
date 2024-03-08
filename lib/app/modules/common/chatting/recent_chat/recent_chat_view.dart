@@ -48,6 +48,7 @@ class RecentChatView extends StatelessWidget {
                         ),
                       ),
                       Dimens.boxHeight10,
+                      //check
                       ListView.builder(
                         itemCount: 16,
                         shrinkWrap: true,

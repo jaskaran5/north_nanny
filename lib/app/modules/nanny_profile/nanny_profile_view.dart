@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,8 +20,11 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../widgets/custom_bottom_sheet.dart';
+import '../../widgets/custom_text_field.dart';
 import '../../widgets/houry_rate_view.dart';
+import '../schedule_nanny/schedule_nanny_view.dart';
 
 class NannyProfileView extends StatelessWidget {
   const NannyProfileView(
@@ -287,10 +292,10 @@ class NannyProfileView extends StatelessWidget {
                       ),
                   ],
                   if (controller.selectedIndex == 2) ...[
-                    // availabilityView(
-                    //   isComeFromSetting: isComeFromSetting,
-                    //   controller: controller,
-                    // ),
+                    availabilityView(
+                      isComeFromSetting: isComeFromSetting,
+                      controller: controller,
+                    ),
                   ],
                 ],
               ),
@@ -412,261 +417,320 @@ Widget servicesView(
       ),
     );
 
-// Widget availabilityView(
-//         {required bool isComeFromSetting,
-//         required NannyProfileController controller}) =>
-//     Padding(
-//       padding: Dimens.edgeInsetsL16R16,
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Container(
-//             padding: Dimens.edgeInsets10,
-//             alignment: Alignment.center,
-//             decoration: BoxDecoration(
-//               color: AppColors.primaryColor,
-//               borderRadius: BorderRadius.circular(Dimens.eight),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: AppColors.lightNavyBlue.withOpacity(.8),
-//                   blurRadius: Dimens.five,
-//                 )
-//               ],
-//             ),
-//             child: SfDateRangePicker(
-//               selectionMode: DateRangePickerSelectionMode.range,
-//               navigationMode: DateRangePickerNavigationMode.none,
-//               onSelectionChanged: (DateRangePickerSelectionChangedArgs
-//                   dateRangePickerSelectionChangedArgs) {
-//                 // DateFormat('yyy-MM-dd').format()
-//               },
-//               view: DateRangePickerView.month,
-//               initialSelectedDate: controller.selectedDate,
-//               allowViewNavigation: false,
-//               backgroundColor: AppColors.primaryColor,
-//               enablePastDates: false,
-//               headerStyle: DateRangePickerHeaderStyle(
-//                   textStyle: AppStyles.ubBlack18W600,
-//                   backgroundColor: AppColors.primaryColor,
-//                   textAlign: TextAlign.left),
-//               minDate: DateTime.now(),
-//               monthCellStyle: DateRangePickerMonthCellStyle(
-//                 disabledDatesTextStyle: AppStyles.ubHintColor13W500,
-//                 weekendTextStyle: AppStyles.ubHintColor15W500,
-//                 textStyle: AppStyles.ubBlack15W600,
-//                 todayTextStyle: AppStyles.ubNavyBlue15W600,
-//                 leadingDatesTextStyle: AppStyles.ubHintColor13W500,
-//                 trailingDatesTextStyle: AppStyles.ubHintColor13W500,
-//                 todayCellDecoration: const BoxDecoration(
-//                     color: Colors.transparent, shape: BoxShape.circle),
-//               ),
-//               monthViewSettings: DateRangePickerMonthViewSettings(
-//                 showTrailingAndLeadingDates: true,
-//                 viewHeaderStyle: DateRangePickerViewHeaderStyle(
-//                   textStyle: AppStyles.ubGrey14W500,
-//                 ),
-//               ),
-//               initialDisplayDate: controller.selectedDate,
-//               rangeSelectionColor: AppColors.lightNavyBlue,
-//               startRangeSelectionColor: AppColors.navyBlue,
-//               rangeTextStyle: AppStyles.ubBlack15W600,
-//               endRangeSelectionColor: AppColors.navyBlue,
-//               todayHighlightColor: AppColors.navyBlue,
-//             ),
-//           ),
-//           Dimens.boxHeight20,
-//           Container(
-//             padding: Dimens.edgeInsets16,
-//             decoration: BoxDecoration(
-//               color: AppColors.primaryColor,
-//               borderRadius: BorderRadius.circular(Dimens.eight),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: AppColors.lightNavyBlue.withOpacity(.8),
-//                   blurRadius: Dimens.five,
-//                 ),
-//               ],
-//             ),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     AppText(
-//                       text: '01',
-//                       // 'controller.selectedDate.first.day.toString().padLeft(2, '')',
-//                       style: AppStyles.ubBlack30W600,
-//                       maxLines: 1,
-//                     ),
-//                     Dimens.boxWidth16,
-//                     Column(
-//                       mainAxisSize: MainAxisSize.min,
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         AppText(
-//                             text: 'February 2024, Friday',
-//                             style: AppStyles.ubGrey12W400,
-//                             maxLines: 1,
-//                             textAlign: TextAlign.start),
-//                         Dimens.boxHeight8,
-//                         AppText(
-//                           text: '10:00 AM to 05:00 PM',
-//                           style: AppStyles.ubBlack14W700,
-//                           maxLines: 1,
-//                           textAlign: TextAlign.start,
-//                         )
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//                 if (isComeFromSetting) ...[
-//                   PopupMenuButton(
-//                     padding: Dimens.edgeInsets4,
-//                     position: PopupMenuPosition.under,
-//                     elevation: 2,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(Dimens.six),
-//                     ),
-//                     icon: SvgPicture.asset(Assets.iconsMore),
-//                     itemBuilder: (BuildContext context) {
-//                       return [
-//                         PopupMenuItem(
-//                           child: Text(
-//                             TranslationKeys.edit.tr,
-//                             maxLines: 1,
-//                             style: AppStyles.ubGreen05B016Color12W500,
-//                             textAlign: TextAlign.left,
-//                           ),
-//                         ),
-//                         PopupMenuItem(
-//                           child: Text(
-//                             TranslationKeys.delete.tr,
-//                             style: AppStyles.ubFc3030RedColor12W500,
-//                             textAlign: TextAlign.left,
-//                             maxLines: 1,
-//                           ),
-//                         ),
-//                       ];
-//                     },
-//                   ),
-//                 ],
-//               ],
-//             ),
-//           ),
-//           Dimens.boxHeight20,
-//           CustomButton(
-//             title: isComeFromSetting
-//                 ? TranslationKeys.addAvailability.tr
-//                 : TranslationKeys.bookSitter.tr,
-//             backGroundColor: AppColors.navyBlue,
-//             onTap: () {
-//               if (isComeFromSetting) {
-//                 Get.dialog(
-//                   Center(
-//                     child: Padding(
-//                       padding: Dimens.edgeInsetsL16R16,
-//                       child: Material(
-//                         color: AppColors.primaryColor,
-//                         borderRadius: BorderRadius.circular(Dimens.twenty),
-//                         child: Container(
-//                           decoration: BoxDecoration(
-//                             color: AppColors.primaryColor,
-//                             borderRadius: BorderRadius.circular(Dimens.twenty),
-//                           ),
-//                           child: Column(
-//                             mainAxisSize: MainAxisSize.min,
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Padding(
-//                                 padding: Dimens.edgeInsets10,
-//                                 child: Row(
-//                                   mainAxisAlignment:
-//                                       MainAxisAlignment.spaceBetween,
-//                                   children: [
-//                                     AppText(
-//                                       text: TranslationKeys.addAvailability.tr,
-//                                       maxLines: 1,
-//                                       textAlign: TextAlign.left,
-//                                       style: AppStyles.ubBlack16W700,
-//                                     ),
-//                                     GestureDetector(
-//                                       onTap: () {
-//                                         Get.back();
-//                                       },
-//                                       child: SvgPicture.asset(
-//                                         Assets.iconsRemoveBottomSheet,
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                               Divider(
-//                                 color: AppColors.lightNavyBlue,
-//                                 height: Dimens.one,
-//                               ),
-//                               Dimens.boxHeight14,
-//                               Padding(
-//                                 padding: Dimens.edgeInsets16,
-//                                 child: Column(
-//                                   mainAxisSize: MainAxisSize.min,
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     TextField(
-//                                       maxLines: 1,
-//                                       minLines: 1,
-//                                       decoration: customFieldDeco(
-//                                         hintText: TranslationKeys.startTime.tr,
-//                                       ),
-//                                       cursorColor: AppColors.blackColor,
-//                                       cursorWidth: Dimens.one,
-//                                       style: AppStyles.ubBlack15W600,
-//                                     ),
-//                                     Dimens.boxHeight14,
-//                                     TextField(
-//                                       maxLines: 1,
-//                                       readOnly: true,
-//                                       onTap: () async {
-//                                         var endValue = await showTimePicker(
-//                                           context: Get.context!,
-//                                           initialTime: TimeOfDay.now(),
-//                                         );
-//                                         print('value:$endValue');
-//                                       },
-//                                       minLines: 1,
-//                                       decoration: customFieldDeco(
-//                                         hintText: TranslationKeys.endTime.tr,
-//                                       ),
-//                                       cursorColor: AppColors.blackColor,
-//                                       cursorWidth: Dimens.one,
-//                                       style: AppStyles.ubBlack15W600,
-//                                     ),
-//                                     Dimens.boxHeight14,
-//                                     CustomButton(
-//                                       backGroundColor: AppColors.navyBlue,
-//                                       title: TranslationKeys.submit.tr,
-//                                       onTap: () {
-//                                         Get.back();
-//                                       },
-//                                     ),
-//                                     Dimens.boxHeight10,
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               } else {
-//                 Get.to(const ScheduleNannyView());
-//               }
-//             },
-//           ),
-//         ],
-//       ),
-//     );
+Widget availabilityView(
+        {required bool isComeFromSetting,
+        required NannyProfileController controller}) =>
+    Padding(
+      padding: Dimens.edgeInsetsL16R16,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: Dimens.edgeInsets10,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(Dimens.eight),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.lightNavyBlue.withOpacity(.8),
+                  blurRadius: Dimens.five,
+                )
+              ],
+            ),
+            child: SfDateRangePicker(
+              selectionMode: DateRangePickerSelectionMode.multiple,
+              navigationMode: DateRangePickerNavigationMode.snap,
+              onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                controller.selectedList.clear();
+                controller.selectedList
+                    .addAll(dateRangePickerSelectionChangedArgs.value);
+                log('selected Values:${controller.selectedList}');
+                if (controller.selectedList.isEmpty) {
+                  controller.startTime = null;
+                  controller.endTime = null;
+                }
+                controller.update();
+              },
+              view: DateRangePickerView.month,
+              initialSelectedDate: controller.selectedDate,
+              allowViewNavigation: false,
+              backgroundColor: AppColors.primaryColor,
+              enablePastDates: false,
+              headerStyle: DateRangePickerHeaderStyle(
+                  textStyle: AppStyles.ubBlack18W600,
+                  backgroundColor: AppColors.primaryColor,
+                  textAlign: TextAlign.left),
+              minDate: DateTime.now(),
+              selectionColor: AppColors.navyBlue,
+              selectionShape: DateRangePickerSelectionShape.circle,
+              monthCellStyle: DateRangePickerMonthCellStyle(
+                disabledDatesTextStyle: AppStyles.ubHintColor13W500,
+                weekendTextStyle: AppStyles.ubHintColor15W500,
+                textStyle: AppStyles.ubBlack15W600,
+                todayTextStyle: AppStyles.ubNavyBlue15W600,
+                leadingDatesTextStyle: AppStyles.ubHintColor13W500,
+                trailingDatesTextStyle: AppStyles.ubHintColor13W500,
+                todayCellDecoration: const BoxDecoration(
+                    color: Colors.transparent, shape: BoxShape.circle),
+              ),
+              monthViewSettings: DateRangePickerMonthViewSettings(
+                showTrailingAndLeadingDates: true,
+                viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                  textStyle: AppStyles.ubGrey14W500,
+                ),
+              ),
+              initialDisplayDate: controller.selectedDate,
+              rangeSelectionColor: AppColors.lightNavyBlue,
+              startRangeSelectionColor: AppColors.navyBlue,
+              rangeTextStyle: AppStyles.ubBlack15W600,
+              endRangeSelectionColor: AppColors.navyBlue,
+              todayHighlightColor: AppColors.navyBlue,
+            ),
+          ),
+          Dimens.boxHeight20,
+          Container(
+            padding: Dimens.edgeInsets16,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(Dimens.eight),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.lightNavyBlue.withOpacity(.8),
+                  blurRadius: Dimens.five,
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      text: '01',
+                      // 'controller.selectedDate.first.day.toString().padLeft(2, '')',
+                      style: AppStyles.ubBlack30W600,
+                      maxLines: 1,
+                    ),
+                    Dimens.boxWidth16,
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                            text: 'February 2024, Friday',
+                            style: AppStyles.ubGrey12W400,
+                            maxLines: 1,
+                            textAlign: TextAlign.start),
+                        Dimens.boxHeight8,
+                        AppText(
+                          text: '10:00 AM to 05:00 PM',
+                          style: AppStyles.ubBlack14W700,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                if (isComeFromSetting) ...[
+                  PopupMenuButton(
+                    padding: Dimens.edgeInsets4,
+                    position: PopupMenuPosition.under,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.six),
+                    ),
+                    icon: SvgPicture.asset(Assets.iconsMore),
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          child: Text(
+                            TranslationKeys.edit.tr,
+                            maxLines: 1,
+                            style: AppStyles.ubGreen05B016Color12W500,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: Text(
+                            TranslationKeys.delete.tr,
+                            style: AppStyles.ubFc3030RedColor12W500,
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ];
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+          Dimens.boxHeight20,
+          Opacity(
+            opacity: controller.selectedList.isNotEmpty ? 1 : 0.4,
+            child: CustomButton(
+              title: isComeFromSetting
+                  ? TranslationKeys.addAvailability.tr
+                  : TranslationKeys.bookSitter.tr,
+              backGroundColor: AppColors.navyBlue,
+              onTap: () {
+                if (isComeFromSetting) {
+                  if (controller.selectedList.isNotEmpty) {
+                    Get.dialog(
+                      GetBuilder<NannyProfileController>(
+                          builder: (nannyController) {
+                        return Center(
+                          child: Padding(
+                            padding: Dimens.edgeInsetsL16R16,
+                            child: Material(
+                              color: AppColors.primaryColor,
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.twenty),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.twenty),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: Dimens.edgeInsets10,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppText(
+                                            text: TranslationKeys
+                                                .addAvailability.tr,
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                            style: AppStyles.ubBlack16W700,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.back();
+                                            },
+                                            child: SvgPicture.asset(
+                                              Assets.iconsRemoveBottomSheet,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      color: AppColors.lightNavyBlue,
+                                      height: Dimens.one,
+                                    ),
+                                    Dimens.boxHeight14,
+                                    Padding(
+                                      padding: Dimens.edgeInsets16,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextField(
+                                            maxLines: 1,
+                                            minLines: 1,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              nannyController.startTime =
+                                                  await showTimePicker(
+                                                context: Get.context!,
+                                                initialTime: nannyController
+                                                            .startTime !=
+                                                        null
+                                                    ? nannyController.startTime!
+                                                    : TimeOfDay.now(),
+                                              );
+                                              nannyController.update();
+                                              log('startTime:${nannyController.startTime}');
+                                            },
+                                            decoration: customFieldDeco(
+                                              hintStyle:
+                                                  nannyController.startTime ==
+                                                          null
+                                                      ? null
+                                                      : AppStyles.ubBlack15W600,
+                                              hintText: nannyController
+                                                          .startTime ==
+                                                      null
+                                                  ? TranslationKeys.startTime.tr
+                                                  : '${nannyController.startTime?.hour} :${nannyController.startTime?.minute} ${nannyController.startTime?.period.name}',
+                                            ),
+                                            cursorColor: AppColors.blackColor,
+                                            cursorWidth: Dimens.one,
+                                            style: AppStyles.ubBlack15W600,
+                                          ),
+                                          Dimens.boxHeight14,
+                                          TextField(
+                                            maxLines: 1,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              nannyController.endTime =
+                                                  await showTimePicker(
+                                                context: Get.context!,
+                                                initialTime: nannyController
+                                                            .endTime !=
+                                                        null
+                                                    ? nannyController.endTime!
+                                                    : TimeOfDay.now(),
+                                              );
+                                              nannyController.update();
+                                              log('endTime:${nannyController.endTime}');
+                                            },
+                                            minLines: 1,
+                                            decoration: customFieldDeco(
+                                              hintStyle:
+                                                  nannyController.endTime ==
+                                                          null
+                                                      ? null
+                                                      : AppStyles.ubBlack15W600,
+                                              hintText: nannyController
+                                                          .endTime ==
+                                                      null
+                                                  ? TranslationKeys.endTime.tr
+                                                  : '${nannyController.endTime?.hour} :${nannyController.endTime?.minute} ${nannyController.endTime?.period.name}',
+                                            ),
+                                            cursorColor: AppColors.blackColor,
+                                            cursorWidth: Dimens.one,
+                                            style: AppStyles.ubBlack15W600,
+                                          ),
+                                          Dimens.boxHeight14,
+                                          CustomButton(
+                                            backGroundColor: AppColors.navyBlue,
+                                            title: TranslationKeys.submit.tr,
+                                            onTap: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                          Dimens.boxHeight10,
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  }
+                } else {
+                  Get.to(const ScheduleNannyView());
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
