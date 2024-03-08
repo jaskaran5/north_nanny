@@ -375,9 +375,6 @@ class SettingController extends GetxController {
     }
     var controller = Get.find<NannyProfileController>();
     controller.getProfile();
-    nannyImage.value = controller.profileData.data?.image ?? '';
-    nannyEmail.value = controller.profileData.data?.email ?? '';
-    nannyName.value = controller.profileData.data?.name ?? '';
     if (!Get.isRegistered<NannyEditProfileController>()) {
       NannyEditProfileBinding().dependencies();
     }

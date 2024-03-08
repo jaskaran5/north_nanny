@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 
 import '../../data/api/api_helper.dart';
@@ -23,8 +22,7 @@ class NannyProfileController extends GetxController {
 
   List<DateTime> selectedDates = [];
   DateTime selectedDate = DateTime(DateTime.now().month);
-  TimeOfDay? endTime;
-  TimeOfDay? startTime;
+
   List<String>? priceList = [
     '\$ 10',
     '\$ 10',
@@ -59,6 +57,17 @@ class NannyProfileController extends GetxController {
         var response = MyProfileModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           profileData = response;
+          if (!Get.isRegistered<SettingController>()) {
+            SettingBinding().dependencies();
+          } else {
+            Get.find<SettingController>().nannyImage.value =
+                response.data?.image ?? '';
+            Get.find<SettingController>().nannyName.value =
+                response.data?.name ?? '';
+            Get.find<SettingController>().nannyEmail.value =
+                response.data?.email ?? '';
+            Get.find<SettingController>().update();
+          }
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -70,61 +79,9 @@ class NannyProfileController extends GetxController {
     }
   }
 
-  /// -------------------------khach ------------
-  // DateRangePickerController datePickerController = DateRangePickerController();
-  // final now = DateTime.now();
-  //
-  // bool isEqualToNow({required DateTime date}) {
-  //   bool datesMatch =
-  //       date.year == now.year && date.month == now.month && date.day == now.day;
-  //   return datesMatch;
-  // }
-  //
-  // bool isEqualToSelected({required DateTime date}) {
-  //   bool datesMatch = date.year == selectedDate.year &&
-  //       date.month == selectedDate.month &&
-  //       date.day == selectedDate.day;
-  //   return datesMatch;
-  // }
-  //
-  // void onSelectedDateChange({required dynamic date}) {
-  //   selectedDate = DateTime.parse(date.toString());
-  //   log("selectedDate>>$selectedDate");
-  //   update();
-  // }
-  //
-  // void changeMonth({required bool increase}) {
-  //   if (increase) {
-  //     _increaseMonth();
-  //   } else {
-  //     _decreaseMonth();
-  //   }
-  //   update();
-  // }
-  //
-  // void _increaseMonth() {
-  //   final currentDisplayDate = datePickerController.displayDate;
-  //   final nextMonth = DateTime((currentDisplayDate?.year ?? 0),
-  //       (currentDisplayDate?.month ?? 0) + 1, (currentDisplayDate?.day ?? 0));
-  //   datePickerController.displayDate = nextMonth;
-  // }
-  //
-  // void _decreaseMonth() {
-  //   final currentDisplayDate = datePickerController.displayDate;
-  //   final previousMonth = DateTime((currentDisplayDate?.year ?? 0),
-  //       (currentDisplayDate?.month ?? 1) - 1, (currentDisplayDate?.day ?? 0));
-  //   datePickerController.displayDate = previousMonth;
-  // }
-  //
-  // String getFormattedMonthName() {
-  //   final currentDisplayDate = datePickerController.displayDate;
-  //   final monthFormat = DateFormat('MMMM');
-  //   return monthFormat.format(currentDisplayDate ?? selectedDate);
-  // }
-  //
-  // String getFormattedYear() {
-  //   final currentDisplayDate = datePickerController.displayDate;
-  //   final monthFormat = DateFormat('yyyy');
-  //   return monthFormat.format(currentDisplayDate ?? selectedDate);
-  // }
+  /// start range day.
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
+
+  List<dynamic> selectedList = [];
 }

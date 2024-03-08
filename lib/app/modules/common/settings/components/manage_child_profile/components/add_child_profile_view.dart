@@ -12,7 +12,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_drop_down.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class AddChildProfileView extends StatelessWidget {
   AddChildProfileView({super.key});

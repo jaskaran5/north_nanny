@@ -56,7 +56,7 @@ class NannyHomeView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Transform.scale(
-                        scale: 0.8,
+                        scale: 0.9,
                         child: CupertinoSwitch(
                           value: controller.isSwitchOn,
                           onChanged: (value) {

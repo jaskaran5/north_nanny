@@ -108,7 +108,7 @@ class ManageChildProfileController extends GetxController {
           childList.value = res.data ?? [];
           update();
 
-          log("child list data is :-->> ${childList.value}");
+          log("child list data is :-->> ${childList.value.toString()}");
         } else {
           toast(msg: res.message!, isError: true);
         }
