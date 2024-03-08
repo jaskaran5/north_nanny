@@ -160,8 +160,10 @@ class NannyEditProfileController extends GetxController {
                   ? 2
                   : 0,
         "Location": locationTextEditingController.text.trim(),
-        "Latitude": Storage.getValue(StringConstants.latitude).toString(),
-        "Longitude": Storage.getValue(StringConstants.longitude).toString(),
+        "Latitude":
+            Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
+        "Longitude":
+            Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
         'Experience': selectedYear,
         'NameOfHighSchool': highSchoolTextEditingController.text.trim(),
         'NameOfCollage': collegeTextEditingController.text.trim(),

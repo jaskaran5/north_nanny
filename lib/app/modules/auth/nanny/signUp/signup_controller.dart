@@ -108,8 +108,8 @@ class SignupViewController extends GetxController {
 
   /// LOCATION CHECK
   Future<void> locationCheck() async {
-    if ((Storage.getValue(StringConstants.latitude) == null) ||
-        (Storage.getValue(StringConstants.longitude) == null)) {
+    if ((Storage.getValue(StringConstants.latitude) ?? 30.7046 == null) ||
+        (Storage.getValue(StringConstants.longitude) ?? 76.7179 == null)) {
       Tuple2<LatLng, String>? tuple2 = await Utils.getCurrentLocation();
       if (tuple2 != null) {
         currentLatLng.value = tuple2.item1;
@@ -139,9 +139,9 @@ class SignupViewController extends GetxController {
         "deviceToken": "deviceToken",
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": type,
-        // "latitude": Storage.getValue(StringConstants.latitude) ??
+        // "latitude": Storage.getValue(StringConstants.latitude) ?? 30.7046 ??
         //     currentLatLng.value!.latitude.toString(),
-        // "longitude": Storage.getValue(StringConstants.longitude) ??
+        // "longitude": Storage.getValue(StringConstants.longitude) ?? 76.7179 ??
         //     currentLatLng.value!.longitude.toString()
       };
 

@@ -90,8 +90,8 @@ class CreateCustomerProfileController extends GetxController {
         return;
       }
 
-      var lat = Storage.getValue(StringConstants.latitude);
-      var lang = Storage.getValue(StringConstants.longitude);
+      var lat = Storage.getValue(StringConstants.latitude) ?? 30.7046 ?? 30;
+      var lang = Storage.getValue(StringConstants.longitude) ?? 76.7179;
 
       FormData body = FormData({
         if (pickedImage != null)

@@ -72,7 +72,7 @@ class EditProfileView extends StatelessWidget {
                                         ? Padding(
                                             padding: Dimens.edgeInsets16,
                                             child: SvgPicture.asset(
-                                              Assets.iconsProfile,
+                                              Assets.imagesUserAvatar,
                                               fit: BoxFit.contain,
                                             ),
                                           )

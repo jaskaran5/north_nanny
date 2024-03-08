@@ -37,13 +37,13 @@ class BookingDetailView extends StatelessWidget {
           if (controller.bookingDetailStatus == BookingDetailStatus.present) {
             Timer(const Duration(seconds: 3), () {
               Utility.showAlertDialog(
-                title: 'Confirmation',
+                title: 'Congratulations',
                 firstButtonTitle: 'No',
                 secondButtonTitle: 'Yes',
                 onTapFirstButton: () => Get.back(),
                 onTapSecondButton: () {
                   Utility.showAlertDialog(
-                    title: 'Confirmations!',
+                    title: 'Congratulations',
                     firstButtonTitle: 'Send Tip',
                     onTapFirstButton: () {
                       Get.to(

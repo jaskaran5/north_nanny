@@ -13,8 +13,8 @@ import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart'
 class GoogleMapViewController extends GetxController {
   RxBool isFromEdit = false.obs;
   Rxn<LatLng> currentLatLng = Rxn(LatLng(
-      Storage.getValue(StringConstants.latitude) ?? 30.7046,
-      Storage.getValue(StringConstants.longitude) ?? 76.7179));
+      Storage.getValue(StringConstants.latitude) ?? 30.7046 ?? 30.7046,
+      Storage.getValue(StringConstants.longitude) ?? 76.7179 ?? 76.7179));
 //
   final Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();

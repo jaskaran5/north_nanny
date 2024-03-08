@@ -84,7 +84,7 @@ class CustomerProfileView extends StatelessWidget {
                         ),
                         child: controller.customerImageUrl.value.isEmpty
                             ? Image.asset(
-                                Assets.iconsImage,
+                                Assets.imagesUserAvatar,
                                 fit: BoxFit.fill,
                               )
                             : CustomCacheNetworkImage(
