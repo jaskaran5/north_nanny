@@ -18,8 +18,7 @@ class NannyEditServicesView extends StatelessWidget {
   const NannyEditServicesView({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      GetBuilder<NannyEditProfileController>(
+  Widget build(BuildContext context) => GetBuilder<NannyEditProfileController>(
         init: NannyEditProfileController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(

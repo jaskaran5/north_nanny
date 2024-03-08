@@ -25,7 +25,7 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListView.builder(
-                itemCount: 2,
+                itemCount: 1,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return CustomPaymentBankDeleteTile(

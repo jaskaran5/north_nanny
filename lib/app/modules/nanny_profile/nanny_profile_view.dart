@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -388,19 +389,27 @@ Widget servicesView(
                         ],
                         GestureDetector(
                           onTap: () {
-                            if (!isComeFromSetting) {
-                              Get.bottomSheet(
-                                CustomBottomSheet(
-                                  heading:
-                                      Services.values[index].serviceName.tr,
-                                  description: Services
-                                      .values[index].serviceDescription.tr,
-                                  headingSvg: Assets.iconsRemoveBottomSheet,
-                                ),
-                                barrierColor:
-                                    AppColors.greyColor.withOpacity(.2),
-                              );
-                            }
+                            // if (!isComeFromSetting) {
+                            Get.bottomSheet(
+                              CustomBottomSheet(
+                                heading: Services.values
+                                    .firstWhere((element) =>
+                                        element.serviceName ==
+                                        servicesList?[index].toString())
+                                    .serviceName
+                                    .tr,
+                                description: Services.values
+                                        .firstWhereOrNull((element) =>
+                                            element.serviceName ==
+                                            servicesList?[index].toString())
+                                        ?.serviceDescription
+                                        .tr ??
+                                    '',
+                                headingSvg: Assets.iconsRemoveBottomSheet,
+                              ),
+                              barrierColor: AppColors.greyColor.withOpacity(.2),
+                            );
+                            // }
                           },
                           child: SvgPicture.asset(
                             Assets.iconsInfoCircle,
@@ -709,6 +718,47 @@ Widget availabilityView(
                                             backGroundColor: AppColors.navyBlue,
                                             title: TranslationKeys.submit.tr,
                                             onTap: () {
+                                              var formatList;
+                                              DateTime list;
+                                              List<DateTime> startTimeList = [];
+                                              List<DateTime> endTimeList = [];
+                                              for (var i
+                                                  in controller.selectedList) {
+                                                formatList =
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(i);
+                                                list =
+                                                    DateTime.parse(formatList);
+                                                startTimeList.add(DateTime(
+                                                  list.year,
+                                                  list.month,
+                                                  list.day,
+                                                  controller.startTime!.hour,
+                                                  controller.startTime!.minute,
+                                                ).toUtc());
+                                                endTimeList.add(DateTime(
+                                                  list.year,
+                                                  list.month,
+                                                  list.day,
+                                                  controller.endTime!.hour,
+                                                  controller.endTime!.minute,
+                                                ).toUtc());
+                                              }
+                                              print(
+                                                  'start Time List:$startTimeList');
+                                              print(
+                                                  'End time List:$endTimeList');
+                                              List<dynamic> finalList = [];
+                                              for (int value = 0;
+                                                  value < startTimeList.length;
+                                                  value++) {
+                                                finalList.add({
+                                                  'openingTiming':
+                                                      startTimeList[value],
+                                                  'closingTiming':
+                                                      endTimeList[value],
+                                                });
+                                              }
                                               Get.back();
                                             },
                                           ),

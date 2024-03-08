@@ -312,6 +312,9 @@ class SettingController extends GetxController {
         printInfo(info: "Contact Us response value $value");
         var response = RegisterModelResponseJson.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          emailTextEditingController.clear();
+          subjectTextEditingController.clear();
+          messageTextEditingController.clear();
           Utility.showDialog(
             assetName: Assets.iconsSuccess,
             title: 'Thank You',
