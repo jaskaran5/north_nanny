@@ -4,10 +4,10 @@ import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_vi
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 
 import '../../../res/constants/string_contants.dart';
-import '../../customer/home/home_view.dart';
 import '../../nanny/nanny_views/nanny_calender_view/nanny_calender_view.dart';
 import '../../nanny/nanny_views/nanny_home/nanny_home_view.dart';
 
@@ -46,7 +46,7 @@ class DashboardBottomController extends GetxController {
 
   /// CUSTOMER
   List bottomBarScreenListCustomer = [
-    const HomeView(),
+    const CustomerHomeView(),
     const RecentChatView(),
     const NotificationView(),
     const CalenderView(),

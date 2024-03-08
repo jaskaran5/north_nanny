@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String animationBabyLoader = 'assets/animation/baby_loader.json';
+  static const String animationNannyAni = 'assets/animation/nanny_ani.json';
   static const String iconsAboutUs = 'assets/icons/about_us.svg';
   static const String iconsAddCircle = 'assets/icons/add_circle.svg';
   static const String iconsAmericanBank = 'assets/icons/american_bank.svg';

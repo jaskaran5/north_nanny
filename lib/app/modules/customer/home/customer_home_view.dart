@@ -16,13 +16,13 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../widgets/review_custom_bottom_sheet.dart';
-import 'home_controller.dart';
+import 'customer_home_controller.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class CustomerHomeView extends StatelessWidget {
+  const CustomerHomeView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder(
-        init: HomeController(),
+        init: CustomerHomeController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             leadingWidth: Dimens.zero,

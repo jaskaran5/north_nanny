@@ -12,7 +12,7 @@ import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 
-class HomeController extends GetxController {
+class CustomerHomeController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
 
   RxBool showListView = false.obs;
@@ -129,7 +129,7 @@ class HomeController extends GetxController {
 
   @override
   void onReady() async {
-    // getDashboardApi();
+    getDashboardApi();
     super.onReady();
     await setMarkers();
   }

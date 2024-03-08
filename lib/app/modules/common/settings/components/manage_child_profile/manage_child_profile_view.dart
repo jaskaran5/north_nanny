@@ -25,33 +25,38 @@ class ManageChildProfileView extends StatelessWidget {
             title: TranslationKeys.mangeChildProfile.tr,
             centerTitle: false,
           ),
-          body: Padding(
-            padding: EdgeInsets.fromLTRB(Dimens.sixteen, Dimens.sixteen,
-                Dimens.sixteen, Dimens.fiftyThree),
-            child: ListView.builder(
-              itemCount: controller.childList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return CustomChildProfileTile(
-                  aboutChild: controller.childList[index].aboutChild ?? '',
-                  allergies: controller
-                      .childList[index].allergiesDietaryAndRestrictions!,
-                  childAge: controller.childList[index].age ?? '',
-                  childGender: controller.childList[index].gender ?? '',
-                  childIdl: controller.childList[index].childId.toString(),
-                  childName: controller.childList[index].name!,
-                  medicalCondition:
-                      controller.childList[index].medicalCondition!,
-                  onTap: () {
-                    controller.updateSelectedChild(
-                        id: controller.childList[index].childId!);
-                    log("click on redirect to edit child screen");
-                    controller.redirectToEditAndDeleteChildScreen(index: index);
-                  },
-                );
-              },
-            ),
-          ),
+          body: controller.childList.value.isNotEmpty
+              ? Padding(
+                  padding: EdgeInsets.fromLTRB(Dimens.sixteen, Dimens.sixteen,
+                      Dimens.sixteen, Dimens.fiftyThree),
+                  child: ListView.builder(
+                    itemCount: controller.childList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return CustomChildProfileTile(
+                        aboutChild:
+                            controller.childList[index].aboutChild ?? '',
+                        allergies: controller
+                            .childList[index].allergiesDietaryAndRestrictions!,
+                        childAge: controller.childList[index].age ?? '',
+                        childGender: controller.childList[index].gender ?? '',
+                        childIdl:
+                            controller.childList[index].childId.toString(),
+                        childName: controller.childList[index].name!,
+                        medicalCondition:
+                            controller.childList[index].medicalCondition!,
+                        onTap: () {
+                          controller.updateSelectedChild(
+                              id: controller.childList[index].childId!);
+                          log("click on redirect to edit child screen");
+                          controller.redirectToEditAndDeleteChildScreen(
+                              index: index);
+                        },
+                      );
+                    },
+                  ),
+                )
+              : const Center(child: Text("No Data")),
           floatingActionButton: CustomButton(
             title: TranslationKeys.addChild.tr,
             backGroundColor: AppColors.navyBlue,

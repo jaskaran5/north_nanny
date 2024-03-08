@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
@@ -176,6 +177,8 @@ class EditProfileView extends StatelessWidget {
                         TextField(
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(14),
+                            PhoneNumberFormatter(),
                           ],
                           controller:
                               controller.phoneNumberTextEditingController,
