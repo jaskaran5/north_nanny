@@ -29,7 +29,7 @@ class Validator {
     } else if (password.isEmpty) {
       error = "Please enter password";
       return false;
-    }  else if (password.trim().length < 8) {
+    } else if (password.trim().length < 8) {
       error = "Password must be 8 Characters long";
       return false;
     } else if (!RegExp(r'(?=.*?[A-Z])').hasMatch(password.trim())) {
@@ -134,6 +134,10 @@ class Validator {
   ) {
     if (email.isEmpty) {
       error = "Please enter your email ";
+      return false;
+    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(email.trim())) {
+      error = "Please enter valid email";
       return false;
     } else if (subject.isEmpty) {
       error = "Please enter your Subject";
@@ -259,7 +263,7 @@ class Validator {
     } else if (collegeName.isEmpty) {
       error = "Please enter your college name";
       return false;
-    }else if (aboutYourSelf.isEmpty) {
+    } else if (aboutYourSelf.isEmpty) {
       error = "Please tell us about yourself";
       return false;
     } else {

@@ -117,10 +117,12 @@ class NannyEditProfileController extends GetxController {
                   ? TranslationKeys.female.capitalizeFirst.toString()
                   : '';
           selectedYear = response.data?.experience;
-          if (response.data?.isDrivingLicence) {
-            licenseHaveOrNot = TranslationKeys.yes.capitalizeFirst.toString();
-          } else if (!response.data?.isDrivingLicence) {
-            licenseHaveOrNot = TranslationKeys.no.capitalizeFirst.toString();
+          if (response.data?.isDrivingLicence != null) {
+            if (response.data?.isDrivingLicence == true) {
+              licenseHaveOrNot = TranslationKeys.yes.capitalizeFirst.toString();
+            } else if (!response.data?.isDrivingLicence == false) {
+              licenseHaveOrNot = TranslationKeys.no.capitalizeFirst.toString();
+            }
           }
 
           selectedServices = response.data?.services ?? [];
