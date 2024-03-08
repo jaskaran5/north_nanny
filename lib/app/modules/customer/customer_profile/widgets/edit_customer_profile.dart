@@ -11,7 +11,6 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/constants/assets.dart';
 import '../../../../res/theme/colors.dart';

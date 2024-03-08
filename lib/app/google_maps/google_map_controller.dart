@@ -15,7 +15,7 @@ class GoogleMapViewController extends GetxController {
   Rxn<LatLng> currentLatLng = Rxn(LatLng(
       Storage.getValue(StringConstants.latitude) ?? 30.7046,
       Storage.getValue(StringConstants.longitude) ?? 76.7179));
-
+//
   final Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
 
