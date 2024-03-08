@@ -18,6 +18,8 @@
 	<string>NorthShore Nanny</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>0</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>

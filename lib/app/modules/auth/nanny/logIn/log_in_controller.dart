@@ -115,8 +115,8 @@ class LogInController extends GetxController {
       Storage.removeValue(StringConstants.token);
     }
     try {
-      final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
-      log("fcm token : $deviceToken");
+      // final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
+      // log("fcm token : $deviceToken");
       if (!(await Utils.hasNetwork())) {
         return;
       }
@@ -124,7 +124,7 @@ class LogInController extends GetxController {
       var body = {
         "email": emailTextEditingController.text.trim(),
         "password": passwordTextEditingController.text.trim(),
-        "deviceToken": deviceToken,
+        "deviceToken": "deviceToken",
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": userType,
         "latitude": Storage.getValue(StringConstants.latitude).toString(),
@@ -147,13 +147,10 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            }
-            //  else if (res.data?.user?.isApproved == false ||
-            //     res.data?.user?.isSkipBankDetail == true) {
-            //   RouteManagement.goToOffAllWaitingApprovalView();
-            // }
-
-            else {
+            } else if (res.data?.user?.isApproved == false ||
+                res.data?.user?.isSkipBankDetail == true) {
+              RouteManagement.goToOffAllWaitingApprovalView();
+            } else {
               Storage.saveValue(StringConstants.isLogin, true);
 
               RouteManagement.goToOffAllDashboard(isFromSetting: false);
