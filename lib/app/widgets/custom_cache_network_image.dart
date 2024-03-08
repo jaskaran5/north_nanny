@@ -27,7 +27,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: Dimens.hundred,
-              backgroundImage: const AssetImage(Assets.iconsImage),
+              backgroundImage: const AssetImage(Assets.imagesUserAvatar),
             ),
           )
         : CachedNetworkImage(

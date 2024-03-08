@@ -55,7 +55,7 @@ class NannyEditProfileController extends GetxController {
 
   List<Services> servicesList = Services.values;
 
-  var selectedServices = <String>[];
+  List<String> selectedServices = [];
 
   /// gender list.
   List<String> genderList = [
@@ -116,7 +116,12 @@ class NannyEditProfileController extends GetxController {
                   ? TranslationKeys.female.capitalizeFirst.toString()
                   : '';
           selectedYear = response.data?.experience;
-          licenseHaveOrNot = response.data?.isDrivingLicence;
+          if (response.data?.isDrivingLicence) {
+            licenseHaveOrNot = TranslationKeys.yes.capitalizeFirst.toString();
+          } else if (!response.data?.isDrivingLicence) {
+            licenseHaveOrNot = TranslationKeys.no.capitalizeFirst.toString();
+          }
+
           selectedServices = response.data?.services ?? [];
           imageUrl = response.data?.image;
           update();

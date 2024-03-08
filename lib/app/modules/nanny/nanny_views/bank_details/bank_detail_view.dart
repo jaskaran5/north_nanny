@@ -93,6 +93,7 @@ class BankDetailsView extends StatelessWidget {
                                 controller.accountNumberTextEditingController,
                             maxLines: 1,
                             minLines: 1,
+                            maxLength: 12,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.accountNumber.tr,
                               prefixWidget: Padding(
@@ -115,6 +116,7 @@ class BankDetailsView extends StatelessWidget {
                                 controller.routingNumberTextEditingController,
                             maxLines: 1,
                             minLines: 1,
+                            maxLength: 9,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.routingNumber.tr,
                               prefixWidget: Padding(

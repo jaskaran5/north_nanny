@@ -226,10 +226,11 @@ class NannyEditProfileView extends StatelessWidget {
                         controller.selectedGender = value.toString();
                         controller.update();
                       },
-                      baseTextStyle: controller.selectedGender?.isEmpty == true ||
-                          controller.selectedGender == null
-                          ? AppStyles.ubHintColor15W500
-                          : AppStyles.ubBlack15W600,
+                      baseTextStyle:
+                          controller.selectedGender?.isEmpty == true ||
+                                  controller.selectedGender == null
+                              ? AppStyles.ubHintColor15W500
+                              : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsGender),
                       items: controller.genderList,
                       itemBuilder: (context, item, isSelected) {
@@ -299,14 +300,16 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     AppDropdown(
-                      selectedItem: controller.selectedYear?.isEmpty == true || controller.selectedYear==null
+                      selectedItem: controller.selectedYear?.isEmpty == true ||
+                              controller.selectedYear == null
                           ? TranslationKeys.experience.tr
                           : controller.selectedYear,
                       onChanged: (value) {
                         controller.selectedYear = value.toString();
                         controller.update();
                       },
-                      baseTextStyle: controller.selectedYear?.isEmpty == true || controller.selectedYear==null
+                      baseTextStyle: controller.selectedYear?.isEmpty == true ||
+                              controller.selectedYear == null
                           ? AppStyles.ubHintColor15W500
                           : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
@@ -404,7 +407,7 @@ class NannyEditProfileView extends StatelessWidget {
                       },
                       baseTextStyle:
                           controller.licenseHaveOrNot?.isEmpty == true ||
-                              controller.licenseHaveOrNot == null
+                                  controller.licenseHaveOrNot == null
                               ? AppStyles.ubHintColor15W500
                               : AppStyles.ubBlack15W600,
                       prefix: SvgPicture.asset(Assets.iconsPersonalcard),
@@ -426,8 +429,8 @@ class NannyEditProfileView extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: AppStyles.ubNavyBlue15W600,
                                   ),
-                                  controller.licenseHaveOrNot == item.toString()
-                                      ? SvgPicture.asset(Assets.iconsCircleTick)
+                                    item.toString() == controller.licenseHaveOrNot
+                                        ? SvgPicture.asset(Assets.iconsCircleTick)
                                       : Dimens.box0,
                                 ],
                               ),

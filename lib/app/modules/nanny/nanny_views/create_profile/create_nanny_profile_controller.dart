@@ -261,7 +261,6 @@ class CreateNannyProfileController extends GetxController {
           } else {
             RouteManagement.goToOffAllWaitingApprovalView();
           }
-          toast(msg: response.message.toString(), isError: false);
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
