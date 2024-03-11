@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/dashboard_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -24,6 +30,17 @@ class CustomerHomeController extends GetxController {
   double distanceHigherValue = Dimens.ten;
   double ageLowerValue = Dimens.thirteen;
   double ageHigherValue = Dimens.fifty;
+  final debounce = Debouncer(delay: const Duration(milliseconds: 10));
+
+  /// FILTER
+
+  RxString filterMinMiles = "0".obs;
+  RxString filterMaxMiles = "0".obs;
+  RxString filterGender = "0".obs;
+  RxString filterMinAge = "0".obs;
+  RxString filterMaxAge = "0".obs;
+  RxString filterDateTime = "".obs;
+  RxString filterName = "".obs;
 
   /// use to select Date
   DateTime selectedDate = DateTime.now();
@@ -38,13 +55,9 @@ class CustomerHomeController extends GetxController {
   RxBool isGoogleMap = true.obs;
   final Set<Marker> markers = {};
 
-  RxList homeNannyList = [].obs;
+  RxList<NannyDataList> homeNannyList = <NannyDataList>[].obs;
 
-  List<String> homeCustomList = [
-    'Distance: 3 miles',
-    'Age: 40',
-    'Experience: 7+ yrs'
-  ];
+  // List<String> homeCustomList = ['Distance: ', 'Age: ', 'Experience:'];
 
   late GoogleMapController googleMapController;
 
@@ -130,34 +143,56 @@ class CustomerHomeController extends GetxController {
     );
   }
 
-  getDashboardApi() async {
+  /// UPDATE FILTER DATA
+
+  /// CONVERT DATE TIME
+
+  String convertDateTimeToString(DateTime dateTime) {
+    final dateFormat = DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
+    return dateFormat.format(dateTime);
+  }
+
+  /// GET NANNY LIST DATA WITH LOCATION IN DASHBOARD
+  getDashboardApi(
+      // {
+      //   minMiles,
+      //   maxMiles,
+      //   minAge,
+      //   maxAge,
+      //   dateTime,
+      //   gender,
+      //   name,
+      // }
+      ) async {
+    // String newDateTime = convertDateTimeToString(DateTime.now());
     try {
-      if (!(await Utils.hasNetwork())) {
-        return;
-      }
+      // if (!(await Utils.hasNetwork())) {
+      //   return;
+      // }
 
       var body = {
-        "minMiles": 0,
-        "maxMiles": 0,
-        "minAge": 0,
-        "maxAge": 0,
-        "dateTime": "2024-03-08T05:51:50.263Z",
-        "gender": 0,
-        "name": "string"
+        "minMiles": filterMinMiles.value,
+        "maxMiles": filterMaxMiles.value,
+        "minAge": filterMinAge.value,
+        "maxAge": filterMaxAge.value,
+        "dateTime": filterDateTime.value,
+        "gender": filterGender.value,
+        "name": filterName.value,
       };
 
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
-        var res = DashboardResponseModel.fromJson(value);
+        var res = CustomerHomeDashboardResponseModel.fromJson(value);
 
-        if (res.response == AppConstants.apiResponseSuccess) {
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          print("response success");
           homeNannyList.value = res.data ?? [];
           update();
-          // toast(msg: "");
         }
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
-      printError(info: "Contact Us post  API ISSUE $s");
+      printError(info: "Get dashboard data post  API ISSUE $s");
     }
   }
 
@@ -166,5 +201,122 @@ class CustomerHomeController extends GetxController {
     getDashboardApi();
     super.onReady();
     await setMarkers();
+  }
+
+  toggleFavouriteAndUnFavouriteApi(
+      {required int userId, required bool isFavourite}) {
+    try {
+      var body = {
+        "toUserId": userId,
+        "isFavorite": isFavourite,
+      };
+
+      _apiHelper.postApi(ApiUrls.addOrRemoveFavoriteNanny, body).futureValue(
+          (value) {
+        var res = NannyFavouriteResponseModel.fromJson(value);
+
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          print("response success");
+
+          getDashboardApi();
+
+          update();
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get dashboard data post  API ISSUE $s");
+    }
+  }
+
+  onClickOnFilterApply() async {
+    log("distacne lower: $distanceLowerValue");
+    log("distacne higher: $distanceHigherValue");
+    log(" gender: $selectedGender");
+    log("age lower: $ageLowerValue");
+    log("age higher: $ageHigherValue");
+
+    log("date: $selectedDate");
+    log("time: $selectedTime");
+
+    try {
+      // if (!(await Utils.hasNetwork())) {
+      //   return;
+      // }
+
+      var body = {
+        "minMiles": distanceLowerValue.toInt(),
+        "maxMiles": distanceHigherValue.toInt(),
+        "minAge": ageLowerValue.toInt(),
+        "maxAge": ageHigherValue.toInt(),
+        "dateTime": filterDateTime.value,
+        "gender": selectedGender == "female"
+            ? 2
+            : selectedGender == "male"
+                ? 1
+                : 0,
+        "name": filterName.value,
+      };
+
+      _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
+        var res = CustomerHomeDashboardResponseModel.fromJson(value);
+
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          print("response success");
+          homeNannyList.value = res.data ?? [];
+
+          update();
+
+          Get.back();
+        }
+      }, retryFunction: getDashboardApi);
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get dashboard data post  API ISSUE $s");
+    }
+  }
+
+  /// SEARCH NANNY BY NAME
+
+  _searchNannyByName({required String name}) {
+    try {
+      // if (!(await Utils.hasNetwork())) {
+      //   return;
+      // }
+
+      var body = {
+        "minMiles": filterMinMiles.value,
+        "maxMiles": filterMaxMiles.value,
+        "minAge": filterMinAge.value,
+        "maxAge": filterMaxAge.value,
+        "dateTime": filterDateTime.value,
+        "gender": filterGender.value,
+        "name": name,
+      };
+
+      _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
+        var res = CustomerHomeDashboardResponseModel.fromJson(value);
+
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          print("response success");
+          homeNannyList.value = res.data ?? [];
+          update();
+        }
+      }, retryFunction: getDashboardApi);
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get dashboard data post  API ISSUE $s");
+    }
+  }
+
+  void searchNanny(String name) {
+    debounce.call(() {
+      if (name.trim().isNotEmpty) {
+        _searchNannyByName(name: name);
+      }
+    });
   }
 }

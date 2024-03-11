@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../res/constants/assets.dart';
 import '../../res/theme/colors.dart';
@@ -13,7 +16,6 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_drop_down.dart';
 import '../../widgets/library/flutter_time_picker_spinner.dart';
-import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_controller.dart';
 
 class FilterView extends StatelessWidget {
   const FilterView({super.key});
@@ -23,7 +25,7 @@ class FilterView extends StatelessWidget {
     return SafeArea(
       top: false,
       child: GetBuilder(
-        builder: (FilterController controller) {
+        builder: (CustomerHomeController controller) {
           return Scaffold(
             appBar: CustomAppbarWidget(
               title: TranslationKeys.filters.tr,
@@ -50,7 +52,8 @@ class FilterView extends StatelessWidget {
 
                   CustomButton(
                     onTap: () {
-                      Get.back();
+                      controller.onClickOnFilterApply();
+                      ();
                     },
                     height: Dimens.fiftyThree,
                     width: Dimens.oneHundredFifty,
@@ -76,7 +79,10 @@ class FilterView extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                     Dimens.boxHeight4,
+/**DISTANCE slider */
                     FlutterSlider(
+                      minimumDistance: 0.0,
+                      maximumDistance: 11.0,
                       handler: FlutterSliderHandler(
                         child: SvgPicture.asset(Assets.iconsSliderThumb),
                       ),
@@ -97,8 +103,15 @@ class FilterView extends StatelessWidget {
                       max: Dimens.ten,
                       axis: Axis.horizontal,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
-                        controller.distanceHigherValue = upperValue;
-                        controller.distanceLowerValue = lowerValue;
+                        log("handlerIndex:-->> $handlerIndex");
+                        log("lower:-->> $lowerValue");
+                        log("upperValue:-->> $upperValue");
+
+                        if (handlerIndex == 0) {
+                          controller.distanceLowerValue = lowerValue;
+                        } else {
+                          controller.distanceHigherValue = upperValue;
+                        }
                         controller.update();
                       },
                       handlerAnimation: FlutterSliderHandlerAnimation(
@@ -134,6 +147,73 @@ class FilterView extends StatelessWidget {
                         inactiveTrackBarHeight: Dimens.five,
                       ),
                     ),
+                    // FlutterSlider(
+                    //   handler: FlutterSliderHandler(
+                    //     child: SvgPicture.asset(Assets.iconsSliderThumb),
+                    //   ),
+                    //   handlerHeight: Dimens.twentyFour,
+                    //   handlerWidth: Dimens.twentyFour,
+                    //   rightHandler: FlutterSliderHandler(
+                    //     child: SvgPicture.asset(Assets.iconsSliderThumb),
+                    //   ),
+                    //   step: const FlutterSliderStep(
+                    //     isPercentRange: false,
+                    //   ),
+                    //   values: [
+                    //     controller.distanceLowerValue,
+                    //     controller.distanceHigherValue,
+                    //   ],
+                    //   rangeSlider: true,
+                    //   min: Dimens.zero,
+                    //   max: Dimens.ten,
+                    //   axis: Axis.horizontal,
+                    //   onDragging: (handlerIndex, lowerValue, upperValue) {
+                    //     if (handlerIndex == 0) {
+                    //       controller.ageLowerValue = lowerValue;
+                    //     } else {
+                    //       controller.ageHigherValue = upperValue;
+                    //     }
+                    //     controller.update();
+                    //   },
+                    //   // onDragging: (handlerIndex, lowerValue, upperValue) {
+                    //   //   controller.distanceHigherValue = upperValue;
+                    //   //   controller.distanceLowerValue = lowerValue;
+                    //   //   controller.update();
+                    //   // },
+                    //   handlerAnimation: FlutterSliderHandlerAnimation(
+                    //     scale: Dimens.one,
+                    //     duration: Duration.zero,
+                    //   ),
+                    //   tooltip: FlutterSliderTooltip(
+                    //     positionOffset: FlutterSliderTooltipPositionOffset(
+                    //       top: Dimens.fortySix,
+                    //     ),
+                    //     textStyle: AppStyles.ubGrey14W600,
+                    //     custom: (value) => AppText(
+                    //       text:
+                    //           '${double.parse(value.toString()).toInt().toString()} miles',
+                    //       style: AppStyles.ubGrey14W600,
+                    //       textAlign: TextAlign.center,
+                    //       maxLines: 1,
+                    //     ),
+                    //     alwaysShowTooltip: true,
+                    //   ),
+                    //   trackBar: FlutterSliderTrackBar(
+                    //     activeTrackBar: BoxDecoration(
+                    //         color: AppColors.sliderActiveColor,
+                    //         borderRadius: BorderRadius.circular(
+                    //           Dimens.eight,
+                    //         )),
+                    //     activeTrackBarHeight: Dimens.five,
+                    //     inactiveTrackBar: BoxDecoration(
+                    //         color: AppColors.sliderInActiveColor,
+                    //         borderRadius: BorderRadius.circular(
+                    //           Dimens.eight,
+                    //         )),
+                    //     inactiveTrackBarHeight: Dimens.five,
+                    //   ),
+                    // ),
+
                     Dimens.boxHeight26,
                     AppText(
                       text:
@@ -344,7 +424,8 @@ class FilterView extends StatelessWidget {
                                           ),
                                           Padding(
                                             padding: Dimens.edgeInsetsL16R16,
-                                            child: GetBuilder<FilterController>(
+                                            child: GetBuilder<
+                                                CustomerHomeController>(
                                               builder: (filterController) {
                                                 return TableCalendar(
                                                   sixWeekMonthsEnforced: true,
@@ -409,6 +490,8 @@ class FilterView extends StatelessWidget {
                                               },
                                             ),
                                           ),
+
+                                          /**apply */
                                           Padding(
                                             padding: Dimens.edgeInsetsL16R16,
                                             child: CustomButton(
@@ -417,6 +500,8 @@ class FilterView extends StatelessWidget {
                                                   AppColors.navyBlue,
                                               onTap: () {
                                                 Get.back();
+                                                // controller
+                                                //     .onClickOnFilterApply();
                                               },
                                             ),
                                           ),

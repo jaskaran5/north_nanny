@@ -8,14 +8,18 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class ShortDetailProfileView extends StatelessWidget {
-  const ShortDetailProfileView(
-      {super.key,
-      required this.nannyName,
-      required this.totalRating,
-      required this.totalReviews});
+  const ShortDetailProfileView({
+    super.key,
+    required this.nannyName,
+    required this.totalRating,
+    required this.totalReviews,
+    required this.image,
+  });
   final String nannyName;
   final double totalRating;
   final int totalReviews;
+  final String image;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,23 +28,35 @@ class ShortDetailProfileView extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            height: Dimens.fifty,
-            width: Dimens.fifty,
-            child: CircleAvatar(
-              backgroundImage: const AssetImage(
-                Assets.iconsImage,
+              height: Dimens.fifty,
+              width: Dimens.fifty,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(image),
+              )
+
+              //  CircleAvatar(
+              //   backgroundImage: const AssetImage(
+              //     Assets.iconsImage,
+              //   ),
+              //   radius: Dimens.hundred,
+              // ),
               ),
-              radius: Dimens.hundred,
-            ),
-          ),
           Dimens.boxWidth10,
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AppText(
-                text: nannyName,
-                style: AppStyles.ubNavyBlue14W700,
-                maxLines: 1,
+              SizedBox(
+                width: Get.width * .7,
+                child: AppText(
+                  textAlign: TextAlign.left,
+                  text: nannyName,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.ubNavyBlue14W700,
+                  maxLines: 1,
+                ),
               ),
               Dimens.boxHeight8,
               Row(

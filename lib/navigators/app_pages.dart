@@ -32,8 +32,9 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_view.dart';
 
-import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
@@ -181,7 +182,7 @@ class AppPages {
       name: Routes.filterView,
       transitionDuration: transitionDuration,
       page: FilterView.new,
-      binding: FilterBinding(),
+      binding: CustomerHomeBinding(),
       transition: Transition.rightToLeft,
     ),
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -84,8 +86,12 @@ class CustomerHomeView extends StatelessWidget {
                             ),
                             Dimens.boxWidth10,
                             GestureDetector(
-                              onTap: () {
-                                Get.to(SearchView());
+                              onTap: () async {
+                                bool? check = await Get.to(SearchView());
+
+                                if (check != null && check == true) {
+                                  controller.getDashboardApi();
+                                }
                               },
                               child: Container(
                                 height: Dimens.thirtyFive,
@@ -118,8 +124,12 @@ class CustomerHomeView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Get.to(SearchView());
+                        onTap: () async {
+                          bool? check = await Get.to(SearchView());
+
+                          if (check != null && check == true) {
+                            controller.getDashboardApi();
+                          }
                         },
                         child: Container(
                           height: Dimens.forty,
@@ -212,63 +222,76 @@ class CustomerHomeView extends StatelessWidget {
                             Assets.imagesNoDataPng,
                             scale: 2,
                           ),
-
-                          //   SvgPicture.asset(
-                          //   Assets.iconsNoDataFoundImage,
-                          //   height: 200,
-                          //   width: 200,
-                          //   fit: BoxFit.cover,
-                          // )
                         ),
-                        // SizedBox(
-                        //   height: Get.height * .12,
-                        // )
                       ],
                     )
-                  // Center(
-                  //     child: Text(
-                  //       "No Nanny Nearby",
-                  //       style: AppStyles.b0b0fairPlay15w600,
-                  //     ),
-                  //   )
                   : Padding(
                       padding: Dimens.edgeInsets16,
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => NannyProfileView(
-                              isComeFromSetting: false,
-                              appBarTitle: TranslationKeys.nannyProfile.tr,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.homeNannyList.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => NannyProfileView(
+                                  isComeFromSetting: false,
+                                  appBarTitle: TranslationKeys.nannyProfile.tr,
+                                ),
+                              );
+                            },
+                            child: HomeCustomListView(
+                              // servicesListData: controller,
+                              distance:
+                                  ((controller.homeNannyList[index].distance)!
+                                          .toInt())
+                                      .toString(),
+
+                              age: controller.homeNannyList[index].age
+                                  .toString(),
+                              experience: (controller
+                                      .homeNannyList[index].experience
+                                      .toString())
+                                  .split(' ')
+                                  .first,
+
+                              description:
+                                  controller.homeNannyList[index].aboutMe,
+                              image: controller.homeNannyList[index].image,
+                              name: controller.homeNannyList[index].name,
+                              rating: controller.homeNannyList[index].rating
+                                  .toString(),
+                              reviews:
+                                  '(${controller.homeNannyList[index].reviewCount} reviews)',
+                              // servicesList: controller.homeCustomList,
+                              isHeartTapped:
+                                  controller.homeNannyList[index].isFavorite!,
+                              heartSvg: Assets.iconsHeartOutline,
+                              onTapHeartIcon: () {
+                                controller.toggleFavouriteAndUnFavouriteApi(
+                                    isFavourite: !controller
+                                        .homeNannyList[index].isFavorite!,
+                                    userId:
+                                        controller.homeNannyList[index].id!);
+                              },
+                              onTapRating: () {
+                                Utility.openBottomSheet(
+                                  const CustomReviewBottomSheet(
+                                    totalReviews: 21,
+                                    totalReviewsRating: 4.5,
+                                    reviewsList: [
+                                      'Michael Johnson',
+                                      'Giorgio Chiellini',
+                                      'Michael Johnson',
+                                      'Alex Morgan',
+                                      'Giorgio Chiellini'
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           );
                         },
-                        child: HomeCustomListView(
-                          description:
-                              'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children',
-                          image: Assets.iconsImage,
-                          name: 'Christina Wang',
-                          rating: '4.5',
-                          reviews: '(21 reviews)',
-                          servicesList: controller.homeCustomList,
-                          isHeartTapped: false,
-                          heartSvg: Assets.iconsHeartOutline,
-                          onTapHeartIcon: () {},
-                          onTapRating: () {
-                            Utility.openBottomSheet(
-                              const CustomReviewBottomSheet(
-                                totalReviews: 21,
-                                totalReviewsRating: 4.5,
-                                reviewsList: [
-                                  'Michael Johnson',
-                                  'Giorgio Chiellini',
-                                  'Michael Johnson',
-                                  'Alex Morgan',
-                                  'Giorgio Chiellini'
-                                ],
-                              ),
-                            );
-                          },
-                        ),
                       ),
                     ),
         ),
