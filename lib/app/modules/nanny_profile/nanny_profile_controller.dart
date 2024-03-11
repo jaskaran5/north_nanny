@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/availability_list_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
@@ -88,7 +89,11 @@ class NannyProfileController extends GetxController {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
 
+  /// selected List
   List<dynamic> selectedList = [];
+
+  /// used to store availability list
+  AvailabilityListModel? availabilityListModel;
 
   /// add nanny Availability validator
   addAvailabilityValidator(
@@ -105,7 +110,7 @@ class NannyProfileController extends GetxController {
     }
   }
 
-  /// add nanny availability
+  /// add nanny availability post api
   addAvailability({required List<dynamic> availabilityList}) async {
     try {
       if (!(await Utils.hasNetwork())) {
@@ -133,5 +138,50 @@ class NannyProfileController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "post availability  Nanny  API ISSUE $s");
     }
+  }
+
+  /// post api for get availabilities list
+  getAvailabilityList() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        'utcDateTime': DateTime.now().toUtc().toString(),
+      };
+      _apiHelper
+          .postApi(
+        ApiUrls.nannyBookingList,
+        body,
+      )
+          .futureValue((value) {
+        printInfo(info: "Get Nanny Availability List response  $value");
+        var response = AvailabilityListModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          availabilityListModel = response;
+          update();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get Nanny Availability List    API ISSUE $s");
+    }
+  }
+
+  /// used to check the day have availability or not.
+ dayHaveAvailability(){
+
+ }
+
+  bool checkDays(List<DateTime> list1, List<DateTime> list2) {
+    for (int i = 0; i < list1.length; i++) {
+      if (list1[i].day != list2[i].day) {
+        return false; // Return false if days don't match
+      }
+    }
+
+    return true; // Return true if all days match
   }
 }

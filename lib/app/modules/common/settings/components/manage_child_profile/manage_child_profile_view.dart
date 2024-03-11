@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';

@@ -75,20 +75,20 @@ class FCMService {
       //TODO: SAVING_FIREBASE_TOKEN_TO_LOCAL_STORAGE
       // AppLocalDb().setFirebaseToken(token);
     });
-    print('============FCM Token ---> $token');
+    log('============FCM Token ---> $token');
     return token;
   }
 
   ///TODO
   showForGroundMessage() {
     FirebaseMessaging.onMessage.listen((message) {
-      print(message.notification!.body.toString());
-      print(message.notification!.title.toString());
+      log(message.notification!.body.toString());
+      log(message.notification!.title.toString());
       final data = message.data;
       _handleMessageClick(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print("notification click in forground");
+      log("notification click in forground");
       _handleMessageClick(message);
     });
   }
@@ -96,9 +96,9 @@ class FCMService {
   ///Todo: handle click
   _handleMessageClick(RemoteMessage message) {
     ///Handle all message notification click
-    print("====>newMessage${message.data.toString()}");
+    log("====>newMessage${message.data.toString()}");
     if (message.data["type"] == "subcriptionSuccess") {
-      print("====>newMessage${message.data.toString()}");
+      log("====>newMessage${message.data.toString()}");
     }
     // print('=========> Notification Clicked - ${message.toString()}');
 

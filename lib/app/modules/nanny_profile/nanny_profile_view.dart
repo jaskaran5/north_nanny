@@ -102,6 +102,9 @@ class NannyProfileView extends StatelessWidget {
                         (index) => GestureDetector(
                           onTap: () {
                             controller.selectedIndex = index;
+                            if (index == 2) {
+                              controller.getAvailabilityList();
+                            }
                             controller.update();
                           },
                           child: Container(
@@ -227,16 +230,17 @@ class NannyProfileView extends StatelessWidget {
                             ),
                             Dimens.boxHeight14,
                             if (controller.profileData.data?.isDrivingLicence !=
-                                    null ||
-                                controller.profileData.data?.isDrivingLicence ==
-                                    false) ...[
+                                null) ...[
                               CustomNannySvgTile(
                                 assetName: Assets.iconsPersonalcard,
                                 heading: TranslationKeys.driversLicense.tr,
-                                aboutHeading: controller
-                                        .profileData.data?.isDrivingLicence
-                                        .toString() ??
-                                    '',
+                                aboutHeading: controller.profileData.data
+                                            ?.isDrivingLicence ==
+                                        true
+                                    ? TranslationKeys.yes.capitalizeFirst
+                                        .toString()
+                                    : TranslationKeys.no.capitalizeFirst
+                                        .toString(),
                               ),
                               Dimens.boxHeight14,
                             ],
@@ -452,18 +456,27 @@ Widget availabilityView(
               ],
             ),
             child: SfDateRangePicker(
-              selectionMode: DateRangePickerSelectionMode.multiple,
+              selectionMode: DateRangePickerSelectionMode.range,
               navigationMode: DateRangePickerNavigationMode.snap,
-              onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
-                controller.selectedList.clear();
-                controller.selectedList
-                    .addAll(dateRangePickerSelectionChangedArgs.value);
-                log('selected Values:${controller.selectedList}');
-                if (controller.selectedList.isEmpty) {
-                  controller.startTime = null;
-                  controller.endTime = null;
-                }
-                controller.update();
+              onSelectionChanged: (args) {
+                //   controller.selectedList.clear();
+                log('selected Values:${args.value}');
+                String _range =
+                    '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+                    // ignore: lines_longer_than_80_chars
+                    ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+
+                print("_range==> $_range");
+
+                //   controller.selectedList
+                //       .addAll(dateRangePickerSelectionChangedArgs.value);
+                //   log('selected Values:${controller.selectedList}');
+                //
+                //   if (controller.selectedList.isEmpty) {
+                //     controller.startTime = null;
+                //     controller.endTime = null;
+                //   }
+                //   controller.update();
               },
               view: DateRangePickerView.month,
               initialSelectedDate: controller.selectedDate,
@@ -471,9 +484,10 @@ Widget availabilityView(
               backgroundColor: AppColors.primaryColor,
               enablePastDates: false,
               headerStyle: DateRangePickerHeaderStyle(
-                  textStyle: AppStyles.ubBlack18W600,
-                  backgroundColor: AppColors.primaryColor,
-                  textAlign: TextAlign.left),
+                textStyle: AppStyles.ubBlack18W600,
+                backgroundColor: AppColors.primaryColor,
+                textAlign: TextAlign.left,
+              ),
               minDate: DateTime.now(),
               selectionColor: AppColors.navyBlue,
               selectionShape: DateRangePickerSelectionShape.circle,
@@ -487,6 +501,52 @@ Widget availabilityView(
                 todayCellDecoration: const BoxDecoration(
                     color: Colors.transparent, shape: BoxShape.circle),
               ),
+              cellBuilder: (context, cellDetails) =>
+                  GetBuilder<NannyProfileController>(
+                      builder: (nannyController) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(Dimens.twenty),
+                        child: Container(
+                          height: Dimens.twenty,
+                          width: Dimens.twenty,
+                          alignment: Alignment.center,
+                          child: AppText(
+                            text: cellDetails.date.day.toString(),
+                            style: nannyController.selectedList
+                                    .contains(cellDetails)
+                                ? AppStyles.ubWhite15700
+                                : AppStyles.ubBlack15W600,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      // if (controller.availabilityListModel?.data?.indexWhere(
+                      //         (element) {
+                      //           print('data:${element.openingTime?.day}');
+                      //
+                      //           return (element.openingTime?.day ?? 0) ==
+                      //             cellDetails.date.day;
+                      //         }) !=
+                      //     null)
+                      //   Container(
+                      //     height: Dimens.five,
+                      //     width: Dimens.five,
+                      //     decoration: const BoxDecoration(
+                      //       color: AppColors.navyBlue,
+                      //       shape: BoxShape.circle,
+                      //     ),
+                      //   )
+                    ],
+                  ),
+                );
+              }),
               monthViewSettings: DateRangePickerMonthViewSettings(
                 showTrailingAndLeadingDates: true,
                 viewHeaderStyle: DateRangePickerViewHeaderStyle(
@@ -725,27 +785,36 @@ Widget availabilityView(
                                               DateTime list;
                                               List<DateTime> startTimeList = [];
                                               List<DateTime> endTimeList = [];
-                                              for (var i
-                                                  in controller.selectedList) {
-                                                formatList =
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(i);
-                                                list =
-                                                    DateTime.parse(formatList);
-                                                startTimeList.add(DateTime(
-                                                  list.year,
-                                                  list.month,
-                                                  list.day,
-                                                  controller.startTime!.hour,
-                                                  controller.startTime!.minute,
-                                                ).toUtc());
-                                                endTimeList.add(DateTime(
-                                                  list.year,
-                                                  list.month,
-                                                  list.day,
-                                                  controller.endTime!.hour,
-                                                  controller.endTime!.minute,
-                                                ).toUtc());
+                                              if (nannyController.startTime !=
+                                                      null ||
+                                                  nannyController.endTime !=
+                                                      null) {
+                                                for (var i in controller
+                                                    .selectedList) {
+                                                  formatList =
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(i);
+                                                  list = DateTime.parse(
+                                                      formatList);
+                                                  startTimeList.add(DateTime(
+                                                    list.year,
+                                                    list.month,
+                                                    list.day,
+                                                    nannyController
+                                                        .startTime!.hour,
+                                                    nannyController
+                                                        .startTime!.minute,
+                                                  ).toUtc());
+                                                  endTimeList.add(DateTime(
+                                                    list.year,
+                                                    list.month,
+                                                    list.day,
+                                                    nannyController
+                                                        .endTime!.hour,
+                                                    nannyController
+                                                        .endTime!.minute,
+                                                  ).toUtc());
+                                                }
                                               }
                                               log('start Time List:$startTimeList');
                                               log('End time List:$endTimeList');
@@ -766,7 +835,7 @@ Widget availabilityView(
                                               log('final list:$finalList');
 
                                               /// api for add availability validator
-                                              controller
+                                              nannyController
                                                   .addAvailabilityValidator(
                                                       availabilityList:
                                                           finalList,

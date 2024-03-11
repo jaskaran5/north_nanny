@@ -16,7 +16,6 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
-import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 class CustomerProfileController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;

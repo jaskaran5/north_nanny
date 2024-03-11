@@ -78,7 +78,7 @@ class ManageChildProfileController extends GetxController {
   updateSelectedChild({required int id}) {
     selectedChildId.value = id;
 
-    print("selected child is:-->> ${selectedChildId.value}");
+    log("selected child is:-->> ${selectedChildId.value}");
     update();
   }
 
