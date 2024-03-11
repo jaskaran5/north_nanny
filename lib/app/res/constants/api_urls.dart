@@ -56,4 +56,9 @@ class ApiUrls {
   static const String addOrEditBankDetails =
       'api/NannyDashBoard/AddOrEditBankDetail';
   static const String getNannyProfile = 'api/NannyDashBoard/MyProfile';
+  static const String addAvailability = 'api/NannyDashBoard/AddAvailability';
+  static const String nannyDashboard = 'api/NannyDashBoard/HomeDashBoard';
+  static const String setAvailability = 'api/NannyDashBoard/SetAvailabilityStatus';
+  static const String getAllNannyBookingDetails = 'api/NannyDashBoard/GetAllNannyBookingDates';
+  static const String postNannyBookingDetails = 'api/NannyDashBoard/NannyBookingDeatil';
 }

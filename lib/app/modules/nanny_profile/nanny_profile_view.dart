@@ -216,6 +216,7 @@ class NannyProfileView extends StatelessWidget {
                               heading: TranslationKeys.location.tr,
                               aboutHeading:
                                   controller.profileData.data?.location ?? '',
+                              aboutHeadingWidth: Dimens.twoHundredFifty,
                             ),
                             Dimens.boxHeight14,
                             CustomNannySvgTile(
@@ -226,7 +227,9 @@ class NannyProfileView extends StatelessWidget {
                             ),
                             Dimens.boxHeight14,
                             if (controller.profileData.data?.isDrivingLicence !=
-                                null) ...[
+                                    null ||
+                                controller.profileData.data?.isDrivingLicence ==
+                                    false) ...[
                               CustomNannySvgTile(
                                 assetName: Assets.iconsPersonalcard,
                                 heading: TranslationKeys.driversLicense.tr,
@@ -673,7 +676,7 @@ Widget availabilityView(
                                                           .startTime ==
                                                       null
                                                   ? TranslationKeys.startTime.tr
-                                                  : '${nannyController.startTime?.hour} :${nannyController.startTime?.minute} ${nannyController.startTime?.period.name}',
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
                                             ),
                                             cursorColor: AppColors.blackColor,
                                             cursorWidth: Dimens.one,
@@ -707,7 +710,7 @@ Widget availabilityView(
                                                           .endTime ==
                                                       null
                                                   ? TranslationKeys.endTime.tr
-                                                  : '${nannyController.endTime?.hour} :${nannyController.endTime?.minute} ${nannyController.endTime?.period.name}',
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
                                             ),
                                             cursorColor: AppColors.blackColor,
                                             cursorWidth: Dimens.one,
@@ -718,7 +721,7 @@ Widget availabilityView(
                                             backGroundColor: AppColors.navyBlue,
                                             title: TranslationKeys.submit.tr,
                                             onTap: () {
-                                              var formatList;
+                                              String formatList;
                                               DateTime list;
                                               List<DateTime> startTimeList = [];
                                               List<DateTime> endTimeList = [];
@@ -744,22 +747,33 @@ Widget availabilityView(
                                                   controller.endTime!.minute,
                                                 ).toUtc());
                                               }
-                                              print(
-                                                  'start Time List:$startTimeList');
-                                              print(
-                                                  'End time List:$endTimeList');
-                                              List<dynamic> finalList = [];
+                                              log('start Time List:$startTimeList');
+                                              log('End time List:$endTimeList');
+                                              List<Map<String, dynamic>>
+                                                  finalList = [];
                                               for (int value = 0;
                                                   value < startTimeList.length;
                                                   value++) {
                                                 finalList.add({
-                                                  'openingTiming':
-                                                      startTimeList[value],
-                                                  'closingTiming':
-                                                      endTimeList[value],
+                                                  "openingTime":
+                                                      startTimeList[value]
+                                                          .toString(),
+                                                  "closingTime":
+                                                      endTimeList[value]
+                                                          .toString(),
                                                 });
                                               }
-                                              Get.back();
+                                              log('final list:$finalList');
+
+                                              /// api for add availability validator
+                                              controller
+                                                  .addAvailabilityValidator(
+                                                      availabilityList:
+                                                          finalList,
+                                                      startTime:
+                                                          controller.startTime,
+                                                      endTime:
+                                                          controller.endTime);
                                             },
                                           ),
                                           Dimens.boxHeight10,

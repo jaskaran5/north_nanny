@@ -436,43 +436,20 @@ class Utility {
     return croppedFile;
   }
 
-  // static Future<File?> getImage({int source = 1}) async {
-  //   // File? croppedFile;
-  //   File? image;
+  static String convertTo12HourFormat(String time24) {
+    // Split the time string into hours and minutes
+    List<String> parts = time24.split(":");
+    int hour = int.parse(parts[0]);
+    int minute = int.parse(parts[1]);
 
-  //   final picker = ImagePicker();
+    // Convert hour to 12-hour format
+    if (hour > 12) {
+      hour -= 12;
+    } else if (hour == 0) {
+      hour = 12;
+    }
 
-  //   final pickedFile = await picker.pickImage(
-  //     source: source == 1 ? ImageSource.camera : ImageSource.gallery,
-  //     imageQuality: 60,
-  //   );
-
-  //   if (pickedFile != null) {
-  //     image = File(pickedFile.path);
-
-  //     croppedFile = ImageCropper().cropImage(
-  //       compressQuality: 50,
-  //       sourcePath: image.path,
-  //       aspectRatioPresets: [
-  //         CropAspectRatioPreset.square,
-  //         CropAspectRatioPreset.ratio3x2,
-  //         CropAspectRatioPreset.original,
-  //         CropAspectRatioPreset.ratio4x3,
-  //         CropAspectRatioPreset.ratio16x9
-  //       ],
-  //       androidUiSettings: const AndroidUiSettings(
-  //         toolbarColor: Colors.transparent,
-  //         toolbarWidgetColor: Colors.transparent,
-  //         initAspectRatio: CropAspectRatioPreset.original,
-  //         lockAspectRatio: false,
-  //       ),
-  //       iosUiSettings: const IOSUiSettings(
-  //         minimumAspectRatio: 0.1,
-  //         aspectRatioLockDimensionSwapEnabled: true,
-  //       ),
-  //     );
-  //   }
-
-  //   return image;
-  // }
+    // Return the formatted time
+    return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  }
 }

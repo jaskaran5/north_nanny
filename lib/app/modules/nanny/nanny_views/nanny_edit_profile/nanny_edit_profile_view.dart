@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
+import '../../../../../navigators/app_routes.dart';
 import '../../../../res/constants/assets.dart';
 import '../../../../res/theme/colors.dart';
 import '../../../../res/theme/dimens.dart';
@@ -277,6 +279,20 @@ class NannyEditProfileView extends StatelessWidget {
                       controller: controller.locationTextEditingController,
                       maxLines: 1,
                       minLines: 1,
+                      onTap: () async {
+                        String? address = await Get.toNamed(
+                                Routes.googleMapView,
+                                arguments: true)
+                            ?.then((value) {
+                          return value;
+                        });
+                        log("new address is -->> $address");
+
+                        if (address != null) {
+                          controller.updateLocationAddress(address: address);
+                        }
+                      },
+                      readOnly: true,
                       decoration: customFieldDeco(
                         hintText: TranslationKeys.selectLocation.tr,
                         prefixWidget: Padding(

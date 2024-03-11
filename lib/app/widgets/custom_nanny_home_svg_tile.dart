@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -11,10 +10,12 @@ class CustomNannySvgTile extends StatelessWidget {
       {super.key,
       required this.assetName,
       required this.heading,
-      required this.aboutHeading});
+      required this.aboutHeading,
+      this.aboutHeadingWidth});
   final String assetName;
   final String heading;
   final String aboutHeading;
+  final double? aboutHeadingWidth;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -41,11 +42,14 @@ class CustomNannySvgTile extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Dimens.boxHeight4,
-              AppText(
-                text: aboutHeading,
-                style: AppStyles.ubBlack14W600,
-                maxLines: 1,
-                textAlign: TextAlign.left,
+              SizedBox(
+                width: aboutHeadingWidth ,
+                child: AppText(
+                  text: aboutHeading,
+                  style: AppStyles.ubBlack14W600,
+                  maxLines: 2,
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
           ),

@@ -39,13 +39,14 @@ class NannyHomeView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText(
-                        text: 'Chicago, Naperville',
+                        text: controller.nannyHomeData.data?.address,
                         style: AppStyles.ubLocationColor14W400,
                         maxLines: 1,
                       ),
                       Dimens.boxHeight2,
                       AppText(
-                        text: 'Good morning, Christina ',
+                        text:
+                            'Good morning,${controller.nannyHomeData.data?.name.toString().capitalizeFirst} ',
                         style: AppStyles.pdBlack18W600,
                         maxLines: 1,
                       ),
@@ -61,6 +62,7 @@ class NannyHomeView extends StatelessWidget {
                           value: controller.isSwitchOn,
                           onChanged: (value) {
                             controller.isSwitchOn = value;
+                            controller.setAvailability(isAvailable: value);
                             controller.update();
                           },
                           activeColor: AppColors.navyBlue,
@@ -128,7 +130,8 @@ class NannyHomeView extends StatelessWidget {
                           ),
                           Dimens.boxHeight4,
                           AppText(
-                            text: '\$25,365',
+                            text:
+                                '\$${controller.nannyHomeData.data?.totalRevenue}',
                             style: AppStyles.ubColorFFF24W700,
                             maxLines: 1,
                           ),
@@ -145,58 +148,76 @@ class NannyHomeView extends StatelessWidget {
                   style: AppStyles.ubBlack16W600,
                 ),
                 Dimens.boxHeight14,
-                Expanded(
-                  child: ListView(
-                    children: List.generate(
-                      controller.homeList.length,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          if (!Get.isRegistered<
-                              NannyBookingDetailController>()) {
-                            NannyBookingDetailBinding().dependencies();
-                          }
-                          Get.find<NannyBookingDetailController>()
-                                  .nannyBookingDetailStatus =
-                              NannyBookingDetailStatus.present;
+                controller.nannyHomeData.data?.bookingRequest?.isNotEmpty ==
+                        true
+                    ? Expanded(
+                        child: ListView(
+                          children: List.generate(
+                            controller.homeList.length,
+                            (index) => GestureDetector(
+                              onTap: () {
+                                if (!Get.isRegistered<
+                                    NannyBookingDetailController>()) {
+                                  NannyBookingDetailBinding().dependencies();
+                                }
+                                Get.find<NannyBookingDetailController>()
+                                        .nannyBookingDetailStatus =
+                                    NannyBookingDetailStatus.present;
 
-                          RouteManagement.goToNannyBookingView();
-                        },
-                        child: CustomNannyHomeTile(
-                          day: controller.homeList[index]['day'].toString(),
-                          dateFormatInMonthYearDayOfWeek:
-                              controller.homeList[index]['date'].toString(),
-                          timing: controller.homeList[index]['totalTiming']
-                              .toString(),
-                          totalPrice: controller.homeList[index]['totalPrice']
-                              .toString(),
-                          image: Assets.iconsImage,
-                          name:
-                              controller.homeList[index]['userName'].toString(),
-                          rating: controller.homeList[index]['totalRating']
-                              .toString(),
-                          reviews: controller.homeList[index]['totalReview']
-                              .toString(),
-                          servicesList: controller.servicesList,
-                          onTapRating: () {
-                            Utility.openBottomSheet(
-                              const CustomReviewBottomSheet(
-                                totalReviews: 21,
-                                totalReviewsRating: 4.5,
-                                reviewsList: [
-                                  'Michael Johnson',
-                                  'Giorgio Chiellini',
-                                  'Michael Johnson',
-                                  'Alex Morgan',
-                                  'Giorgio Chiellini'
-                                ],
+                                RouteManagement.goToNannyBookingView();
+                              },
+                              child: CustomNannyHomeTile(
+                                day: controller.homeList[index]['day']
+                                    .toString(),
+                                dateFormatInMonthYearDayOfWeek: controller
+                                    .homeList[index]['date']
+                                    .toString(),
+                                timing: controller.homeList[index]
+                                        ['totalTiming']
+                                    .toString(),
+                                totalPrice: controller.homeList[index]
+                                        ['totalPrice']
+                                    .toString(),
+                                image: Assets.iconsImage,
+                                name: controller.homeList[index]['userName']
+                                    .toString(),
+                                rating: controller.homeList[index]
+                                        ['totalRating']
+                                    .toString(),
+                                reviews: controller.homeList[index]
+                                        ['totalReview']
+                                    .toString(),
+                                servicesList: controller.servicesList,
+                                onTapRating: () {
+                                  Utility.openBottomSheet(
+                                    const CustomReviewBottomSheet(
+                                      totalReviews: 21,
+                                      totalReviewsRating: 4.5,
+                                      reviewsList: [
+                                        'Michael Johnson',
+                                        'Giorgio Chiellini',
+                                        'Michael Johnson',
+                                        'Alex Morgan',
+                                        'Giorgio Chiellini'
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: Center(
+                          child: AppText(
+                            text: TranslationKeys.noResultFound.tr,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: AppStyles.ubNavyBlue30W600,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -168,12 +167,15 @@ class NannyEditProfileController extends GetxController {
         'NameOfHighSchool': highSchoolTextEditingController.text.trim(),
         'NameOfCollage': collegeTextEditingController.text.trim(),
         if (licenseHaveOrNot?.isNotEmpty == true)
-          'IsDrivingLicense':
-              licenseHaveOrNot?.toLowerCase() == 'true' ? true : false,
+          'IsDrivingLicense': licenseHaveOrNot?.toLowerCase() == 'yes'
+              ? true
+              : licenseHaveOrNot?.toLowerCase() == 'no'
+                  ? false
+                  : null,
         'AboutMe': tellUsTextEditingController.text.trim(),
       });
 
-      log(body.fields.toString());
+      log('edit body:${body.fields.toString()}');
       log("auth token:-->> ${Storage.getValue(StringConstants.token)}");
 
       _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(
@@ -264,5 +266,11 @@ class NannyEditProfileController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "Edit Select Services  Nanny  API ISSUE $s");
     }
+  }
+
+  /// update location
+  updateLocationAddress({required String address}) {
+    locationTextEditingController.text = address;
+    update();
   }
 }

@@ -1,3 +1,5 @@
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 
 class Validator {
@@ -323,6 +325,25 @@ class Validator {
       return false;
     } else if (coordinates!.isEmpty) {
       error = "Please Select Your Location";
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /// add availability validator
+  addNannyAvailabilityValidator(
+      {required TimeOfDay? startTime, required TimeOfDay? endTime}) {
+    if (startTime == null) {
+      error = "Please Select Start Time";
+      return false;
+    } else if (endTime == null) {
+      error = "Please Select End Time";
+      return false;
+    } else if (endTime.hour < startTime.hour ||
+        (endTime.hour == startTime.hour &&
+            endTime.minute <= startTime.minute)) {
+      error = "End time should be after start time";
       return false;
     } else {
       return true;
