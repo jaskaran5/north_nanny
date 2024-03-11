@@ -130,6 +130,7 @@ class EditProfileView extends StatelessWidget {
                         Dimens.boxHeight26,
                         /** first name */
                         TextField(
+                          maxLength: 20,
                           controller: controller.firstNameTextEditingController,
                           maxLines: 1,
                           minLines: 1,
@@ -153,6 +154,7 @@ class EditProfileView extends StatelessWidget {
 
                         /** Last Name */
                         TextField(
+                          maxLength: 20,
                           controller: controller.lastNameTextEditingController,
                           maxLines: 1,
                           minLines: 1,

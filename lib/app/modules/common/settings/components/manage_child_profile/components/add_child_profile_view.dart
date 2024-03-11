@@ -62,6 +62,7 @@ class AddChildProfileView extends StatelessWidget {
                     children: [
                       Dimens.boxHeight32,
                       TextField(
+                        maxLength: 20,
                         controller: controller.childNameTextEditingController,
                         maxLines: 1,
                         minLines: 1,
@@ -83,6 +84,7 @@ class AddChildProfileView extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       TextField(
+                        maxLength: 2,
                         controller: controller.childAgeTextEditingController,
                         maxLines: 1,
                         minLines: 1,

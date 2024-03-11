@@ -120,6 +120,7 @@ class CreateNannyProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight26,
                     TextField(
+                      maxLength: 20,
                       controller: controller.firstNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -141,6 +142,7 @@ class CreateNannyProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     TextField(
+                      maxLength: 20,
                       controller: controller.lastNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,

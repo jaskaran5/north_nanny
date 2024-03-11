@@ -204,12 +204,33 @@ class CustomerHomeView extends StatelessWidget {
                   },
                 )
               : controller.homeNannyList.isEmpty
-                  ? Center(
-                      child: Text(
-                        "No Nanny Nearby",
-                        style: AppStyles.b0b0fairPlay15w600,
-                      ),
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Image.asset(
+                            Assets.imagesNoDataPng,
+                            scale: 2,
+                          ),
+
+                          //   SvgPicture.asset(
+                          //   Assets.iconsNoDataFoundImage,
+                          //   height: 200,
+                          //   width: 200,
+                          //   fit: BoxFit.cover,
+                          // )
+                        ),
+                        // SizedBox(
+                        //   height: Get.height * .12,
+                        // )
+                      ],
                     )
+                  // Center(
+                  //     child: Text(
+                  //       "No Nanny Nearby",
+                  //       style: AppStyles.b0b0fairPlay15w600,
+                  //     ),
+                  //   )
                   : Padding(
                       padding: Dimens.edgeInsets16,
                       child: GestureDetector(

@@ -35,6 +35,17 @@ class ApiUrls {
   static const String addOrRemoveFavoriteNanny =
       "api/UserDashBoard/AddOrRemoveFavoriteNanny";
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";
+  static const String bookingDetails = "api/UserDashBoard/BookingDetail";
+  static const String myFavoriteNannyList =
+      "api/UserDashBoard/MyFavoriteNannyList";
+  static const String getAllNannyBookingDates =
+      "api/UserDashBoard/GetAllNannyBookingDates";
+
+  static const String userBookingDeatil = "api/UserDashBoard/UserBookingDeatil";
+  static const String bookAppointment = "api/UserDashBoard/BookAppointment";
+  static const String addCard = "api/UserDashBoard/AddCard";
+
+  static const String saveCard = "api/UserDashBoard/SaveCard";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
   ///

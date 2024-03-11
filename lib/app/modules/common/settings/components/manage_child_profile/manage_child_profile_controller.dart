@@ -106,7 +106,7 @@ class ManageChildProfileController extends GetxController {
           childList.value = res.data ?? [];
 
           if (res.data!.isEmpty) {
-            toast(msg: "Child List Empty", isError: false);
+            // toast(msg: "Child List Empty", isError: false);
           }
 
           update();

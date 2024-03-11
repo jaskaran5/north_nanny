@@ -28,6 +28,7 @@ class Assets {
   static const String iconsClipboardText = 'assets/icons/clipboard-text.svg';
   static const String iconsClock = 'assets/icons/clock.svg';
   static const String iconsCopy = 'assets/icons/copy.svg';
+  static const String iconsDataNotFound = 'assets/icons/data_not_found.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
   static const String iconsDollarCircle = 'assets/icons/dollar_circle.svg';
@@ -76,6 +77,8 @@ class Assets {
   static const String iconsMore = 'assets/icons/more.svg';
   static const String iconsMoreSquare = 'assets/icons/more_square.svg';
   static const String iconsNext = 'assets/icons/next.svg';
+  static const String iconsNoData = 'assets/icons/no_data.svg';
+  static const String iconsNoDataFoundImage = 'assets/icons/no_data_found_image.svg';
   static const String iconsNoOfChild = 'assets/icons/no_of_child.svg';
   static const String iconsNoRating = 'assets/icons/no_rating.svg';
   static const String iconsNotification = 'assets/icons/notification.svg';
@@ -114,6 +117,7 @@ class Assets {
   static const String iconsVisa = 'assets/icons/visa.svg';
   static const String imagesMap = 'assets/images/map.png';
   static const String imagesNannyMapPin = 'assets/images/nanny_map_pin.png';
+  static const String imagesNoDataPng = 'assets/images/no_data_png.png';
   static const String imagesPinkHeart = 'assets/images/pink_heart.png';
   static const String imagesStar = 'assets/images/star.png';
   static const String imagesUserAvatar = 'assets/images/user_avatar.png';

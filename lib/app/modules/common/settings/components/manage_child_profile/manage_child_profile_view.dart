@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -56,7 +58,27 @@ class ManageChildProfileView extends StatelessWidget {
                     },
                   ),
                 )
-              : const Center(child: Text("No Data")),
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        Assets.imagesNoDataPng,
+                        scale: 2,
+                      ),
+
+                      //   SvgPicture.asset(
+                      //   Assets.iconsNoDataFoundImage,
+                      //   height: 200,
+                      //   width: 200,
+                      //   fit: BoxFit.cover,
+                      // )
+                    ),
+                    SizedBox(
+                      height: Get.height * .12,
+                    )
+                  ],
+                ),
           floatingActionButton: CustomButton(
             title: TranslationKeys.addChild.tr,
             backGroundColor: AppColors.navyBlue,

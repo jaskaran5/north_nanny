@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -56,13 +57,20 @@ class CustomSettingProfileTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      title,
-                      style: AppStyles.ubBlack15W600,
+                    SizedBox(
+                      width: Get.width * .6,
+                      child: Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.ubBlack15W600,
+                      ),
                     ),
-                    Text(
-                      subtitle,
-                      style: AppStyles.ubGrey12W500,
+                    SizedBox(
+                      width: Get.width * .5,
+                      child: Text(
+                        subtitle,
+                        style: AppStyles.ubGrey12W500,
+                      ),
                     ),
                   ],
                 ),

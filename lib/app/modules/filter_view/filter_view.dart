@@ -20,567 +20,582 @@ class FilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (FilterController controller) {
-        return Scaffold(
-          appBar: CustomAppbarWidget(
-            title: TranslationKeys.filters.tr,
-          ),
-          bottomSheet: Container(
-            color: AppColors.primaryColor,
-            padding: Dimens.edgeInsets16,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomButton(
-                  onTap: () {
-                    Get.back();
-                  },
-                  height: Dimens.fiftyThree,
-                  width: Dimens.oneHundredFifty,
-                  borderRadius: Dimens.twelve,
-                  title: TranslationKeys.reset.tr,
-                  backGroundColor: AppColors.lightNavyBlue,
-                  textColor: AppColors.navyBlue,
-                ),
-                CustomButton(
-                  onTap: () {
-                    Get.back();
-                  },
-                  height: Dimens.fiftyThree,
-                  width: Dimens.oneHundredFifty,
-                  borderRadius: Dimens.twelve,
-                  title: TranslationKeys.apply.tr,
-                  backGroundColor: AppColors.navyBlue,
-                ),
-              ],
+    return SafeArea(
+      top: false,
+      child: GetBuilder(
+        builder: (FilterController controller) {
+          return Scaffold(
+            appBar: CustomAppbarWidget(
+              title: TranslationKeys.filters.tr,
             ),
-          ),
-          body: SafeArea(
-            child: Padding(
+            bottomSheet: Container(
+              color: AppColors.primaryColor,
               padding: Dimens.edgeInsets16,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Dimens.boxHeight10,
-                  AppText(
-                    text: TranslationKeys.distance.tr,
-                    style: AppStyles.ubBlack16W700,
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                  ),
-                  Dimens.boxHeight4,
-                  FlutterSlider(
-                    handler: FlutterSliderHandler(
-                      child: SvgPicture.asset(Assets.iconsSliderThumb),
-                    ),
-                    handlerHeight: Dimens.twentyFour,
-                    handlerWidth: Dimens.twentyFour,
-                    rightHandler: FlutterSliderHandler(
-                      child: SvgPicture.asset(Assets.iconsSliderThumb),
-                    ),
-                    step: const FlutterSliderStep(
-                      isPercentRange: false,
-                    ),
-                    values: [
-                      controller.distanceLowerValue,
-                      controller.distanceHigherValue,
-                    ],
-                    rangeSlider: true,
-                    min: Dimens.zero,
-                    max: Dimens.ten,
-                    axis: Axis.horizontal,
-                    onDragging: (handlerIndex, lowerValue, upperValue) {
-                      controller.distanceHigherValue = upperValue;
-                      controller.distanceLowerValue = lowerValue;
-                      controller.update();
+                  /**-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>------>>>>>> RESET BUTTON */
+                  CustomButton(
+                    onTap: () {
+                      Get.back();
                     },
-                    handlerAnimation: FlutterSliderHandlerAnimation(
-                      scale: Dimens.one,
-                      duration: Duration.zero,
-                    ),
-                    tooltip: FlutterSliderTooltip(
-                      positionOffset: FlutterSliderTooltipPositionOffset(
-                        top: Dimens.fortySix,
-                      ),
-                      textStyle: AppStyles.ubGrey14W600,
-                      custom: (value) => AppText(
-                        text:
-                            '${double.parse(value.toString()).toInt().toString()} miles',
-                        style: AppStyles.ubGrey14W600,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                      ),
-                      alwaysShowTooltip: true,
-                    ),
-                    trackBar: FlutterSliderTrackBar(
-                      activeTrackBar: BoxDecoration(
-                          color: AppColors.sliderActiveColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          )),
-                      activeTrackBarHeight: Dimens.five,
-                      inactiveTrackBar: BoxDecoration(
-                          color: AppColors.sliderInActiveColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          )),
-                      inactiveTrackBarHeight: Dimens.five,
-                    ),
+                    height: Dimens.fiftyThree,
+                    width: Dimens.oneHundredFifty,
+                    borderRadius: Dimens.twelve,
+                    title: TranslationKeys.reset.tr,
+                    backGroundColor: AppColors.lightNavyBlue,
+                    textColor: AppColors.navyBlue,
                   ),
-                  Dimens.boxHeight26,
-                  AppText(
-                    text:
-                        "${TranslationKeys.gender.tr.capitalizeFirst} (${TranslationKeys.optional.tr})",
-                    style: AppStyles.ubBlack16W700,
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                  ),
-                  Dimens.boxHeight10,
-                  AppDropdown(
-                    selectedItem: controller.selectedGender?.isEmpty == true
-                        ? '${TranslationKeys.gender.tr} '
-                        : controller.selectedGender,
-                    onChanged: (value) {
-                      controller.selectedGender = value.toString();
-                      controller.update();
+                  /**--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>----->>>>>> APPLY BUTTON */
+
+                  CustomButton(
+                    onTap: () {
+                      Get.back();
                     },
-                    baseTextStyle: controller.selectedGender?.isEmpty == true
-                        ? AppStyles.ubHintColor15W500
-                        : null,
-                    prefix: SvgPicture.asset(Assets.iconsGender),
-                    items: controller.genderList,
-                    itemBuilder: (context, item, isSelected) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: Dimens.edgeInsetsH20V15,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppText(
-                                  text: item.toString().tr,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  style: AppStyles.ubNavyBlue15W600,
-                                ),
-                                item == controller.selectedGender
-                                    ? SvgPicture.asset(Assets.iconsCircleTick)
-                                    : Dimens.box0,
-                              ],
-                            ),
-                          ),
-                          item != controller.genderList.last
-                              ? Dimens.boxHeight2
-                              : Dimens.box0,
-                          item != controller.genderList.last
-                              ? Divider(
-                                  color: AppColors.dividerColor,
-                                  height: Dimens.two,
-                                )
-                              : Dimens.box0,
-                        ],
-                      );
-                    },
+                    height: Dimens.fiftyThree,
+                    width: Dimens.oneHundredFifty,
+                    borderRadius: Dimens.twelve,
+                    title: TranslationKeys.apply.tr,
+                    backGroundColor: AppColors.navyBlue,
                   ),
-                  Dimens.boxHeight16,
-                  RichText(
-                    text: TextSpan(
-                      text: TranslationKeys.age.tr,
+                ],
+              ),
+            ),
+            body: SafeArea(
+              child: Padding(
+                padding: Dimens.edgeInsets16,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Dimens.boxHeight10,
+                    AppText(
+                      text: TranslationKeys.distance.tr,
                       style: AppStyles.ubBlack16W700,
-                      children: [
-                        TextSpan(
-                          text: ' (13-50)',
-                          style: AppStyles.ubGrey16W500,
-                        )
-                      ],
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
                     ),
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                  ),
-                  Dimens.boxHeight4,
-                  FlutterSlider(
-                    handler: FlutterSliderHandler(
-                      child: SvgPicture.asset(Assets.iconsSliderThumb),
-                    ),
-                    handlerHeight: Dimens.twentyFour,
-                    handlerWidth: Dimens.twentyFour,
-                    rightHandler: FlutterSliderHandler(
-                      child: SvgPicture.asset(Assets.iconsSliderThumb),
-                    ),
-                    jump: true,
-                    step: const FlutterSliderStep(
-                      isPercentRange: false,
-                    ),
-                    values: [
-                      controller.ageLowerValue,
-                      controller.ageHigherValue,
-                    ],
-                    rangeSlider: true,
-                    min: Dimens.thirteen,
-                    max: Dimens.fifty,
-                    axis: Axis.horizontal,
-                    onDragging: (handlerIndex, lowerValue, upperValue) {
-                      controller.ageHigherValue = upperValue;
-                      controller.ageLowerValue = lowerValue;
-                      controller.update();
-                    },
-                    handlerAnimation: FlutterSliderHandlerAnimation(
-                      scale: Dimens.one,
-                      duration: Duration.zero,
-                    ),
-                    tooltip: FlutterSliderTooltip(
-                      positionOffset: FlutterSliderTooltipPositionOffset(
-                        top: Dimens.fortySix,
+                    Dimens.boxHeight4,
+                    FlutterSlider(
+                      handler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
                       ),
-                      textStyle: AppStyles.ubGrey14W600,
-                      custom: (value) => Padding(
-                        padding: Dimens.edgeInsetsL16R16,
-                        child: AppText(
+                      handlerHeight: Dimens.twentyFour,
+                      handlerWidth: Dimens.twentyFour,
+                      rightHandler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      step: const FlutterSliderStep(
+                        isPercentRange: false,
+                      ),
+                      values: [
+                        controller.distanceLowerValue,
+                        controller.distanceHigherValue,
+                      ],
+                      rangeSlider: true,
+                      min: Dimens.zero,
+                      max: Dimens.ten,
+                      axis: Axis.horizontal,
+                      onDragging: (handlerIndex, lowerValue, upperValue) {
+                        controller.distanceHigherValue = upperValue;
+                        controller.distanceLowerValue = lowerValue;
+                        controller.update();
+                      },
+                      handlerAnimation: FlutterSliderHandlerAnimation(
+                        scale: Dimens.one,
+                        duration: Duration.zero,
+                      ),
+                      tooltip: FlutterSliderTooltip(
+                        positionOffset: FlutterSliderTooltipPositionOffset(
+                          top: Dimens.fortySix,
+                        ),
+                        textStyle: AppStyles.ubGrey14W600,
+                        custom: (value) => AppText(
                           text:
-                              double.parse(value.toString()).toInt().toString(),
+                              '${double.parse(value.toString()).toInt().toString()} miles',
                           style: AppStyles.ubGrey14W600,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                         ),
+                        alwaysShowTooltip: true,
                       ),
-                      alwaysShowTooltip: true,
+                      trackBar: FlutterSliderTrackBar(
+                        activeTrackBar: BoxDecoration(
+                            color: AppColors.sliderActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        activeTrackBarHeight: Dimens.five,
+                        inactiveTrackBar: BoxDecoration(
+                            color: AppColors.sliderInActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        inactiveTrackBarHeight: Dimens.five,
+                      ),
                     ),
-                    trackBar: FlutterSliderTrackBar(
-                      activeTrackBar: BoxDecoration(
-                          color: AppColors.sliderActiveColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          )),
-                      activeTrackBarHeight: Dimens.five,
-                      inactiveTrackBar: BoxDecoration(
-                          color: AppColors.sliderInActiveColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          )),
-                      inactiveTrackBarHeight: Dimens.five,
+                    Dimens.boxHeight26,
+                    AppText(
+                      text:
+                          "${TranslationKeys.gender.tr.capitalizeFirst} (${TranslationKeys.optional.tr})",
+                      style: AppStyles.ubBlack16W700,
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
                     ),
-                  ),
-                  Dimens.boxHeight26,
+                    Dimens.boxHeight10,
+                    AppDropdown(
+                      selectedItem: controller.selectedGender?.isEmpty == true
+                          ? '${TranslationKeys.gender.tr} '
+                          : controller.selectedGender,
+                      onChanged: (value) {
+                        controller.selectedGender = value.toString();
+                        controller.update();
+                      },
+                      baseTextStyle: controller.selectedGender?.isEmpty == true
+                          ? AppStyles.ubHintColor15W500
+                          : null,
+                      prefix: SvgPicture.asset(Assets.iconsGender),
+                      items: controller.genderList,
+                      itemBuilder: (context, item, isSelected) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: Dimens.edgeInsetsH20V15,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AppText(
+                                    text: item.toString().tr,
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    style: AppStyles.ubNavyBlue15W600,
+                                  ),
+                                  item == controller.selectedGender
+                                      ? SvgPicture.asset(Assets.iconsCircleTick)
+                                      : Dimens.box0,
+                                ],
+                              ),
+                            ),
+                            item != controller.genderList.last
+                                ? Dimens.boxHeight2
+                                : Dimens.box0,
+                            item != controller.genderList.last
+                                ? Divider(
+                                    color: AppColors.dividerColor,
+                                    height: Dimens.two,
+                                  )
+                                : Dimens.box0,
+                          ],
+                        );
+                      },
+                    ),
+                    Dimens.boxHeight16,
+                    RichText(
+                      text: TextSpan(
+                        text: TranslationKeys.age.tr,
+                        style: AppStyles.ubBlack16W700,
+                        children: [
+                          TextSpan(
+                            text: ' (13-50)',
+                            style: AppStyles.ubGrey16W500,
+                          )
+                        ],
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                    ),
+                    Dimens.boxHeight4,
+                    FlutterSlider(
+                      handler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      handlerHeight: Dimens.twentyFour,
+                      handlerWidth: Dimens.twentyFour,
+                      rightHandler: FlutterSliderHandler(
+                        child: SvgPicture.asset(Assets.iconsSliderThumb),
+                      ),
+                      jump: true,
+                      step: const FlutterSliderStep(
+                        isPercentRange: false,
+                      ),
+                      values: [
+                        controller.ageLowerValue,
+                        controller.ageHigherValue,
+                      ],
+                      rangeSlider: true,
+                      min: Dimens.thirteen,
+                      max: Dimens.fifty,
+                      axis: Axis.horizontal,
+                      onDragging: (handlerIndex, lowerValue, upperValue) {
+                        controller.ageHigherValue = upperValue;
+                        controller.ageLowerValue = lowerValue;
+                        controller.update();
+                      },
+                      handlerAnimation: FlutterSliderHandlerAnimation(
+                        scale: Dimens.one,
+                        duration: Duration.zero,
+                      ),
+                      tooltip: FlutterSliderTooltip(
+                        positionOffset: FlutterSliderTooltipPositionOffset(
+                          top: Dimens.fortySix,
+                        ),
+                        textStyle: AppStyles.ubGrey14W600,
+                        custom: (value) => Padding(
+                          padding: Dimens.edgeInsetsL16R16,
+                          child: AppText(
+                            text: double.parse(value.toString())
+                                .toInt()
+                                .toString(),
+                            style: AppStyles.ubGrey14W600,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                          ),
+                        ),
+                        alwaysShowTooltip: true,
+                      ),
+                      trackBar: FlutterSliderTrackBar(
+                        activeTrackBar: BoxDecoration(
+                            color: AppColors.sliderActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        activeTrackBarHeight: Dimens.five,
+                        inactiveTrackBar: BoxDecoration(
+                            color: AppColors.sliderInActiveColor,
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
+                            )),
+                        inactiveTrackBarHeight: Dimens.five,
+                      ),
+                    ),
+                    Dimens.boxHeight26,
 
-                  /** Date and time **/
-                  AppText(
-                    text: TranslationKeys.dateAndTime.tr,
-                    style: AppStyles.ubBlack16W700,
-                    maxLines: 1,
-                  ),
-                  Dimens.boxHeight10,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          await Get.dialog(
-                            Center(
-                              child: Padding(
+                    /** Date and time **/
+                    AppText(
+                      text: TranslationKeys.dateAndTime.tr,
+                      style: AppStyles.ubBlack16W700,
+                      maxLines: 1,
+                    ),
+                    Dimens.boxHeight10,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await Get.dialog(
+                              Center(
+                                child: Padding(
+                                  padding: Dimens.edgeInsetsL16R16,
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    borderRadius:
+                                        BorderRadius.circular(Dimens.twenty),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      constraints: BoxConstraints(
+                                        maxHeight: Dimens.fourHundredEighty,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsets10,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AppText(
+                                                  text: TranslationKeys
+                                                      .selectDate.tr,
+                                                  style:
+                                                      AppStyles.ubBlack16W700,
+                                                  maxLines: 1,
+                                                ),
+                                                InkWell(
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    Assets.iconsRemove,
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                      AppColors.blackColor,
+                                                      BlendMode.srcIn,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: Dimens.one,
+                                            color: AppColors.dividerColor,
+                                          ),
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: GetBuilder<FilterController>(
+                                              builder: (filterController) {
+                                                return TableCalendar(
+                                                  sixWeekMonthsEnforced: true,
+                                                  startingDayOfWeek:
+                                                      StartingDayOfWeek.monday,
+                                                  daysOfWeekStyle:
+                                                      DaysOfWeekStyle(
+                                                    weekdayStyle: AppStyles
+                                                        .ubHintColor13W500,
+                                                    weekendStyle: AppStyles
+                                                        .ubHintColor13W500,
+                                                  ),
+                                                  calendarStyle: CalendarStyle(
+                                                    defaultTextStyle:
+                                                        AppStyles.ubBlack15W600,
+                                                    weekendTextStyle:
+                                                        AppStyles.ubBlack15W600,
+                                                    outsideTextStyle: AppStyles
+                                                        .ubHintColor15W500,
+                                                    todayDecoration:
+                                                        const BoxDecoration(
+                                                      color: AppColors.navyBlue,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    todayTextStyle:
+                                                        AppStyles.ubWhite15700,
+                                                    selectedTextStyle:
+                                                        AppStyles.ubWhite15700,
+                                                    selectedDecoration:
+                                                        const BoxDecoration(
+                                                      color: AppColors.navyBlue,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    isTodayHighlighted: false,
+                                                    markersMaxCount: 1,
+                                                  ),
+                                                  firstDay: DateTime.utc(
+                                                      1999, 01, 01),
+                                                  lastDay: DateTime.utc(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month + 1,
+                                                  ),
+                                                  headerStyle: HeaderStyle(
+                                                    titleCentered: true,
+                                                    titleTextStyle:
+                                                        AppStyles.ubBlack18W600,
+                                                    formatButtonVisible: false,
+                                                  ),
+                                                  selectedDayPredicate: (day) =>
+                                                      day ==
+                                                      controller.selectedDate,
+                                                  onDaySelected: (selectedDay,
+                                                      focusedDay) {
+                                                    filterController
+                                                            .selectedDate =
+                                                        selectedDay;
+                                                    filterController.update();
+                                                  },
+                                                  focusedDay: filterController
+                                                      .selectedDate,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: CustomButton(
+                                              title: TranslationKeys.apply.tr,
+                                              backGroundColor:
+                                                  AppColors.navyBlue,
+                                              onTap: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              useSafeArea: true,
+                            );
+                          },
+                          child: Container(
+                            height: Dimens.fifty,
+                            width: Dimens.oneHundredFifty,
+                            padding: Dimens.edgeInsets8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.eight,
+                              ),
+                              border: Border.all(
+                                color: AppColors.lightNavyBlue,
+                                width: Dimens.one,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.iconsCalendar,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
+                                ),
+                                Dimens.boxWidth10,
+                                AppText(
+                                  text:
+                                      '${controller.selectedDate.month.toString().padLeft(2, '0')}/${controller.selectedDate.day.toString().padLeft(2, '0')}/${controller.selectedDate.year}',
+                                  style: AppStyles.ubHintColor15W500,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.dialog(
+                              Padding(
                                 padding: Dimens.edgeInsetsL16R16,
                                 child: Material(
                                   color: Colors.transparent,
                                   borderRadius:
                                       BorderRadius.circular(Dimens.twenty),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    constraints: BoxConstraints(
-                                      maxHeight: Dimens.fourHundredEighty,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.twenty),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding: Dimens.edgeInsets10,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              AppText(
-                                                text: TranslationKeys
-                                                    .selectDate.tr,
-                                                style: AppStyles.ubBlack16W700,
-                                                maxLines: 1,
-                                              ),
-                                              InkWell(
-                                                hoverColor: Colors.transparent,
-                                                onTap: () {
-                                                  Get.back();
-                                                },
-                                                child: SvgPicture.asset(
-                                                  Assets.iconsRemove,
-                                                  colorFilter:
-                                                      const ColorFilter.mode(
-                                                    AppColors.blackColor,
-                                                    BlendMode.srcIn,
+                                  child: Center(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      constraints: BoxConstraints(
+                                        maxHeight: Dimens.twoHundredNinety,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsets10,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AppText(
+                                                  text: TranslationKeys
+                                                      .selectTime.tr,
+                                                  style:
+                                                      AppStyles.ubBlack16W700,
+                                                  maxLines: 1,
+                                                ),
+                                                InkWell(
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    Assets.iconsRemove,
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                      AppColors.blackColor,
+                                                      BlendMode.srcIn,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Divider(
-                                          height: Dimens.one,
-                                          color: AppColors.dividerColor,
-                                        ),
-                                        Padding(
-                                          padding: Dimens.edgeInsetsL16R16,
-                                          child: GetBuilder<FilterController>(
-                                            builder: (filterController) {
-                                              return TableCalendar(
-                                                sixWeekMonthsEnforced: true,
-                                                startingDayOfWeek:
-                                                    StartingDayOfWeek.monday,
-                                                daysOfWeekStyle:
-                                                    DaysOfWeekStyle(
-                                                  weekdayStyle: AppStyles
-                                                      .ubHintColor13W500,
-                                                  weekendStyle: AppStyles
-                                                      .ubHintColor13W500,
-                                                ),
-                                                calendarStyle: CalendarStyle(
-                                                  defaultTextStyle:
-                                                      AppStyles.ubBlack15W600,
-                                                  weekendTextStyle:
-                                                      AppStyles.ubBlack15W600,
-                                                  outsideTextStyle: AppStyles
-                                                      .ubHintColor15W500,
-                                                  todayDecoration:
-                                                      const BoxDecoration(
-                                                    color: AppColors.navyBlue,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  todayTextStyle:
-                                                      AppStyles.ubWhite15700,
-                                                  selectedTextStyle:
-                                                      AppStyles.ubWhite15700,
-                                                  selectedDecoration:
-                                                      const BoxDecoration(
-                                                    color: AppColors.navyBlue,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  isTodayHighlighted: false,
-                                                  markersMaxCount: 1,
-                                                ),
-                                                firstDay:
-                                                    DateTime.utc(1999, 01, 01),
-                                                lastDay: DateTime.utc(
-                                                  DateTime.now().year,
-                                                  DateTime.now().month + 1,
-                                                ),
-                                                headerStyle: HeaderStyle(
-                                                  titleCentered: true,
-                                                  titleTextStyle:
-                                                      AppStyles.ubBlack18W600,
-                                                  formatButtonVisible: false,
-                                                ),
-                                                selectedDayPredicate: (day) =>
-                                                    day ==
-                                                    controller.selectedDate,
-                                                onDaySelected:
-                                                    (selectedDay, focusedDay) {
-                                                  filterController
-                                                          .selectedDate =
-                                                      selectedDay;
-                                                  filterController.update();
-                                                },
-                                                focusedDay: filterController
-                                                    .selectedDate,
-                                              );
-                                            },
+                                          Divider(
+                                            height: Dimens.one,
+                                            color: AppColors.dividerColor,
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: Dimens.edgeInsetsL16R16,
-                                          child: CustomButton(
+                                          Padding(
+                                            padding: Dimens.edgeInsetsL16R16,
+                                            child: TimePickerSpinner(
+                                              is24HourMode: false,
+                                              isForce2Digits: true,
+                                              highlightedTextStyle:
+                                                  AppStyles.ubNavyBlue20W600,
+                                              normalTextStyle:
+                                                  AppStyles.ubHintColor20W500,
+                                              itemHeight: Dimens.sixty,
+                                              onTimeChange: (time) {
+                                                controller.selectedTime = time;
+                                                controller.update();
+                                              },
+                                              time: controller.selectedTime,
+                                            ),
+                                          ),
+                                          Dimens.boxHeight10,
+                                          CustomButton(
+                                            height: Dimens.fortySix,
+                                            width: Dimens.twoHundredNinety,
                                             title: TranslationKeys.apply.tr,
+                                            titleStyle: AppStyles.ubWhite14700,
                                             backGroundColor: AppColors.navyBlue,
                                             onTap: () {
                                               Get.back();
                                             },
-                                          ),
-                                        ),
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            useSafeArea: true,
-                          );
-                        },
-                        child: Container(
-                          height: Dimens.fifty,
-                          width: Dimens.oneHundredFifty,
-                          padding: Dimens.edgeInsets8,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              Dimens.eight,
-                            ),
-                            border: Border.all(
-                              color: AppColors.lightNavyBlue,
-                              width: Dimens.one,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.iconsCalendar,
-                                height: Dimens.twenty,
-                                width: Dimens.twenty,
+                            );
+                          },
+                          child: Container(
+                            height: Dimens.fifty,
+                            width: Dimens.oneHundredFifty,
+                            padding: Dimens.edgeInsets8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.eight,
                               ),
-                              Dimens.boxWidth10,
-                              AppText(
-                                text:
-                                    '${controller.selectedDate.month.toString().padLeft(2, '0')}/${controller.selectedDate.day.toString().padLeft(2, '0')}/${controller.selectedDate.year}',
-                                style: AppStyles.ubHintColor15W500,
-                                maxLines: 1,
+                              border: Border.all(
+                                color: AppColors.lightNavyBlue,
+                                width: Dimens.one,
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.dialog(
-                            Padding(
-                              padding: Dimens.edgeInsetsL16R16,
-                              child: Material(
-                                color: Colors.transparent,
-                                borderRadius:
-                                    BorderRadius.circular(Dimens.twenty),
-                                child: Center(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    constraints: BoxConstraints(
-                                      maxHeight: Dimens.twoHundredNinety,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.twenty),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: Dimens.edgeInsets10,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              AppText(
-                                                text: TranslationKeys
-                                                    .selectTime.tr,
-                                                style: AppStyles.ubBlack16W700,
-                                                maxLines: 1,
-                                              ),
-                                              InkWell(
-                                                hoverColor: Colors.transparent,
-                                                onTap: () {
-                                                  Get.back();
-                                                },
-                                                child: SvgPicture.asset(
-                                                  Assets.iconsRemove,
-                                                  colorFilter:
-                                                      const ColorFilter.mode(
-                                                    AppColors.blackColor,
-                                                    BlendMode.srcIn,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: Dimens.one,
-                                          color: AppColors.dividerColor,
-                                        ),
-                                        Padding(
-                                          padding: Dimens.edgeInsetsL16R16,
-                                          child: TimePickerSpinner(
-                                            is24HourMode: false,
-                                            isForce2Digits: true,
-                                            highlightedTextStyle:
-                                                AppStyles.ubNavyBlue20W600,
-                                            normalTextStyle:
-                                                AppStyles.ubHintColor20W500,
-                                            itemHeight: Dimens.sixty,
-                                            onTimeChange: (time) {
-                                              controller.selectedTime = time;
-                                              controller.update();
-                                            },
-                                            time: controller.selectedTime,
-                                          ),
-                                        ),
-                                        Dimens.boxHeight10,
-                                        CustomButton(
-                                          height: Dimens.fortySix,
-                                          width: Dimens.twoHundredNinety,
-                                          title: TranslationKeys.apply.tr,
-                                          titleStyle: AppStyles.ubWhite14700,
-                                          backGroundColor: AppColors.navyBlue,
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.iconsClock,
+                                  height: Dimens.twenty,
+                                  width: Dimens.twenty,
                                 ),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: Dimens.fifty,
-                          width: Dimens.oneHundredFifty,
-                          padding: Dimens.edgeInsets8,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              Dimens.eight,
-                            ),
-                            border: Border.all(
-                              color: AppColors.lightNavyBlue,
-                              width: Dimens.one,
+                                Dimens.boxWidth10,
+                                AppText(
+                                  text:
+                                      '${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')} ${controller.selectedTime.hour > 12 ? 'PM' : 'AM'} ',
+                                  style: AppStyles.ubHintColor15W500,
+                                  maxLines: 1,
+                                ),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.iconsClock,
-                                height: Dimens.twenty,
-                                width: Dimens.twenty,
-                              ),
-                              Dimens.boxWidth10,
-                              AppText(
-                                text:
-                                    '${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')} ${controller.selectedTime.hour > 12 ? 'PM' : 'AM'} ',
-                                style: AppStyles.ubHintColor15W500,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -98,7 +98,7 @@ class SendTipView extends StatelessWidget {
                 backGroundColor: AppColors.navyBlue,
                 onTap: onTapSubmitButton,
               ),
-              Dimens.boxHeight10,
+              Dimens.boxHeight20,
             ],
           ),
         ),

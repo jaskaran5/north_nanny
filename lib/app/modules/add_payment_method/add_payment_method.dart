@@ -13,7 +13,11 @@ import '../../res/theme/colors.dart';
 import '../../widgets/custom_text_field.dart';
 
 class AddPaymentMethod extends StatelessWidget {
-  const AddPaymentMethod({super.key, required this.isComeFromNannyProfile, required this.buttonTitle, required this.onTapButton});
+  const AddPaymentMethod(
+      {super.key,
+      required this.isComeFromNannyProfile,
+      required this.buttonTitle,
+      required this.onTapButton});
   final bool isComeFromNannyProfile;
   final String buttonTitle;
   final Function() onTapButton;
@@ -142,7 +146,7 @@ class AddPaymentMethod extends StatelessWidget {
                 CustomButton(
                   title: buttonTitle,
                   backGroundColor: AppColors.navyBlue,
-                  onTap:onTapButton,
+                  onTap: onTapButton,
                 ),
               ],
             ),

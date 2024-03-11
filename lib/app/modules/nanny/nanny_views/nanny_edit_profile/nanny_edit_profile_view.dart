@@ -129,6 +129,7 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight26,
                     TextField(
+                      maxLength: 20,
                       controller: controller.firstNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -150,6 +151,7 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     TextField(
+                      maxLength: 20,
                       controller: controller.lastNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -171,6 +173,7 @@ class NannyEditProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight20,
                     TextField(
+                      maxLength: 2,
                       controller: controller.ageTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -429,8 +432,8 @@ class NannyEditProfileView extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: AppStyles.ubNavyBlue15W600,
                                   ),
-                                    item.toString() == controller.licenseHaveOrNot
-                                        ? SvgPicture.asset(Assets.iconsCircleTick)
+                                  item.toString() == controller.licenseHaveOrNot
+                                      ? SvgPicture.asset(Assets.iconsCircleTick)
                                       : Dimens.box0,
                                 ],
                               ),

@@ -106,7 +106,7 @@ class SignupViewController extends GetxController {
     }
   }
 
-  /// LOCATION CHECK
+  /// --------->>>>>>>>>>>>>>>>>>>> -------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> LOCATION CHECK  <<<<-------------------------------
   Future<void> locationCheck() async {
     if ((Storage.getValue(StringConstants.latitude) ?? 30.7046 == null) ||
         (Storage.getValue(StringConstants.longitude) ?? 76.7179 == null)) {

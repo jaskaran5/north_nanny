@@ -153,10 +153,14 @@ class CustomerProfileView extends StatelessWidget {
                                 maxLines: 1,
                               ),
                               Dimens.boxHeight4,
-                              AppText(
-                                text: controller.customerAddress.value,
-                                style: AppStyles.ubGrey14W500,
-                                maxLines: 1,
+                              SizedBox(
+                                width: Get.width * .6,
+                                child: AppText(
+                                  overflow: TextOverflow.ellipsis,
+                                  text: controller.customerAddress.value,
+                                  style: AppStyles.ubGrey14W500,
+                                  maxLines: 1,
+                                ),
                               ),
                             ],
                           ),

@@ -8,6 +8,9 @@ import 'package:northshore_nanny_flutter/app/models/dashboard_response_model.dar
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
@@ -15,6 +18,22 @@ import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 class CustomerHomeController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
 
+  String? selectedGender = '';
+
+  double distanceLowerValue = Dimens.zero;
+  double distanceHigherValue = Dimens.ten;
+  double ageLowerValue = Dimens.thirteen;
+  double ageHigherValue = Dimens.fifty;
+
+  /// use to select Date
+  DateTime selectedDate = DateTime.now();
+
+  /// use to select Time
+  DateTime selectedTime = DateTime.now();
+
+  List<String> genderList = GenderConstant.values
+      .map((e) => e.genderName.capitalizeFirst.toString())
+      .toList();
   RxBool showListView = false.obs;
   RxBool isGoogleMap = true.obs;
   final Set<Marker> markers = {};

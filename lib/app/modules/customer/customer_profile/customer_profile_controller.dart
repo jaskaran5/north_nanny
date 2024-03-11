@@ -7,6 +7,7 @@ import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/widgets/edit_customer_profile.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -25,9 +26,7 @@ class CustomerProfileController extends GetxController {
   RxString referralEarned = '0'.obs;
   CroppedFile? pickedImage;
 
-  RxString customerImageUrl =
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww'
-          .obs;
+  RxString customerImageUrl = ''.obs;
   RxString customerAddress = ''.obs;
   RxString customerPhoneNumber = ''.obs;
   final firstNameTextEditingController = TextEditingController();
@@ -135,7 +134,7 @@ class CustomerProfileController extends GetxController {
         "LastName": lastNameTextEditingController.text.trim(),
         "MobileNumber": phoneNumberTextEditingController.text.trim(),
         "Latitude": lat.toString(),
-        "Logngitude": lang.toString(),
+        "Longitude": lang.toString(),
       });
 
       log(body.fields.toString());
@@ -147,7 +146,7 @@ class CustomerProfileController extends GetxController {
         var res = RegisterModelResponseJson.fromJson(value);
 
         if (res.response == AppConstants.apiResponseSuccess) {
-          toast(msg: res.message!, isError: false);
+          toast(msg: "Profile Update Successfully", isError: false);
 
           Get.back(result: true);
         } else {
@@ -162,17 +161,16 @@ class CustomerProfileController extends GetxController {
     }
   }
 
+  /// ------->>>>>>>>> ------------------------->>>>>>>>>>>. REDIRECT TO EDIT PROFILE SCREEN
   redirectToEditProfileScreen() async {
-    bool check = await Get.toNamed(
-      Routes.ediProfileView,
-    );
+    bool? check = await Get.to(const EditProfileView());
 
-    if (check) {
+    if (check!) {
       getCustomerProfileApi();
     }
   }
 
-  /// update location
+  /// ----------------------------------------->>>>>>>>>>>>>>> update location
 
   updateLocationAddress({required String address}) {
     locationTextEditingController.text = address;

@@ -149,10 +149,12 @@ class LogInController extends GetxController {
             } else if (res.data?.user?.isBankDetailAdded == false &&
                 res.data?.user?.isSkipBankDetail == false) {
               RouteManagement.goToBankDetailView();
-            } else if (res.data?.user?.isApproved == false ||
-                res.data?.user?.isSkipBankDetail == true) {
-              RouteManagement.goToOffAllWaitingApprovalView();
-            } else {
+            }
+            // else if (res.data?.user?.isApproved == false ||
+            //     res.data?.user?.isSkipBankDetail == true) {
+            //   RouteManagement.goToOffAllWaitingApprovalView();
+            // }
+            else {
               Storage.saveValue(StringConstants.isLogin, true);
 
               RouteManagement.goToOffAllDashboard(isFromSetting: false);

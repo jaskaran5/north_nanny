@@ -165,6 +165,7 @@ class CreateCustomerProfileView extends StatelessWidget {
                     ),
                     Dimens.boxHeight26,
                     TextField(
+                      maxLength: 20,
                       controller: controller.firstNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,
@@ -188,6 +189,7 @@ class CreateCustomerProfileView extends StatelessWidget {
 
                     /** LAST NAME */
                     TextField(
+                      maxLength: 20,
                       controller: controller.lastNameTextEditingController,
                       maxLines: 1,
                       minLines: 1,

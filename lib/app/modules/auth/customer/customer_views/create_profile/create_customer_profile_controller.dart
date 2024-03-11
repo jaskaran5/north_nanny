@@ -67,8 +67,7 @@ class CreateCustomerProfileController extends GetxController {
     bool valid = Validator.instance.customerCreateProfileValidator(
       firstName: firstNameTextEditingController.text.trim(),
       lastName: lastNameTextEditingController.text.trim(),
-      coordinates:
-          coordinates.value.isEmpty ? '0.0' : coordinates.value.toString(),
+      coordinates: locationTextEditingController.text.trim(),
       phoneNumber: phoneNumberTextEditingController.text.trim(),
     );
     if (valid) {
@@ -104,7 +103,7 @@ class CreateCustomerProfileController extends GetxController {
         if (selectedGender!.isNotEmpty)
           "gender": selectedGender == 'Male' ? 1 : 2,
         "Latitude": lat.toString(),
-        "Logngitude": lang.toString(),
+        "Longitude": lang.toString(),
         // "Location": firstNameTextEditingController.text.trim(),
         "ReferralCode": referrelCodeTextEditingController.text.trim()
       });

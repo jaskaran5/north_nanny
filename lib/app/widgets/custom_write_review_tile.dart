@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -37,7 +39,10 @@ class CustomWriteReviewTile extends StatelessWidget {
                   maxLines: null,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Please let us know how the job went!",
+                    hintText: Storage.getValue(StringConstants.loginType) !=
+                            StringConstants.customer
+                        ? "Please let us know how the job went!"
+                        : "Let us know how your nanny did!",
                     hintStyle: AppStyles.ubHintColor15W500,
                     fillColor: AppColors.f5F4F6GreyColor,
                     filled: true,
