@@ -64,4 +64,6 @@ class ApiUrls {
       'api/NannyDashBoard/GetAllNannyBookingDates';
   static const String postNannyBookingDetails =
       'api/NannyDashBoard/NannyBookingDeatil';
+  static const String nannyBookingList =
+      'api/NannyDashBoard/NannyAvailabilityList';
 }

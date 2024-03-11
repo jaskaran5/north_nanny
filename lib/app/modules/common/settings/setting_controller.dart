@@ -378,7 +378,9 @@ class SettingController extends GetxController {
       NannyProfileBinding().dependencies();
     }
     var controller = Get.find<NannyProfileController>();
+
     controller.getProfile();
+
     if (!Get.isRegistered<NannyEditProfileController>()) {
       NannyEditProfileBinding().dependencies();
     }
