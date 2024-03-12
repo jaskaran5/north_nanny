@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -436,6 +438,7 @@ class Utility {
     return croppedFile;
   }
 
+  /// used to convert 24 hours format to 12 hours
   static String convertTo12HourFormat(String time24) {
     // Split the time string into hours and minutes
     List<String> parts = time24.split(":");
@@ -451,5 +454,40 @@ class Utility {
 
     // Return the formatted time
     return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  }
+
+  /// used to convert date time to this format '[February 2024, Friday']
+  static String convertDateToMMMMYYYEEE(DateTime date) {
+    return DateFormat('MMMM yyyy, EEEE').format(date);
+  }
+
+  /// used to convert the method to format time range ['10:00 AM to 05:00 PM']
+  static String formatTimeRange(
+      {required DateTime startTime, required DateTime endTime}) {
+    String formattedStartTime = DateFormat('hh:mm a').format(startTime);
+    log('strat format : $formattedStartTime');
+
+    String formattedEndTime = DateFormat('hh:mm a').format(endTime);
+
+    return '$formattedStartTime to $formattedEndTime';
+  }
+
+  /// method used to convert utc to local.
+  static String convertUtcToLocal(String utcTimeString) {
+    DateTime utcTime = DateTime.parse(utcTimeString);
+    DateTime localTime = utcTime.toLocal();
+    final DateFormat formatter = DateFormat('hh:mm a');
+    String formattedStartTime = formatter.format(localTime);
+    return formattedStartTime; // You can format the local time as per your requirements
+  }
+
+  static String formatTimeTo12Hour(String ? dateTimeString) {
+    if(dateTimeString== null){
+      return "";
+    }
+    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
+    var dateLocal = dateTime.toLocal();
+    String formattedTime = DateFormat('hh:mm a').format(dateLocal);
+    return formattedTime;
   }
 }

@@ -24,9 +24,6 @@ class NannyProfileController extends GetxController {
 
   int selectedIndex = 0;
 
-  List<DateTime> selectedDates = [];
-  DateTime selectedDate = DateTime(DateTime.now().month);
-
   List<String>? priceList = [
     '\$ 10',
     '\$ 10',
@@ -61,8 +58,6 @@ class NannyProfileController extends GetxController {
         var response = MyProfileModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           profileData = response;
-
-          selectedList.clear();
           if (!Get.isRegistered<SettingController>()) {
             SettingBinding().dependencies();
           } else {
@@ -85,12 +80,14 @@ class NannyProfileController extends GetxController {
     }
   }
 
+  ///----------------------------------------------- Availability ------------------------------
+
+  /// used to get value on basis of single selection.
+  DateTime? selectedDate;
+
   /// start range day.
   TimeOfDay? startTime;
   TimeOfDay? endTime;
-
-  /// selected List
-  List<dynamic> selectedList = [];
 
   /// used to store availability list
   AvailabilityListModel? availabilityListModel;
@@ -147,7 +144,7 @@ class NannyProfileController extends GetxController {
         return;
       }
       var body = {
-        'utcDateTime': DateTime.now().toUtc().toString(),
+        'utcDateTime': DateTime.now().toUtc().toIso8601String().toString(),
       };
       _apiHelper
           .postApi(
@@ -170,18 +167,22 @@ class NannyProfileController extends GetxController {
     }
   }
 
-  /// used to check the day have availability or not.
- dayHaveAvailability(){
+  /// used to store range start date  .
+  DateTime? rangeStartDate = DateTime.now();
 
- }
+  /// used to store range End date  .
+  DateTime? rangeEndDate;
 
-  bool checkDays(List<DateTime> list1, List<DateTime> list2) {
-    for (int i = 0; i < list1.length; i++) {
-      if (list1[i].day != list2[i].day) {
-        return false; // Return false if days don't match
+  /// used to check element have event or not
+  bool isElementEqualToData(List<AvailabilityListModelData> list, int day) {
+    for (var value in list) {
+      if (value.openingTime?.day == day) {
+        return true;
       }
     }
-
-    return true; // Return true if all days match
+    return false;
   }
+
+  /// used to on the range selection
+  bool isRangeSelection = false;
 }

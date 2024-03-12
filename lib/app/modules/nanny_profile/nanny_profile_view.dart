@@ -21,11 +21,10 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/houry_rate_view.dart';
-import '../schedule_nanny/schedule_nanny_view.dart';
 
 class NannyProfileView extends StatelessWidget {
   const NannyProfileView(
@@ -66,9 +65,6 @@ class NannyProfileView extends StatelessWidget {
                   CustomNannyProfileView(
                     imageUrl: controller.profileData.data?.image,
                     nannyName: controller.profileData.data?.name.toString(),
-                    // servicesList: isComeFromSetting
-                    //     ? ['Gender: Female', 'Age: 40', 'Experience: 7+ yrs']
-                    //     : controller.homeCustomList,
                     totalRating: controller.profileData.data?.rating,
                     totalReview: controller.profileData.data?.reviewCount,
                     nannyAge: controller.profileData.data?.age.toString(),
@@ -287,9 +283,8 @@ class NannyProfileView extends StatelessWidget {
                   ],
                   if (controller.selectedIndex == 1) ...[
                     servicesView(
-                        // rateList: controller.priceList,
-                        servicesList: controller.profileData.data?.services,
-                        isComeFromSetting: isComeFromSetting),
+                      servicesList: controller.profileData.data?.services,
+                    ),
                     if (isComeFromSetting)
                       CustomButton(
                         backGroundColor: AppColors.navyBlue,
@@ -301,7 +296,6 @@ class NannyProfileView extends StatelessWidget {
                   ],
                   if (controller.selectedIndex == 2) ...[
                     availabilityView(
-                      isComeFromSetting: isComeFromSetting,
                       controller: controller,
                     ),
                   ],
@@ -313,10 +307,10 @@ class NannyProfileView extends StatelessWidget {
       );
 }
 
-Widget servicesView(
-        {List<String>? rateList,
-        List<String>? servicesList,
-        required bool isComeFromSetting}) =>
+Widget servicesView({
+  List<String>? rateList,
+  List<String>? servicesList,
+}) =>
     Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
@@ -386,17 +380,8 @@ Widget servicesView(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (!isComeFromSetting) ...[
-                          AppText(
-                            text: '${rateList?[index].toString()}',
-                            style: AppStyles.ubNavyBlue16W700,
-                            maxLines: 1,
-                          ),
-                          Dimens.boxWidth10,
-                        ],
                         GestureDetector(
                           onTap: () {
-                            // if (!isComeFromSetting) {
                             Get.bottomSheet(
                               CustomBottomSheet(
                                 heading: Services.values
@@ -416,7 +401,6 @@ Widget servicesView(
                               ),
                               barrierColor: AppColors.greyColor.withOpacity(.2),
                             );
-                            // }
                           },
                           child: SvgPicture.asset(
                             Assets.iconsInfoCircle,
@@ -433,9 +417,7 @@ Widget servicesView(
       ),
     );
 
-Widget availabilityView(
-        {required bool isComeFromSetting,
-        required NannyProfileController controller}) =>
+Widget availabilityView({required NannyProfileController controller}) =>
     Padding(
       padding: Dimens.edgeInsetsL16R16,
       child: Column(
@@ -455,412 +437,759 @@ Widget availabilityView(
                 )
               ],
             ),
-            child: SfDateRangePicker(
-              selectionMode: DateRangePickerSelectionMode.range,
-              navigationMode: DateRangePickerNavigationMode.snap,
-              onSelectionChanged: (args) {
-                //   controller.selectedList.clear();
-                log('selected Values:${args.value}');
-                String _range =
-                    '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-                    // ignore: lines_longer_than_80_chars
-                    ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-
-                print("_range==> $_range");
-
-                //   controller.selectedList
-                //       .addAll(dateRangePickerSelectionChangedArgs.value);
-                //   log('selected Values:${controller.selectedList}');
-                //
-                //   if (controller.selectedList.isEmpty) {
-                //     controller.startTime = null;
-                //     controller.endTime = null;
-                //   }
-                //   controller.update();
-              },
-              view: DateRangePickerView.month,
-              initialSelectedDate: controller.selectedDate,
-              allowViewNavigation: false,
-              backgroundColor: AppColors.primaryColor,
-              enablePastDates: false,
-              headerStyle: DateRangePickerHeaderStyle(
-                textStyle: AppStyles.ubBlack18W600,
-                backgroundColor: AppColors.primaryColor,
-                textAlign: TextAlign.left,
+            child: TableCalendar(
+              sixWeekMonthsEnforced: true,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle: AppStyles.ubHintColor13W500,
+                weekendStyle: AppStyles.ubHintColor13W500,
               ),
-              minDate: DateTime.now(),
-              selectionColor: AppColors.navyBlue,
-              selectionShape: DateRangePickerSelectionShape.circle,
-              monthCellStyle: DateRangePickerMonthCellStyle(
-                disabledDatesTextStyle: AppStyles.ubHintColor13W500,
-                weekendTextStyle: AppStyles.ubHintColor15W500,
-                textStyle: AppStyles.ubBlack15W600,
-                todayTextStyle: AppStyles.ubNavyBlue15W600,
-                leadingDatesTextStyle: AppStyles.ubHintColor13W500,
-                trailingDatesTextStyle: AppStyles.ubHintColor13W500,
-                todayCellDecoration: const BoxDecoration(
-                    color: Colors.transparent, shape: BoxShape.circle),
-              ),
-              cellBuilder: (context, cellDetails) =>
-                  GetBuilder<NannyProfileController>(
-                      builder: (nannyController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(Dimens.twenty),
-                        child: Container(
-                          height: Dimens.twenty,
-                          width: Dimens.twenty,
-                          alignment: Alignment.center,
-                          child: AppText(
-                            text: cellDetails.date.day.toString(),
-                            style: nannyController.selectedList
-                                    .contains(cellDetails)
-                                ? AppStyles.ubWhite15700
-                                : AppStyles.ubBlack15W600,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ),
-                      // if (controller.availabilityListModel?.data?.indexWhere(
-                      //         (element) {
-                      //           print('data:${element.openingTime?.day}');
-                      //
-                      //           return (element.openingTime?.day ?? 0) ==
-                      //             cellDetails.date.day;
-                      //         }) !=
-                      //     null)
-                      //   Container(
-                      //     height: Dimens.five,
-                      //     width: Dimens.five,
-                      //     decoration: const BoxDecoration(
-                      //       color: AppColors.navyBlue,
-                      //       shape: BoxShape.circle,
-                      //     ),
-                      //   )
-                    ],
-                  ),
-                );
-              }),
-              monthViewSettings: DateRangePickerMonthViewSettings(
-                showTrailingAndLeadingDates: true,
-                viewHeaderStyle: DateRangePickerViewHeaderStyle(
-                  textStyle: AppStyles.ubGrey14W500,
+              calendarStyle: CalendarStyle(
+                defaultTextStyle: AppStyles.ubBlack15W600,
+                weekendTextStyle: AppStyles.ubBlack15W600,
+                outsideTextStyle: AppStyles.ubHintColor15W500,
+                todayDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
                 ),
+                isTodayHighlighted: false,
+                todayTextStyle: AppStyles.ubWhite15700,
+                selectedTextStyle: AppStyles.ubWhite15700,
+                selectedDecoration: const BoxDecoration(
+                  color: AppColors.navyBlue,
+                  shape: BoxShape.circle,
+                ),
+                rangeStartDecoration: const BoxDecoration(
+                  color: AppColors.navyBlue,
+                  shape: BoxShape.circle,
+                ),
+                rangeEndDecoration: const BoxDecoration(
+                  color: AppColors.navyBlue,
+                  shape: BoxShape.circle,
+                ),
+                rangeHighlightColor: AppColors.lightNavyBlue,
+                markersMaxCount: 1,
+                markerSize: Dimens.four,
+                markersAutoAligned: true,
+                markerMargin: Dimens.edgeInsets4,
+                markersAlignment: Alignment.center,
               ),
-              initialDisplayDate: controller.selectedDate,
-              rangeSelectionColor: AppColors.lightNavyBlue,
-              startRangeSelectionColor: AppColors.navyBlue,
-              rangeTextStyle: AppStyles.ubBlack15W600,
-              endRangeSelectionColor: AppColors.navyBlue,
-              todayHighlightColor: AppColors.navyBlue,
+              firstDay: DateTime(
+                DateTime.now().year,
+              ),
+              lastDay: DateTime.utc(
+                DateTime.now().year + 100,
+              ),
+              calendarFormat: CalendarFormat.month,
+              headerStyle: HeaderStyle(
+                titleTextStyle: AppStyles.ubBlack18W600,
+                formatButtonVisible: false,
+                titleCentered: true,
+                leftChevronIcon: SvgPicture.asset(Assets.iconsLeft),
+                rightChevronIcon: SvgPicture.asset(Assets.iconsRight),
+              ),
+              onDaySelected: (selectedDay, focusedDay) {
+                controller.selectedDate = selectedDay;
+                controller.update();
+              },
+              selectedDayPredicate: (day) => controller.selectedDate == day,
+              focusedDay: controller.selectedDate ?? DateTime.now(),
+              onDayLongPressed: (selectedDay, focusedDay) {
+                controller.isRangeSelection = !controller.isRangeSelection;
+                if (controller.isRangeSelection) {
+                  controller.selectedDate = null;
+                } else {
+                  controller.rangeStartDate = null;
+                  controller.rangeEndDate = null;
+                }
+                controller.update();
+              },
+              rangeSelectionMode: controller.isRangeSelection
+                  ? RangeSelectionMode.toggledOn
+                  : RangeSelectionMode.disabled,
+              onRangeSelected: (start, end, focusedDay) {
+                if (controller.isRangeSelection) {
+                  controller.rangeStartDate = start;
+                  controller.rangeEndDate = end;
+                }
+                controller.update();
+              },
+              rangeStartDay: controller.rangeStartDate,
+              rangeEndDay: controller.rangeEndDate,
+              eventLoader: (day) {
+                return controller.isElementEqualToData(
+                        controller.availabilityListModel?.data ?? [], day.day)
+                    ? [
+                        '.',
+                      ]
+                    : [];
+              },
+              availableGestures: AvailableGestures.none,
+              onPageChanged: (focusedDay) {
+                /// used to  call api when calender month change.
+              },
             ),
+            // SfDateRangePicker(
+            //   selectionMode: DateRangePickerSelectionMode.range,
+            //   navigationMode: DateRangePickerNavigationMode.snap,
+            //   onSelectionChanged: (args) {
+            //     //   controller.selectedList.clear();
+            //     log('selected Values:${args.value}');
+            //     String _range =
+            //         '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            //         // ignore: lines_longer_than_80_chars
+            //         ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+            //
+            //     print("_range==> $_range");
+            //
+            //     //   controller.selectedList
+            //     //       .addAll(dateRangePickerSelectionChangedArgs.value);
+            //     //   log('selected Values:${controller.selectedList}');
+            //     //
+            //     //   if (controller.selectedList.isEmpty) {
+            //     //     controller.startTime = null;
+            //     //     controller.endTime = null;
+            //     //   }
+            //     //   controller.update();
+            //   },
+            //   view: DateRangePickerView.month,
+            //   initialSelectedDate: controller.selectedDate,
+            //   allowViewNavigation: false,
+            //   backgroundColor: AppColors.primaryColor,
+            //   enablePastDates: false,
+            //   headerStyle: DateRangePickerHeaderStyle(
+            //     textStyle: AppStyles.ubBlack18W600,
+            //     backgroundColor: AppColors.primaryColor,
+            //     textAlign: TextAlign.left,
+            //   ),
+            //   minDate: DateTime.now(),
+            //   selectionColor: AppColors.navyBlue,
+            //   selectionShape: DateRangePickerSelectionShape.circle,
+            //   monthCellStyle: DateRangePickerMonthCellStyle(
+            //     disabledDatesTextStyle: AppStyles.ubHintColor13W500,
+            //     weekendTextStyle: AppStyles.ubHintColor15W500,
+            //     textStyle: AppStyles.ubBlack15W600,
+            //     todayTextStyle: AppStyles.ubNavyBlue15W600,
+            //     leadingDatesTextStyle: AppStyles.ubHintColor13W500,
+            //     trailingDatesTextStyle: AppStyles.ubHintColor13W500,
+            //     todayCellDecoration: const BoxDecoration(
+            //         color: Colors.transparent, shape: BoxShape.circle),
+            //   ),
+            //   cellBuilder: (context, cellDetails) =>
+            //       GetBuilder<NannyProfileController>(
+            //           builder: (nannyController) {
+            //     return Container(
+            //       decoration: BoxDecoration(
+            //         border: Border.all(color: Colors.white),
+            //       ),
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //         children: [
+            //           ClipRRect(
+            //             borderRadius: BorderRadius.circular(Dimens.twenty),
+            //             child: Container(
+            //               height: Dimens.twenty,
+            //               width: Dimens.twenty,
+            //               alignment: Alignment.center,
+            //               child: AppText(
+            //                 text: cellDetails.date.day.toString(),
+            //                 style: nannyController.selectedList
+            //                         .contains(cellDetails)
+            //                     ? AppStyles.ubWhite15700
+            //                     : AppStyles.ubBlack15W600,
+            //                 maxLines: 1,
+            //               ),
+            //             ),
+            //           ),
+            //           // if (controller.availabilityListModel?.data?.indexWhere(
+            //           //         (element) {
+            //           //           print('data:${element.openingTime?.day}');
+            //           //
+            //           //           return (element.openingTime?.day ?? 0) ==
+            //           //             cellDetails.date.day;
+            //           //         }) !=
+            //           //     null)
+            //           //   Container(
+            //           //     height: Dimens.five,
+            //           //     width: Dimens.five,
+            //           //     decoration: const BoxDecoration(
+            //           //       color: AppColors.navyBlue,
+            //           //       shape: BoxShape.circle,
+            //           //     ),
+            //           //   )
+            //         ],
+            //       ),
+            //     );
+            //   }),
+            //   monthViewSettings: DateRangePickerMonthViewSettings(
+            //     showTrailingAndLeadingDates: true,
+            //     viewHeaderStyle: DateRangePickerViewHeaderStyle(
+            //       textStyle: AppStyles.ubGrey14W500,
+            //     ),
+            //   ),
+            //   initialDisplayDate: controller.selectedDate,
+            //   rangeSelectionColor: AppColors.lightNavyBlue,
+            //   startRangeSelectionColor: AppColors.navyBlue,
+            //   rangeTextStyle: AppStyles.ubBlack15W600,
+            //   endRangeSelectionColor: AppColors.navyBlue,
+            //   todayHighlightColor: AppColors.navyBlue,
+            // ),
           ),
           Dimens.boxHeight20,
-          Container(
-            padding: Dimens.edgeInsets16,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(Dimens.eight),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.lightNavyBlue.withOpacity(.8),
-                  blurRadius: Dimens.five,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText(
-                      text: '01',
-                      // 'controller.selectedDate.first.day.toString().padLeft(2, '')',
-                      style: AppStyles.ubBlack30W600,
-                      maxLines: 1,
-                    ),
-                    Dimens.boxWidth16,
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppText(
-                            text: 'February 2024, Friday',
-                            style: AppStyles.ubGrey12W400,
-                            maxLines: 1,
-                            textAlign: TextAlign.start),
-                        Dimens.boxHeight8,
-                        AppText(
-                          text: '10:00 AM to 05:00 PM',
-                          style: AppStyles.ubBlack14W700,
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                if (isComeFromSetting) ...[
-                  PopupMenuButton(
-                    padding: Dimens.edgeInsets4,
-                    position: PopupMenuPosition.under,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.six),
-                    ),
-                    icon: SvgPicture.asset(Assets.iconsMore),
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem(
-                          child: Text(
-                            TranslationKeys.edit.tr,
-                            maxLines: 1,
-                            style: AppStyles.ubGreen05B016Color12W500,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        PopupMenuItem(
-                          child: Text(
-                            TranslationKeys.delete.tr,
-                            style: AppStyles.ubFc3030RedColor12W500,
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ];
-                    },
-                  ),
-                ],
-              ],
-            ),
-          ),
+          // controller.isElementEqualToData(
+          //         controller.availabilityListModel?.data ?? [],
+          //         controller.selectedDate?.day ?? 0)
+          //     ? Container(
+          //         padding: Dimens.edgeInsets16,
+          //         decoration: BoxDecoration(
+          //           color: AppColors.primaryColor,
+          //           borderRadius: BorderRadius.circular(Dimens.eight),
+          //           boxShadow: [
+          //             BoxShadow(
+          //               color: AppColors.lightNavyBlue.withOpacity(.8),
+          //               blurRadius: Dimens.five,
+          //             ),
+          //           ],
+          //         ),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               mainAxisSize: MainAxisSize.min,
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 AppText(
+          //                   text: controller.selectedDate!.day
+          //                       .toString()
+          //                       .padLeft(2, '0')
+          //                       .toString(),
+          //                   style: AppStyles.ubBlack30W600,
+          //                   maxLines: 1,
+          //                 ),
+          //                 Dimens.boxWidth16,
+          //                 Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     AppText(
+          //                         text: Utility.convertDateToMMMMYYYEEE(
+          //                             controller.selectedDate ??
+          //                                 DateTime.now()),
+          //                         style: AppStyles.ubGrey12W400,
+          //                         maxLines: 1,
+          //                         textAlign: TextAlign.start),
+          //                     Dimens.boxHeight8,
+          //                     AppText(
+          //                       text:
+          //                           '${Utility.formatTimeTo12Hour(controller.returnOpeningTime(
+          //                         list:
+          //                             controller.availabilityListModel?.data ??
+          //                                 [],
+          //                       ))}  to ${Utility.formatTimeTo12Hour(controller.returnClosingTime(
+          //                         list:
+          //                             controller.availabilityListModel?.data ??
+          //                                 [],
+          //                       ))} ',
+          //                       style: AppStyles.ubBlack14W700,
+          //                       maxLines: 1,
+          //                       textAlign: TextAlign.start,
+          //                     )
+          //                   ],
+          //                 ),
+          //               ],
+          //             ),
+          //             PopupMenuButton(
+          //               padding: Dimens.edgeInsets4,
+          //               position: PopupMenuPosition.under,
+          //               elevation: 2,
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(Dimens.six),
+          //               ),
+          //               icon: SvgPicture.asset(Assets.iconsMore),
+          //               itemBuilder: (BuildContext context) {
+          //                 return [
+          //                   PopupMenuItem(
+          //                     onTap: () {
+          //                       /// edit selected time
+          //                       Get.dialog(
+          //                         GetBuilder<NannyProfileController>(
+          //                             builder: (nannyController) {
+          //                           return Center(
+          //                             child: Padding(
+          //                               padding: Dimens.edgeInsetsL16R16,
+          //                               child: Material(
+          //                                 color: AppColors.primaryColor,
+          //                                 borderRadius: BorderRadius.circular(
+          //                                     Dimens.twenty),
+          //                                 child: Container(
+          //                                   decoration: BoxDecoration(
+          //                                     color: AppColors.primaryColor,
+          //                                     borderRadius:
+          //                                         BorderRadius.circular(
+          //                                             Dimens.twenty),
+          //                                   ),
+          //                                   child: Column(
+          //                                     mainAxisSize: MainAxisSize.min,
+          //                                     crossAxisAlignment:
+          //                                         CrossAxisAlignment.start,
+          //                                     children: [
+          //                                       Padding(
+          //                                         padding: Dimens.edgeInsets10,
+          //                                         child: Row(
+          //                                           mainAxisAlignment:
+          //                                               MainAxisAlignment
+          //                                                   .spaceBetween,
+          //                                           children: [
+          //                                             AppText(
+          //                                               text: TranslationKeys
+          //                                                   .addAvailability.tr,
+          //                                               maxLines: 1,
+          //                                               textAlign:
+          //                                                   TextAlign.left,
+          //                                               style: AppStyles
+          //                                                   .ubBlack16W700,
+          //                                             ),
+          //                                             GestureDetector(
+          //                                               onTap: () {
+          //                                                 Get.back();
+          //                                               },
+          //                                               child: SvgPicture.asset(
+          //                                                 Assets
+          //                                                     .iconsRemoveBottomSheet,
+          //                                               ),
+          //                                             ),
+          //                                           ],
+          //                                         ),
+          //                                       ),
+          //                                       Divider(
+          //                                         color:
+          //                                             AppColors.lightNavyBlue,
+          //                                         height: Dimens.one,
+          //                                       ),
+          //                                       Dimens.boxHeight14,
+          //                                       Padding(
+          //                                         padding: Dimens.edgeInsets16,
+          //                                         child: Column(
+          //                                           mainAxisSize:
+          //                                               MainAxisSize.min,
+          //                                           crossAxisAlignment:
+          //                                               CrossAxisAlignment
+          //                                                   .start,
+          //                                           children: [
+          //                                             TextField(
+          //                                               maxLines: 1,
+          //                                               minLines: 1,
+          //                                               readOnly: true,
+          //                                               onTap: () async {
+          //                                                 nannyController
+          //                                                         .startTime =
+          //                                                     await showTimePicker(
+          //                                                   context:
+          //                                                       Get.context!,
+          //                                                   initialTime:
+          //                                                       TimeOfDay.now(),
+          //                                                 );
+          //                                                 nannyController
+          //                                                     .update();
+          //                                                 log('startTime:${nannyController.startTime}');
+          //                                               },
+          //                                               decoration:
+          //                                                   customFieldDeco(
+          //                                                 hintStyle: nannyController
+          //                                                             .startTime ==
+          //                                                         null
+          //                                                     ? null
+          //                                                     : AppStyles
+          //                                                         .ubBlack15W600,
+          //                                                 hintText: nannyController
+          //                                                             .startTime ==
+          //                                                         null
+          //                                                     ? TranslationKeys
+          //                                                         .startTime.tr
+          //                                                     : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
+          //                                               ),
+          //                                               cursorColor: AppColors
+          //                                                   .blackColor,
+          //                                               cursorWidth: Dimens.one,
+          //                                               style: AppStyles
+          //                                                   .ubBlack15W600,
+          //                                             ),
+          //                                             Dimens.boxHeight14,
+          //                                             TextField(
+          //                                               maxLines: 1,
+          //                                               readOnly: true,
+          //                                               onTap: () async {
+          //                                                 nannyController
+          //                                                         .endTime =
+          //                                                     await showTimePicker(
+          //                                                   context:
+          //                                                       Get.context!,
+          //                                                   initialTime: controller
+          //                                                           .returnClosingTime(
+          //                                                         list: controller
+          //                                                                 .availabilityListModel
+          //                                                                 ?.data ??
+          //                                                             [],
+          //                                                       ) ??
+          //                                                       TimeOfDay.now(),
+          //                                                 );
+          //                                                 nannyController
+          //                                                     .update();
+          //                                                 log('endTime:${nannyController.endTime}');
+          //                                               },
+          //                                               minLines: 1,
+          //                                               decoration:
+          //                                                   customFieldDeco(
+          //                                                 hintStyle: nannyController
+          //                                                             .endTime ==
+          //                                                         null
+          //                                                     ? null
+          //                                                     : AppStyles
+          //                                                         .ubBlack15W600,
+          //                                                 hintText: nannyController
+          //                                                             .endTime ==
+          //                                                         null
+          //                                                     ? TranslationKeys
+          //                                                         .endTime.tr
+          //                                                     : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+          //                                               ),
+          //                                               cursorColor: AppColors
+          //                                                   .blackColor,
+          //                                               cursorWidth: Dimens.one,
+          //                                               style: AppStyles
+          //                                                   .ubBlack15W600,
+          //                                             ),
+          //                                             Dimens.boxHeight14,
+          //                                             CustomButton(
+          //                                               backGroundColor:
+          //                                                   AppColors.navyBlue,
+          //                                               title: TranslationKeys
+          //                                                   .submit.tr,
+          //                                               onTap: () {
+          //                                                 String formatList;
+          //                                                 DateTime list;
+          //                                                 List<DateTime>
+          //                                                     startTimeList =
+          //                                                     [];
+          //                                                 List<DateTime>
+          //                                                     endTimeList = [];
+          //                                                 if (nannyController
+          //                                                             .startTime !=
+          //                                                         null ||
+          //                                                     nannyController
+          //                                                             .endTime !=
+          //                                                         null) {
+          //                                                   for (var i in controller
+          //                                                       .selectedList) {
+          //                                                     formatList =
+          //                                                         DateFormat(
+          //                                                                 'yyyy-MM-dd')
+          //                                                             .format(
+          //                                                                 i);
+          //                                                     list = DateTime
+          //                                                         .parse(
+          //                                                             formatList);
+          //                                                     startTimeList
+          //                                                         .add(DateTime(
+          //                                                       list.year,
+          //                                                       list.month,
+          //                                                       list.day,
+          //                                                       nannyController
+          //                                                           .startTime!
+          //                                                           .hour,
+          //                                                       nannyController
+          //                                                           .startTime!
+          //                                                           .minute,
+          //                                                     ).toUtc());
+          //                                                     endTimeList
+          //                                                         .add(DateTime(
+          //                                                       list.year,
+          //                                                       list.month,
+          //                                                       list.day,
+          //                                                       nannyController
+          //                                                           .endTime!
+          //                                                           .hour,
+          //                                                       nannyController
+          //                                                           .endTime!
+          //                                                           .minute,
+          //                                                     ).toUtc());
+          //                                                   }
+          //                                                 }
+          //                                                 log('start Time List:$startTimeList');
+          //                                                 log('End time List:$endTimeList');
+          //                                                 List<
+          //                                                         Map<String,
+          //                                                             dynamic>>
+          //                                                     finalList = [];
+          //                                                 for (int value = 0;
+          //                                                     value <
+          //                                                         startTimeList
+          //                                                             .length;
+          //                                                     value++) {
+          //                                                   finalList.add({
+          //                                                     "openingTime":
+          //                                                         startTimeList[
+          //                                                                 value]
+          //                                                             .toString(),
+          //                                                     "closingTime":
+          //                                                         endTimeList[
+          //                                                                 value]
+          //                                                             .toString(),
+          //                                                   });
+          //                                                 }
+          //                                                 log('final list:$finalList');
+          //
+          //                                                 /// api for add availability validator
+          //                                                 nannyController.addAvailabilityValidator(
+          //                                                     availabilityList:
+          //                                                         finalList,
+          //                                                     startTime:
+          //                                                         controller
+          //                                                             .startTime,
+          //                                                     endTime:
+          //                                                         controller
+          //                                                             .endTime);
+          //                                               },
+          //                                             ),
+          //                                             Dimens.boxHeight10,
+          //                                           ],
+          //                                         ),
+          //                                       ),
+          //                                     ],
+          //                                   ),
+          //                                 ),
+          //                               ),
+          //                             ),
+          //                           );
+          //                         }),
+          //                       );
+          //                     },
+          //                     child: Text(
+          //                       TranslationKeys.edit.tr,
+          //                       maxLines: 1,
+          //                       style: AppStyles.ubGreen05B016Color12W500,
+          //                       textAlign: TextAlign.left,
+          //                     ),
+          //                   ),
+          //                   PopupMenuItem(
+          //                     child: Text(
+          //                       TranslationKeys.delete.tr,
+          //                       style: AppStyles.ubFc3030RedColor12W500,
+          //                       textAlign: TextAlign.left,
+          //                       maxLines: 1,
+          //                     ),
+          //                   ),
+          //                 ];
+          //               },
+          //             ),
+          //           ],
+          //         ),
+          //       )
+          //     : const SizedBox.shrink(),
           Dimens.boxHeight20,
           Opacity(
-            opacity: controller.selectedList.isNotEmpty ? 1 : 0.4,
+            opacity: controller.isRangeSelection
+                ? controller.rangeStartDate != null &&
+                        controller.rangeEndDate != null
+                    ? 1
+                    : 0.4
+                : controller.selectedDate != null
+                    ? 1
+                    : 0.4,
             child: CustomButton(
-              title: isComeFromSetting
-                  ? TranslationKeys.addAvailability.tr
-                  : TranslationKeys.bookSitter.tr,
+              title: TranslationKeys.addAvailability.tr,
               backGroundColor: AppColors.navyBlue,
               onTap: () {
-                if (isComeFromSetting) {
-                  if (controller.selectedList.isNotEmpty) {
-                    Get.dialog(
-                      GetBuilder<NannyProfileController>(
-                          builder: (nannyController) {
-                        return Center(
-                          child: Padding(
-                            padding: Dimens.edgeInsetsL16R16,
-                            child: Material(
+                Get.dialog(
+                  GetBuilder<NannyProfileController>(
+                      builder: (nannyController) {
+                    return Center(
+                      child: Padding(
+                        padding: Dimens.edgeInsetsL16R16,
+                        child: Material(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(Dimens.twenty),
+                          child: Container(
+                            decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius:
                                   BorderRadius.circular(Dimens.twenty),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius:
-                                      BorderRadius.circular(Dimens.twenty),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: Dimens.edgeInsets10,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AppText(
-                                            text: TranslationKeys
-                                                .addAvailability.tr,
-                                            maxLines: 1,
-                                            textAlign: TextAlign.left,
-                                            style: AppStyles.ubBlack16W700,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Get.back();
-                                            },
-                                            child: SvgPicture.asset(
-                                              Assets.iconsRemoveBottomSheet,
-                                            ),
-                                          ),
-                                        ],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: Dimens.edgeInsets10,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AppText(
+                                        text:
+                                            TranslationKeys.addAvailability.tr,
+                                        maxLines: 1,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyles.ubBlack16W700,
                                       ),
-                                    ),
-                                    Divider(
-                                      color: AppColors.lightNavyBlue,
-                                      height: Dimens.one,
-                                    ),
-                                    Dimens.boxHeight14,
-                                    Padding(
-                                      padding: Dimens.edgeInsets16,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextField(
-                                            maxLines: 1,
-                                            minLines: 1,
-                                            readOnly: true,
-                                            onTap: () async {
-                                              nannyController.startTime =
-                                                  await showTimePicker(
-                                                context: Get.context!,
-                                                initialTime: nannyController
-                                                            .startTime !=
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: SvgPicture.asset(
+                                          Assets.iconsRemoveBottomSheet,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  color: AppColors.lightNavyBlue,
+                                  height: Dimens.one,
+                                ),
+                                Dimens.boxHeight14,
+                                Padding(
+                                  padding: Dimens.edgeInsets16,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextField(
+                                        maxLines: 1,
+                                        minLines: 1,
+                                        readOnly: true,
+                                        onTap: () async {
+                                          nannyController.startTime =
+                                              await showTimePicker(
+                                            context: Get.context!,
+                                            initialTime:
+                                                nannyController.startTime !=
                                                         null
                                                     ? nannyController.startTime!
                                                     : TimeOfDay.now(),
-                                              );
-                                              nannyController.update();
-                                              log('startTime:${nannyController.startTime}');
-                                            },
-                                            decoration: customFieldDeco(
-                                              hintStyle:
-                                                  nannyController.startTime ==
-                                                          null
-                                                      ? null
-                                                      : AppStyles.ubBlack15W600,
-                                              hintText: nannyController
-                                                          .startTime ==
-                                                      null
-                                                  ? TranslationKeys.startTime.tr
-                                                  : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
-                                            ),
-                                            cursorColor: AppColors.blackColor,
-                                            cursorWidth: Dimens.one,
-                                            style: AppStyles.ubBlack15W600,
-                                          ),
-                                          Dimens.boxHeight14,
-                                          TextField(
-                                            maxLines: 1,
-                                            readOnly: true,
-                                            onTap: () async {
-                                              nannyController.endTime =
-                                                  await showTimePicker(
-                                                context: Get.context!,
-                                                initialTime: nannyController
-                                                            .endTime !=
-                                                        null
+                                          );
+                                          nannyController.update();
+                                          log('startTime:${nannyController.startTime}');
+                                        },
+                                        decoration: customFieldDeco(
+                                          hintStyle:
+                                              nannyController.startTime == null
+                                                  ? null
+                                                  : AppStyles.ubBlack15W600,
+                                          hintText: nannyController.startTime ==
+                                                  null
+                                              ? TranslationKeys.startTime.tr
+                                              : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
+                                        ),
+                                        cursorColor: AppColors.blackColor,
+                                        cursorWidth: Dimens.one,
+                                        style: AppStyles.ubBlack15W600,
+                                      ),
+                                      Dimens.boxHeight14,
+                                      TextField(
+                                        maxLines: 1,
+                                        readOnly: true,
+                                        onTap: () async {
+                                          nannyController.endTime =
+                                              await showTimePicker(
+                                            context: Get.context!,
+                                            initialTime:
+                                                nannyController.endTime != null
                                                     ? nannyController.endTime!
                                                     : TimeOfDay.now(),
-                                              );
-                                              nannyController.update();
-                                              log('endTime:${nannyController.endTime}');
-                                            },
-                                            minLines: 1,
-                                            decoration: customFieldDeco(
-                                              hintStyle:
-                                                  nannyController.endTime ==
-                                                          null
-                                                      ? null
-                                                      : AppStyles.ubBlack15W600,
-                                              hintText: nannyController
-                                                          .endTime ==
-                                                      null
-                                                  ? TranslationKeys.endTime.tr
-                                                  : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
-                                            ),
-                                            cursorColor: AppColors.blackColor,
-                                            cursorWidth: Dimens.one,
-                                            style: AppStyles.ubBlack15W600,
-                                          ),
-                                          Dimens.boxHeight14,
-                                          CustomButton(
-                                            backGroundColor: AppColors.navyBlue,
-                                            title: TranslationKeys.submit.tr,
-                                            onTap: () {
-                                              String formatList;
-                                              DateTime list;
-                                              List<DateTime> startTimeList = [];
-                                              List<DateTime> endTimeList = [];
-                                              if (nannyController.startTime !=
-                                                      null ||
-                                                  nannyController.endTime !=
-                                                      null) {
-                                                for (var i in controller
-                                                    .selectedList) {
-                                                  formatList =
-                                                      DateFormat('yyyy-MM-dd')
-                                                          .format(i);
-                                                  list = DateTime.parse(
-                                                      formatList);
-                                                  startTimeList.add(DateTime(
-                                                    list.year,
-                                                    list.month,
-                                                    list.day,
-                                                    nannyController
-                                                        .startTime!.hour,
-                                                    nannyController
-                                                        .startTime!.minute,
-                                                  ).toUtc());
-                                                  endTimeList.add(DateTime(
-                                                    list.year,
-                                                    list.month,
-                                                    list.day,
-                                                    nannyController
-                                                        .endTime!.hour,
-                                                    nannyController
-                                                        .endTime!.minute,
-                                                  ).toUtc());
-                                                }
-                                              }
-                                              log('start Time List:$startTimeList');
-                                              log('End time List:$endTimeList');
-                                              List<Map<String, dynamic>>
-                                                  finalList = [];
-                                              for (int value = 0;
-                                                  value < startTimeList.length;
-                                                  value++) {
-                                                finalList.add({
-                                                  "openingTime":
-                                                      startTimeList[value]
-                                                          .toString(),
-                                                  "closingTime":
-                                                      endTimeList[value]
-                                                          .toString(),
-                                                });
-                                              }
-                                              log('final list:$finalList');
-
-                                              /// api for add availability validator
-                                              nannyController
-                                                  .addAvailabilityValidator(
-                                                      availabilityList:
-                                                          finalList,
-                                                      startTime:
-                                                          controller.startTime,
-                                                      endTime:
-                                                          controller.endTime);
-                                            },
-                                          ),
-                                          Dimens.boxHeight10,
-                                        ],
+                                          );
+                                          nannyController.update();
+                                          log('endTime:${nannyController.endTime}');
+                                        },
+                                        minLines: 1,
+                                        decoration: customFieldDeco(
+                                          hintStyle:
+                                              nannyController.endTime == null
+                                                  ? null
+                                                  : AppStyles.ubBlack15W600,
+                                          hintText: nannyController.endTime ==
+                                                  null
+                                              ? TranslationKeys.endTime.tr
+                                              : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+                                        ),
+                                        cursorColor: AppColors.blackColor,
+                                        cursorWidth: Dimens.one,
+                                        style: AppStyles.ubBlack15W600,
                                       ),
-                                    ),
-                                  ],
+                                      Dimens.boxHeight14,
+                                      CustomButton(
+                                        backGroundColor: AppColors.navyBlue,
+                                        title: TranslationKeys.submit.tr,
+                                        onTap: () {
+                                          // String formatList;
+                                          // DateTime list;
+                                          // List<DateTime> startTimeList = [];
+                                          // List<DateTime> endTimeList = [];
+                                          // if (nannyController.startTime != null || nannyController.endTime != null) {
+                                          //   for (var i in controller.selectedList) {
+                                          //     formatList = DateFormat('yyyy-MM-dd').format(i);
+                                          //     list = DateTime.parse(formatList);
+                                          //     var date  =DateTime(
+                                          //       list.year,
+                                          //       list.month,
+                                          //       list.day,
+                                          //       nannyController.startTime!.hour,
+                                          //       nannyController.startTime!.minute,
+                                          //     ).toUtc().toIso8601String();
+                                          //     print("Date =======>>$date ");
+                                          //     startTimeList.add(date);
+                                          //     endTimeList.add(DateTime(
+                                          //       list.year,
+                                          //       list.month,
+                                          //       list.day,
+                                          //       nannyController
+                                          //           .endTime!.hour,
+                                          //       nannyController
+                                          //           .endTime!.minute,
+                                          //     ).toUtc().toIso8601String());
+                                          //   }
+                                          // }
+                                          // log('start Time List:$startTimeList');
+                                          // log('End time List:$endTimeList');
+                                          // List<Map<String, dynamic>>
+                                          //     finalList = [];
+                                          // for (int value = 0;
+                                          //     value < startTimeList.length;
+                                          //     value++) {
+                                          //   finalList.add({
+                                          //     "openingTime":
+                                          //         startTimeList[value]
+                                          //             .toString(),
+                                          //     "closingTime":
+                                          //         endTimeList[value]
+                                          //             .toString(),
+                                          //   });
+                                          // }
+                                          // log('final list:$finalList');
+
+                                          /// api for add availability validator
+                                          // nannyController
+                                          //     .addAvailabilityValidator(
+                                          //         availabilityList: [],
+                                          //         startTime:
+                                          //             controller.startTime,
+                                          //         endTime:
+                                          //             controller.endTime);
+                                        },
+                                      ),
+                                      Dimens.boxHeight10,
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      ),
                     );
-                  }
-                } else {
-                  Get.to(const ScheduleNannyView());
-                }
+                  }),
+                );
               },
             ),
           ),
