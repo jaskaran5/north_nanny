@@ -194,6 +194,7 @@ var en = <String, String>{
   TranslationKeys.editServices: 'Edit services',
   TranslationKeys.edit: 'Edit',
   TranslationKeys.addAvailability: 'Add availability',
+  TranslationKeys.editAvailability: 'Edit availability',
   TranslationKeys.startTime: 'Start time',
   TranslationKeys.endTime: 'End time',
   TranslationKeys.saveChanges: 'Save Changes',

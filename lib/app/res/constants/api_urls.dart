@@ -60,10 +60,21 @@ class ApiUrls {
   static const String nannyDashboard = 'api/NannyDashBoard/HomeDashBoard';
   static const String setAvailability =
       'api/NannyDashBoard/SetAvailabilityStatus';
-  static const String getAllNannyBookingDetails =
-      'api/NannyDashBoard/GetAllNannyBookingDates';
+
+  /// ------------------ Nanny availability api urls -------------------------------
   static const String postNannyBookingDetails =
       'api/NannyDashBoard/NannyBookingDeatil';
   static const String nannyBookingList =
       'api/NannyDashBoard/NannyAvailabilityList';
+  static const String getNannyAvailabilityByDate =
+      'api/NannyDashBoard/NannyAvailabilityByDate';
+  static const String editNannyAvailability =
+      'api/NannyDashBoard/EditAvailability';
+  static const String deleteNannyAvailability =
+      'api/NannyDashBoard/DeleteAvailability';
+
+  /// ----------------------- Nanny calender api urls ---------------------
+
+  static const String getNannyAllBookingDates =
+      'api/NannyDashBoard/GetAllNannyBookingDates';
 }

@@ -381,7 +381,9 @@ Widget availabilityView({required NannyProfileController controller}) =>
               rangeEndDay: controller.rangeEndDate,
               eventLoader: (day) {
                 return controller.isElementEqualToData(
-                        controller.availabilityListModel?.data ?? [], day.day)
+                        controller.availabilityListModel?.data ?? [],
+                        day.day,
+                        day.month)
                     ? [
                         '.',
                       ]

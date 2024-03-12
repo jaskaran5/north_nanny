@@ -208,6 +208,7 @@ class TranslationKeys {
   static const String editServices = 'editServices';
   static const String edit = 'edit';
   static const String addAvailability = 'addAvailability';
+  static const String editAvailability = 'editAvailability';
   static const String startTime = 'startTime';
   static const String endTime = 'endTime';
   static const String saveChanges = 'saveChanges';
