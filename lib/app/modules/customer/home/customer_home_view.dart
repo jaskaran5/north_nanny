@@ -286,6 +286,7 @@ class CustomerHomeView extends StatelessWidget {
               ),
             ),
           ),
+          //
           body: controller.isGoogleMap.value
               ? GoogleMap(
                   initialCameraPosition: const CameraPosition(

@@ -209,14 +209,8 @@ class NannyHomeView extends StatelessWidget {
                         ),
                       )
                     : Expanded(
-                        child: Center(
-                          child: AppText(
-                            text: TranslationKeys.noResultFound.tr,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: AppStyles.ubNavyBlue30W600,
-                          ),
-                        ),
+                        child:
+                            Center(child: Image.asset(Assets.imagesNoDataPng)),
                       ),
               ],
             ),

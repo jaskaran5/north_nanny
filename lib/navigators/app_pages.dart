@@ -33,7 +33,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_bin
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_view.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
 

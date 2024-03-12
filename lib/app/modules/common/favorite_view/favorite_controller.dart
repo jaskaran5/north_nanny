@@ -3,7 +3,6 @@ import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/favourite_nanny_list_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
-import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 
