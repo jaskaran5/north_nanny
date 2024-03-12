@@ -69,6 +69,8 @@ dependencies:
   syncfusion_flutter_datepicker: ^23.1.36
   image_cropper: ^5.0.1
   flutter_shimmer: ^2.1.2
+  widget_to_marker: ^1.0.4
+  shimmer: ^3.0.0
 
   # insta_login: ^0.0.2
 #  share_plus: 7.2.1

@@ -20,6 +20,8 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_dynamic_marker.dart';
+import 'package:widget_to_marker/widget_to_marker.dart';
 
 class CustomerHomeController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -30,7 +32,21 @@ class CustomerHomeController extends GetxController {
   double distanceHigherValue = Dimens.ten;
   double ageLowerValue = Dimens.thirteen;
   double ageHigherValue = Dimens.fifty;
-  final debounce = Debouncer(delay: const Duration(milliseconds: 10));
+  final debounce = Debouncer(delay: const Duration(seconds: 1));
+
+  /// SHOW NANNY TILE
+  RxString nannyName = ''.obs;
+  RxString nannyImage = ''.obs;
+
+  RxBool nannyFavourite = false.obs;
+  RxString nannyRatingCount = '0'.obs;
+  RxInt nannyUserId = 0.obs;
+
+  RxString nannyDescription = ''.obs;
+  RxString nannyTotalReviews = '0'.obs;
+  RxString nannyDistance = ''.obs;
+  RxString nannyAge = ''.obs;
+  RxString nannyExperience = ''.obs;
 
   /// FILTER
 
@@ -48,6 +64,33 @@ class CustomerHomeController extends GetxController {
   /// use to select Time
   DateTime selectedTime = DateTime.now();
 
+  Future<void> updateNannyTile({
+    required String name,
+    required bool isFavourite,
+    required String ratingCount,
+    required String description,
+    required String totalReviews,
+    required String distance,
+    required String age,
+    required String experience,
+    required String image,
+    required int userId,
+  }) async {
+    log("exper::->> $experience");
+    nannyName.value = name;
+    nannyFavourite.value = isFavourite;
+    nannyRatingCount.value = ratingCount;
+    nannyDescription.value = description;
+    nannyTotalReviews.value = totalReviews;
+    nannyDistance.value = distance;
+    nannyAge.value = age;
+    nannyExperience.value = experience;
+    nannyImage.value = image;
+    nannyUserId.value = userId;
+
+    update();
+  }
+
   List<String> genderList = GenderConstant.values
       .map((e) => e.genderName.capitalizeFirst.toString())
       .toList();
@@ -61,25 +104,36 @@ class CustomerHomeController extends GetxController {
 
   late GoogleMapController googleMapController;
 
-  static const CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(30.7046, 76.7179),
-    zoom: 14.4746,
-  );
+  RxBool isNannyMarkerVisible = false.obs;
 
-  static const CameraPosition kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(
-        30.7046,
-        76.7179,
-      ),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  toggleIsNannyMarkerVisible() {
+    isNannyMarkerVisible.value = !isNannyMarkerVisible.value;
+    update();
+  }
+
+  // static const CameraPosition kGooglePlex = CameraPosition(
+  //   target: LatLng(30.7046, 76.7179),
+  //   zoom: 54.4746,
+  // );
+
+  // static const CameraPosition kLake = CameraPosition(
+  //     bearing: 192.8334901395799,
+  //     target: LatLng(
+  //       30.7046,
+  //       76.7179,
+  //     ),
+  //     tilt: 59.440717697143555,
+  //     zoom: 19.151926040649414);
 
   /// UPDATE SCREEN WITH TAP -- GOOGLE MAP/ LIST VIEW
 
   updateScreen() {
     isGoogleMap.value = !isGoogleMap.value;
     showListView.value = !showListView.value;
+
+    if (showListView.value) {
+      isNannyMarkerVisible.value = false;
+    }
     update();
   }
 
@@ -88,15 +142,22 @@ class CustomerHomeController extends GetxController {
   void onMapCreated({required GoogleMapController controller}) async {
     googleMapController = controller;
 
-    markers.add(
-      Marker(
-        markerId: const MarkerId("nanny"),
-        position: const LatLng(30.7046, 76.7179),
-        icon: await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(devicePixelRatio: 2.0),
-            Assets.imagesNannyMapPin),
-      ),
-    );
+    // for (int a = 0; a < homeNannyList.length - 1; a++) {
+    //   markers.add(
+    //     Marker(
+    //       markerId: MarkerId("$a"),
+    //       position: LatLng(
+    //           double.tryParse(homeNannyList[a].latitude.toString())!,
+    //           double.tryParse(homeNannyList[a].longitude.toString())!),
+    //       icon: await TextOnImage(
+    //         image: homeNannyList[a].image,
+    //       ).toBitmapDescriptor(
+    //           logicalSize: const Size(200, 200),
+    //           imageSize: const Size(200, 200)),
+    //     ),
+    //   );
+    //   update();
+    // }
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -112,36 +173,36 @@ class CustomerHomeController extends GetxController {
     }
   }
 
-  Future<void> setMarkers() async {
-    final Uint8List defaultMarkerImage =
-        await getBytesFromAsset(Assets.imagesNannyMapPin, Get.width ~/ 4);
-    const size = Size(200, 200);
-    markers.addAll([
-      Marker(
-        icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
-        markerId: const MarkerId("00"),
-        position: const LatLng(30.7046, 76.7179),
-      ),
-      Marker(
-        icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
-        markerId: const MarkerId("12"),
-        position: const LatLng(30.669583801015502, 76.72269824892282),
-      ),
-      Marker(
-        icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
-        markerId: const MarkerId("1213"),
-        position: const LatLng(30.800617977927477, 76.69576685875654),
-      ),
-    ]);
-    await googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        const CameraPosition(
-          target: LatLng(30.7046, 76.7179),
-          zoom: 13.4746,
-        ),
-      ),
-    );
-  }
+  // Future<void> setMarkers() async {
+  //   final Uint8List defaultMarkerImage =
+  //       await getBytesFromAsset(Assets.imagesNannyMapPin, Get.width ~/ 4);
+  //   const size = Size(200, 200);
+  //   markers.addAll([
+  //     Marker(
+  //       icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
+  //       markerId: const MarkerId("00"),
+  //       position: const LatLng(30.7046, 76.7179),
+  //     ),
+  //     Marker(
+  //       icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
+  //       markerId: const MarkerId("12"),
+  //       position: const LatLng(30.669583801015502, 76.72269824892282),
+  //     ),
+  //     Marker(
+  //       icon: BitmapDescriptor.fromBytes(defaultMarkerImage, size: size),
+  //       markerId: const MarkerId("1213"),
+  //       position: const LatLng(30.800617977927477, 76.69576685875654),
+  //     ),
+  //   ]);
+  //   await googleMapController.animateCamera(
+  //     CameraUpdate.newCameraPosition(
+  //       const CameraPosition(
+  //         target: LatLng(30.7046, 76.7179),
+  //         zoom: 13.4746,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   /// UPDATE FILTER DATA
 
@@ -180,7 +241,8 @@ class CustomerHomeController extends GetxController {
         "name": filterName.value,
       };
 
-      _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
+      _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue(
+          (value) async {
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
 
         if (res.response.toString() ==
@@ -188,6 +250,48 @@ class CustomerHomeController extends GetxController {
           print("response success");
           homeNannyList.value = res.data ?? [];
           update();
+
+          if (res.data != []) {
+            for (int a = 0; a < homeNannyList.length - 1; a++) {
+              markers.add(
+                Marker(
+                    markerId: MarkerId("$a"),
+                    position: LatLng(
+                        double.tryParse(homeNannyList[a].latitude.toString())!,
+                        double.tryParse(
+                            homeNannyList[a].longitude.toString())!),
+                    icon: await TextOnImage(
+                      image: homeNannyList[a].image,
+                    ).toBitmapDescriptor(
+                        logicalSize: const Size(200, 200),
+                        imageSize: const Size(200, 200)),
+                    onTap: () {
+                      updateNannyTile(
+                              name: homeNannyList[a].name,
+                              isFavourite: homeNannyList[a].isFavorite ?? false,
+                              ratingCount: homeNannyList[a].rating.toString(),
+                              description: homeNannyList[a].aboutMe,
+                              totalReviews:
+                                  homeNannyList[a].reviewCount.toString(),
+                              distance: homeNannyList[a]
+                                      .distance
+                                      ?.toInt()
+                                      .toString() ??
+                                  '0',
+                              age: homeNannyList[a].age.toString(),
+                              experience:
+                                  homeNannyList[a].experience.toString(),
+                              image: homeNannyList[a].image.toString(),
+                              userId: homeNannyList[a].id ?? 0)
+                          .then((value) {
+                        toggleIsNannyMarkerVisible();
+                        log("on tap on marker");
+                      });
+                    }),
+              );
+              update();
+            }
+          } else {}
         }
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
@@ -200,7 +304,7 @@ class CustomerHomeController extends GetxController {
   void onReady() async {
     getDashboardApi();
     super.onReady();
-    await setMarkers();
+    // await setMarkers();
   }
 
   toggleFavouriteAndUnFavouriteApi(
@@ -314,9 +418,10 @@ class CustomerHomeController extends GetxController {
 
   void searchNanny(String name) {
     debounce.call(() {
-      if (name.trim().isNotEmpty) {
-        _searchNannyByName(name: name);
-      }
+      // if (name.trim().isNotEmpty)
+      // {
+      _searchNannyByName(name: name.trim());
+      // }
     });
   }
 }

@@ -6,9 +6,10 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network.dart';
 
 class HomeCustomListView extends StatelessWidget {
-  const HomeCustomListView({
+  HomeCustomListView({
     super.key,
     required this.image,
     required this.name,
@@ -22,6 +23,8 @@ class HomeCustomListView extends StatelessWidget {
     required this.age,
     required this.experience,
     this.onTapRating,
+    this.canClose,
+    this.onTapClose,
   });
 
   final String image;
@@ -33,10 +36,12 @@ class HomeCustomListView extends StatelessWidget {
   final String distance;
   final String age;
   final String experience;
+  bool? canClose = false;
 
   final bool isHeartTapped;
   final Function() onTapHeartIcon;
   final Function()? onTapRating;
+  final Function()? onTapClose;
 
   @override
   Widget build(BuildContext context) {
@@ -64,85 +69,99 @@ class HomeCustomListView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: Dimens.hundred,
-                width: Dimens.eightySix,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.ten),
-                  image: DecorationImage(
-                      image: NetworkImage(image), fit: BoxFit.cover),
+          SizedBox(
+            width: Get.width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomCacheNetworkWidget(image: image),
+                // Container(
+                //   height: Dimens.hundred,
+                //   width: Dimens.eightySix,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(Dimens.ten),
+                //     image: DecorationImage(
+                //         image: NetworkImage(image), fit: BoxFit.cover),
+                //   ),
+                // ),
+                Dimens.boxWidth16,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: Dimens.oneHundredNinety,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: Get.width * .4,
+                            child: AppText(
+                              overflow: TextOverflow.ellipsis,
+                              text: name,
+                              style: AppStyles.ubBlack14W700,
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: onTapHeartIcon,
+                            child: SvgPicture.asset(
+                              isHeartTapped
+                                  ? Assets.iconsHeartFilled
+                                  : Assets.iconsHeartOutline,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: onTapClose,
+                            child: Visibility(
+                                visible: canClose ?? false,
+                                child: SvgPicture.asset(
+                                  Assets.iconsCancel,
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                    Dimens.boxHeight4,
+                    GestureDetector(
+                      onTap: onTapRating,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(Assets.iconsStar),
+                          RichText(
+                            text: TextSpan(
+                              text: ' $rating ',
+                              style: AppStyles.ubBlack12W500,
+                              children: [
+                                TextSpan(
+                                  text: reviews,
+                                  style: AppStyles.ubGrey12W400,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Dimens.boxHeight4,
+                    SizedBox(
+                      width: Dimens.oneHundredNinety,
+                      child: AppText(
+                        text: description,
+                        maxLines: 4,
+                        style: AppStyles.ubGrey12W400,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Dimens.boxWidth16,
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: Dimens.oneHundredNinety,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: Get.width * .43,
-                          child: AppText(
-                            overflow: TextOverflow.ellipsis,
-                            text: name,
-                            style: AppStyles.ubBlack14W700,
-                            maxLines: 1,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: onTapHeartIcon,
-                          child: SvgPicture.asset(
-                            isHeartTapped
-                                ? Assets.iconsHeartFilled
-                                : Assets.iconsHeartOutline,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Dimens.boxHeight4,
-                  GestureDetector(
-                    onTap: onTapRating,
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(Assets.iconsStar),
-                        RichText(
-                          text: TextSpan(
-                            text: ' $rating ',
-                            style: AppStyles.ubBlack12W500,
-                            children: [
-                              TextSpan(
-                                text: reviews,
-                                style: AppStyles.ubGrey12W400,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Dimens.boxHeight4,
-                  SizedBox(
-                    width: Dimens.oneHundredNinety,
-                    child: AppText(
-                      text: description,
-                      maxLines: 4,
-                      style: AppStyles.ubGrey12W400,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
           Dimens.boxHeight14,
 

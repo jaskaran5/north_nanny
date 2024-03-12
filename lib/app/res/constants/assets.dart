@@ -21,6 +21,7 @@ class Assets {
   static const String iconsCake = 'assets/icons/cake.svg';
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsCalendarFilled = 'assets/icons/calendar_filled.svg';
+  static const String iconsCancel = 'assets/icons/cancel.svg';
   static const String iconsCard = 'assets/icons/card.svg';
   static const String iconsChatSend = 'assets/icons/chat_send.svg';
   static const String iconsChatWhite = 'assets/icons/chat_white.svg';

@@ -16,7 +16,6 @@ import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
 import '../../../widgets/review_custom_bottom_sheet.dart';
 import 'customer_home_controller.dart';
 
@@ -162,41 +161,126 @@ class CustomerHomeView extends StatelessWidget {
                     ],
                   ),
           ),
-          floatingActionButton: GestureDetector(
-            onTap: () {
-              controller.updateScreen();
-            },
-            child: Container(
-              height: Dimens.thirtyFive,
-              width: Dimens.hundredTen,
-              padding: Dimens.edgeInsets10,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(
-                  Dimens.twenty,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.hintColor.withOpacity(.2),
-                    blurRadius: Dimens.one,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            padding: Dimens.edgeInsets8_0,
+            child: SizedBox(
+              width: Get.width,
+              height: Get.height * .32,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  SvgPicture.asset(
-                    controller.showListView.value
-                        ? Assets.iconsMapView
-                        : Assets.iconsListView,
+                  GestureDetector(
+                    onTap: () {
+                      controller.updateScreen();
+                    },
+                    child: Container(
+                      height: Dimens.thirtyFive,
+                      width: Dimens.hundredTen,
+                      padding: Dimens.edgeInsets10,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(
+                          Dimens.twenty,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.hintColor.withOpacity(.2),
+                            blurRadius: Dimens.one,
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            controller.showListView.value
+                                ? Assets.iconsMapView
+                                : Assets.iconsListView,
+                          ),
+                          Dimens.boxWidth2,
+                          AppText(
+                            text: controller.showListView.value
+                                ? TranslationKeys.mapView.tr
+                                : TranslationKeys.listView.tr,
+                            style: AppStyles.ubNavyBlue12W600,
+                            maxLines: 1,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  Dimens.boxWidth2,
-                  AppText(
-                    text: controller.showListView.value
-                        ? TranslationKeys.mapView.tr
-                        : TranslationKeys.listView.tr,
-                    style: AppStyles.ubNavyBlue12W600,
-                    maxLines: 1,
+                  !controller.isNannyMarkerVisible.value
+                      ? Dimens.boxHeight10
+                      : Dimens.box0,
+                  Visibility(
+                    visible: controller.isNannyMarkerVisible.value,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => NannyProfileView(
+                            isComeFromSetting: false,
+                            appBarTitle: TranslationKeys.nannyProfile.tr,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top: Dimens.ten),
+                        child: controller.homeNannyList.isNotEmpty
+                            ? HomeCustomListView(
+                                canClose: true,
+                                // servicesListData: controller,
+                                distance:
+                                    (controller.nannyDistance.value).toString(),
+
+                                age: controller.nannyAge.value.toString(),
+                                experience: (controller.nannyExperience.value)
+                                    .split(' ')
+                                    .first,
+
+                                description: controller.nannyDescription.value,
+                                image: controller.nannyImage.value,
+                                name: controller.nannyName.value,
+                                rating: controller.nannyRatingCount.value,
+                                reviews:
+                                    '(${controller.nannyTotalReviews.value} reviews)',
+                                // servicesList: controller.homeCustomList,
+                                isHeartTapped: controller.nannyFavourite.value,
+                                heartSvg: controller.nannyFavourite.value
+                                    ? Assets.iconsHeartOutline
+                                    : Assets.iconsHeartFilled,
+                                onTapHeartIcon: () {
+                                  controller.toggleFavouriteAndUnFavouriteApi(
+                                      userId: controller.nannyUserId.value,
+                                      isFavourite:
+                                          !controller.nannyFavourite.value);
+                                },
+
+                                onTapClose: () {
+                                  controller.toggleIsNannyMarkerVisible();
+                                  log("on tap on close");
+                                },
+                                onTapRating: () {
+                                  Utility.openBottomSheet(
+                                    const CustomReviewBottomSheet(
+                                      totalReviews: 21,
+                                      totalReviewsRating: 4.5,
+                                      reviewsList: [
+                                        'Michael Johnson',
+                                        'Giorgio Chiellini',
+                                        'Michael Johnson',
+                                        'Alex Morgan',
+                                        'Giorgio Chiellini'
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                            : null,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -206,12 +290,14 @@ class CustomerHomeView extends StatelessWidget {
               ? GoogleMap(
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(30.7046, 76.7179),
-                    zoom: 14.4746,
+                    zoom: 5,
                   ),
                   markers: controller.markers,
                   onMapCreated: (contro) {
                     controller.onMapCreated(controller: contro);
                   },
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
                 )
               : controller.homeNannyList.isEmpty
                   ? Column(

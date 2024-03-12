@@ -60,6 +60,7 @@ class SearchView extends StatelessWidget {
                             suffix: GestureDetector(
                               onTap: () {
                                 searchTextEditingController.clear();
+                                controller.searchNanny('');
                               },
                               child: Padding(
                                 padding: Dimens.edgeInsets10,
@@ -79,26 +80,38 @@ class SearchView extends StatelessWidget {
                     ],
                   ),
                   Dimens.boxHeight16,
+                  controller.homeNannyList.isEmpty
+                      ? Expanded(
+                          child: Center(
+                            child: Image.asset(
+                              Assets.imagesNoDataPng,
+                              scale: 2,
+                            ),
+                          ),
+                        )
+                      :
 
-                  //** SEARCH LIST */
-                  Expanded(
-                    child: SizedBox(
-                      height: 300, // Set a fixed height for the container
-                      child: ListView.builder(
-                        itemCount: controller.homeNannyList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ShortDetailProfileView(
-                            image: controller.homeNannyList[index].image,
-                            nannyName: controller.homeNannyList[index].name,
-                            totalRating: controller.homeNannyList[index].rating,
-                            totalReviews:
-                                controller.homeNannyList[index].reviewCount,
-                          );
-                        },
-                      ),
-                    ),
-                  )
+                      //** SEARCH LIST */
+                      Expanded(
+                          child: SizedBox(
+                            height: 300, // Set a fixed height for the container
+                            child: ListView.builder(
+                              itemCount: controller.homeNannyList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return ShortDetailProfileView(
+                                  image: controller.homeNannyList[index].image,
+                                  nannyName:
+                                      controller.homeNannyList[index].name,
+                                  totalRating:
+                                      controller.homeNannyList[index].rating,
+                                  totalReviews: controller
+                                      .homeNannyList[index].reviewCount,
+                                );
+                              },
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),
