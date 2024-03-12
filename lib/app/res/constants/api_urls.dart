@@ -74,6 +74,7 @@ class ApiUrls {
       'api/NannyDashBoard/DeleteAvailability';
 
   /// ----------------------- Nanny calender api urls ---------------------
+
   static const String getNannyAllBookingDates =
       'api/NannyDashBoard/GetAllNannyBookingDates';
 }
