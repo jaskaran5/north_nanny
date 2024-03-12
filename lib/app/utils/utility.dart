@@ -461,33 +461,58 @@ class Utility {
     return DateFormat('MMMM yyyy, EEEE').format(date);
   }
 
-  /// used to convert the method to format time range ['10:00 AM to 05:00 PM']
-  static String formatTimeRange(
-      {required DateTime startTime, required DateTime endTime}) {
-    String formattedStartTime = DateFormat('hh:mm a').format(startTime);
-    log('strat format : $formattedStartTime');
-
-    String formattedEndTime = DateFormat('hh:mm a').format(endTime);
-
-    return '$formattedStartTime to $formattedEndTime';
+  /// used to convert date time to Time of day
+  static TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) {
+    var formatDate =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime.toString(), true);
+    var value = TimeOfDay.fromDateTime(formatDate.toLocal());
+    log('time of day:$value');
+    return value;
   }
 
-  /// method used to convert utc to local.
-  static String convertUtcToLocal(String utcTimeString) {
-    DateTime utcTime = DateTime.parse(utcTimeString);
-    DateTime localTime = utcTime.toLocal();
-    final DateFormat formatter = DateFormat('hh:mm a');
-    String formattedStartTime = formatter.format(localTime);
-    return formattedStartTime; // You can format the local time as per your requirements
-  }
-
-  static String formatTimeTo12Hour(String ? dateTimeString) {
-    if(dateTimeString== null){
+  /// this is used to show format in date time.
+  static String formatTimeTo12Hour(String? dateTimeString) {
+    if (dateTimeString == null) {
       return "";
     }
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
+    var dateTime =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
     var dateLocal = dateTime.toLocal();
     String formattedTime = DateFormat('hh:mm a').format(dateLocal);
     return formattedTime;
+  }
+
+  /// this is used to get a day from date
+  static String getDay({required DateTime? dateTime}) {
+    return dateTime?.day.toString().padLeft(2, '0') ?? '';
+  }
+
+  /// used to get days  according to start time and end time
+  static List<DateTime> getDaysInBetween(
+      {required DateTime startDate, required DateTime endDate}) {
+    List<DateTime> days = [];
+    DateTime currentDate = startDate;
+    while (!currentDate.isAfter(endDate)) {
+      days.add(currentDate);
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+    return days;
+  }
+
+  /// this method used to return the list by add the timing to the list.
+  static List<DateTime> addTimeToList(
+      {required List<DateTime> dates, required TimeOfDay? addTime}) {
+    List<DateTime> updatedList = [];
+    for (DateTime date in dates) {
+      DateTime updatedDateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        addTime!.hour,
+        addTime.minute,
+      );
+      updatedList.add(updatedDateTime);
+    }
+    return updatedList;
   }
 }
