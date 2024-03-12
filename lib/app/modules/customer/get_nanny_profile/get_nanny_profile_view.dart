@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -16,126 +17,130 @@ import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_shimmer_skeleton.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
+import 'package:northshore_nanny_flutter/app/widgets/houry_rate_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../widgets/custom_bottom_sheet.dart';
-import '../../widgets/custom_text_field.dart';
-import '../../widgets/houry_rate_view.dart';
 
-class NannyProfileView extends StatelessWidget {
-  const NannyProfileView(
-      {super.key, required this.isComeFromSetting, required this.appBarTitle});
-
-  final bool isComeFromSetting;
-  final String appBarTitle;
+class GetNannyProfileView extends StatelessWidget {
+  const GetNannyProfileView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => GetBuilder(
-        init: NannyProfileController(),
+        init: GetNannyProfileController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
-            title: appBarTitle,
+            title: "Nanny Profile",
             centerTitle: true,
             actions: [
-              if (!isComeFromSetting)
-                GestureDetector(
-                  onTap: () {
-                    controller.isFavorite = !controller.isFavorite;
-                    controller.update();
-                  },
-                  child: Padding(
-                    padding: Dimens.edgeInsetsL16R16,
-                    child: SvgPicture.asset(controller.isFavorite
-                        ? Assets.iconsHeartFilled
-                        : Assets.iconsHeartOutline),
-                  ),
+              // if (!isComeFromSetting)
+              GestureDetector(
+                onTap: () {
+                  controller.isFavorite = !controller.isFavorite;
+                  controller.update();
+                },
+                child: Padding(
+                  padding: Dimens.edgeInsetsL16R16,
+                  child: controller.getNannyData != null
+                      ? SvgPicture.asset(controller.getNannyData!.isFavorite!
+                          ? Assets.iconsHeartFilled
+                          : Assets.iconsHeartOutline)
+                      : null,
                 ),
+              ),
             ],
           ),
           backgroundColor: AppColors.profileBackgroundColor,
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: Dimens.edgeInsetsB16,
-              child: Column(
-                children: [
-                  CustomNannyProfileView(
-                    imageUrl: controller.profileData.data?.image,
-                    nannyName: controller.profileData.data?.name.toString(),
-                    totalRating: controller.profileData.data?.rating,
-                    totalReview: controller.profileData.data?.reviewCount,
-                    nannyAge: controller.profileData.data?.age.toString(),
-                    nannyExperience: controller.profileData.data?.experience
-                        ?.split(' ')
-                        .first,
-                    nannyGender: controller.profileData.data?.gender == 1
-                        ? TranslationKeys.male.tr
-                        : controller.profileData.data?.gender == 2
-                            ? TranslationKeys.female.tr
-                            : '',
-                    onTapRating: () {
-                      Utility.openBottomSheet(CustomReviewBottomSheet(
-                          totalReviews:
-                              controller.profileData.data?.reviewCount ?? 0,
-                          totalReviewsRating:
-                              controller.profileData.data?.rating ?? 0.0,
-                          reviewsList:
-                              controller.profileData.data?.ratingList ?? []));
-                    },
-                  ),
-                  Dimens.boxHeight20,
-                  Container(
-                    margin: Dimens.edgeInsetsL16R16,
-                    height: Dimens.fifty,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(Dimens.ten),
+          body: SkeletonWidget(
+            isLoading: controller.isDataLoading.value,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: Dimens.edgeInsetsB16,
+                child: Column(
+                  children: [
+                    CustomNannyProfileView(
+                      distance: double.tryParse(
+                              controller.getNannyData?.distance.toString() ??
+                                  "0.0")
+                          ?.truncate()
+                          .toString(),
+                      imageUrl: controller.getNannyData?.image,
+                      nannyName: controller.getNannyData?.name.toString(),
+                      totalRating: controller.getNannyData?.rating,
+                      totalReview: controller.getNannyData?.reviewCount,
+                      nannyAge: controller.getNannyData?.age.toString(),
+                      nannyExperience: controller.getNannyData?.experience
+                              ?.split(' ')
+                              .first ??
+                          '',
+                      onTapRating: () {
+                        Utility.openBottomSheet(CustomReviewBottomSheet(
+                            totalReviews:
+                                controller.profileData.data?.reviewCount ?? 0,
+                            totalReviewsRating:
+                                controller.profileData.data?.rating ?? 0.0,
+                            reviewsList:
+                                controller.profileData.data?.ratingList ?? []));
+                      },
                     ),
-                    child: Row(
-                      children: List.generate(
-                        controller.profileTabList.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            controller.selectedIndex = index;
-                            if (index == 2) {
-                              controller.getAvailabilityList();
-                            }
-                            controller.update();
-                          },
-                          child: Container(
-                            height: Dimens.forty,
-                            width: Dimens.hundredEight,
-                            // padding: Dimens.edgeInsets8,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: controller.selectedIndex == index
-                                  ? AppColors.navyBlue
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(Dimens.eight),
-                            ),
-                            child: AppText(
-                              text: controller.profileTabList[index].tr,
-                              style: controller.selectedIndex == index
-                                  ? AppStyles.ubWhite14700
-                                  : AppStyles.ubGrey14W600,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
+                    Dimens.boxHeight20,
+                    Container(
+                      margin: Dimens.edgeInsetsL16R16,
+                      height: Dimens.fifty,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(Dimens.ten),
+                      ),
+                      child: Row(
+                        children: List.generate(
+                          controller.profileTabList.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              controller.selectedIndex = index;
+                              if (index == 2) {
+                                controller.getAvailabilityList();
+                              }
+                              controller.update();
+                            },
+                            child: Container(
+                              height: Dimens.forty,
+                              width: Dimens.hundredEight,
+                              // padding: Dimens.edgeInsets8,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: controller.selectedIndex == index
+                                    ? AppColors.navyBlue
+                                    : Colors.transparent,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.eight),
+                              ),
+                              child: AppText(
+                                text: controller.profileTabList[index].tr,
+                                style: controller.selectedIndex == index
+                                    ? AppStyles.ubWhite14700
+                                    : AppStyles.ubGrey14W600,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Dimens.boxHeight20,
-                  if (controller.selectedIndex == 0) ...[
-                    CustomAbout(
-                      aboutNanny: controller.profileData.data?.about ?? '',
-                    ),
                     Dimens.boxHeight20,
-                    if (!isComeFromSetting) ...[
+                    if (controller.selectedIndex == 0) ...[
+                      CustomAbout(
+                        aboutNanny: controller.getNannyData?.aboutMe ?? '',
+                      ),
+                      Dimens.boxHeight20,
                       Padding(
                         padding: Dimens.edgeInsetsL16R16,
                         child: HourlyRateView(
@@ -144,164 +149,20 @@ class NannyProfileView extends StatelessWidget {
                         ),
                       )
                     ],
-                    if (isComeFromSetting) ...[
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        margin: Dimens.edgeInsetsL16R16,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.education.tr,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              style: AppStyles.ubBlack14W700,
-                            ),
-                            Dimens.boxHeight14,
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsHouse,
-                              heading: TranslationKeys.highSchool.tr,
-                              aboutHeading: controller
-                                      .profileData.data?.highSchool
-                                      .toString() ??
-                                  '',
-                            ),
-                            Dimens.boxHeight14,
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsBuilding,
-                              heading: TranslationKeys.college.tr,
-                              aboutHeading: controller.profileData.data?.college
-                                      .toString() ??
-                                  '',
-                            ),
-                            Dimens.boxHeight14,
-                          ],
-                        ),
-                      ),
-                      Dimens.boxHeight20,
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        width: Get.width,
-                        margin: Dimens.edgeInsetsL16R16,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsLocationDot,
-                              heading: TranslationKeys.location.tr,
-                              aboutHeading:
-                                  controller.profileData.data?.location ?? '',
-                              aboutHeadingWidth: Dimens.twoHundredFifty,
-                            ),
-                            Dimens.boxHeight14,
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsPhone,
-                              heading: TranslationKeys.phoneNumber.tr,
-                              aboutHeading:
-                                  controller.profileData.data?.mobileNo ?? '',
-                            ),
-                            Dimens.boxHeight14,
-                            if (controller.profileData.data?.isDrivingLicence !=
-                                null) ...[
-                              CustomNannySvgTile(
-                                assetName: Assets.iconsPersonalcard,
-                                heading: TranslationKeys.driversLicense.tr,
-                                aboutHeading: controller.profileData.data
-                                            ?.isDrivingLicence ==
-                                        true
-                                    ? TranslationKeys.yes.capitalizeFirst
-                                        .toString()
-                                    : TranslationKeys.no.capitalizeFirst
-                                        .toString(),
-                              ),
-                              Dimens.boxHeight14,
-                            ],
-                          ],
-                        ),
-                      ),
-                      Dimens.boxHeight20,
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        margin: Dimens.edgeInsetsL16R16,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsDollarCircle,
-                              heading: TranslationKeys.referralEarned.tr,
-                              aboutHeading: '\$5.00',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Dimens.boxHeight20,
-                      CustomButton(
-                        backGroundColor: AppColors.navyBlue,
-                        title: TranslationKeys.editProfile.tr,
-                        onTap: () {
-                          RouteManagement.goToEditNannyProfileView();
-                        },
-                      ),
+                    if (controller.selectedIndex == 1) ...[
+                      servicesView(
+                          servicesList: controller.getNannyData?.services ?? [],
+                          rateList: controller.priceList),
+                      // CustomButton(
+                      //   backGroundColor: AppColors.navyBlue,
+                      //   title: TranslationKeys.editServices.tr,
+                      //   onTap: () {
+                      //     RouteManagement.goToEditNannyServicesView();
+                      //   },
+                      // ),
                     ],
                   ],
-                  if (controller.selectedIndex == 1) ...[
-                    servicesView(
-                      servicesList: controller.profileData.data?.services,
-                    ),
-                    if (isComeFromSetting)
-                      CustomButton(
-                        backGroundColor: AppColors.navyBlue,
-                        title: TranslationKeys.editServices.tr,
-                        onTap: () {
-                          RouteManagement.goToEditNannyServicesView();
-                        },
-                      ),
-                  ],
-                  if (controller.selectedIndex == 2) ...[
-                    availabilityView(
-                      controller: controller,
-                    ),
-                  ],
-                ],
+                ),
               ),
             ),
           ),

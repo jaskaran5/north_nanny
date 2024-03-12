@@ -15,6 +15,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
@@ -94,7 +95,7 @@ class CustomerHomeController extends GetxController {
       .toList();
   RxBool showListView = false.obs;
   RxBool isGoogleMap = true.obs;
-  final Set<Marker> markers = {};
+  Set<Marker> markers = {};
 
   RxList<NannyDataList> homeNannyList = <NannyDataList>[].obs;
 
@@ -250,6 +251,7 @@ class CustomerHomeController extends GetxController {
           update();
 
           if (res.data != []) {
+            log("nanny list-->> ${homeNannyList.length}");
             for (int a = 0; a < homeNannyList.length - 1; a++) {
               markers.add(
                 Marker(
@@ -263,7 +265,8 @@ class CustomerHomeController extends GetxController {
                     ).toBitmapDescriptor(
                         logicalSize: const Size(200, 200),
                         imageSize: const Size(200, 200)),
-                    onTap: () {
+                    onTap: () async {
+                      log("aaaaaaa:-->> $a");
                       updateNannyTile(
                               name: homeNannyList[a].name,
                               isFavourite: homeNannyList[a].isFavorite ?? false,
@@ -281,8 +284,25 @@ class CustomerHomeController extends GetxController {
                                   homeNannyList[a].experience.toString(),
                               image: homeNannyList[a].image.toString(),
                               userId: homeNannyList[a].id ?? 0)
-                          .then((value) {
+                          .then((value) async {
                         toggleIsNannyMarkerVisible();
+
+                        // markers = markers.difference({markers.elementAt(a)});
+                        // markers.add(Marker(
+                        //     markerId: MarkerId("$a"),
+                        //     position: LatLng(
+                        //       double.tryParse(
+                        //           homeNannyList[a].latitude.toString())!,
+                        //       double.tryParse(
+                        //           homeNannyList[a].longitude.toString())!,
+                        //     ),
+                        //     icon: await TextOnImage(
+                        //       image: homeNannyList[a].image,
+                        //       color: AppColors.navyBlue,
+                        //     ).toBitmapDescriptor(
+                        //       logicalSize: const Size(200, 200),
+                        //       imageSize: const Size(200, 200),
+                        //     )));
                         log("on tap on marker");
                       });
                     }),

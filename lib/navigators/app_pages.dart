@@ -32,6 +32,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/components/
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/customer_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
 
 import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dart';
@@ -393,6 +395,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: NannyEditServicesView.new,
       binding: NannyEditProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ GET NANNY PROFILE FROM CUSTOMER SIDE -------  */
+    GetPage<GetNannyProfileView>(
+      name: Routes.getNannyProfile,
+      transitionDuration: transitionDuration,
+      page: GetNannyProfileView.new,
+      binding: GetNannyProfileBinding(),
       transition: Transition.leftToRight,
     ),
   ];

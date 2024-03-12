@@ -219,12 +219,14 @@ class CustomerHomeView extends StatelessWidget {
                     visible: controller.isNannyMarkerVisible.value,
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(
-                          () => NannyProfileView(
-                            isComeFromSetting: false,
-                            appBarTitle: TranslationKeys.nannyProfile.tr,
-                          ),
-                        );
+                        RouteManagement.goToGetNannyProfileView(
+                            argument: controller.nannyUserId.value);
+                        // Get.to(
+                        //   () => NannyProfileView(
+                        //     isComeFromSetting: false,
+                        //     appBarTitle: TranslationKeys.nannyProfile.tr,
+                        //   ),
+                        // );
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: Dimens.ten),
@@ -320,12 +322,9 @@ class CustomerHomeView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              Get.to(
-                                () => NannyProfileView(
-                                  isComeFromSetting: false,
-                                  appBarTitle: TranslationKeys.nannyProfile.tr,
-                                ),
-                              );
+                              log("selected Nanny id:-->>${controller.homeNannyList[index].id}");
+                              RouteManagement.goToGetNannyProfileView(
+                                  argument: controller.homeNannyList[index].id);
                             },
                             child: HomeCustomListView(
                               // servicesListData: controller,

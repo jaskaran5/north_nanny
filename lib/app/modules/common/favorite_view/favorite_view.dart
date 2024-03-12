@@ -9,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});
@@ -28,12 +29,13 @@ class FavoriteView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(
-                      () => NannyProfileView(
-                        isComeFromSetting: false,
-                        appBarTitle: TranslationKeys.nannyProfile.tr,
-                      ),
-                    );
+                    RouteManagement.goToGetNannyProfileView();
+                    // Get.to(
+                    //   () => NannyProfileView(
+                    //     isComeFromSetting: false,
+                    //     appBarTitle: TranslationKeys.nannyProfile.tr,
+                    //   ),
+                    // );
                   },
                   child: HomeCustomListView(
                     // servicesListData: controller,

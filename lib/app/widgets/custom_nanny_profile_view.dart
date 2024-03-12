@@ -58,7 +58,7 @@ class CustomNannyProfileView extends StatelessWidget {
                   ? CustomCacheNetworkImage(
                       img: imageUrl.toString(),
                       size: Dimens.ninety,
-                      imageRadius:  Dimens.hundred,
+                      imageRadius: Dimens.hundred,
                     )
                   : CircleAvatar(
                       radius: Dimens.hundred,
@@ -90,7 +90,7 @@ class CustomNannyProfileView extends StatelessWidget {
                         TextSpan(
                           text:
                               ' (${totalReview.toString()} ${TranslationKeys.reviews.tr})',
-                          style: AppStyles.ubGrey12W400,
+                          style: AppStyles.ubBlack0B0B0B12W400,
                         )
                       ],
                     ),
@@ -118,7 +118,7 @@ class CustomNannyProfileView extends StatelessWidget {
                       ),
                       child: AppText(
                         text: ' ${TranslationKeys.gender.tr}: $nannyGender',
-                        style: AppStyles.ubGrey12W400,
+                        style: AppStyles.ubBlack0B0B0B12W400,
                         maxLines: 1,
                         textAlign: TextAlign.center,
                       ),
@@ -134,8 +134,9 @@ class CustomNannyProfileView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimens.eight),
                       ),
                       child: AppText(
-                        text: ' ${TranslationKeys.distance.tr}: $distance',
-                        style: AppStyles.ubGrey12W400,
+                        text:
+                            ' ${TranslationKeys.distance.tr}: $distance miles',
+                        style: AppStyles.ubBlack0B0B0B12W400,
                         maxLines: 1,
                         textAlign: TextAlign.center,
                       ),
@@ -152,7 +153,7 @@ class CustomNannyProfileView extends StatelessWidget {
                       ),
                       child: AppText(
                         text: ' ${TranslationKeys.age.tr}: $nannyAge',
-                        style: AppStyles.ubGrey12W400,
+                        style: AppStyles.ubBlack0B0B0B12W400,
                         maxLines: 1,
                         textAlign: TextAlign.center,
                       ),
@@ -169,8 +170,8 @@ class CustomNannyProfileView extends StatelessWidget {
                       ),
                       child: AppText(
                         text:
-                            ' ${TranslationKeys.experience.tr}: $nannyExperience',
-                        style: AppStyles.ubGrey12W400,
+                            ' ${TranslationKeys.experience.tr}: $nannyExperience yrs',
+                        style: AppStyles.ubBlack0B0B0B12W400,
                         maxLines: 1,
                         textAlign: TextAlign.center,
                       ),

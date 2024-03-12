@@ -39,6 +39,7 @@ class Routes {
   static const String createChildProfileView = Paths.createChildProfileView;
   static const String editNannyProfile = Paths.editNannyProfile;
   static const String editNannyServices = Paths.editNannyServices;
+  static const String getNannyProfile = Paths.getNannyProfile;
 
   static const String createCustomerProfileView =
       Paths.createCustomerProfileView;
@@ -84,6 +85,7 @@ class Paths {
   static const String createChildProfileView = '/create-child-profile-view';
   static const String editNannyProfile = '/Edit-nanny-Profile-view';
   static const String editNannyServices = '/Edit-nanny-Services-view';
+  static const String getNannyProfile = '/get-nanny-profile';
 
   static const String createCustomerProfileView =
       '/create-customer-profile-view-';

@@ -310,4 +310,9 @@ abstract class RouteManagement {
       Routes.editNannyServices,
     );
   }
+
+  /// Go to GET NANNY PROFILE  View
+  static void goToGetNannyProfileView({argument}) {
+    Get.toNamed(Routes.getNannyProfile, arguments: argument ?? 0);
+  }
 }

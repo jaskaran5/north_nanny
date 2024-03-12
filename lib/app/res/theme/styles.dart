@@ -211,6 +211,14 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: AppColors.greyColor,
   );
+
+  static TextStyle ubBlack0B0B0B12W400 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.twelve,
+    color: AppColors.blackColor,
+  );
+
   static TextStyle ubWhite12W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,
