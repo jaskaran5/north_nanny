@@ -13,7 +13,6 @@ import 'app_text.dart';
 class CustomNannyProfileView extends StatelessWidget {
   const CustomNannyProfileView({
     super.key,
-    this.servicesList,
     this.nannyName,
     this.totalRating,
     this.onTapRating,
@@ -24,7 +23,6 @@ class CustomNannyProfileView extends StatelessWidget {
     this.distance,
     this.imageUrl,
   });
-  final List<String>? servicesList;
   final String? nannyName;
   final String? distance;
   final String? imageUrl;

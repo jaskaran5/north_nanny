@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:northshore_nanny_flutter/app/utils/config/communication_config.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
+
+import '../../res/constants/enums.dart';
 
 class EnvConfig {
   const EnvConfig({

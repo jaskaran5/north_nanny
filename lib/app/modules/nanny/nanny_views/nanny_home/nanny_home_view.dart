@@ -9,13 +9,13 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_hom
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
+import '../../../../res/constants/enums.dart';
 import '../../../../res/theme/styles.dart';
 import '../../../../widgets/app_text.dart';
 
@@ -54,10 +54,10 @@ class NannyHomeView extends StatelessWidget {
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Transform.scale(
-                        scale: .85,
+                        scale: .8,
                         child: CupertinoSwitch(
                           value: controller.isSwitchOn,
                           onChanged: (value) {
@@ -193,13 +193,13 @@ class NannyHomeView extends StatelessWidget {
                                     const CustomReviewBottomSheet(
                                       totalReviews: 21,
                                       totalReviewsRating: 4.5,
-                                      reviewsList: [
-                                        'Michael Johnson',
-                                        'Giorgio Chiellini',
-                                        'Michael Johnson',
-                                        'Alex Morgan',
-                                        'Giorgio Chiellini'
-                                      ],
+                                      reviewsList: [],
+                                      //   'Michael Johnson',
+                                      //   'Giorgio Chiellini',
+                                      //   'Michael Johnson',
+                                      //   'Alex Morgan',
+                                      //   'Giorgio Chiellini'
+                                      // ],
                                     ),
                                   );
                                 },
@@ -209,8 +209,12 @@ class NannyHomeView extends StatelessWidget {
                         ),
                       )
                     : Expanded(
-                        child:
-                            Center(child: Image.asset(Assets.imagesNoDataPng)),
+                        child: Center(
+                            child: Image.asset(
+                          Assets.imagesNoDataPng,
+                          height: Dimens.twoHundredFifty,
+                          width: Dimens.twoHundredFifty,
+                        )),
                       ),
               ],
             ),

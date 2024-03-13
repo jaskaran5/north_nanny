@@ -370,6 +370,7 @@ class ScheduleNannyView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          //
                           Padding(
                             padding: Dimens.edgeInsetsH20V15,
                             child: Row(

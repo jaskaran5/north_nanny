@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_login_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 

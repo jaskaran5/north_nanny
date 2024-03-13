@@ -9,7 +9,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/send_tip_view/send_t
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -22,6 +21,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
 
 import '../../../../navigators/routes_management.dart';
+import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 
 class BookingDetailView extends StatelessWidget {

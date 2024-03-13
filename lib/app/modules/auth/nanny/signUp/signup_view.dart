@@ -136,7 +136,8 @@ class SignUpView extends StatelessWidget {
                                 ),
                               ),
                               suffix: GestureDetector(
-                                onTap: controller.updateConfirmPasswordVisibility,
+                                onTap:
+                                    controller.updateConfirmPasswordVisibility,
                                 child: Padding(
                                   padding: Dimens.edgeInsets12,
                                   child: SvgPicture.asset(

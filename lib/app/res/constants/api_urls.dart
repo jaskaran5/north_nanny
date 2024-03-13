@@ -16,6 +16,7 @@ class ApiUrls {
   static const String resetPassWord = "api/User/ResetPassword";
   static const String forgotPassword = "api/User/ForgotPassword";
   static const String customerLogOut = "api/User/LogOut";
+  static const String changePassword = "api/User/ChangePassword";
 
   ///
   ///
@@ -62,8 +63,7 @@ class ApiUrls {
       'api/NannyDashBoard/SetAvailabilityStatus';
 
   /// ------------------ Nanny availability api urls -------------------------------
-  static const String postNannyBookingDetails =
-      'api/NannyDashBoard/NannyBookingDeatil';
+
   static const String nannyBookingList =
       'api/NannyDashBoard/NannyAvailabilityList';
   static const String getNannyAvailabilityByDate =
@@ -76,5 +76,12 @@ class ApiUrls {
   /// ----------------------- Nanny calender api urls ---------------------
 
   static const String getNannyAllBookingDates =
-      'api/NannyDashBoard/GetAllNannyBookingDates';
+      'api/NannyDashBoard/AllNannyBookingDates';
+
+  static const String postNannyBookingDetails =
+      'api/NannyDashBoard/NannyBookingDeatil';
+  static const String acceptOrRejectBooking =
+      'api/NannyDashBoard/AcceptOrRejectBooking';
+  static const String updateBookingStatus =
+      'api/NannyDashBoard/UpdateBookingStatus';
 }

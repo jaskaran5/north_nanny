@@ -43,7 +43,7 @@ class CustomNannySvgTile extends StatelessWidget {
               ),
               Dimens.boxHeight4,
               SizedBox(
-                width: aboutHeadingWidth ,
+                width: aboutHeadingWidth,
                 child: AppText(
                   text: aboutHeading,
                   style: AppStyles.ubBlack14W600,

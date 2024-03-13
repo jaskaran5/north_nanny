@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_notification_tile.dart';
 
 import '../../../data/storage/storage.dart';
+import '../../../res/constants/enums.dart';
 import '../../../res/constants/string_contants.dart';
 import '../../../res/theme/dimens.dart';
 import '../../nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';

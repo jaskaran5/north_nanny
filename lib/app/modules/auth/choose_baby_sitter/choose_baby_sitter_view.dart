@@ -18,10 +18,10 @@ class ChooseBabySitterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PopScope(
-    canPop: false,
-    child: SafeArea(
-      top: false,
-      child: Scaffold(
+        canPop: false,
+        child: SafeArea(
+          top: false,
+          child: Scaffold(
             backgroundColor: AppColors.primaryColor,
             body: Padding(
               padding: Dimens.edgeInsets16,
@@ -38,32 +38,33 @@ class ChooseBabySitterView extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Dimens.boxHeight32,
-      
+
                     /** Need a Sitter ==>> Parents */
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: TranslationKeys.needASitter.tr,
-                      onTap: ()async {
-      
+                      onTap: () async {
                         log("==>> ${StringConstants.loginType}");
                         log("==>> ${StringConstants.customer}");
-      
-                       await Storage.saveValue(StringConstants.loginType, StringConstants.customer);
+
+                        await Storage.saveValue(StringConstants.loginType,
+                            StringConstants.customer);
                         RouteManagement.goToSignUp();
                       },
                     ),
                     Dimens.boxHeight16,
-      
+
                     /** I'm a Sitter ==>> NANNY */
-      
+
                     CustomButton(
                       backGroundColor: AppColors.lightNavyBlue,
                       title: TranslationKeys.iAmSitter.tr,
                       titleStyle: AppStyles.navyBlue15UbW600,
                       onTap: () async {
-                          log("==>> ${StringConstants.loginType}");
+                        log("==>> ${StringConstants.loginType}");
                         log("==>> ${StringConstants.nanny}");
-                       await Storage.saveValue(StringConstants.loginType, StringConstants.nanny);
+                        await Storage.saveValue(
+                            StringConstants.loginType, StringConstants.nanny);
                         RouteManagement.goToSignUp();
                       },
                     ),
@@ -72,6 +73,6 @@ class ChooseBabySitterView extends StatelessWidget {
               ),
             ),
           ),
-    ),
-  );
+        ),
+      );
 }

@@ -8,10 +8,6 @@ abstract class Storage {
   static Future<void> saveValue(String key, dynamic value) =>
       _storage.write(key, value);
 
-
-
-
-
   static T? getValue<T>(String key) => _storage.read<T>(key);
 
   static bool hasData(String key) => _storage.hasData(key);

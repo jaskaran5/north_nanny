@@ -6,7 +6,6 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -20,6 +19,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 
+import '../../../../res/constants/enums.dart';
 import '../../../../widgets/custom_booking_detail.dart';
 import '../../../../widgets/custom_text_field.dart';
 
@@ -146,13 +146,13 @@ class NannyBookingDetailView extends StatelessWidget {
                                         const CustomReviewBottomSheet(
                                           totalReviews: 21,
                                           totalReviewsRating: 4.5,
-                                          reviewsList: [
-                                            'Michael Johnson',
-                                            'Giorgio Chiellini',
-                                            'Michael Johnson',
-                                            'Alex Morgan',
-                                            'Giorgio Chiellini'
-                                          ],
+                                          reviewsList: [],
+                                          //   'Michael Johnson',
+                                          //   'Giorgio Chiellini',
+                                          //   'Michael Johnson',
+                                          //   'Alex Morgan',
+                                          //   'Giorgio Chiellini'
+                                          // ],
                                         ),
                                       );
                                     },
@@ -232,6 +232,10 @@ class NannyBookingDetailView extends StatelessWidget {
                           textColor: AppColors.fC3030RedColor,
                           onTap: () {
                             controller.selectedIndex = null;
+                            controller.otherRejectionTextEditingController
+                                .clear();
+                            controller.rejectionReason = '';
+                            /// rejection dialog.
                             Get.dialog(
                               GetBuilder(
                                   init: NannyBookingDetailController(),
@@ -312,6 +316,20 @@ class NannyBookingDetailView extends StatelessWidget {
                                                             bookingController
                                                                     .selectedIndex =
                                                                 index;
+                                                            if (index != 2) {
+                                                              controller
+                                                                      .rejectionReason =
+                                                                  controller
+                                                                      .reportList[
+                                                                          index]
+                                                                      .toString();
+                                                            } else {
+                                                              controller
+                                                                      .rejectionReason =
+                                                                  controller
+                                                                      .otherRejectionTextEditingController
+                                                                      .text;
+                                                            }
                                                             bookingController
                                                                 .update();
                                                           },
@@ -362,6 +380,8 @@ class NannyBookingDetailView extends StatelessWidget {
                                                           2) ...[
                                                         Dimens.boxHeight8,
                                                         TextField(
+                                                          controller: controller
+                                                              .otherRejectionTextEditingController,
                                                           maxLines: 4,
                                                           decoration:
                                                               customFieldDeco(
@@ -379,7 +399,22 @@ class NannyBookingDetailView extends StatelessWidget {
                                                             .submit.tr,
                                                         backGroundColor:
                                                             AppColors.navyBlue,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          /// report api for report the booking
+                                                          controller.acceptOrRejectBookingDetail(
+                                                              bookingId: 0,
+                                                              bookingStatus: 3,
+                                                              rejectionStatus:
+                                                                  controller.selectedIndex !=
+                                                                          null
+                                                                      ? (controller.selectedIndex ??
+                                                                              0) +
+                                                                          1
+                                                                      : 0,
+                                                              rejectionReason:
+                                                                  controller
+                                                                      .rejectionReason);
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -399,6 +434,11 @@ class NannyBookingDetailView extends StatelessWidget {
                           backGroundColor: AppColors.navyBlue,
                           title: TranslationKeys.accept.tr,
                           onTap: () {
+                            /// accept booking
+                            controller.acceptOrRejectBookingDetail(
+                              bookingId: 0,
+                              bookingStatus: 2,
+                            );
                             controller.nannyBookingDetailStatus =
                                 NannyBookingDetailStatus.onMyWay;
                             controller.update();

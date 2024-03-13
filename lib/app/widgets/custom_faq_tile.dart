@@ -27,17 +27,19 @@ class CustomFAQTile extends StatelessWidget {
       margin: Dimens.edgeInsetsB10,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(Dimens.sixteen),
-          border: Border.all(
-              color: isExpand ? AppColors.navyBlue : Colors.white,
-              width: Dimens.two,),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.lightNavyBlue.withOpacity(.8),
-              blurRadius: Dimens.seven,
-            )
-          ],),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(Dimens.sixteen),
+        border: Border.all(
+          color: isExpand ? AppColors.navyBlue : Colors.white,
+          width: Dimens.two,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.lightNavyBlue.withOpacity(.8),
+            blurRadius: Dimens.seven,
+          )
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,16 +54,14 @@ class CustomFAQTile extends StatelessWidget {
               GestureDetector(
                 onTap: onTap,
                 child: SvgPicture.asset(
-                  isExpand
-                      ? Assets.iconsMinusCirlce
-                      : Assets.iconsAddCircle,
+                  isExpand ? Assets.iconsMinusCirlce : Assets.iconsAddCircle,
                   height: Dimens.twenty,
                   width: Dimens.twenty,
                 ),
               ),
             ],
           ),
-          isExpand?Dimens.boxHeight8:Dimens.box0,
+          isExpand ? Dimens.boxHeight8 : Dimens.box0,
           Visibility(
             visible: isExpand,
             child: Text(

@@ -10,4 +10,5 @@ class InitialBindings extends Bindings {
 
     Get.lazyPut<ApiInterfaceController>(() => ApiInterfaceController(),
         fenix: true);
-  }}
+  }
+}

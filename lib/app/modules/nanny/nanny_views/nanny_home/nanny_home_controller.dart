@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_dashboard_model.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 
 import '../../../../data/api/api_helper.dart';
 import '../../../../res/constants/api_urls.dart';

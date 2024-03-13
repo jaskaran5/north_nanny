@@ -348,4 +348,50 @@ class Validator {
       return true;
     }
   }
+
+  /// password change validator in settings.
+
+  bool changeSettingPasswordValidator({
+    required String newPassword,
+    required String confirmPassword,
+    required String oldPassword,
+  }) {
+     if (oldPassword.isEmpty) {
+    error = "Please enter your old Password ";
+    return false;
+    }
+     else if (newPassword.isEmpty) {
+      error = "Please enter your New Password";
+      return false;
+    } else if (newPassword.length > 15) {
+      error = "Password maximum length 15 character";
+      return false;
+    } else if (newPassword.trim().length < 6) {
+      error = "Password must be 8 Characters long";
+      return false;
+    } else if (!RegExp(r'(?=.*?[A-Z])').hasMatch(newPassword.trim())) {
+      error = 'Password must contain at least one uppercase letter';
+      return false;
+    } else if (!RegExp(r'(?=.*?[a-z])').hasMatch(newPassword.trim())) {
+      error = 'Password must contain at least one lowercase letter';
+      return false;
+    } else if (!RegExp(r'(?=.*?\d)').hasMatch(newPassword.trim())) {
+      error = 'Password must contain at least one digit';
+      return false;
+    } else if (!RegExp(r'(?=.*?[!@#\$&*~])').hasMatch(newPassword.trim())) {
+      error = 'Password must contain at least one special character (!@#\$&*~)';
+      return false;
+    } else if (confirmPassword.isEmpty) {
+      error = "Please enter your Confirm Password ";
+      return false;
+    } else if (newPassword != confirmPassword) {
+      error = "Confirm Password is not match";
+      return false;
+    }  else if (oldPassword == newPassword) {
+      error = "Please enter new password which is not match with old password";
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

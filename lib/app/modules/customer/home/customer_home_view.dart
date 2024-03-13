@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/widgets/custom_home_list.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/search_view/search_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -269,13 +268,13 @@ class CustomerHomeView extends StatelessWidget {
                                     const CustomReviewBottomSheet(
                                       totalReviews: 21,
                                       totalReviewsRating: 4.5,
-                                      reviewsList: [
-                                        'Michael Johnson',
-                                        'Giorgio Chiellini',
-                                        'Michael Johnson',
-                                        'Alex Morgan',
-                                        'Giorgio Chiellini'
-                                      ],
+                                      reviewsList: [],
+                                      //   'Michael Johnson',
+                                      //   'Giorgio Chiellini',
+                                      //   'Michael Johnson',
+                                      //   'Alex Morgan',
+                                      //   'Giorgio Chiellini'
+                                      // ],
                                     ),
                                   );
                                 },
@@ -365,13 +364,14 @@ class CustomerHomeView extends StatelessWidget {
                                   const CustomReviewBottomSheet(
                                     totalReviews: 21,
                                     totalReviewsRating: 4.5,
-                                    reviewsList: [
-                                      'Michael Johnson',
-                                      'Giorgio Chiellini',
-                                      'Michael Johnson',
-                                      'Alex Morgan',
-                                      'Giorgio Chiellini'
-                                    ],
+                                    reviewsList: [],
+                                    // [
+                                    //   'Michael Johnson',
+                                    //   'Giorgio Chiellini',
+                                    //   'Michael Johnson',
+                                    //   'Alex Morgan',
+                                    //   'Giorgio Chiellini'
+                                    // ],
                                   ),
                                 );
                               },

@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 
 import '../res/constants/assets.dart';
+import '../res/constants/enums.dart';
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import '../res/theme/styles.dart';
-import '../utils/enums.dart';
 import '../utils/translations/translation_keys.dart';
 import 'app_text.dart';
 

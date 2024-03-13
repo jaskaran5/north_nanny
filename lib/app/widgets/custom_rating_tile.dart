@@ -4,23 +4,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
 class CustomRatingTile extends StatelessWidget {
-  const CustomRatingTile(
-      {super.key,
-      this.reviewDate,
-      this.userImage,
-      this.userName,
-      this.ratingDescription,
-      this.totalRating,
-      this.personRating});
+  const CustomRatingTile({
+    super.key,
+    this.reviewDate,
+    this.userImage,
+    this.userName,
+    this.ratingDescription,
+    this.totalRating,
+  });
   final String? reviewDate;
   final String? userImage;
   final String? userName;
   final String? ratingDescription;
   final double? totalRating;
-  final double? personRating;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -36,10 +37,16 @@ class CustomRatingTile extends StatelessWidget {
                   SizedBox(
                     height: Dimens.forty,
                     width: Dimens.forty,
-                    child: CircleAvatar(
-                      radius: Dimens.hundred,
-                      backgroundImage: AssetImage(userImage ?? ""),
-                    ),
+                    child: userImage?.isNotEmpty == true
+                        ? CustomCacheNetworkImage(
+                            img: userImage.toString(),
+                            size: Dimens.forty,
+                            imageRadius: Dimens.hundred)
+                        : CircleAvatar(
+                            radius: Dimens.hundred,
+                            backgroundImage:
+                                const AssetImage(Assets.imagesUserAvatar),
+                          ),
                   ),
                   Dimens.boxWidth10,
                   Column(
@@ -74,7 +81,7 @@ class CustomRatingTile extends StatelessWidget {
                           ),
                           Dimens.boxWidth2,
                           AppText(
-                            text: personRating.toString(),
+                            text: totalRating.toString(),
                             style: AppStyles.ubBlack12W500,
                             maxLines: 1,
                             textAlign: TextAlign.start,
@@ -86,7 +93,8 @@ class CustomRatingTile extends StatelessWidget {
                 ],
               ),
               AppText(
-                text: reviewDate,
+                text: Utility.convertStringToDateFormatDDMMYY(
+                    reviewDate.toString()),
                 style: AppStyles.ubGrey12W400,
                 maxLines: 1,
                 textAlign: TextAlign.start,
@@ -94,7 +102,8 @@ class CustomRatingTile extends StatelessWidget {
             ],
           ),
           Dimens.boxHeight8,
-          Flexible(
+          SizedBox(
+            width: Dimens.twoHundredEightyOne,
             child: AppText(
               text: ratingDescription,
               style: AppStyles.ubGrey12W500,

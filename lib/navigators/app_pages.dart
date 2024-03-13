@@ -49,6 +49,8 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edi
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_services_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/pricing/pricing_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/services/services_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.dart';
 
@@ -130,10 +132,10 @@ class AppPages {
       binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
-    GetPage<ChnagePasswordView>(
+    GetPage<ChangePasswordView>(
       name: Routes.changePasswordView,
       transitionDuration: transitionDuration,
-      page: ChnagePasswordView.new,
+      page: ChangePasswordView.new,
       binding: ForgotPasswordBinding(),
       transition: Transition.rightToLeft,
     ),
@@ -404,6 +406,15 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: GetNannyProfileView.new,
       binding: GetNannyProfileBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ NANNY PROFILE View  -------  */
+    GetPage<NannyProfileView>(
+      name: Routes.nannyProfileView,
+      transitionDuration: transitionDuration,
+      page: NannyProfileView.new,
+      binding: NannyProfileBinding(),
       transition: Transition.leftToRight,
     ),
   ];

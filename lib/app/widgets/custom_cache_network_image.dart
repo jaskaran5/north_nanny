@@ -14,7 +14,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
     super.key,
     required this.img,
     required this.size,
-      required this.imageRadius,
+    required this.imageRadius,
   });
 
   @override
@@ -36,7 +36,6 @@ class CustomCacheNetworkImage extends StatelessWidget {
               height: size,
               width: size,
               decoration: BoxDecoration(
-
                 borderRadius: BorderRadius.circular(imageRadius),
                 image: DecorationImage(
                   image: imageProvider,

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
@@ -12,13 +11,10 @@ import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_resp
 import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_dynamic_marker.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
@@ -246,7 +242,7 @@ class CustomerHomeController extends GetxController {
 
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
-          print("response success");
+          log("response success");
           homeNannyList.value = res.data ?? [];
           update();
 
@@ -339,7 +335,7 @@ class CustomerHomeController extends GetxController {
 
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
-          print("response success");
+          log("response success");
 
           getDashboardApi();
 
@@ -386,7 +382,7 @@ class CustomerHomeController extends GetxController {
 
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
-          print("response success");
+          log("response success");
           homeNannyList.value = res.data ?? [];
 
           update();
@@ -423,7 +419,7 @@ class CustomerHomeController extends GetxController {
 
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
-          print("response success");
+          log("response success");
           homeNannyList.value = res.data ?? [];
           update();
         }

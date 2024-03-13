@@ -6,7 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 
 import '../../../../data/api/api_helper.dart';
 import '../../../../models/nanny_profile_model.dart';

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -8,9 +9,9 @@ import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/comm
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
@@ -421,6 +422,69 @@ class SettingController extends GetxController {
 
     if (check) {
       getCustomerProfileApi();
+    }
+  }
+
+  /// ---------------------------------  change password -----------------------------------------
+
+  /// ------------------------ change password controllers -------------------------
+  TextEditingController oldPasswordTextEditingController =
+      TextEditingController();
+  TextEditingController newPassWordTextEditingController =
+      TextEditingController();
+  TextEditingController confirmTextEditingController = TextEditingController();
+
+  bool isShowOldPassword = false;
+  bool isShowNewPassword = false;
+  bool isShowConfirmPassword = false;
+
+  changePasswordValidator({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) {
+    var validate = Validator.instance.changeSettingPasswordValidator(
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+        oldPassword: oldPassword);
+    if (validate) {
+      changePassword(oldPassword: oldPassword, newPassword: newPassword);
+    } else {
+      toast(msg: Validator.instance.error, isError: true);
+    }
+    update();
+  }
+
+  /// change password api
+  changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        "oldPassword": oldPassword,
+        "newPassword": newPassword,
+      };
+
+      _apiHelper.postApi(ApiUrls.changePassword, jsonEncode(body)).futureValue(
+          (value) {
+        printInfo(info: "Change Password api  $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          oldPasswordTextEditingController.clear();
+          newPassWordTextEditingController.clear();
+          confirmTextEditingController.clear();
+          redirectToPasswordChangedScreen();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Change Password  post API ISSUE $s");
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../res/constants/assets.dart';
-import '../../../utils/enums.dart';
+import '../../../res/constants/enums.dart';
 
 class BookingDetailController extends GetxController {
   bool isExpandChildren = false;
@@ -44,5 +44,5 @@ class BookingDetailController extends GetxController {
   ];
 
   /// check status
-  late BookingDetailStatus bookingDetailStatus=BookingDetailStatus.present ;
+  late BookingDetailStatus bookingDetailStatus = BookingDetailStatus.present;
 }
