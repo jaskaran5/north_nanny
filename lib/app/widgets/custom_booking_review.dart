@@ -46,7 +46,6 @@ class CustomBookingReview extends StatelessWidget {
                     ratingDescription:
                         'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
                     totalRating: 4.5,
-                    personRating: 4.5,
                   ),
                 ),
               ),

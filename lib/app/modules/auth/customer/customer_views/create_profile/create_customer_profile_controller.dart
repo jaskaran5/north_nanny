@@ -12,7 +12,6 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';

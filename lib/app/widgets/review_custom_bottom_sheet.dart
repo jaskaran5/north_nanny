@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -9,7 +10,6 @@ import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_rating_tile.dart';
-
 
 class CustomReviewBottomSheet extends StatelessWidget {
   const CustomReviewBottomSheet(
@@ -19,7 +19,7 @@ class CustomReviewBottomSheet extends StatelessWidget {
       required this.reviewsList});
   final int totalReviews;
   final double totalReviewsRating;
-  final List<dynamic> reviewsList;
+  final List<RatingList> reviewsList;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -62,9 +62,10 @@ class CustomReviewBottomSheet extends StatelessWidget {
             if (reviewsList.isEmpty) ...[
               Dimens.boxHeight20,
               Center(
-                  child: AppText(
-                text: TranslationKeys.noResultFound.tr,
-                style: AppStyles.ubNavyBlue30W600,
+                  child: Image.asset(
+                Assets.imagesNoDataPng,
+                height: Dimens.twoHundredFifty,
+                width: Dimens.twoHundredFifty,
               )),
             ],
             if (reviewsList.isNotEmpty) ...[
@@ -124,13 +125,11 @@ class CustomReviewBottomSheet extends StatelessWidget {
                     (index) => Padding(
                       padding: Dimens.edgeInsets16,
                       child: CustomRatingTile(
-                        reviewDate: reviewsList[index].datetime?.toLocal() ?? '',
-                        userImage:  reviewsList[index].image,
+                        reviewDate: reviewsList[index].datetime.toString(),
+                        userImage: reviewsList[index].image,
                         userName: reviewsList[index].name,
-                        ratingDescription:
-                            'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
-                        totalRating: totalReviewsRating,
-                        personRating: 4.5,
+                        ratingDescription: reviewsList[index].review,
+                        totalRating: reviewsList[index].rating,
                       ),
                     ),
                   ),

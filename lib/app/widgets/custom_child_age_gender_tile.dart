@@ -27,7 +27,7 @@ class CustomChildAgeGenderTile extends StatelessWidget {
           ),
           Dimens.boxWidth4,
           AppText(
-            text: gender ,
+            text: gender,
             style: AppStyles.ub5E5F60Grey12W500,
           ),
         ],

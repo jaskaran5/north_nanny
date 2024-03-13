@@ -16,15 +16,14 @@ class InviteAFriendView extends StatelessWidget {
   const InviteAFriendView({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      GetBuilder<SettingController>(
-        init: SettingController(),
+  Widget build(BuildContext context) => GetBuilder<SettingController>(
+      init: SettingController(),
 
       //     initState: (_) {
       //   Get.find<SettingController>().getAndUpdateLoginType();
       // },
 
-          builder: (controller) {
+      builder: (controller) {
         return Scaffold(
           appBar: const CustomAppbarWidget(),
           floatingActionButtonLocation:
@@ -96,17 +95,16 @@ class InviteAFriendView extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
                 Dimens.boxHeight16,
-
                 AppText(
-                  text:(controller.loginType.value == StringConstants.customer)? TranslationKeys.sendUniqueReferralLinkCustomer.tr:'Send this unique referral link out to your friends! For each friend that joins the app, you will get a \$5 reward.',
+                  text: (controller.loginType.value == StringConstants.customer)
+                      ? TranslationKeys.sendUniqueReferralLinkCustomer.tr
+                      : 'Send this unique referral link out to your friends! For each friend that joins the app, you will get a \$5 reward.',
                   style: AppStyles.ubGrey16W400,
                   textAlign: TextAlign.start,
                 ),
                 Dimens.boxHeight24,
                 AppText(
-                  text:
-
-                  TranslationKeys.whatInviteFriendNeedToDo.tr,
+                  text: TranslationKeys.whatInviteFriendNeedToDo.tr,
                   style: AppStyles.ubNavyBlue18W600,
                   maxLines: 1,
                   textAlign: TextAlign.start,

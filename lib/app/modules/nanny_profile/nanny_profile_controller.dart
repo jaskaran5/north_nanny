@@ -7,7 +7,7 @@ import 'package:northshore_nanny_flutter/app/models/availability_list_model.dart
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 

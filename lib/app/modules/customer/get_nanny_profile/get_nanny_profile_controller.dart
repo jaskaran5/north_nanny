@@ -12,9 +12,9 @@ import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_bin
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
-import 'package:northshore_nanny_flutter/app/utils/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 

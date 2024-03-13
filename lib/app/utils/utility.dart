@@ -460,6 +460,10 @@ class Utility {
   static String convertDateToMMMMYYYEEE(DateTime date) {
     return DateFormat('MMMM yyyy, EEEE').format(date);
   }
+  /// used to convert date time to this format '[01/03/2024']
+  static String convertStringToDateFormatDDMMYY(String date) {
+    return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
+  }
 
   /// used to convert date time to Time of day
   static TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) {

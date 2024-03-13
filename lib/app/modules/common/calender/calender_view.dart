@@ -6,7 +6,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/booking_details/book
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
-import 'package:northshore_nanny_flutter/app/utils/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_date_format_tile_view.dart';
@@ -15,6 +14,7 @@ import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../res/constants/assets.dart';
+import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
 import '../../../widgets/app_text.dart';
@@ -231,13 +231,14 @@ class CalenderView extends StatelessWidget {
                                                   const CustomReviewBottomSheet(
                                                     totalReviews: 21,
                                                     totalReviewsRating: 4.5,
-                                                    reviewsList: [
-                                                      'Michael Johnson',
-                                                      'Giorgio Chiellini',
-                                                      'Michael Johnson',
-                                                      'Alex Morgan',
-                                                      'Giorgio Chiellini'
-                                                    ],
+                                                    reviewsList: [],
+                                                    // [
+                                                    //   'Michael Johnson',
+                                                    //   'Giorgio Chiellini',
+                                                    //   'Michael Johnson',
+                                                    //   'Alex Morgan',
+                                                    //   'Giorgio Chiellini'
+                                                    // ],
                                                   ),
                                                 );
                                               },

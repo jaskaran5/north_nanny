@@ -3,7 +3,6 @@ library time_picker_spinner;
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-
 class ItemScrollPhysics extends ScrollPhysics {
   /// Creates physics for snapping to item.
   /// Based on PageScrollPhysics
@@ -239,7 +238,6 @@ class TimePickerSpinnerState extends State<TimePickerSpinner> {
           () => isHourScrolling = false,
         ),
       ),
-
       spacer(),
       SizedBox(
         width: _getItemWidth(),

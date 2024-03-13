@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 
 class TextOnImage extends StatelessWidget {
   const TextOnImage({

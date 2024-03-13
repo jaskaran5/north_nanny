@@ -58,7 +58,7 @@ class CustomBookingChildrenTile extends StatelessWidget {
                       ExpansionPanel(
                         headerBuilder: (context, isExpanded) {
                           return Padding(
-                            padding: Dimens.edgeInsets16,
+                            padding: Dimens.edgeInsets10,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,

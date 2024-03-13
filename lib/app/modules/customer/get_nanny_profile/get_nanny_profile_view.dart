@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -19,13 +18,11 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_about_section.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_home_svg_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_shimmer_skeleton.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/app/widgets/houry_rate_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class GetNannyProfileView extends StatelessWidget {

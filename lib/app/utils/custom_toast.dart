@@ -42,7 +42,9 @@ void toast({required String msg, bool isError = false}) {
                   ),
                   child: Icon(
                     isError ? Icons.error : Icons.done_all,
-                    color: isError ? AppColors.fC3030RedColor : AppColors.greenColor05B016,
+                    color: isError
+                        ? AppColors.fC3030RedColor
+                        : AppColors.greenColor05B016,
                   ),
                 ),
                 Dimens.boxWidth10,

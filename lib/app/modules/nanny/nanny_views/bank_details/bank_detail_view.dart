@@ -154,7 +154,6 @@ class BankDetailsView extends StatelessWidget {
                   textColor: AppColors.navyBlue,
                   onTap: () {
                     controller.postBankDetails(isComeFromSkip: true);
-
                   },
                 ),
                 Dimens.boxHeight32,

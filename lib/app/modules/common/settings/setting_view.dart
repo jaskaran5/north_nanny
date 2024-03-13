@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/nanny_update_bank_details_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -58,12 +57,7 @@ class SettingView extends StatelessWidget {
                                   .toString())
                           : CustomSettingProfileTile(
                               onTap: () {
-                                Get.to(
-                                  () => NannyProfileView(
-                                    isComeFromSetting: true,
-                                    appBarTitle: TranslationKeys.myProfile.tr,
-                                  ),
-                                );
+                                RouteManagement.goToNannyProfileView();
                               },
                               title: controller.nannyName.value,
                               subtitle: controller.nannyEmail.value,

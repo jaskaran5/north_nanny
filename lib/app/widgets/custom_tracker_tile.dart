@@ -63,7 +63,7 @@ class CustomTrackerTile extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
-                     mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         AppText(
                           text: name,
@@ -71,7 +71,7 @@ class CustomTrackerTile extends StatelessWidget {
                           maxLines: 1,
                           textAlign: TextAlign.start,
                         ),
-                       Dimens.boxWidth55,
+                        Dimens.boxWidth55,
                         GestureDetector(
                           onTap: onTapSvg,
                           child: SvgPicture.asset(

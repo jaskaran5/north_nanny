@@ -84,7 +84,6 @@ class FCMService {
     FirebaseMessaging.onMessage.listen((message) {
       log(message.notification!.body.toString());
       log(message.notification!.title.toString());
-      final data = message.data;
       _handleMessageClick(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {

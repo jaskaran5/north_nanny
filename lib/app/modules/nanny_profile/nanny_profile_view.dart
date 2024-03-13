@@ -23,37 +23,19 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/custom_text_field.dart';
-import '../../widgets/houry_rate_view.dart';
 
 class NannyProfileView extends StatelessWidget {
-  const NannyProfileView(
-      {super.key, required this.isComeFromSetting, required this.appBarTitle});
-
-  final bool isComeFromSetting;
-  final String appBarTitle;
+  const NannyProfileView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => GetBuilder(
         init: NannyProfileController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
-            title: appBarTitle,
+            title: TranslationKeys.myProfile.tr,
             centerTitle: true,
-            // actions: [
-            //   if (!isComeFromSetting)
-            //     GestureDetector(
-            //       onTap: () {
-            //         controller.isFavorite = !controller.isFavorite;
-            //         controller.update();
-            //       },
-            //       child: Padding(
-            //         padding: Dimens.edgeInsetsL16R16,
-            //         child: SvgPicture.asset(controller.isFavorite
-            //             ? Assets.iconsHeartFilled
-            //             : Assets.iconsHeartOutline),
-            //       ),
-            //     ),
-            // ],
           ),
           backgroundColor: AppColors.profileBackgroundColor,
           body: SingleChildScrollView(
@@ -144,166 +126,154 @@ class NannyProfileView extends StatelessWidget {
                       aboutNanny: controller.profileData.data?.about ?? '',
                     ),
                     Dimens.boxHeight20,
-                    if (!isComeFromSetting) ...[
-                      Padding(
-                        padding: Dimens.edgeInsetsL16R16,
-                        child: HourlyRateView(
-                          showShadow: false,
-                          borderRadius: Dimens.ten,
+                    Container(
+                      padding: Dimens.edgeInsets16,
+                      margin: Dimens.edgeInsetsL16R16,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(
+                          Dimens.eight,
                         ),
-                      )
-                    ],
-                    if (isComeFromSetting) ...[
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        margin: Dimens.edgeInsetsL16R16,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.lightNavyBlue.withOpacity(.8),
+                            blurRadius: Dimens.five,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppText(
+                            text: TranslationKeys.education.tr,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            style: AppStyles.ubBlack14W700,
+                          ),
+                          Dimens.boxHeight14,
+                          CustomNannySvgTile(
+                            assetName: Assets.iconsHouse,
+                            heading: TranslationKeys.highSchool.tr,
+                            aboutHeading: controller
+                                    .profileData.data?.highSchool
+                                    .toString() ??
+                                '',
+                          ),
+                          Dimens.boxHeight14,
+                          CustomNannySvgTile(
+                            assetName: Assets.iconsBuilding,
+                            heading: TranslationKeys.college.tr,
+                            aboutHeading: controller.profileData.data?.college
+                                    .toString() ??
+                                '',
+                          ),
+                          Dimens.boxHeight14,
+                        ],
+                      ),
+                    ),
+                    Dimens.boxHeight20,
+                    Container(
+                      padding: Dimens.edgeInsets16,
+                      width: Get.width,
+                      margin: Dimens.edgeInsetsL16R16,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(
+                          Dimens.eight,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText(
-                              text: TranslationKeys.education.tr,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              style: AppStyles.ubBlack14W700,
-                            ),
-                            Dimens.boxHeight14,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.lightNavyBlue.withOpacity(.8),
+                            blurRadius: Dimens.five,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomNannySvgTile(
+                            assetName: Assets.iconsLocationDot,
+                            heading: TranslationKeys.location.tr,
+                            aboutHeading:
+                                controller.profileData.data?.location ?? '',
+                            aboutHeadingWidth: Dimens.twoHundredFifty,
+                          ),
+                          Dimens.boxHeight14,
+                          CustomNannySvgTile(
+                            assetName: Assets.iconsPhone,
+                            heading: TranslationKeys.phoneNumber.tr,
+                            aboutHeading:
+                                controller.profileData.data?.mobileNo ?? '',
+                          ),
+                          Dimens.boxHeight14,
+                          if (controller.profileData.data?.isDrivingLicence !=
+                              null) ...[
                             CustomNannySvgTile(
-                              assetName: Assets.iconsHouse,
-                              heading: TranslationKeys.highSchool.tr,
+                              assetName: Assets.iconsPersonalcard,
+                              heading: TranslationKeys.driversLicense.tr,
                               aboutHeading: controller
-                                      .profileData.data?.highSchool
-                                      .toString() ??
-                                  '',
-                            ),
-                            Dimens.boxHeight14,
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsBuilding,
-                              heading: TranslationKeys.college.tr,
-                              aboutHeading: controller.profileData.data?.college
-                                      .toString() ??
-                                  '',
+                                          .profileData.data?.isDrivingLicence ==
+                                      true
+                                  ? TranslationKeys.yes.capitalizeFirst
+                                      .toString()
+                                  : TranslationKeys.no.capitalizeFirst
+                                      .toString(),
                             ),
                             Dimens.boxHeight14,
                           ],
-                        ),
+                        ],
                       ),
-                      Dimens.boxHeight20,
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        width: Get.width,
-                        margin: Dimens.edgeInsetsL16R16,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
+                    ),
+                    Dimens.boxHeight20,
+                    Container(
+                      padding: Dimens.edgeInsets16,
+                      margin: Dimens.edgeInsetsL16R16,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(
+                          Dimens.eight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.lightNavyBlue.withOpacity(.8),
+                            blurRadius: Dimens.five,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsLocationDot,
-                              heading: TranslationKeys.location.tr,
-                              aboutHeading:
-                                  controller.profileData.data?.location ?? '',
-                              aboutHeadingWidth: Dimens.twoHundredFifty,
-                            ),
-                            Dimens.boxHeight14,
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsPhone,
-                              heading: TranslationKeys.phoneNumber.tr,
-                              aboutHeading:
-                                  controller.profileData.data?.mobileNo ?? '',
-                            ),
-                            Dimens.boxHeight14,
-                            if (controller.profileData.data?.isDrivingLicence !=
-                                null) ...[
-                              CustomNannySvgTile(
-                                assetName: Assets.iconsPersonalcard,
-                                heading: TranslationKeys.driversLicense.tr,
-                                aboutHeading: controller.profileData.data
-                                            ?.isDrivingLicence ==
-                                        true
-                                    ? TranslationKeys.yes.capitalizeFirst
-                                        .toString()
-                                    : TranslationKeys.no.capitalizeFirst
-                                        .toString(),
-                              ),
-                              Dimens.boxHeight14,
-                            ],
-                          ],
-                        ),
+                        ],
                       ),
-                      Dimens.boxHeight20,
-                      Container(
-                        padding: Dimens.edgeInsets16,
-                        margin: Dimens.edgeInsetsL16R16,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomNannySvgTile(
+                            assetName: Assets.iconsDollarCircle,
+                            heading: TranslationKeys.referralEarned.tr,
+                            aboutHeading: '\$5.00',
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lightNavyBlue.withOpacity(.8),
-                              blurRadius: Dimens.five,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomNannySvgTile(
-                              assetName: Assets.iconsDollarCircle,
-                              heading: TranslationKeys.referralEarned.tr,
-                              aboutHeading: '\$5.00',
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
-                      Dimens.boxHeight20,
-                      CustomButton(
-                        backGroundColor: AppColors.navyBlue,
-                        title: TranslationKeys.editProfile.tr,
-                        onTap: () {
-                          RouteManagement.goToEditNannyProfileView();
-                        },
-                      ),
-                    ],
+                    ),
+                    Dimens.boxHeight20,
+                    CustomButton(
+                      backGroundColor: AppColors.navyBlue,
+                      title: TranslationKeys.editProfile.tr,
+                      onTap: () {
+                        RouteManagement.goToEditNannyProfileView();
+                      },
+                    ),
                   ],
                   if (controller.selectedIndex == 1) ...[
                     servicesView(
                       servicesList: controller.profileData.data?.services,
                     ),
-                    if (isComeFromSetting)
-                      CustomButton(
-                        backGroundColor: AppColors.navyBlue,
-                        title: TranslationKeys.editServices.tr,
-                        onTap: () {
-                          RouteManagement.goToEditNannyServicesView();
-                        },
-                      ),
+                    CustomButton(
+                      backGroundColor: AppColors.navyBlue,
+                      title: TranslationKeys.editServices.tr,
+                      onTap: () {
+                        RouteManagement.goToEditNannyServicesView();
+                      },
+                    ),
                   ],
                   if (controller.selectedIndex == 2) ...[
                     availabilityView(
