@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/models/availability_by_day_model.dart';
 import 'package:northshore_nanny_flutter/app/models/availability_list_model.dart';
+import 'package:northshore_nanny_flutter/app/models/child_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/schedule_nanny/schedule_nanny_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
@@ -30,16 +33,51 @@ class GetNannyProfileController extends GetxController {
 
   int selectedIndex = 0;
 
+  RxBool isContained = false.obs;
+
   GetNannyData? getNannyData;
 
+  AvailabilityByDayModel? singleDay;
+
+  RxList<ChildData> childList = <ChildData>[].obs;
+  RxList<String> selectedServices = <String>[].obs;
+
   List<String>? priceList = [
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
-    '\$ 10',
+    '\$10',
+    '\$10',
+    '\$10',
+    '\$10',
+    '\$10',
     '',
   ];
+
+  updateIsContained({required bool val}) {
+    isContained.value = val;
+    update();
+  }
+
+  //Update selected services
+  updateSelectedServices({value}) {
+    if (selectedServices.contains(value)) {
+      selectedServices.remove(value);
+    } else {
+      selectedServices.add(value);
+    }
+    update();
+
+    log("selected services are:-->> $selectedServices");
+  }
+
+  /// used to check element have event or not
+  bool isElementEqualToData(List<AvilabilityList> list, int day, int month) {
+    for (var value in list) {
+      if (value.openingTime?.day == day && value.openingTime?.month == month) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   bool isFavorite = false;
 
   List<String> profileTabList = [
@@ -50,6 +88,29 @@ class GetNannyProfileController extends GetxController {
 
   /// used to set the referral
   bool? isReferral = false;
+
+  /// check selected date
+
+  bool isOpeningTimeContained(
+      DateTime dateToCheck, List<AvilabilityList> availabilityList) {
+    bool isContained = false;
+    for (var selectedData in availabilityList) {
+      // Compare the dates
+      if ((DateTime(dateToCheck.day, dateToCheck.month, dateToCheck.year))
+          .isAtSameMomentAs((DateTime(
+              selectedData.openingTime!.day,
+              selectedData.openingTime!.month,
+              selectedData.openingTime!.year)))) {
+        print("contain--> $dateToCheck,${selectedData.openingTime!}");
+        isContained = true;
+        break;
+      } else {
+        isContained = false;
+        print("not contain--> $dateToCheck,${selectedData.openingTime!}");
+      }
+    }
+    return isContained;
+  }
 
   /// get api for nanny profile model
   Future<void> getProfile() async {
@@ -92,6 +153,13 @@ class GetNannyProfileController extends GetxController {
 
   /// used to get value on basis of single selection.
   DateTime? selectedDate;
+  DateTime focusedDay = DateTime.now();
+
+  updateSelectedDate({required DateTime date, required DateTime focusDate}) {
+    selectedDate = date;
+    focusedDay = focusDate;
+    update();
+  }
 
   /// start range day.
   TimeOfDay? startTime;
@@ -146,7 +214,7 @@ class GetNannyProfileController extends GetxController {
   }
 
   /// post api for get availabilities list
-  getAvailabilityList() async {
+  getAvailableDataByDate() async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
@@ -156,11 +224,11 @@ class GetNannyProfileController extends GetxController {
       };
       _apiHelper
           .postApi(
-        ApiUrls.nannyBookingList,
+        ApiUrls.userBookingDeatil,
         body,
       )
           .futureValue((value) {
-        printInfo(info: "Get Nanny Availability List response  $value");
+        printInfo(info: "Get Data from date $value");
         var response = AvailabilityListModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           availabilityListModel = response;
@@ -247,5 +315,95 @@ class GetNannyProfileController extends GetxController {
   void onReady() {
     getNannyDetails();
     super.onReady();
+  }
+
+  /// REDIRECT TO NANNY SCHEDULE VIEW
+
+  redirectToNannyScheduleView() async {
+    Get.to(() => const ScheduleNannyView());
+    await getChildListApi();
+  }
+
+//** GET CHILD LIST API */
+  getChildListApi() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      _apiHelper
+          .getPosts(
+        ApiUrls.childList,
+      )
+          .futureValue((value) {
+        printInfo(info: "CHILD LIST $value");
+        var res = ChildListResponseModel.fromJson(value);
+
+        log("res--${res.response}");
+
+        if (res.response == AppConstants.apiResponseSuccess) {
+          childList.clear();
+          log("child list length:-${res.data?.length}");
+          log("child list data:-${res.data}");
+          childList.value = res.data ?? [];
+
+          if (res.data!.isEmpty) {
+            // toast(msg: "Child List Empty", isError: false);
+          }
+
+          update();
+
+          log("child list data is :-->> ${childList.value.toString()}");
+        } else {
+          toast(msg: res.message!, isError: true);
+        }
+      }, retryFunction: getChildListApi);
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "add child post  API ISSUE $s");
+    }
+  }
+
+  getDataByDate() {}
+
+  /// --------->>>>>> --------------------->>>>>>>>>>>CONFIRM BOOKING
+
+  confirmBookingApi() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      _apiHelper
+          .getPosts(
+        ApiUrls.bookAppointment,
+      )
+          .futureValue((value) {
+        printInfo(info: "CHILD LIST $value");
+        // var res = ChildListResponseModel.fromJson(value);
+
+        // log("res--${res.response}");
+
+        // if (res.response == AppConstants.apiResponseSuccess) {
+        //   childList.clear();
+        //   log("child list length:-${res.data?.length}");
+        //   log("child list data:-${res.data}");
+        //   childList.value = res.data ?? [];
+
+        //   if (res.data!.isEmpty) {
+        //     // toast(msg: "Child List Empty", isError: false);-*
+        //   }
+
+        //   update();
+
+        //   log("child list data is :-->> ${childList.value.toString()}");
+        // } else {
+        //   toast(msg: res.message!, isError: true);
+        // }
+      }, retryFunction: getChildListApi);
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "add child post  API ISSUE $s");
+    }
   }
 }

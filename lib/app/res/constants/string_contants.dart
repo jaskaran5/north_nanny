@@ -25,6 +25,8 @@ class StringConstants {
 
   static const String nanny = 'nanny';
   static const String customer = 'customer';
+  static const String userId = 'userId';
+
   static const String deviceType = 'deviceType';
   static const String deviceToken = 'deviceToken';
   static const String email = 'email';

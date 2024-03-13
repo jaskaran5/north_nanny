@@ -140,6 +140,8 @@ class LogInController extends GetxController {
           /******* NANNY ----------->>>>>>>> */
           var res = LoginResponseDataModel.fromJson(value);
           if (res.response == AppConstants.apiResponseSuccess) {
+            Storage.saveValue(StringConstants.userId, res.data!.user!.id);
+
             Storage.saveValue(StringConstants.token, res.data!.token);
             if (res.data?.user?.isProfileCreated == false) {
               RouteManagement.goToCreateNannyProfile();
@@ -169,6 +171,8 @@ class LogInController extends GetxController {
           log("login response : $res");
 
           if (res.response == AppConstants.apiResponseSuccess) {
+            Storage.saveValue(StringConstants.userId, res.data!.user!.id);
+
             Storage.saveValue(StringConstants.token, res.data?.token);
             if (res.data?.user?.isProfileCreated == false) {
               /** PROFILE is not created */

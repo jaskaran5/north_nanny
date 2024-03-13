@@ -1,13 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_multiselection_dropdown.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../navigators/routes_management.dart';
@@ -22,7 +25,7 @@ class ScheduleNannyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GetBuilder(
-      init: NannyProfileController(),
+      init: GetNannyProfileController(),
       builder: (controller) {
         return Scaffold(
           appBar: CustomAppbarWidget(
@@ -61,6 +64,7 @@ class ScheduleNannyView extends StatelessWidget {
                               weekendStyle: AppStyles.ubHintColor13W500,
                             ),
                             calendarStyle: CalendarStyle(
+                              isTodayHighlighted: false,
                               defaultTextStyle: AppStyles.ubBlack15W600,
                               weekendTextStyle: AppStyles.ubBlack15W600,
                               outsideTextStyle: AppStyles.ubHintColor15W500,
@@ -68,13 +72,20 @@ class ScheduleNannyView extends StatelessWidget {
                                 color: AppColors.navyBlue,
                                 shape: BoxShape.circle,
                               ),
-                              todayTextStyle: AppStyles.ubWhite15700,
-                              selectedTextStyle: AppStyles.ubWhite15700,
                               selectedDecoration: const BoxDecoration(
                                 color: AppColors.navyBlue,
                                 shape: BoxShape.circle,
                               ),
                               markersMaxCount: 1,
+                              markerSize: Dimens.four,
+                              markersAutoAligned: true,
+                              markerMargin: Dimens.edgeInsets4,
+                              markersAlignment: Alignment.center,
+                              todayTextStyle: AppStyles.ubWhite15700,
+                              selectedTextStyle: AppStyles.ubWhite15700,
+                              markerDecoration: const BoxDecoration(
+                                  color: AppColors.navyBlue,
+                                  shape: BoxShape.circle),
                             ),
                             firstDay: DateTime.now(),
                             lastDay: DateTime.utc(
@@ -89,8 +100,65 @@ class ScheduleNannyView extends StatelessWidget {
                               rightChevronIcon:
                                   SvgPicture.asset(Assets.iconsRight),
                             ),
-                            onDaySelected: (selectedDay, focusedDay) {},
-                            focusedDay: DateTime.now(),
+                            onDaySelected: (selectedDay, focusedDay) {
+                              log("selected day:--$selectedDay");
+                              log("focusedDay day:--$focusedDay");
+
+                              if (selectedDay.day == DateTime.now().day) {
+                                log("both date same");
+                                controller.updateSelectedDate(
+                                    date: selectedDay, focusDate: focusedDay);
+                                log("both date different :${controller.selectedDate}");
+
+                                return;
+                              } else {
+                                controller.updateSelectedDate(
+                                    date: selectedDay, focusDate: focusedDay);
+                                log("both date different :${controller.selectedDate}");
+                              }
+
+                              // Update the selected date
+                              controller.updateSelectedDate(
+                                  date: selectedDay, focusDate: focusedDay);
+
+                              /** CHECK SELECTED DATE PRESENT IN AVAILABILITY */
+                              bool isContained =
+                                  controller.isOpeningTimeContained(
+                                      selectedDay,
+                                      controller
+                                              .getNannyData?.avilabilityList ??
+                                          []);
+
+                              print(
+                                  "is contained $selectedDay-----$isContained");
+                              controller.updateIsContained(val: isContained);
+                              controller.updateSelectedDate(
+                                  date: selectedDay, focusDate: focusedDay);
+                            },
+                            focusedDay: controller.selectedDate!,
+
+                            selectedDayPredicate: (day) =>
+                                controller.selectedDate == day,
+
+                            eventLoader: (day) {
+                              return controller.isElementEqualToData(
+                                      controller
+                                              .getNannyData!.avilabilityList ??
+                                          [],
+                                      day.day,
+                                      day.month)
+                                  ? [
+                                      '.',
+                                    ]
+                                  : [];
+                            },
+                            // availableGestures: AvailableGestures.none,
+                            onPageChanged: (focusedDay) {
+                              focusedDay = controller.selectedDate!;
+                              log("on chnage page fpcus day:--> $focusedDay");
+
+                              /// used to  call api when calender month change.
+                            },
                           ),
                         ),
                         Divider(
@@ -103,7 +171,10 @@ class ScheduleNannyView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(
-                                text: '03',
+                                text: Utility.getDay(
+                                    dateTime: controller.selectedDate),
+                                // text: DateFormat('dd')
+                                //     .format(controller.selectedDate!),
                                 style: AppStyles.ubBlack30W600,
                                 maxLines: 1,
                                 textAlign: TextAlign.start,
@@ -114,14 +185,20 @@ class ScheduleNannyView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AppText(
-                                    text: 'Februaery 2024 Friday',
+                                    text: Utility.convertDateToMMMMYYYEEE(
+                                        controller.selectedDate ??
+                                            DateTime.now()),
+                                    // "${DateFormat('MMMM').format(controller.selectedDate ?? DateTime.now())} ${controller.selectedDate?.year}, ${DateFormat('EEEE').format(
+                                    // controller.selectedDate ?? DateTime.now(),
+                                    // )}",
+                                    // text: 'Februaery 2024 Friday',
                                     style: AppStyles.ubGrey12W400,
                                     maxLines: 1,
                                     textAlign: TextAlign.start,
                                   ),
                                   Dimens.boxHeight8,
                                   AppText(
-                                    text: '10:00 AM to 05:00 PM',
+                                    text: "Utility.formatTimeTo12h)",
                                     style: AppStyles.ubBlack14W700,
                                     maxLines: 1,
                                     textAlign: TextAlign.start,
@@ -162,64 +239,96 @@ class ScheduleNannyView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: Dimens.fiftyThree,
-                        width: Dimens.oneHundredFifty,
-                        padding: Dimens.edgeInsets8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          ),
-                          border: Border.all(
-                            color: AppColors.lightNavyBlue,
-                            width: Dimens.one,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.iconsClock,
-                              height: Dimens.twenty,
-                              width: Dimens.twenty,
+                      GestureDetector(
+                        onTap: () async {
+                          controller.startTime = await showTimePicker(
+                            context: Get.context!,
+                            initialTime: Utility.convertDateTimeToTimeOfDay(
+                                controller.singleDay?.data?.openingTime ??
+                                    DateTime.now()),
+                          );
+                          controller.update();
+                          log('Edit startTime:${controller.startTime}');
+                        },
+                        child: Container(
+                          height: Dimens.fiftyThree,
+                          width: Dimens.oneHundredFifty,
+                          padding: Dimens.edgeInsets8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
                             ),
-                            Dimens.boxWidth10,
-                            AppText(
-                              text: '01:00 PM',
-                              style: AppStyles.ubBlack15W600,
-                              maxLines: 1,
+                            border: Border.all(
+                              color: AppColors.lightNavyBlue,
+                              width: Dimens.one,
                             ),
-                          ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(
+                                Assets.iconsClock,
+                                height: Dimens.twenty,
+                                width: Dimens.twenty,
+                              ),
+                              Dimens.boxWidth10,
+                              AppText(
+                                text: controller.startTime == null
+                                    ? Utility.formatTimeTo12Hour(controller
+                                        .singleDay?.data?.openingTime
+                                        .toString())
+                                    : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name}',
+                                style: AppStyles.ubBlack15W600,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        height: Dimens.fiftyThree,
-                        width: Dimens.oneHundredFifty,
-                        padding: Dimens.edgeInsets8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Dimens.eight,
-                          ),
-                          border: Border.all(
-                            color: AppColors.lightNavyBlue,
-                            width: Dimens.one,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.iconsClock,
-                              height: Dimens.twenty,
-                              width: Dimens.twenty,
+                      GestureDetector(
+                        onTap: () async {
+                          controller.endTime = await showTimePicker(
+                            context: Get.context!,
+                            initialTime: Utility.convertDateTimeToTimeOfDay(
+                                controller.singleDay?.data?.openingTime ??
+                                    DateTime.now()),
+                          );
+                          controller.update();
+                          log('Edit endTime:${controller.endTime}');
+                        },
+                        child: Container(
+                          height: Dimens.fiftyThree,
+                          width: Dimens.oneHundredFifty,
+                          padding: Dimens.edgeInsets8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Dimens.eight,
                             ),
-                            Dimens.boxWidth10,
-                            AppText(
-                              text: '05:00 PM',
-                              style: AppStyles.ubBlack15W600,
-                              maxLines: 1,
+                            border: Border.all(
+                              color: AppColors.lightNavyBlue,
+                              width: Dimens.one,
                             ),
-                          ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(
+                                Assets.iconsClock,
+                                height: Dimens.twenty,
+                                width: Dimens.twenty,
+                              ),
+                              Dimens.boxWidth10,
+                              AppText(
+                                text: controller.endTime == null
+                                    ? Utility.formatTimeTo12Hour(controller
+                                        .singleDay?.data?.openingTime
+                                        .toString())
+                                    : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name}',
+                                style: AppStyles.ubBlack15W600,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -241,21 +350,22 @@ class ScheduleNannyView extends StatelessWidget {
                     ],
                   ),
                   Dimens.boxHeight16,
-                  AppDropdown(
-                    selectedItem: '${TranslationKeys.typeOfServices.tr} ',
+
+                  /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
+                  MultidropDownAppDropdown(
+                    selectedItem: controller.selectedServices,
                     itemBuilderPhysics: const ScrollPhysics(),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      controller.updateSelectedServices(value: value);
+                      return;
+                    },
                     maxHeight: Dimens.twoHundredSeventy,
                     baseTextStyle: AppStyles.ubHintColor15W500,
                     prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
-                    items: [
-                      Services.homeWorkHelp.name,
-                      Services.driving.name,
-                      Services.petCare.name,
-                      Services.homeWorkHelp.name,
-                      Services.funActivityOutHouse.name,
-                    ],
+                    items: controller.getNannyData?.services?.toList() ?? [],
                     itemBuilder: (context, item, isSelected) {
+                      bool isItemSelected =
+                          controller.selectedServices.contains(item);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -271,38 +381,50 @@ class ScheduleNannyView extends StatelessWidget {
                                   textAlign: TextAlign.start,
                                   style: AppStyles.ubNavyBlue15W600,
                                 ),
-                                // item == controller.selectedGender
-                                SvgPicture.asset(Assets.iconsCircleTick)
-                                //     : Dimens.box0,
+                                if (isItemSelected)
+                                  SvgPicture.asset(Assets.iconsCircleTick)
                               ],
                             ),
                           ),
-                          // item != controller.genderList.last
-                          //     ? Dimens.boxHeight2
-                          //     : Dimens.box0,
-                          // item != controller.genderList.last
-                          //     ?
                           Divider(
                             color: AppColors.dividerColor,
                             height: Dimens.two,
                           )
-                          // : Dimens.box0,
                         ],
                       );
                     },
                   ),
+
                   Dimens.boxHeight16,
+
+                  //** SELECT CHILDREN */
                   AppDropdown(
                     selectedItem: '${TranslationKeys.selectChildren.tr} ',
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      log("value: $value");
+                    },
+
                     baseTextStyle: AppStyles.ubHintColor15W500,
                     prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                    items: const [
+                    items: [
                       'Select all',
-                      'Alexander',
-                      'Oliver',
-                      'add',
+                      ...controller.childList.map((element) => element.name),
+                      "+ Add kids"
                     ],
+
+                    // controller.childList.map((element) {return
+
+                    // DropdownMenuItem(child: child)
+                    // })
+
+                    // controller.childList.toList(),
+                    // const [
+                    //   'Select all',
+                    //   'Alexander',
+                    //   'Oliver',
+                    //   'add',
+                    // ],
+
                     itemBuilderPhysics: const ScrollPhysics(),
                     maxHeight: Dimens.twoHundred,
                     itemBuilder: (context, item, isSelected) {
@@ -454,6 +576,7 @@ class ScheduleNannyView extends StatelessWidget {
                     title: TranslationKeys.confirmBooking.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
+                      //  controller.confirmBookingApi();
                       RouteManagement.goToAddPaymentMethodScreen(
                         isComeFromNannyProfile: true,
                         buttonText: TranslationKeys.submit.tr,
