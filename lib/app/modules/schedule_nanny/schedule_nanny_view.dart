@@ -18,7 +18,6 @@ import '../../res/theme/colors.dart';
 import '../../res/theme/styles.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_booking_receipt_tile.dart';
-import '../../widgets/custom_drop_down.dart';
 
 class ScheduleNannyView extends StatelessWidget {
   const ScheduleNannyView({super.key});
