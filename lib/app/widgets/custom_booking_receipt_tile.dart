@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomBookingReceiptTile extends StatelessWidget {
-  const CustomBookingReceiptTile(
-      {super.key,
-      required this.receiptHeader,
-      required this.receiptDetailsList,
-      required this.totalPriceReceived,
-      required this.receiptPricesList,
-      this.shoBorder = true,
-      this.showHeader = true,
-      this.isReferralBonus = false,
-      this.netPayAbleAmount = 0});
+  const CustomBookingReceiptTile({
+    super.key,
+    required this.receiptHeader,
+    required this.totalPriceReceived,
+    this.shoBorder = true,
+    this.showHeader = true,
+    this.isReferralBonus = false,
+    this.netPayAbleAmount = 0,
+    required this.childCount,
+    required this.servicesList,
+    required this.totalTimeHour,
+    required this.totalTimeHourPrice,
+  });
 
   final String receiptHeader;
-  final int totalPriceReceived;
+  final double totalPriceReceived;
+  final int childCount;
+  final int totalTimeHour;
+  final int totalTimeHourPrice;
   final int netPayAbleAmount;
-  final List receiptDetailsList;
-  final List<int> receiptPricesList;
+
+  final List<String> servicesList;
   final bool shoBorder;
   final bool showHeader;
   final bool isReferralBonus;
@@ -51,20 +60,20 @@ class CustomBookingReceiptTile extends StatelessWidget {
               Dimens.boxHeight10,
             ],
             ...List.generate(
-              receiptDetailsList.length,
+              servicesList.length,
               (index) => Padding(
                 padding: Dimens.edgeInsetsB10,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AppText(
-                      text: receiptDetailsList[index].toString(),
+                      text: servicesList[index].toString().capitalizeFirst,
                       style: AppStyles.ubGrey15W500,
                       maxLines: 1,
                       textAlign: TextAlign.start,
                     ),
                     AppText(
-                      text: "\$${receiptPricesList[index].toString()}",
+                      text: "\$10",
                       style: AppStyles.ubGrey15W500,
                       maxLines: 1,
                       textAlign: TextAlign.start,
@@ -72,6 +81,46 @@ class CustomBookingReceiptTile extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppText(
+                  text: childCount == 1
+                      ? '${childCount.toString()} ${TranslationKeys.child.tr}'
+                      : '${childCount.toString()} ${TranslationKeys.children.tr}',
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+                AppText(
+                  text:
+                      "\$${childCount == 1 ? HourlyChildrenRateList.oneChild.ratePricePerChildren : childCount == 2 ? HourlyChildrenRateList.twoChildren.ratePricePerChildren : childCount == 3 ? HourlyChildrenRateList.threeChildren.ratePricePerChildren : childCount == 4 ? HourlyChildrenRateList.forChildren.ratePricePerChildren : ''}",
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+            Dimens.boxHeight10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppText(
+                  text: 'Total Time : $totalTimeHour Hours',
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+                AppText(
+                  text:
+                      "\$$totalTimeHourPrice",
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
             ),
             Dimens.boxHeight10,
             Row(
@@ -91,8 +140,9 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
               ],
             ),
-            Dimens.boxHeight10,
+
             if (isReferralBonus) ...[
+              Dimens.boxHeight10,
               Divider(
                 color: AppColors.dividerColor,
                 height: Dimens.one,

@@ -66,6 +66,7 @@ dependencies:
   widget_to_marker: ^1.0.4
   shimmer: ^3.0.0
   skeletonizer: ^1.1.0
+  signalr_netcore: ^0.1.7+2-nullsafety.3
 
   # insta_login: ^0.0.2
 #  share_plus: 7.2.1
@@ -97,6 +98,10 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/animation/
+    - assets/
+    - assets/fonts/
+    - assets/fonts/urbanist/
+    - assets/fonts/playfairDisplay/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -129,7 +129,7 @@ class ScheduleNannyView extends StatelessWidget {
                                               .getNannyData?.avilabilityList ??
                                           []);
 
-                              print(
+                              log(
                                   "is contained $selectedDay-----$isContained");
                               controller.updateIsContained(val: isContained);
                               controller.updateSelectedDate(
@@ -647,13 +647,15 @@ class ScheduleNannyView extends StatelessWidget {
                     ),
                     child: CustomBookingReceiptTile(
                       receiptHeader: 'Receipt',
-                      receiptDetailsList: controller.receiptList.toList(),
                       shoBorder: false,
                       showHeader: false,
                       totalPriceReceived: 112,
                       netPayAbleAmount: 112 - 5,
                       isReferralBonus: controller.isReferral ?? false,
-                      receiptPricesList: const [10, 10, 23, 92, 10, 25],
+                      childCount: 1,
+                      servicesList: const [],
+                      totalTimeHour: 4,
+                      totalTimeHourPrice: 92,
                     ),
                   ),
                   Dimens.boxHeight16,

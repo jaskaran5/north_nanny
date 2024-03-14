@@ -84,4 +84,6 @@ class ApiUrls {
       'api/NannyDashBoard/AcceptOrRejectBooking';
   static const String updateBookingStatus =
       'api/NannyDashBoard/UpdateBookingStatus';
+  static const String customerBookedNannyDetail =
+      'api/NannyDashBoard/BookingDetail';
 }

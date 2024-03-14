@@ -212,4 +212,5 @@ class TranslationKeys {
   static const String startTime = 'startTime';
   static const String endTime = 'endTime';
   static const String saveChanges = 'saveChanges';
+  static const String numberOfKids = 'numberOfKids';
 }

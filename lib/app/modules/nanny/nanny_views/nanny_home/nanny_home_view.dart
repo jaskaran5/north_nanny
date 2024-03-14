@@ -14,8 +14,6 @@ import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
-
-import '../../../../res/constants/enums.dart';
 import '../../../../res/theme/styles.dart';
 import '../../../../widgets/app_text.dart';
 
@@ -131,7 +129,7 @@ class NannyHomeView extends StatelessWidget {
                           Dimens.boxHeight4,
                           AppText(
                             text:
-                                '\$${controller.nannyHomeData.data?.totalRevenue}',
+                                '\$${controller.nannyHomeData.data?.totalRevenue ?? ''}',
                             style: AppStyles.ubColorFFF24W700,
                             maxLines: 1,
                           ),
@@ -153,56 +151,99 @@ class NannyHomeView extends StatelessWidget {
                     ? Expanded(
                         child: ListView(
                           children: List.generate(
-                            controller.homeList.length,
+                            controller.nannyHomeData.data?.bookingRequest
+                                    ?.length ??
+                                0,
                             (index) => GestureDetector(
                               onTap: () {
                                 if (!Get.isRegistered<
                                     NannyBookingDetailController>()) {
                                   NannyBookingDetailBinding().dependencies();
                                 }
-                                Get.find<NannyBookingDetailController>()
-                                        .nannyBookingDetailStatus =
-                                    NannyBookingDetailStatus.present;
+                                var nannyBookingDetailsController =
+                                    Get.find<NannyBookingDetailController>();
+                                nannyBookingDetailsController
+                                    .getBookingDetailOfCustomer(
+                                        bookingId: controller
+                                                .nannyHomeData
+                                                .data
+                                                ?.bookingRequest?[index]
+                                                .bookingId ??
+                                            0);
+                                nannyBookingDetailsController.typeOfBooking(
+                                    bookingStatus: controller
+                                            .nannyHomeData
+                                            .data
+                                            ?.bookingRequest?[index]
+                                            .bookingStatus ??
+                                        0);
 
                                 RouteManagement.goToNannyBookingView();
                               },
                               child: CustomNannyHomeTile(
-                                day: controller.homeList[index]['day']
-                                    .toString(),
-                                dateFormatInMonthYearDayOfWeek: controller
-                                    .homeList[index]['date']
-                                    .toString(),
-                                timing: controller.homeList[index]
-                                        ['totalTiming']
-                                    .toString(),
-                                totalPrice: controller.homeList[index]
-                                        ['totalPrice']
-                                    .toString(),
-                                image: Assets.iconsImage,
-                                name: controller.homeList[index]['userName']
-                                    .toString(),
-                                rating: controller.homeList[index]
-                                        ['totalRating']
-                                    .toString(),
-                                reviews: controller.homeList[index]
-                                        ['totalReview']
-                                    .toString(),
-                                servicesList: controller.servicesList,
+                                day: Utility.getDay(
+                                    dateTime: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].openingDate),
+                                dateFormatInMonthYearDayOfWeek:
+                                    Utility.convertDateToMMMMYYYEEE(controller
+                                            .nannyHomeData
+                                            .data
+                                            ?.bookingRequest?[index]
+                                            .openingDate ??
+                                        DateTime.now()),
+                                timing:
+                                    '${Utility.formatTimeTo12Hour(controller.nannyHomeData.data?.bookingRequest?[index].openingDate.toString() ?? '')} to ${Utility.formatTimeTo12Hour(controller.nannyHomeData.data?.bookingRequest?[index].closingDate.toString())}',
+                                totalPrice: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].price
+                                        .toString() ??
+                                    '0',
+                                image: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].image ??
+                                    '',
+                                name: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].name ??
+                                    '',
+                                rating: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].rating
+                                        .toString() ??
+                                    '',
+                                reviews: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].reviewCount
+                                        .toString() ??
+                                    '',
                                 onTapRating: () {
                                   Utility.openBottomSheet(
-                                    const CustomReviewBottomSheet(
-                                      totalReviews: 21,
-                                      totalReviewsRating: 4.5,
-                                      reviewsList: [],
-                                      //   'Michael Johnson',
-                                      //   'Giorgio Chiellini',
-                                      //   'Michael Johnson',
-                                      //   'Alex Morgan',
-                                      //   'Giorgio Chiellini'
-                                      // ],
+                                    CustomReviewBottomSheet(
+                                      totalReviews: controller
+                                              .nannyHomeData
+                                              .data
+                                              ?.bookingRequest?[index]
+                                              .reviewCount ??
+                                          0,
+                                      totalReviewsRating: controller
+                                          .nannyHomeData
+                                          .data
+                                          ?.bookingRequest?[index]
+                                          .rating ??
+                                          0.0,
+                                      reviewsList: controller
+                                              .nannyHomeData
+                                              .data
+                                              ?.bookingRequest?[index]
+                                              .userReviewList ??
+                                          [],
                                     ),
                                   );
                                 },
+                                noOfKids: controller
+                                        .nannyHomeData
+                                        .data
+                                        ?.bookingRequest?[index]
+                                        .numberOfChildren ??
+                                    0,
+                                distance: controller.nannyHomeData.data
+                                        ?.bookingRequest?[index].distance ??
+                                    0,
                               ),
                             ),
                           ),

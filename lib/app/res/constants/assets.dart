@@ -8,6 +8,8 @@ class Assets {
   static const String iconsAddCircle = 'assets/icons/add_circle.svg';
   static const String iconsAmericanBank = 'assets/icons/american_bank.svg';
   static const String iconsApple = 'assets/icons/apple.svg';
+  static const String iconsArrowDown = 'assets/icons/arrow_down.svg';
+  static const String iconsArrowUp = 'assets/icons/arrow_up.svg';
   static const String iconsAttachments = 'assets/icons/attachments.svg';
   static const String iconsBabyBoy = 'assets/icons/baby_boy.svg';
   static const String iconsBack = 'assets/icons/back.svg';

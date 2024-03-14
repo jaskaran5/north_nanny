@@ -194,14 +194,12 @@ class BookingDetailView extends StatelessWidget {
                     ),
                     Dimens.boxHeight16,
                   ],
-                  const CustomBookingDetailView(
+                  CustomBookingDetailView(
                     bookingHeader: 'Booking details',
-                    bookingDetailsList: [
-                      'Chicago, Naperville',
-                      '4 hours',
-                      'January 03, 2024',
-                      '01:00 PM to 05:00 PM',
-                    ],
+                    time: '01:00 PM to 05:00 PM',
+                    location: 'Chicago, Naperville',
+                    date: DateTime.now(),
+                    hours: '4 hours',
                   ),
                   Dimens.boxHeight16,
                   const CustomBookingServiceTile(
@@ -220,15 +218,9 @@ class BookingDetailView extends StatelessWidget {
                   ///CHILDREN PROFILE
                   CustomBookingChildrenTile(
                     childrenHeader: 'Children Profile',
-                    childrenDetailsList: const [
-                      'Alexander',
-                      'Oliver',
-                    ],
-                    isExpand: controller.isExpandChildren,
-                    expansionCallback: (panelIndex, isExpand) {
-                      controller.isExpandChildren = isExpand;
-                      controller.update();
-                    },
+                    childrenDetailsList: const [],
+                    // isExpand: controller.isExpandChildren,
+                    expansionCallback: (index) {},
                   ),
                   Dimens.boxHeight16,
                   const CustomTrackerTile(
@@ -246,16 +238,13 @@ class BookingDetailView extends StatelessWidget {
                     ],
                   ),
                   Dimens.boxHeight16,
-                  CustomBookingReceiptTile(
+                  const CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    receiptDetailsList: const [
-                      'Housekeeping',
-                      'Driving',
-                      '2 children',
-                      'Total Time: 4 Hours',
-                    ],
-                    totalPriceReceived: controller.totalPrice,
-                    receiptPricesList: controller.receiptPriceList,
+                    totalPriceReceived: 92,
+                    childCount: 0,
+                    servicesList: [],
+                    totalTimeHour: 0,
+                    totalTimeHourPrice: 0,
                   ),
                   Dimens.boxHeight16,
                   if (controller.bookingDetailStatus ==

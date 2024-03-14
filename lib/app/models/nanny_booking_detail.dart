@@ -36,7 +36,8 @@ class NannyBookingDetail {
 class Data {
   DateTime? openingTime;
   DateTime? closingTime;
-  int? billAmount;
+  double? billAmount;
+  int? bookingId;
   List<String>? services;
   int? childCount;
   String? name;
@@ -58,6 +59,7 @@ class Data {
     this.rating,
     this.bookingStatus,
     this.ratingList,
+    this.bookingId,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -76,7 +78,8 @@ class Data {
         image: json["image"],
         reviewCount: json["reviewCount"],
         rating: json["rating"],
-        bookingStatus: json["BookingStatus"],
+        bookingId: json["bookingId"],
+        bookingStatus: json["bookingStatus"],
         ratingList: json["ratingList"] == null
             ? []
             : List<RatingList>.from(
@@ -94,7 +97,8 @@ class Data {
         "image": image,
         "reviewCount": reviewCount,
         "rating": rating,
-        "BookingStatus": bookingStatus,
+        "bookingId": bookingId,
+        "bookingStatus": bookingStatus,
         "ratingList": ratingList == null
             ? []
             : List<dynamic>.from(ratingList!.map((x) => x.toJson())),

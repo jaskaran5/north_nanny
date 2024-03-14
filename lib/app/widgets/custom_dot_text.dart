@@ -34,7 +34,7 @@ class CustomDotText extends StatelessWidget {
               color: AppColors.blackColor,
             ),
           ),
-          Dimens.boxWidth2, // boxWidth8 changes to boxWidth2
+          Dimens.boxWidth4, // boxWidth8 changes to boxWidth2
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -45,7 +45,7 @@ class CustomDotText extends StatelessWidget {
                 maxLines: 1,
                 textAlign: TextAlign.left,
               ),
-              Dimens.boxHeight5,
+              Dimens.boxHeight4,
               Container(
                 constraints: BoxConstraints(
                   maxWidth: Get.width * .7,

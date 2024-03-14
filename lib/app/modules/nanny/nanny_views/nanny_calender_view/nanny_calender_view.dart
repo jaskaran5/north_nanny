@@ -115,7 +115,11 @@ class NannyCalenderView extends StatelessWidget {
                                   bookingStatus: controller.nannyBookingDetail
                                           ?.data?.bookingStatus ??
                                       0);
-
+                          Get.find<NannyBookingDetailController>()
+                              .getBookingDetailOfCustomer(
+                                  bookingId: controller.nannyBookingDetail?.data
+                                          ?.bookingId ??
+                                      0);
                           RouteManagement.goToNannyBookingView();
                         },
                         child: Container(
@@ -171,7 +175,8 @@ class NannyCalenderView extends StatelessWidget {
                                         AppText(
                                           text: controller.nannyBookingDetail
                                               ?.data?.services
-                                              ?.join(', '),
+                                              ?.join(', ')
+                                              .capitalizeFirst,
                                           style: AppStyles.ubGrey15W500,
                                           maxLines: 3,
                                           textAlign: TextAlign.start,
@@ -247,13 +252,16 @@ class NannyCalenderView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        AppText(
-                                          text: controller
-                                              .nannyBookingDetail?.data?.name
-                                              .toString(),
-                                          style: AppStyles.ubWhite14700,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.start,
+                                        SizedBox(
+                                          width: Dimens.twoHundred,
+                                          child: AppText(
+                                            text: controller
+                                                .nannyBookingDetail?.data?.name
+                                                .toString(),
+                                            style: AppStyles.ubWhite14700,
+                                            maxLines: 2,
+                                            textAlign: TextAlign.start,
+                                          ),
                                         ),
                                         Dimens.boxHeight4,
                                         GestureDetector(
@@ -286,17 +294,14 @@ class NannyCalenderView extends StatelessWidget {
                                               Dimens.boxWidth4,
                                               RichText(
                                                 text: TextSpan(
-                                                  text: controller
-                                                      .nannyBookingDetail
-                                                      ?.data
-                                                      ?.rating
-                                                      .toString(),
+                                                  text:
+                                                      '${controller.nannyBookingDetail?.data?.rating.toString()} ',
                                                   style: AppStyles
                                                       .ubLightNavy12W500,
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          '${controller.nannyBookingDetail?.data?.reviewCount.toString()} ${TranslationKeys.reviews.tr}',
+                                                          '(${controller.nannyBookingDetail?.data?.reviewCount.toString()} ${TranslationKeys.reviews.tr})',
                                                       style: AppStyles
                                                           .ubLightNavy12W400,
                                                     ),

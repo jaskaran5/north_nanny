@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -14,14 +17,12 @@ class CustomBookingChildrenTile extends StatelessWidget {
     super.key,
     required this.childrenHeader,
     required this.childrenDetailsList,
-    required this.isExpand,
     required this.expansionCallback,
   });
 
   final String childrenHeader;
-  final List<String> childrenDetailsList;
-  final bool isExpand;
-  final Function(int panelIndex, bool isExpand) expansionCallback;
+  final List<Child> childrenDetailsList;
+  final Function(int index) expansionCallback;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -45,87 +46,125 @@ class CustomBookingChildrenTile extends StatelessWidget {
             Dimens.boxHeight10,
             ...List.generate(
               childrenDetailsList.length,
-              (index) => Container(
-                margin: Dimens.edgeInsetsB10,
-                decoration: BoxDecoration(
-                  color: AppColors.listColor,
-                  borderRadius: BorderRadius.circular(Dimens.ten),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimens.ten),
-                  child: ExpansionPanelList(
+              (index) => GestureDetector(
+                onTap: () {
+                  expansionCallback(index);
+                },
+                child: Container(
+                  margin: Dimens.edgeInsetsB10,
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: AppColors.listColor,
+                    borderRadius: BorderRadius.circular(Dimens.ten),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ExpansionPanel(
-                        headerBuilder: (context, isExpanded) {
-                          return Padding(
-                            padding: Dimens.edgeInsets10,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      Padding(
+                        padding: Dimens.edgeInsets16,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppText(
-                                  text: childrenDetailsList[index].toString(),
+                                  text: childrenDetailsList[index]
+                                      .name
+                                      .toString(),
                                   style: AppStyles.ubBlack14W700,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.start,
+                                ),
+                                SvgPicture.asset(
+                                    childrenDetailsList[index].isExpand == true
+                                        ? Assets.iconsArrowUp
+                                        : Assets.iconsArrowDown),
+                              ],
+                            ),
+                            Dimens.boxHeight4,
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppText(
+                                  text:
+                                      '${TranslationKeys.age.tr}: ${childrenDetailsList[index].age}',
+                                  style: AppStyles.ubGrey12W500,
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
                                 ),
-                                Dimens.boxHeight4,
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    AppText(
-                                      text: 'Age 7 ',
-                                      style: AppStyles.ubGrey12W500,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    Dimens.boxWidth2,
-                                    CustomDot(
-                                        size: Dimens.three,
-                                        color: AppColors.blackColor),
-                                    Dimens.boxWidth2,
-                                    AppText(
-                                      text: ' Male ',
-                                      style: AppStyles.ubGrey12W500,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ],
+                                Dimens.boxWidth8,
+                                CustomDot(
+                                    size: Dimens.three,
+                                    color: AppColors.blackColor),
+                                Dimens.boxWidth8,
+                                AppText(
+                                  text: childrenDetailsList[index].gender == 1
+                                      ? TranslationKeys.male.tr.capitalizeFirst
+                                      : TranslationKeys
+                                          .female.tr.capitalizeFirst,
+                                  style: AppStyles.ubGrey12W500,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.start,
                                 ),
                               ],
                             ),
-                          );
-                        },
-                        body: Padding(
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: childrenDetailsList[index].isExpand ?? false,
+                        child: Padding(
                           padding: Dimens.edgeInsets8,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Divider(
-                                height: Dimens.one,
-                                color: AppColors.hintColor,
-                              ),
-                              CustomDotText(
-                                heading: "Allergies/Dietary Restrictions",
-                                description: "Wheat, Eggs, Tree nuts ",
-                                headingStyle: AppStyles.ubBlack12W600,
-                              ),
-                              CustomDotText(
-                                heading: TranslationKeys.medicalCondition.tr,
-                                description: "Chickenpox",
-                                headingStyle: AppStyles.ubBlack12W600,
-                              ),
+                              if (childrenDetailsList[index]
+                                          .allergiesDietaryAndRestrictions
+                                          ?.isNotEmpty ==
+                                      true &&
+                                  childrenDetailsList[index]
+                                          .medicalCondition
+                                          ?.isNotEmpty ==
+                                      true) ...[
+                                Dimens.boxHeight4,
+                                Divider(
+                                  height: Dimens.one,
+                                  color: AppColors.hintColor,
+                                ),
+                                Dimens.boxHeight4,
+                              ],
+                              if (childrenDetailsList[index]
+                                      .allergiesDietaryAndRestrictions
+                                      ?.isNotEmpty ==
+                                  true) ...[
+                                CustomDotText(
+                                  heading: "Allergies/Dietary Restrictions",
+                                  description: childrenDetailsList[index]
+                                      .allergiesDietaryAndRestrictions
+                                      .toString(),
+                                  headingStyle: AppStyles.ubBlack12W600,
+                                ),
+                              ],
+                              if (childrenDetailsList[index]
+                                      .medicalCondition
+                                      ?.isNotEmpty ==
+                                  true)
+                                CustomDotText(
+                                  heading: TranslationKeys.medicalCondition.tr,
+                                  description: childrenDetailsList[index]
+                                      .medicalCondition
+                                      .toString(),
+                                  headingStyle: AppStyles.ubBlack12W600,
+                                ),
                             ],
                           ),
                         ),
-                        isExpanded: isExpand,
-                        backgroundColor: AppColors.listColor,
-                        canTapOnHeader: true,
                       ),
                     ],
-                    dividerColor: AppColors.dividerColor,
-                    expansionCallback: expansionCallback,
                   ),
                 ),
               ),

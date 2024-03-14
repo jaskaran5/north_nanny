@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
@@ -22,7 +23,7 @@ class NannyBookingDetailController extends GetxController {
 
   late NannyBookingDetailStatus nannyBookingDetailStatus;
 
-  bool isExpandChildren = false;
+  BookingDetailsModel? bookingDetailsModel;
 
   initBooking() {
     if (nannyBookingDetailStatus == NannyBookingDetailStatus.endJob) {
@@ -153,6 +154,38 @@ class NannyBookingDetailController extends GetxController {
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
       printError(info: "update booking status  API ISSUE $s");
+    }
+  }
+
+  /// get booking details of customer
+  getBookingDetailOfCustomer({required int bookingId}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        "bookingId": bookingId,
+      };
+      debugPrint('body of booking details:$body');
+      _apiHelper
+          .postApi(
+        ApiUrls.customerBookedNannyDetail,
+        jsonEncode(body),
+      )
+          .futureValue((value) {
+        printInfo(info: " Customer book nanny Customer details   $value");
+        var response = BookingDetailsModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          bookingDetailsModel = response;
+          update();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(
+          info: "Customer book nanny Customer details get  API ISSUE $s");
     }
   }
 }

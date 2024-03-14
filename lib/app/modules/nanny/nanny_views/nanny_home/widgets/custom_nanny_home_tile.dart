@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_date_format_tile_view.dart';
 
 import '../../../../../res/constants/assets.dart';
@@ -21,8 +22,9 @@ class CustomNannyHomeTile extends StatelessWidget {
       required this.name,
       required this.rating,
       required this.reviews,
-      required this.servicesList,
-      required this.onTapRating});
+      required this.onTapRating,
+      required this.noOfKids,
+      required this.distance});
   final String day;
   final String dateFormatInMonthYearDayOfWeek;
   final String timing;
@@ -31,7 +33,8 @@ class CustomNannyHomeTile extends StatelessWidget {
   final String name;
   final String rating;
   final String reviews;
-  final List<String> servicesList;
+  final int noOfKids;
+  final int distance;
   final Function() onTapRating;
 
   @override
@@ -66,10 +69,15 @@ class CustomNannyHomeTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimens.fourteen),
                   ),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.contain,
-                  ),
+                  child: image.isEmpty
+                      ? Image.asset(
+                          Assets.imagesUserAvatar,
+                          fit: BoxFit.contain,
+                        )
+                      : CustomCacheNetworkImage(
+                          img: image,
+                          size: Dimens.seventy,
+                          imageRadius: Dimens.fourteen),
                 ),
                 Dimens.boxWidth16,
                 Column(
@@ -97,7 +105,8 @@ class CustomNannyHomeTile extends StatelessWidget {
                               style: AppStyles.ubBlack12W500,
                               children: [
                                 TextSpan(
-                                  text: reviews,
+                                  text:
+                                      '($reviews ${TranslationKeys.reviews.tr})',
                                   style: AppStyles.ubGrey12W400,
                                 ),
                               ],
@@ -126,12 +135,10 @@ class CustomNannyHomeTile extends StatelessWidget {
             Dimens.boxHeight14,
             SizedBox(
               height: Dimens.twentyFive,
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                  servicesList.length,
-                  (index) => Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
                     height: Dimens.twentyFive,
                     padding: Dimens.edgeInsetsL12T6R12B6,
                     margin: Dimens.edgeInsetsR16,
@@ -141,12 +148,30 @@ class CustomNannyHomeTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(Dimens.eight),
                     ),
                     child: AppText(
-                      text: servicesList[index].toString(),
+                      text:
+                          '${TranslationKeys.distance.tr.capitalizeFirst} : ${distance.toString()} miles',
                       style: AppStyles.ubGrey10W400,
                       maxLines: 1,
                     ),
                   ),
-                ),
+                  if (noOfKids != 0)
+                    Container(
+                      height: Dimens.twentyFive,
+                      padding: Dimens.edgeInsetsL12T6R12B6,
+                      margin: Dimens.edgeInsetsR16,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.listColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                      ),
+                      child: AppText(
+                        text:
+                            '${TranslationKeys.numberOfKids.tr} : ${noOfKids.toString()}',
+                        style: AppStyles.ubGrey10W400,
+                        maxLines: 1,
+                      ),
+                    ),
+                ],
               ),
             ),
             Dimens.boxHeight8,

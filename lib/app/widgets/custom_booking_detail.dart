@@ -7,16 +7,23 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomBookingDetailView extends StatelessWidget {
   const CustomBookingDetailView(
       {super.key,
       required this.bookingHeader,
-      required this.bookingDetailsList});
+      required this.time,
+      required this.location,
+      required this.date,
+      required this.hours});
 
   final String bookingHeader;
-  final List<String> bookingDetailsList;
+  final String time;
+  final String location;
+  final DateTime? date;
+  final String hours;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -38,28 +45,80 @@ class CustomBookingDetailView extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Dimens.boxHeight10,
-            ...List.generate(
-              bookingDetailsList.length,
-              (index) => Padding(
-                padding: Dimens.edgeInsetsB10,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(
-                      BookingDetails.values[index].bookingDetailSvg,
-                      height: Dimens.thirteen,
-                      width: Dimens.twelve,
-                    ),
-                    Dimens.boxWidth8,
-                    AppText(
-                      text: bookingDetailsList[index].toString(),
-                      style: AppStyles.ubGrey15W500,
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
+            if(location.isNotEmpty)...
+          [  Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  BookingDetails.location.bookingDetailSvg,
+                  height: Dimens.thirteen,
+                  width: Dimens.twelve,
                 ),
-              ),
+                Dimens.boxWidth8,
+                AppText(
+                  text: location.toString(),
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),],
+      if(hours.isNotEmpty)...[
+            Dimens.boxHeight10,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  BookingDetails.hours.bookingDetailSvg,
+                  height: Dimens.thirteen,
+                  width: Dimens.twelve,
+                ),
+                Dimens.boxWidth8,
+                AppText(
+                  text: '$hours hours',
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+            Dimens.boxHeight10,],
+            if(date!=null)...[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  BookingDetails.date.bookingDetailSvg,
+                  height: Dimens.thirteen,
+                  width: Dimens.twelve,
+                ),
+                Dimens.boxWidth8,
+                AppText(
+                  text: Utility.convertDatetimeToMMMMddYYYY(date!),
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+            Dimens.boxHeight8,],
+            if(time.isNotEmpty)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  BookingDetails.time.bookingDetailSvg,
+                  height: Dimens.thirteen,
+                  width: Dimens.twelve,
+                ),
+                Dimens.boxWidth8,
+                AppText(
+                  text: time.toString(),
+                  style: AppStyles.ubGrey15W500,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ],
             ),
           ],
         ),

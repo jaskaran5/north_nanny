@@ -46,7 +46,11 @@ class CustomBookingServiceTile extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset(
-                      Services.values[index].servicesSvg,
+                      Services.values
+                          .firstWhere((element) =>
+                              element.serviceName ==
+                              serviceDetailsList[index].toString())
+                          .servicesSvg,
                       height: Dimens.thirteen,
                       width: Dimens.twelve,
                     ),

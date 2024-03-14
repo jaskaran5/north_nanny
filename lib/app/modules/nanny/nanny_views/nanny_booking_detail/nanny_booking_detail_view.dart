@@ -17,6 +17,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_booking_track_locati
 import 'package:northshore_nanny_flutter/app/widgets/custom_bookng_service_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 
 import '../../../../res/constants/enums.dart';
@@ -78,33 +79,37 @@ class NannyBookingDetailView extends StatelessWidget {
                     ),
                     Dimens.boxHeight14,
                   ],
-                  const CustomBookingDetailView(
+                  CustomBookingDetailView(
                     bookingHeader: 'Job Details',
-                    bookingDetailsList: [
-                      'Chicago, Naperville',
-                      '4 hours',
-                      'January 03, 2024',
-                      '01:00 PM to 05:00 PM',
-                    ],
+                    time: controller.bookingDetailsModel?.data?.openingDate !=
+                            null
+                        ? '${Utility.formatTimeTo12Hour(controller.bookingDetailsModel?.data?.openingDate.toString())} to ${Utility.formatTimeTo12Hour(controller.bookingDetailsModel?.data?.closingDate.toString())}'
+                        : '',
+                    location: controller.bookingDetailsModel?.data?.location
+                            .toString() ??
+                        '',
+                    date: controller.bookingDetailsModel?.data?.bookingDate,
+                    hours: controller.bookingDetailsModel?.data?.totalHour
+                            .toString() ??
+                        '',
                   ),
                   Dimens.boxHeight14,
-                  const CustomBookingServiceTile(
+                  CustomBookingServiceTile(
                     serviceHeader: 'Service Type',
-                    serviceDetailsList: [
-                      'Housekeeping',
-                      'Driving',
-                    ],
+                    serviceDetailsList:
+                        controller.bookingDetailsModel?.data?.servicesType ??
+                            [],
                   ),
                   Dimens.boxHeight14,
                   CustomBookingChildrenTile(
                     childrenHeader: 'Children Profile',
-                    childrenDetailsList: const [
-                      'Alexander',
-                      'Oliver',
-                    ],
-                    isExpand: controller.isExpandChildren,
-                    expansionCallback: (panelIndex, isExpand) {
-                      controller.isExpandChildren = isExpand;
+                    childrenDetailsList:
+                        controller.bookingDetailsModel?.data?.children ?? [],
+                    expansionCallback: (index) {
+                      controller.bookingDetailsModel?.data?.children?[index]
+                          .isExpand = !(controller.bookingDetailsModel?.data
+                              ?.children?[index].isExpand ??
+                          false);
                       controller.update();
                     },
                   ),
@@ -124,35 +129,60 @@ class NannyBookingDetailView extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.circular(Dimens.ten),
                                 ),
-                                child: Image.asset(
-                                  Assets.iconsImage,
-                                ),
+                                child: controller.bookingDetailsModel?.data
+                                            ?.userDetails?.image?.isEmpty ==
+                                        true
+                                    ? Image.asset(
+                                        Assets.imagesUserAvatar,
+                                        fit: BoxFit.contain,
+                                        height: Dimens.seventy,
+                                        width: Dimens.seventy,
+                                      )
+                                    : CustomCacheNetworkImage(
+                                        img: controller.bookingDetailsModel
+                                                ?.data?.userDetails?.image ??
+                                            '',
+                                        size: Dimens.seventy,
+                                        imageRadius: Dimens.ten),
                               ),
                               Dimens.boxWidth10,
                               Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AppText(
-                                    text: 'Michael Johnson',
-                                    style: AppStyles.ubWhite14700,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.left,
+                                  SizedBox(
+                                    width: Dimens.twoHundred,
+                                    child: AppText(
+                                      text: controller.bookingDetailsModel?.data
+                                          ?.userDetails?.name
+                                          .toString(),
+                                      style: AppStyles.ubWhite14700,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ),
                                   Dimens.boxHeight4,
                                   GestureDetector(
                                     onTap: () {
                                       Utility.openBottomSheet(
-                                        const CustomReviewBottomSheet(
-                                          totalReviews: 21,
-                                          totalReviewsRating: 4.5,
-                                          reviewsList: [],
-                                          //   'Michael Johnson',
-                                          //   'Giorgio Chiellini',
-                                          //   'Michael Johnson',
-                                          //   'Alex Morgan',
-                                          //   'Giorgio Chiellini'
-                                          // ],
+                                        CustomReviewBottomSheet(
+                                          totalReviews: controller
+                                                  .bookingDetailsModel
+                                                  ?.data
+                                                  ?.userDetails
+                                                  ?.reviewCount ??
+                                              0,
+                                          totalReviewsRating: controller
+                                                  .bookingDetailsModel
+                                                  ?.data
+                                                  ?.userDetails
+                                                  ?.rating ??
+                                              0.0,
+                                          reviewsList: controller
+                                                  .bookingDetailsModel
+                                                  ?.data
+                                                  ?.userReviewList ??
+                                              [],
                                         ),
                                       );
                                     },
@@ -166,14 +196,17 @@ class NannyBookingDetailView extends StatelessWidget {
                                         ),
                                         Dimens.boxWidth2,
                                         AppText(
-                                          text: '4.5',
+                                          text: controller.bookingDetailsModel
+                                              ?.data?.userDetails?.rating
+                                              .toString(),
                                           style: AppStyles.ubWhite12W500,
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
                                         ),
                                         Dimens.boxWidth2,
                                         AppText(
-                                          text: '(21 reviews)',
+                                          text:
+                                              '(${controller.bookingDetailsModel?.data?.userDetails?.reviewCount} ${TranslationKeys.reviews.tr})',
                                           style: AppStyles.ubWhite12W400,
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
@@ -199,16 +232,20 @@ class NannyBookingDetailView extends StatelessWidget {
                           ? false
                           : true),
                   Dimens.boxHeight14,
-                  const CustomBookingReceiptTile(
+                  CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    receiptDetailsList: [
-                      'Housekeeping',
-                      'Driving',
-                      '2 children',
-                      'Total Time: 4 Hours'
-                    ],
-                    totalPriceReceived: 112,
-                    receiptPricesList: [10, 10, 23, 92],
+                    totalPriceReceived:
+                        controller.bookingDetailsModel?.data?.totalAmount ??
+                            0.0,
+                    childCount:
+                        controller.bookingDetailsModel?.data?.totalChildren ??
+                            0,
+                    servicesList:
+                        controller.bookingDetailsModel?.data?.servicesType ??
+                            [],
+                    totalTimeHour:
+                        controller.bookingDetailsModel?.data?.totalHour ?? 0,
+                    totalTimeHourPrice: 58,
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
@@ -235,6 +272,7 @@ class NannyBookingDetailView extends StatelessWidget {
                             controller.otherRejectionTextEditingController
                                 .clear();
                             controller.rejectionReason = '';
+
                             /// rejection dialog.
                             Get.dialog(
                               GetBuilder(

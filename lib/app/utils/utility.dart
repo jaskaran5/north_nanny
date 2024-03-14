@@ -459,6 +459,9 @@ class Utility {
   /// used to convert date time to this format '[February 2024, Friday']
   static String convertDateToMMMMYYYEEE(DateTime date) {
     return DateFormat('MMMM yyyy, EEEE').format(date);
+  }  /// used to convert date time to this format '[February 2024, Friday']
+  static String convertDatetimeToMMMMddYYYY(DateTime date) {
+    return DateFormat('MMMM dd, yyyy').format(date);
   }
   /// used to convert date time to this format '[01/03/2024']
   static String convertStringToDateFormatDDMMYY(String date) {

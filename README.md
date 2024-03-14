@@ -6,6 +6,11 @@ A new Flutter project.
 customer =1
 nanny =2
 
+# Gender constant
+gender==1 : Male,
+gender==2 : Female,
+
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

@@ -198,4 +198,5 @@ var en = <String, String>{
   TranslationKeys.startTime: 'Start time',
   TranslationKeys.endTime: 'End time',
   TranslationKeys.saveChanges: 'Save Changes',
+  TranslationKeys.numberOfKids: 'Number of kids',
 };
