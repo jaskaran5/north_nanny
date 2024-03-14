@@ -40,7 +40,8 @@ class GetNannyProfileController extends GetxController {
   AvailabilityByDayModel? singleDay;
 
   RxList<ChildData> childList = <ChildData>[].obs;
-  RxList<String> selectedServices = <String>[].obs;
+  RxList selectedServices = [].obs;
+  RxList selectedChildList = [].obs;
 
   List<String>? priceList = [
     '\$10',
@@ -51,18 +52,32 @@ class GetNannyProfileController extends GetxController {
     '',
   ];
 
+  RxList receiptList = [].obs;
+
   updateIsContained({required bool val}) {
     isContained.value = val;
     update();
   }
 
+  updateReceiptList(value) {
+    receiptList.addAll(value);
+    update();
+  }
+
   //Update selected services
-  updateSelectedServices({value}) {
-    if (selectedServices.contains(value)) {
-      selectedServices.remove(value);
-    } else {
-      selectedServices.add(value);
-    }
+  updateSelectedServices({required List value}) {
+    selectedServices.value = value;
+
+    update();
+    updateReceiptList(selectedServices);
+
+    log("selected services are:-->> $selectedServices");
+  }
+
+  //Update selected CHILDREN
+  updateSelectedChildren({required List value}) {
+    selectedChildList.value = value;
+
     update();
 
     log("selected services are:-->> $selectedServices");
@@ -366,13 +381,31 @@ class GetNannyProfileController extends GetxController {
 
   getDataByDate() {}
 
-  /// --------->>>>>> --------------------->>>>>>>>>>>CONFIRM BOOKING
+  /// --------->>>>>> --------------------->>>>>>>>>>>CONFIRM BOOKING --- >. ADD APPONUMENT <<<<----
 
-  confirmBookingApi() async {
+  confirmBookingApi({
+    required bool isUseReferral,
+    required int nannyUserId,
+  }) async {
+    log("cuurent datye tome--->> ${DateTime.now().toUtc().toIso8601String()}");
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
+
+      var body = {
+        {
+          "isUseReferral": isUseReferral,
+          "nannyUserId": nannyUserId,
+          "currentUtcTime": "2024-03-14T04:21:17.264Z",
+          "utcOpeningTime": "2024-03-14T04:21:17.264Z",
+          "utcClosingTime": "2024-03-14T04:21:17.264Z",
+          "services": selectedServices,
+          "childId": [],
+          "totalHour": 0,
+          "totalBillAmount": 0
+        }
+      };
 
       _apiHelper
           .getPosts(

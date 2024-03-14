@@ -34,6 +34,7 @@ class MultidropDownAppDropdown<T> extends StatelessWidget {
   final InputDecoration? dropdownSearchDecoration;
   final Widget? prefix;
   final ScrollPhysics itemBuilderPhysics;
+  final void Function(List<dynamic>, dynamic) onItemRemoved;
 
   const MultidropDownAppDropdown({
     super.key,
@@ -59,6 +60,7 @@ class MultidropDownAppDropdown<T> extends StatelessWidget {
     this.baseColor,
     this.baseTextStyle,
     this.isSelected,
+    required this.onItemRemoved,
     this.dropdownSearchDecoration,
     this.prefix,
     this.itemBuilderPhysics = const NeverScrollableScrollPhysics(),
@@ -111,17 +113,20 @@ class MultidropDownAppDropdown<T> extends StatelessWidget {
                 ),
           ),
           popupProps: PopupPropsMultiSelection.menu(
+            onItemRemoved: onItemRemoved,
+            selectionWidget: (context, item, isSelected) {
+              return isSelected
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: SvgPicture.asset(Assets.iconsCircleTick),
+                    )
+                  : const SizedBox();
+            },
             itemBuilder: itemBuilder,
             listViewProps: ListViewProps(physics: itemBuilderPhysics),
             constraints: BoxConstraints(
               minHeight: mainHeight ?? Dimens.ninety,
               maxHeight: maxHeight ?? Dimens.hundredFive,
-            ),
-            menuProps: MenuProps(
-              shape: UnderlineInputBorder(
-                borderRadius: BorderRadius.circular(Dimens.eight),
-                borderSide: BorderSide.none,
-              ),
             ),
           ),
           dropdownButtonProps: dropDownButtonProps ??

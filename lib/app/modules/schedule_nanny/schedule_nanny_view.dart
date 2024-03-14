@@ -353,9 +353,14 @@ class ScheduleNannyView extends StatelessWidget {
 
                   /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
                   MultidropDownAppDropdown(
+                    onItemRemoved: (p0, p1) {
+                      log("p0-- $p0");
+                      log("p1-- $p1");
+                    },
                     selectedItem: controller.selectedServices,
                     itemBuilderPhysics: const ScrollPhysics(),
                     onChanged: (value) {
+                      log("select bvalue -->> $value");
                       controller.updateSelectedServices(value: value);
                       return;
                     },
@@ -364,88 +369,27 @@ class ScheduleNannyView extends StatelessWidget {
                     prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
                     items: controller.getNannyData?.services?.toList() ?? [],
                     itemBuilder: (context, item, isSelected) {
+                      // log("$isSelected");
+                      // log("is dfasdfasdfas-- $item");
                       bool isItemSelected =
                           controller.selectedServices.contains(item);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          //
-                          Padding(
-                            padding: Dimens.edgeInsetsH20V15,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppText(
-                                  text: item.toString().tr,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  style: AppStyles.ubNavyBlue15W600,
-                                ),
-                                if (isItemSelected)
-                                  SvgPicture.asset(Assets.iconsCircleTick)
-                              ],
-                            ),
-                          ),
-                          Divider(
-                            color: AppColors.dividerColor,
-                            height: Dimens.two,
-                          )
-                        ],
-                      );
-                    },
-                  ),
 
-                  Dimens.boxHeight16,
-
-                  //** SELECT CHILDREN */
-                  AppDropdown(
-                    selectedItem: '${TranslationKeys.selectChildren.tr} ',
-                    onChanged: (value) {
-                      log("value: $value");
-                    },
-
-                    baseTextStyle: AppStyles.ubHintColor15W500,
-                    prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                    items: [
-                      'Select all',
-                      ...controller.childList.map((element) => element.name),
-                      "+ Add kids"
-                    ],
-
-                    // controller.childList.map((element) {return
-
-                    // DropdownMenuItem(child: child)
-                    // })
-
-                    // controller.childList.toList(),
-                    // const [
-                    //   'Select all',
-                    //   'Alexander',
-                    //   'Oliver',
-                    //   'add',
-                    // ],
-
-                    itemBuilderPhysics: const ScrollPhysics(),
-                    maxHeight: Dimens.twoHundred,
-                    itemBuilder: (context, item, isSelected) {
-                      return Visibility(
-                        visible: item != "add",
-                        replacement: Padding(
-                          padding: Dimens.edgeInsets16,
-                          child: Center(
-                            child: AppText(
-                              text: '+ Add kids',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: AppStyles.ubNavyBlue15W600,
-                            ),
-                          ),
-                        ),
+                      log("is item selected already :-->. $isItemSelected");
+                      return GestureDetector(
+                        onTap: () {
+                          log("on taoasdfadsf");
+                          if (controller.selectedServices.contains(item)) {
+                            controller.selectedServices.remove(item);
+                          } else {
+                            controller.selectedServices.add(item);
+                          }
+                          controller.update();
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            //
                             Padding(
                               padding: Dimens.edgeInsetsH20V15,
                               child: Row(
@@ -458,27 +402,175 @@ class ScheduleNannyView extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: AppStyles.ubNavyBlue15W600,
                                   ),
-                                  // item == controller.selectedGender
-                                  SvgPicture.asset(Assets.iconsCircleTick)
-                                  //     : Dimens.box0,
+                                  // if (controller.selectedServices.value
+                                  //         .contains(item) ||
+                                  //     isSelected)
+                                  //   SvgPicture.asset(Assets.iconsCircleTick)
                                 ],
                               ),
                             ),
-                            // item != controller.genderList.last
-                            //     ? Dimens.boxHeight2
-                            //     : Dimens.box0,
-                            // item != controller.genderList.last
-                            //     ?
                             Divider(
                               color: AppColors.dividerColor,
                               height: Dimens.two,
                             )
-                            // : Dimens.box0,
                           ],
                         ),
                       );
                     },
                   ),
+
+                  Dimens.boxHeight16,
+
+                  //** SELECT CHILDREN */
+
+                  MultidropDownAppDropdown(
+                    onItemRemoved: (p0, p1) {
+                      log("p0-- $p0");
+                      log("p1-- $p1");
+                    },
+                    selectedItem: controller.selectedChildList,
+                    itemBuilderPhysics: const ScrollPhysics(),
+                    onChanged: (value) {
+                      log("select bvalue -->> $value");
+                      controller.updateSelectedChildren(value: value);
+                      return;
+                    },
+                    maxHeight: Dimens.twoHundredSeventy,
+                    baseTextStyle: AppStyles.ubHintColor15W500,
+                    prefix: SvgPicture.asset(Assets.iconsBabyBoy),
+                    items: [
+                      'Select all',
+                      ...controller.childList.map((element) => element.name),
+                      "+ Add kids"
+                    ],
+                    itemBuilder: (context, item, isSelected) {
+                      // log("$isSelected");
+                      // log("is dfasdfasdfas-- $item");
+                      bool isItemSelected =
+                          controller.selectedChildList.contains(item);
+
+                      log("is item selected already :-->. $isItemSelected");
+                      return GestureDetector(
+                        onTap: () {
+                          log("on taoasdfadsf");
+                          if (controller.selectedChildList.contains(item)) {
+                            controller.selectedChildList.remove(item);
+                          } else {
+                            controller.selectedChildList.add(item);
+                          }
+                          controller.update();
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            //
+                            Padding(
+                              padding: Dimens.edgeInsetsH20V15,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AppText(
+                                    text: item.toString().tr,
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    style: AppStyles.ubNavyBlue15W600,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: AppColors.dividerColor,
+                              height: Dimens.two,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+
+                  // AppDropdown(
+                  //   selectedItem: '${TranslationKeys.selectChildren.tr} ',
+                  //   onChanged: (value) {
+                  //     log("value: $value");
+                  //   },
+
+                  //   baseTextStyle: AppStyles.ubHintColor15W500,
+                  //   prefix: SvgPicture.asset(Assets.iconsBabyBoy),
+                  //   items: [
+                  //     'Select all',
+                  //     ...controller.childList.map((element) => element.name),
+                  //     "+ Add kids"
+                  //   ],
+
+                  //   // controller.childList.map((element) {return
+
+                  //   // DropdownMenuItem(child: child)
+                  //   // })
+
+                  //   // controller.childList.toList(),
+                  //   // const [
+                  //   //   'Select all',
+                  //   //   'Alexander',
+                  //   //   'Oliver',
+                  //   //   'add',
+                  //   // ],
+
+                  //   itemBuilderPhysics: const ScrollPhysics(),
+                  //   maxHeight: Dimens.twoHundred,
+                  //   itemBuilder: (context, item, isSelected) {
+                  //     return Visibility(
+                  //       visible: item != "add",
+                  //       replacement: Padding(
+                  //         padding: Dimens.edgeInsets16,
+                  //         child: Center(
+                  //           child: AppText(
+                  //             text: '+ Add kids',
+                  //             maxLines: 1,
+                  //             textAlign: TextAlign.center,
+                  //             style: AppStyles.ubNavyBlue15W600,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                  //           Padding(
+                  //             padding: Dimens.edgeInsetsH20V15,
+                  //             child: Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 AppText(
+                  //                   text: item.toString().tr,
+                  //                   maxLines: 1,
+                  //                   textAlign: TextAlign.start,
+                  //                   style: AppStyles.ubNavyBlue15W600,
+                  //                 ),
+                  //                 // item == controller.selectedGender
+                  //                 SvgPicture.asset(Assets.iconsCircleTick)
+                  //                 //     : Dimens.box0,
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           // item != controller.genderList.last
+                  //           //     ? Dimens.boxHeight2
+                  //           //     : Dimens.box0,
+                  //           // item != controller.genderList.last
+                  //           //     ?
+                  //           Divider(
+                  //             color: AppColors.dividerColor,
+                  //             height: Dimens.two,
+                  //           )
+                  //           // : Dimens.box0,
+                  //         ],
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+
                   Dimens.boxHeight16,
                   Container(
                     padding: Dimens.edgeInsets16,
@@ -536,6 +628,8 @@ class ScheduleNannyView extends StatelessWidget {
                     ),
                   ),
                   Dimens.boxHeight16,
+
+                  ///-------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RECEIPT DATA ------------>>>>>>>>
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
@@ -553,23 +647,13 @@ class ScheduleNannyView extends StatelessWidget {
                     ),
                     child: CustomBookingReceiptTile(
                       receiptHeader: 'Receipt',
-                      receiptDetailsList: const [
-                        'Housekeeping',
-                        'Driving',
-                        '2 children',
-                        'Total Time: 4 Hours',
-                      ],
+                      receiptDetailsList: controller.receiptList.toList(),
                       shoBorder: false,
                       showHeader: false,
                       totalPriceReceived: 112,
                       netPayAbleAmount: 112 - 5,
                       isReferralBonus: controller.isReferral ?? false,
-                      receiptPricesList: const [
-                        10,
-                        10,
-                        23,
-                        92,
-                      ],
+                      receiptPricesList: const [10, 10, 23, 92, 10, 25],
                     ),
                   ),
                   Dimens.boxHeight16,

@@ -24,9 +24,9 @@ class CustomerHomeController extends GetxController {
   String? selectedGender = '';
 
   double distanceLowerValue = Dimens.zero;
-  double distanceHigherValue = Dimens.ten;
-  double ageLowerValue = Dimens.thirteen;
-  double ageHigherValue = Dimens.fifty;
+  double distanceHigherValue = 11;
+  double ageLowerValue = 13;
+  double ageHigherValue = 50;
   final debounce = Debouncer(delay: const Duration(seconds: 1));
 
   /// SHOW NANNY TILE

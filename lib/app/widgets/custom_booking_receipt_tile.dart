@@ -20,7 +20,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
   final String receiptHeader;
   final int totalPriceReceived;
   final int netPayAbleAmount;
-  final List<String> receiptDetailsList;
+  final List receiptDetailsList;
   final List<int> receiptPricesList;
   final bool shoBorder;
   final bool showHeader;

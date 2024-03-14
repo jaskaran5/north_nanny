@@ -100,7 +100,7 @@ class FilterView extends StatelessWidget {
                       ],
                       rangeSlider: true,
                       min: Dimens.zero,
-                      max: Dimens.ten,
+                      max: 11,
                       axis: Axis.horizontal,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
                         log("handlerIndex:-->> $handlerIndex");
@@ -288,6 +288,8 @@ class FilterView extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                     Dimens.boxHeight4,
+
+                    /** AGE S;ECEUYDSIBADSB  */
                     FlutterSlider(
                       handler: FlutterSliderHandler(
                         child: SvgPicture.asset(Assets.iconsSliderThumb),
@@ -306,8 +308,8 @@ class FilterView extends StatelessWidget {
                         controller.ageHigherValue,
                       ],
                       rangeSlider: true,
-                      min: Dimens.thirteen,
-                      max: Dimens.fifty,
+                      min: 13,
+                      max: 50,
                       axis: Axis.horizontal,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
                         controller.ageHigherValue = upperValue;
@@ -351,6 +353,7 @@ class FilterView extends StatelessWidget {
                         inactiveTrackBarHeight: Dimens.five,
                       ),
                     ),
+
                     Dimens.boxHeight26,
 
                     /** Date and time **/
