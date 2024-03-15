@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -57,20 +56,11 @@ class GetNannyProfileView extends StatelessWidget {
             backgroundColor: AppColors.profileBackgroundColor,
 
             /**REDIRECT TO <<<<<<<<------->>>>>>>>      SCHEDULE NANNY */
-            floatingActionButton: controller.isContained.value
-                ? Padding(
-                    padding: EdgeInsets.only(bottom: Dimens.eighteen),
-                    child: CustomButton(
-                      title: TranslationKeys.bookSitter.tr,
-                      backGroundColor: AppColors.navyBlue,
-                      onTap: () {
-                        controller.redirectToNannyScheduleView();
-                      },
-                    ),
-                  )
-                : const SizedBox(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.endDocked,
+            // floatingActionButton: controller.isContained.value
+            //     ?
+            //     : const SizedBox(),
+            // floatingActionButtonLocation:
+            //     FloatingActionButtonLocation.endDocked,
             body: SkeletonWidget(
               isLoading: controller.isDataLoading.value,
               child: SingleChildScrollView(
@@ -175,7 +165,6 @@ class GetNannyProfileView extends StatelessWidget {
                       ],
                       if (controller.selectedIndex == 2) ...[
                         /** INDEX-------222222222---------- AVAILABILITY ------- */
-
                         availabilityView(controller: controller),
                       ],
                     ],
@@ -308,7 +297,7 @@ Widget servicesView({
       ),
     );
 
-///*** AVAILABLILITY VIEW WIDGET */
+///*** AVAILABILITY VIEW WIDGET */
 
 Widget availabilityView({required GetNannyProfileController controller}) =>
     Padding(
@@ -331,14 +320,11 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
               ],
             ),
             child: TableCalendar(
-              // sixWeekMonthsEnforced: true,
-
               startingDayOfWeek: StartingDayOfWeek.monday,
               daysOfWeekStyle: DaysOfWeekStyle(
                 weekdayStyle: AppStyles.ubHintColor13W500,
                 weekendStyle: AppStyles.ubHintColor13W500,
               ),
-
               calendarStyle: CalendarStyle(
                 defaultTextStyle: AppStyles.ubBlack15W600,
                 weekendTextStyle: AppStyles.ubBlack15W600,
@@ -359,7 +345,6 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
                 markerMargin: Dimens.edgeInsets4,
                 markersAlignment: Alignment.center,
               ),
-
               firstDay: DateTime.now(),
               lastDay: DateTime.utc(
                 DateTime.now().year + 100,
@@ -374,58 +359,50 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
               ),
               sixWeekMonthsEnforced: true,
               onDaySelected: (selectedDay, focusedDay) async {
-                log("selected day:--$selectedDay");
-                log("focusedDay day:--$focusedDay");
-
-                if (selectedDay.day == DateTime.now().day) {
-                  log("both date same");
-                  controller.updateSelectedDate(
-                      date: selectedDay, focusDate: focusedDay);
-                  log("both date different :${controller.selectedDate}");
-
-                  return;
-                } else {
-                  controller.updateSelectedDate(
-                      date: selectedDay, focusDate: focusedDay);
-                  log("both date different :${controller.selectedDate}");
-                }
-
-                // Update the selected date
+                /// used to update the  values of selected date and focus date.
                 controller.updateSelectedDate(
                     date: selectedDay, focusDate: focusedDay);
 
-                /** CHECK SELECTED DATE PRESENT IN AVAILABILITY */
-                bool isContained = controller.isOpeningTimeContained(
-                    selectedDay,
-                    controller.getNannyData?.avilabilityList ?? []);
-
-                print("is contained $selectedDay-----$isContained");
-                controller.updateIsContained(val: isContained);
+                /// used to get the data by date.
+                controller.getNannyDataByDate(date: selectedDay);
               },
               selectedDayPredicate: (day) => controller.selectedDate == day,
               focusedDay: controller.focusedDay,
-
               eventLoader: (day) {
                 return controller.isElementEqualToData(
-                        controller.getNannyData!.avilabilityList ?? [],
-                        day.day,
-                        day.month)
+                  controller.getNannyData?.avilabilityList ?? [],
+                  day.day,
+                  day.month,
+                )
                     ? [
                         '.',
                       ]
                     : [];
               },
-              // availableGestures: AvailableGestures.none,
               onPageChanged: (focusedDay) {
-                focusedDay = controller.selectedDate!;
-                log("on chnage page fpcus day:--> $focusedDay");
+                controller.focusedDay = focusedDay;
 
                 /// used to  call api when calender month change.
+                controller.getNannyDetails(time: focusedDay);
+                controller.update();
               },
             ),
           ),
           Dimens.boxHeight20,
-          Dimens.boxHeight32,
+          if (controller.selectedDate != null &&
+              controller.isElementEqualToData(
+                controller.getNannyData?.avilabilityList ?? [],
+                controller.selectedDate?.day ?? 0,
+                controller.selectedDate?.month ?? 0,
+              ))
+            CustomButton(
+              title: TranslationKeys.bookSitter.tr,
+              backGroundColor: AppColors.navyBlue,
+              onTap: () {
+                controller.redirectToNannyScheduleView();
+              },
+            ),
+          Dimens.boxHeight5,
         ],
       ),
     );

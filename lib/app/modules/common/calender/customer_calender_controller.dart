@@ -13,7 +13,7 @@ import '../../../data/api/api_helper.dart';
 class CustomerCalenderController extends GetxController {
   DateTime selectedDay = DateTime.now();
   final ApiHelper _apiHelper = ApiHelper.to;
-
+//
   /// used to store availability list
   List<UserBookingData> userBookingDataList = [];
   UserBookingData? userBookingData;

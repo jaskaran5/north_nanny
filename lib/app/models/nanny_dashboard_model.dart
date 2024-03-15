@@ -80,8 +80,8 @@ class BookingRequest {
   String? image;
   double? rating;
   int? reviewCount;
-  int? price;
-  int? distance;
+  double? price;
+  double? distance;
   int? bookingStatus;
   int? numberOfChildren;
   DateTime? bookingDate;

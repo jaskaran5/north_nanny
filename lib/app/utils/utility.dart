@@ -8,6 +8,8 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
@@ -524,5 +526,61 @@ class Utility {
       updatedList.add(updatedDateTime);
     }
     return updatedList;
+  }
+
+  /// this method is used to return price according to minutes
+  static returnPriceAccordingToMinuetBasis(
+      {required int childCount, required int minuets}) {
+    if (minuets != 0) {
+      if (childCount == 1) {
+        return (HourlyChildrenRateList.oneChild.ratePricePerChildren / 60) *
+            minuets;
+      } else if (childCount == 2) {
+        return (HourlyChildrenRateList.twoChildren.ratePricePerChildren / 60) *
+            minuets;
+      } else if (childCount == 3) {
+        return (HourlyChildrenRateList.threeChildren.ratePricePerChildren /
+                60) *
+            minuets;
+      } else if (childCount == 4) {
+        return (HourlyChildrenRateList.forChildren.ratePricePerChildren / 60) *
+            minuets;
+      } else if (childCount > 4) {
+        return (HourlyChildrenRateList.forPlusChildren.ratePricePerChildren /
+                60) *
+            minuets;
+      } else {
+        return 0.0;
+      }
+    }
+  }
+
+  /// this is used to return a hours according to time
+  static int calculateHoursBetween(TimeOfDay startTime, TimeOfDay endTime) {
+    int startMinutes = startTime.hour * 60 + startTime.minute;
+    int endMinutes = endTime.hour * 60 + endTime.minute;
+
+    int differenceInMinutes = endMinutes - startMinutes;
+
+    // Calculate hours and remaining minutes
+    int hours = differenceInMinutes ~/ 60;
+    int minutes = differenceInMinutes % 60;
+    log('difference in hours :$hours $minutes');
+    return hours;
+  }
+
+  static int calculateTotalMinutesDifference(
+      TimeOfDay startTime, TimeOfDay endTime) {
+    // Convert start time to minutes
+    int startMinutes = startTime.hour * 60 + startTime.minute;
+
+    // Convert end time to minutes
+    int endMinutes = endTime.hour * 60 + endTime.minute;
+
+    // Calculate the difference in minutes
+    int differenceInMinutes = endMinutes - startMinutes;
+
+    // Return the absolute value to handle cases where end time is before start time
+    return differenceInMinutes.abs();
   }
 }

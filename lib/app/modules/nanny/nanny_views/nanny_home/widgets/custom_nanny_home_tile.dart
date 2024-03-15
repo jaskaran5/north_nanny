@@ -34,7 +34,7 @@ class CustomNannyHomeTile extends StatelessWidget {
   final String rating;
   final String reviews;
   final int noOfKids;
-  final int distance;
+  final dynamic distance;
   final Function() onTapRating;
 
   @override
@@ -85,11 +85,14 @@ class CustomNannyHomeTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppText(
-                      text: name,
-                      style: AppStyles.ubBlack14W700,
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
+                    SizedBox(
+                      width: Dimens.twoHundred,
+                      child: AppText(
+                        text: name,
+                        style: AppStyles.ubBlack14W700,
+                        maxLines: 2,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                     Dimens.boxHeight4,
                     GestureDetector(

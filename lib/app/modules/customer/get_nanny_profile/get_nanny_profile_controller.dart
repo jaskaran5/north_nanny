@@ -3,10 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
-import 'package:northshore_nanny_flutter/app/models/availability_by_day_model.dart';
-import 'package:northshore_nanny_flutter/app/models/availability_list_model.dart';
 import 'package:northshore_nanny_flutter/app/models/child_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
@@ -19,7 +16,8 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/app/utils/validators.dart';
+
+import '../../../models/get_nanny_booking_detail_in_customer.dart';
 
 class GetNannyProfileController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -33,15 +31,16 @@ class GetNannyProfileController extends GetxController {
 
   int selectedIndex = 0;
 
-  RxBool isContained = false.obs;
-
   GetNannyData? getNannyData;
 
-  AvailabilityByDayModel? singleDay;
+  NannyDataByBookingSlots? singleDay;
 
   RxList<ChildData> childList = <ChildData>[].obs;
-  RxList selectedServices = [].obs;
-  RxList selectedChildList = [].obs;
+  RxList<String> selectedServices = <String>[].obs;
+  RxList<String> selectedChildList = <String>[].obs;
+
+  /// used to store child ids
+  RxList<int> selectedChildIds = <int>[].obs;
 
   List<String>? priceList = [
     '\$10',
@@ -54,33 +53,36 @@ class GetNannyProfileController extends GetxController {
 
   RxList receiptList = [].obs;
 
-  updateIsContained({required bool val}) {
-    isContained.value = val;
-    update();
-  }
-
   updateReceiptList(value) {
-    receiptList.addAll(value);
+    receiptList.add(value);
     update();
   }
 
   //Update selected services
-  updateSelectedServices({required List value}) {
-    selectedServices.value = value;
-
+  updateSelectedServices({required List<dynamic> value}) {
+    selectedServices.clear();
+    for (var element in value) {
+      selectedServices.add(element.toString());
+    }
     update();
-    updateReceiptList(selectedServices);
-
     log("selected services are:-->> $selectedServices");
   }
 
   //Update selected CHILDREN
-  updateSelectedChildren({required List value}) {
-    selectedChildList.value = value;
-
+  updateSelectedChildren({required List<dynamic> value}) {
+    selectedChildList.clear();
+    selectedChildIds.clear();
+    for (var element in value) {
+      selectedChildList.add(element.toString());
+      for (var value in childList) {
+        if (value.name == element) {
+          selectedChildIds.add(value.childId ?? 0);
+        }
+      }
+    }
+    log('child Ids List: $selectedChildIds');
     update();
-
-    log("selected services are:-->> $selectedServices");
+    log("selected Children  are:-->> $selectedChildList");
   }
 
   /// used to check element have event or not
@@ -103,29 +105,6 @@ class GetNannyProfileController extends GetxController {
 
   /// used to set the referral
   bool? isReferral = false;
-
-  /// check selected date
-
-  bool isOpeningTimeContained(
-      DateTime dateToCheck, List<AvilabilityList> availabilityList) {
-    bool isContained = false;
-    for (var selectedData in availabilityList) {
-      // Compare the dates
-      if ((DateTime(dateToCheck.day, dateToCheck.month, dateToCheck.year))
-          .isAtSameMomentAs((DateTime(
-              selectedData.openingTime!.day,
-              selectedData.openingTime!.month,
-              selectedData.openingTime!.year)))) {
-        print("contain--> $dateToCheck,${selectedData.openingTime!}");
-        isContained = true;
-        break;
-      } else {
-        isContained = false;
-        print("not contain--> $dateToCheck,${selectedData.openingTime!}");
-      }
-    }
-    return isContained;
-  }
 
   /// get api for nanny profile model
   Future<void> getProfile() async {
@@ -180,106 +159,17 @@ class GetNannyProfileController extends GetxController {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
 
-  /// used to store availability list
-  AvailabilityListModel? availabilityListModel;
-
-  /// add nanny Availability validator
-  addAvailabilityValidator(
-      {required TimeOfDay? startTime,
-      required TimeOfDay? endTime,
-      required List<dynamic> availabilityList}) {
-    var validate = Validator.instance
-        .addNannyAvailabilityValidator(startTime: startTime, endTime: endTime);
-    if (validate == true) {
-      addAvailability(availabilityList: availabilityList);
-    } else {
-      toast(msg: Validator.instance.error, isError: true);
-      update();
-    }
-  }
-
-  /// add nanny availability post api
-  addAvailability({required List<dynamic> availabilityList}) async {
-    try {
-      if (!(await Utils.hasNetwork())) {
-        return;
-      }
-      if (availabilityList.isNotEmpty) {
-        _apiHelper
-            .postApi(
-          ApiUrls.addAvailability,
-          jsonEncode(availabilityList),
-        )
-            .futureValue((value) {
-          printInfo(info: "post availability nanny  response value $value");
-          var response = MyProfileModel.fromJson(value);
-          if (response.response == AppConstants.apiResponseSuccess) {
-            toast(msg: response.message.toString(), isError: false);
-            update();
-            Get.back();
-          } else {
-            toast(msg: response.message.toString(), isError: true);
-          }
-        }, retryFunction: () {});
-      }
-    } catch (e, s) {
-      toast(msg: e.toString(), isError: true);
-      printError(info: "post availability  Nanny  API ISSUE $s");
-    }
-  }
-
-  /// post api for get availabilities list
-  getAvailableDataByDate() async {
-    try {
-      if (!(await Utils.hasNetwork())) {
-        return;
-      }
-      var body = {
-        'utcDateTime': DateTime.now().toUtc().toIso8601String().toString(),
-      };
-      _apiHelper
-          .postApi(
-        ApiUrls.userBookingDeatil,
-        body,
-      )
-          .futureValue((value) {
-        printInfo(info: "Get Data from date $value");
-        var response = AvailabilityListModel.fromJson(value);
-        if (response.response == AppConstants.apiResponseSuccess) {
-          availabilityListModel = response;
-          update();
-        } else {
-          toast(msg: response.message.toString(), isError: true);
-        }
-      }, retryFunction: () {});
-    } catch (e, s) {
-      toast(msg: e.toString(), isError: true);
-      printError(info: "Get Nanny Availability List    API ISSUE $s");
-    }
-  }
-
   /// used to store range start date  .
   DateTime? rangeStartDate = DateTime.now();
 
   /// used to store range End date  .
   DateTime? rangeEndDate;
 
-  /// used to check element have event or not
-  // bool isElementEqualToData(List<AvailabilityListModelData> list, int day) {
-  //   for (var value in list) {
-  //     if (value.openingTime?.day == day) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-
   /// used to on the range selection
   bool isRangeSelection = false;
 
   /// GET NANNY DETAILS
-
-  getNannyDetails() async {
+  getNannyDetails({required DateTime time}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
@@ -287,9 +177,7 @@ class GetNannyProfileController extends GetxController {
 
       var body = {
         "id": nannyId.value,
-        "dateTime": (DateFormat("yyyy-MM-ddTHH:mm:ss.SSS'Z'")
-                .format((DateTime.now()).toUtc()))
-            .toString()
+        "dateTime": time.toUtc().toIso8601String(),
       };
 
       log("get nanny profile body:------ $body");
@@ -298,9 +186,7 @@ class GetNannyProfileController extends GetxController {
         printInfo(info: "post availability nanny  response value $value");
         var response = GetNannyDetailsResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          // toast(msg: response.message.toString(), isError: false);
           isDataLoading.value = false;
-
           getNannyData = response.data!;
           update();
         } else {
@@ -321,19 +207,17 @@ class GetNannyProfileController extends GetxController {
   void onInit() {
     nannyId.value = Get.arguments ?? 0;
     update();
-
     log("nanny id in nanny profile :-->> ${nannyId.value}");
     super.onInit();
   }
 
   @override
   void onReady() {
-    getNannyDetails();
+    getNannyDetails(time: DateTime.now());
     super.onReady();
   }
 
   /// REDIRECT TO NANNY SCHEDULE VIEW
-
   redirectToNannyScheduleView() async {
     Get.to(() => const ScheduleNannyView());
     await getChildListApi();
@@ -379,64 +263,132 @@ class GetNannyProfileController extends GetxController {
     }
   }
 
-  getDataByDate() {}
+  /// used to get single day data
+  getNannyDataByDate({required DateTime date}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        "nannyUserId": nannyId.value,
+        "utcDateTime": date.toUtc().toIso8601String(),
+      };
+
+      _apiHelper
+          .postApi(ApiUrls.nannyBookingDataByDate, jsonEncode(body))
+          .futureValue((value) {
+        var res = NannyDataByBookingSlots.fromJson(value);
+        if (res.response == AppConstants.apiResponseSuccess) {
+          singleDay = res;
+          update();
+        } else {
+          toast(msg: res.message.toString(), isError: true);
+        }
+      }, retryFunction: getChildListApi);
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "get nanny details by date $s");
+    }
+  }
 
   /// --------->>>>>> --------------------->>>>>>>>>>>CONFIRM BOOKING --- >. ADD APPONUMENT <<<<----
 
   confirmBookingApi({
     required bool isUseReferral,
     required int nannyUserId,
+    required int totalMinutes,
+    required double totalPrice,
+    required List<int> childIds,
+    required DateTime openingTime,
+    required DateTime closingTime,
   }) async {
-    log("cuurent datye tome--->> ${DateTime.now().toUtc().toIso8601String()}");
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
 
       var body = {
-        {
-          "isUseReferral": isUseReferral,
-          "nannyUserId": nannyUserId,
-          "currentUtcTime": "2024-03-14T04:21:17.264Z",
-          "utcOpeningTime": "2024-03-14T04:21:17.264Z",
-          "utcClosingTime": "2024-03-14T04:21:17.264Z",
-          "services": selectedServices,
-          "childId": [],
-          "totalHour": 0,
-          "totalBillAmount": 0
-        }
+        "isUseReferral": isUseReferral,
+        "nannyUserId": nannyUserId,
+        "currentUtcTime": DateTime.now().toUtc().toIso8601String(),
+        "utcOpeningTime": openingTime.toUtc().toIso8601String(),
+        "utcClosingTime": closingTime.toUtc().toIso8601String(),
+        "services": selectedServices,
+        "childId": childIds,
+        "totalHour": totalMinutes,
+        "totalBillAmount": isUseReferral ? totalPrice - 5 : totalPrice,
       };
-
+      log('confirm Api body:$body');
       _apiHelper
-          .getPosts(
+          .postApi(
         ApiUrls.bookAppointment,
+        jsonEncode(body),
       )
           .futureValue((value) {
-        printInfo(info: "CHILD LIST $value");
-        // var res = ChildListResponseModel.fromJson(value);
+        printInfo(info: "confirm booking $value");
+        var res = ChildListResponseModel.fromJson(value);
 
-        // log("res--${res.response}");
+        log("res--${res.response}");
 
-        // if (res.response == AppConstants.apiResponseSuccess) {
-        //   childList.clear();
-        //   log("child list length:-${res.data?.length}");
-        //   log("child list data:-${res.data}");
-        //   childList.value = res.data ?? [];
-
-        //   if (res.data!.isEmpty) {
-        //     // toast(msg: "Child List Empty", isError: false);-*
-        //   }
-
-        //   update();
-
-        //   log("child list data is :-->> ${childList.value.toString()}");
-        // } else {
-        //   toast(msg: res.message!, isError: true);
-        // }
-      }, retryFunction: getChildListApi);
+        if (res.response == AppConstants.apiResponseSuccess) {
+          toast(msg: res.message.toString(), isError: false);
+          Get.back();
+          update();
+        } else {
+          toast(msg: res.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
-      printError(info: "add child post  API ISSUE $s");
+      printError(info: "confirm Booking  API ISSUE $s");
+    }
+  }
+
+  /// used to store total price;
+  var totalPrice = 0.0.obs;
+
+  /// used to get total price according  to services fees
+  returnTotalPrice({
+    required int servicesListLength,
+    required double totalMinutesPrice,
+    required bool isIncludeServicesFee,
+  }) {
+    var value = servicesListLength * 10 + totalMinutesPrice;
+    if (isIncludeServicesFee) {
+      /// 0.03 is deduction strip.
+      var serviceFee = (value * 0.03);
+      var total = value + serviceFee;
+      totalPrice.value = total;
+      return total;
+    } else {
+      totalPrice.value = value;
+      return value;
+    }
+  }
+
+  /// method used to get the service fee total of 3% {total*0.03}
+  returnServiceFeeAccordingToTotalPrice(
+      {required int servicesListLength, required double totalMinutesPrice}) {
+    var value = servicesListLength * 10 + totalMinutesPrice;
+    var servicesFee = (value * 0.03);
+
+    /// 0.03 is deduction strip.
+    return servicesFee;
+  }
+
+  ///used to get final date
+  returnFinalTimeAccordingToDate(
+      {required TimeOfDay? startTime, required DateTime day}) {
+    if (startTime != null) {
+      return DateTime(
+        day.year,
+        day.month,
+        day.day,
+        startTime.hour,
+        startTime.minute,
+      );
+    } else {
+      return DateTime.now();
     }
   }
 }
