@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/child_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
@@ -55,7 +56,35 @@ class GetNannyProfileController extends GetxController {
 
   updateReceiptList(value) {
     receiptList.add(value);
+
     update();
+  }
+
+  toggleFavouriteAndUnFavouriteApi(
+      {required int userId, required bool isFavourite}) {
+    try {
+      var body = {
+        "toUserId": userId,
+        "isFavorite": isFavourite,
+      };
+
+      _apiHelper.postApi(ApiUrls.addOrRemoveFavoriteNanny, body).futureValue(
+          (value) {
+        var res = NannyFavouriteResponseModel.fromJson(value);
+
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          log("response success");
+
+          getNannyDetails(time: DateTime.now());
+
+          update();
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get dashboard data post  API ISSUE $s");
+    }
   }
 
   //Update selected services
@@ -95,7 +124,16 @@ class GetNannyProfileController extends GetxController {
     return false;
   }
 
-  bool isFavorite = false;
+  RxBool isFavorite = false.obs;
+
+  updateIsFavourite() {
+    isFavorite.value = !isFavorite.value;
+
+    toggleFavouriteAndUnFavouriteApi(
+        userId: nannyId.value, isFavourite: isFavorite.value);
+
+    update();
+  }
 
   List<String> profileTabList = [
     TranslationKeys.about.tr,

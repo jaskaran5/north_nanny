@@ -436,10 +436,10 @@ class ScheduleNannyView extends StatelessWidget {
                     baseTextStyle: AppStyles.ubHintColor15W500,
                     prefix: SvgPicture.asset(Assets.iconsBabyBoy),
                     items: [
-                      'Select all',
+                      // 'Select all',
                       ...controller.childList
                           .map((element) => element.name.toString()),
-                      "+ Add kids"
+                      // "+ Add kids"
                     ],
                     itemBuilder: (context, item, isSelected) {
                       bool isItemSelected =

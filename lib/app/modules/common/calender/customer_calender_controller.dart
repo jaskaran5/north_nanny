@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/models/availability_list_model.dart';
+import 'package:northshore_nanny_flutter/app/models/user_booking_details_by_date.dart';
 import 'package:northshore_nanny_flutter/app/models/user_booking_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
@@ -17,6 +17,7 @@ class CustomerCalenderController extends GetxController {
   /// used to store availability list
   List<UserBookingData> userBookingDataList = [];
   UserBookingData? userBookingData;
+  UserBookingDataByDate? singleDateBookingData;
 
   getCustomerAllBookingDetailsApi() async {
     try {
@@ -54,6 +55,7 @@ class CustomerCalenderController extends GetxController {
   @override
   void onInit() {
     getCustomerAllBookingDetailsApi();
+    getSelectedDateBookingDetail(selectedDate: DateTime.now().toUtc());
     super.onInit();
   }
 
@@ -65,5 +67,31 @@ class CustomerCalenderController extends GetxController {
       }
     }
     return false;
+  }
+
+  /// get CUSTOMER selected  date booking detail.
+  getSelectedDateBookingDetail({required DateTime selectedDate}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        "dateTime": selectedDate.toUtc().toIso8601String(),
+      };
+      _apiHelper.postApi(ApiUrls.userBookingDataByDate, body).futureValue(
+          (value) {
+        printInfo(info: "get  cUSTOMER booking single date   $value");
+        var response = UserBookingDetailsByDateResponseModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          singleDateBookingData = response.data;
+          update();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "CUSTOMER booking detail single Get  API ISSUE $s");
+    }
   }
 }

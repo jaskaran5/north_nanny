@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -39,13 +41,13 @@ class GetNannyProfileView extends StatelessWidget {
                 // if (!isComeFromSetting)
                 GestureDetector(
                   onTap: () {
-                    controller.isFavorite = !controller.isFavorite;
-                    controller.update();
+                    log("on tap on favourite");
+                    controller.updateIsFavourite();
                   },
                   child: Padding(
                     padding: Dimens.edgeInsetsL16R16,
                     child: controller.getNannyData != null
-                        ? SvgPicture.asset(controller.getNannyData!.isFavorite!
+                        ? SvgPicture.asset(controller.isFavorite.value
                             ? Assets.iconsHeartFilled
                             : Assets.iconsHeartOutline)
                         : null,

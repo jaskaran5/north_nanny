@@ -76,7 +76,11 @@ class CustomerCalenderView extends StatelessWidget {
                       ),
                       onDaySelected: (selectedDay, focusedDay) {
                         controller.selectedDay = selectedDay;
+
                         controller.update();
+
+                        controller.getSelectedDateBookingDetail(
+                            selectedDate: selectedDay);
                       },
                       selectedDayPredicate: (day) =>
                           controller.selectedDay == day,
@@ -136,9 +140,18 @@ class CustomerCalenderView extends StatelessWidget {
                                               .toString()
                                               .padLeft(2, '0'),
                                           dateFormatInMonthYearDayOfWeek:
-                                              'Februaery 2024 Friday',
-                                          timing: '10:00 AM to 05:00 PM',
-                                          totalPrice: '112',
+                                              Utility.convertDateToMMMMYYYEEE(
+                                                  controller
+                                                          .singleDateBookingData
+                                                          ?.openingTime ??
+                                                      DateTime.now()),
+                                          timing:
+                                              '${Utility.formatTimeTo12Hour(controller.singleDateBookingData?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDateBookingData?.closingTime.toString())}',
+                                          totalPrice: controller
+                                                  .singleDateBookingData
+                                                  ?.billAmount
+                                                  .toString() ??
+                                              '',
                                         ),
                                         Dimens.boxHeight16,
                                         Divider(
@@ -154,7 +167,11 @@ class CustomerCalenderView extends StatelessWidget {
                                                 color: AppColors.blackColor),
                                             Dimens.boxWidth4,
                                             AppText(
-                                              text: 'Housekeeping, driving',
+                                              text: controller
+                                                  .singleDateBookingData
+                                                  ?.services
+                                                  ?.join(', ')
+                                                  .capitalizeFirst,
                                               style: AppStyles.ubGrey15W500,
                                               maxLines: 1,
                                               textAlign: TextAlign.start,
@@ -170,7 +187,8 @@ class CustomerCalenderView extends StatelessWidget {
                                                 color: AppColors.blackColor),
                                             Dimens.boxWidth4,
                                             AppText(
-                                              text: '2 children',
+                                              text:
+                                                  '${controller.singleDateBookingData?.childCount} children',
                                               style: AppStyles.ubGrey15W500,
                                               maxLines: 1,
                                               textAlign: TextAlign.start,
@@ -223,7 +241,10 @@ class CustomerCalenderView extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             AppText(
-                                              text: 'Chirstino Wang',
+                                              text: controller
+                                                      .singleDateBookingData
+                                                      ?.name ??
+                                                  '',
                                               style: AppStyles.ubWhite14700,
                                               maxLines: 1,
                                               textAlign: TextAlign.start,
@@ -254,12 +275,16 @@ class CustomerCalenderView extends StatelessWidget {
                                                   Dimens.boxWidth4,
                                                   RichText(
                                                     text: TextSpan(
-                                                      text: '4.5 ',
+                                                      text: controller
+                                                          .singleDateBookingData
+                                                          ?.rating
+                                                          .toString(),
                                                       style: AppStyles
                                                           .ubLightNavy12W500,
                                                       children: [
                                                         TextSpan(
-                                                          text: '(21 reviews)',
+                                                          text:
+                                                              '(${controller.singleDateBookingData?.reviewCount} reviews)',
                                                           style: AppStyles
                                                               .ubLightNavy12W400,
                                                         ),
@@ -273,8 +298,10 @@ class CustomerCalenderView extends StatelessWidget {
                                             SizedBox(
                                               width: Dimens.oneHundredEightyTwo,
                                               child: AppText(
-                                                text:
-                                                    'Dedicated nanny providing loving Care and guidance to littleness. Experienced in nurturing children\'s development and ensuring a safe, happy environment.',
+                                                text: controller
+                                                        .singleDateBookingData
+                                                        ?.name ??
+                                                    '',
                                                 maxLines: 4,
                                                 style:
                                                     AppStyles.ubLightNavy10W400,
