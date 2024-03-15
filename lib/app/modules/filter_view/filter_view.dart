@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../res/constants/assets.dart';
 import '../../res/theme/colors.dart';
@@ -465,8 +466,7 @@ class FilterView extends StatelessWidget {
                                                     isTodayHighlighted: false,
                                                     markersMaxCount: 1,
                                                   ),
-                                                  firstDay: DateTime.utc(
-                                                      1999, 01, 01),
+                                                  firstDay: DateTime.now(),
                                                   lastDay: DateTime.utc(
                                                     DateTime.now().year,
                                                     DateTime.now().month + 1,
@@ -482,6 +482,7 @@ class FilterView extends StatelessWidget {
                                                       controller.selectedDate,
                                                   onDaySelected: (selectedDay,
                                                       focusedDay) {
+                                                    log("on data select:-->.$selectedDay");
                                                     filterController
                                                             .selectedDate =
                                                         selectedDay;
@@ -549,6 +550,8 @@ class FilterView extends StatelessWidget {
                             ),
                           ),
                         ),
+
+                        //** SELECT TIME */
                         GestureDetector(
                           onTap: () {
                             Get.dialog(
@@ -618,6 +621,7 @@ class FilterView extends StatelessWidget {
                                                   AppStyles.ubHintColor20W500,
                                               itemHeight: Dimens.sixty,
                                               onTimeChange: (time) {
+                                                log("on time select :-->> $time");
                                                 controller.selectedTime = time;
                                                 controller.update();
                                               },

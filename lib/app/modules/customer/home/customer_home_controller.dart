@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
@@ -14,7 +15,9 @@ import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_dynamic_marker.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
@@ -208,6 +211,8 @@ class CustomerHomeController extends GetxController {
     return dateFormat.format(dateTime);
   }
 
+  /**  */
+
   /// GET NANNY LIST DATA WITH LOCATION IN DASHBOARD
   getDashboardApi(
       // {
@@ -238,6 +243,7 @@ class CustomerHomeController extends GetxController {
 
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue(
           (value) async {
+        Utils.loadingDialog();
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
 
         if (res.response.toString() ==
@@ -253,9 +259,11 @@ class CustomerHomeController extends GetxController {
                 Marker(
                     markerId: MarkerId("$a"),
                     position: LatLng(
-                        double.tryParse(homeNannyList[a].latitude.toString())!,
+                        double.tryParse(homeNannyList[a].latitude.toString()) ??
+                            0.0,
                         double.tryParse(
-                            homeNannyList[a].longitude.toString())!),
+                                homeNannyList[a].longitude.toString()) ??
+                            0.0),
                     icon: await TextOnImage(
                       image: homeNannyList[a].image,
                     ).toBitmapDescriptor(
@@ -304,8 +312,11 @@ class CustomerHomeController extends GetxController {
                     }),
               );
               update();
+              Utils.closeDialog();
             }
-          } else {}
+          } else {
+            Utils.closeDialog();
+          }
         }
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
@@ -349,6 +360,10 @@ class CustomerHomeController extends GetxController {
   }
 
   onClickOnFilterApply() async {
+    var selectedTimeDate = Utility.addTimeToList(
+        dates: [selectedDate], addTime: TimeOfDay.fromDateTime(selectedTime));
+
+    log("seleceted datetime -->> $selectedTimeDate");
     log("distacne lower: $distanceLowerValue");
     log("distacne higher: $distanceHigherValue");
     log(" gender: $selectedGender");
@@ -359,9 +374,9 @@ class CustomerHomeController extends GetxController {
     log("time: $selectedTime");
 
     try {
-      // if (!(await Utils.hasNetwork())) {
-      //   return;
-      // }
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
 
       var body = {
         "minMiles": distanceLowerValue.toInt(),

@@ -17,6 +17,7 @@ class ApiUrls {
   static const String forgotPassword = "api/User/ForgotPassword";
   static const String customerLogOut = "api/User/LogOut";
   static const String changePassword = "api/User/ChangePassword";
+  static const String reviewList = "api/User/ReviewList";
 
   ///
   ///

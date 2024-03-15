@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
@@ -19,12 +19,12 @@ import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
 import '../../../widgets/app_text.dart';
 
-class CalenderView extends StatelessWidget {
-  const CalenderView({super.key});
+class CustomerCalenderView extends StatelessWidget {
+  const CustomerCalenderView({super.key});
 
   @override
   Widget build(BuildContext context) => GetBuilder(
-        init: CalenderController(),
+        init: CustomerCalenderController(),
         builder: (controller) => SafeArea(
           child: Scaffold(
             body: Padding(
@@ -82,8 +82,10 @@ class CalenderView extends StatelessWidget {
                           controller.selectedDay == day,
                       focusedDay: controller.selectedDay,
                       eventLoader: (day) {
-                        return day.day == DateTime.now().day ||
-                                day.day == DateTime.now().day - 1
+                        return controller.isElementEqualToData(
+                                controller.userBookingDataList,
+                                day.day,
+                                day.month)
                             ? [
                                 '.',
                               ]
@@ -91,8 +93,10 @@ class CalenderView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight32,
-                    controller.selectedDay.day == DateTime.now().day ||
-                            controller.selectedDay.day == DateTime.now().day - 1
+                    controller.isElementEqualToData(
+                            controller.userBookingDataList,
+                            controller.selectedDay.day,
+                            controller.selectedDay.month)
                         ? GestureDetector(
                             onTap: () {
                               if (!Get.isRegistered<

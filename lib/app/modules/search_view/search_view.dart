@@ -9,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/app/widgets/short_detail_of_nanny_profile.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 class SearchView extends StatelessWidget {
   SearchView({super.key});
@@ -98,14 +99,22 @@ class SearchView extends StatelessWidget {
                               itemCount: controller.homeNannyList.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return ShortDetailProfileView(
-                                  image: controller.homeNannyList[index].image,
-                                  nannyName:
-                                      controller.homeNannyList[index].name,
-                                  totalRating:
-                                      controller.homeNannyList[index].rating,
-                                  totalReviews: controller
-                                      .homeNannyList[index].reviewCount,
+                                return GestureDetector(
+                                  onTap: () {
+                                    RouteManagement.goToGetNannyProfileView(
+                                        argument:
+                                            controller.homeNannyList[index].id);
+                                  },
+                                  child: ShortDetailProfileView(
+                                    image:
+                                        controller.homeNannyList[index].image,
+                                    nannyName:
+                                        controller.homeNannyList[index].name,
+                                    totalRating:
+                                        controller.homeNannyList[index].rating,
+                                    totalReviews: controller
+                                        .homeNannyList[index].reviewCount,
+                                  ),
                                 );
                               },
                             ),

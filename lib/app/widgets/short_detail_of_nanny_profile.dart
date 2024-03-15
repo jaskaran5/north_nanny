@@ -5,7 +5,9 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 
 class ShortDetailProfileView extends StatelessWidget {
   const ShortDetailProfileView({
@@ -59,26 +61,40 @@ class ShortDetailProfileView extends StatelessWidget {
                 ),
               ),
               Dimens.boxHeight8,
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(Assets.iconsStar),
-                  Dimens.boxWidth4,
-                  RichText(
-                    text: TextSpan(
-                      text: totalRating.toString(),
-                      style: AppStyles.ubBlack12W500,
-                      children: [
-                        TextSpan(
-                          text:
-                              ' (${totalReviews.toString()} ${TranslationKeys.reviews.tr})',
-                          style: AppStyles.ubGrey12W400,
-                        )
-                      ],
+              GestureDetector(
+                onTap: () {
+                  Utility.openBottomSheet(const CustomReviewBottomSheet(
+                      totalReviews: 0,
+                      totalReviewsRating: 4.5,
+                      reviewsList: []));
+                  //   'Michael Johnson',
+                  //   'Giorgio Chiellini',
+                  //   'Michael Johnson',
+                  //   'Alex Morgan',
+                  //   'Giorgio Chiellini'
+                  // ],
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgPicture.asset(Assets.iconsStar),
+                    Dimens.boxWidth4,
+                    RichText(
+                      text: TextSpan(
+                        text: totalRating.toString(),
+                        style: AppStyles.ubBlack12W500,
+                        children: [
+                          TextSpan(
+                            text:
+                                ' (${totalReviews.toString()} ${TranslationKeys.reviews.tr})',
+                            style: AppStyles.ubGrey12W400,
+                          )
+                        ],
+                      ),
+                      maxLines: 1,
                     ),
-                    maxLines: 1,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           )

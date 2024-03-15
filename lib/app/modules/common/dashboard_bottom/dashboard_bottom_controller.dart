@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/calender/calender_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_calender_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
@@ -49,7 +49,7 @@ class DashboardBottomController extends GetxController {
     const CustomerHomeView(),
     const RecentChatView(),
     const NotificationView(),
-    const CalenderView(),
+    const CustomerCalenderView(),
     const SettingView(),
   ];
 
