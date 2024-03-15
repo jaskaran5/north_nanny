@@ -13,7 +13,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_multiselection_dropdown.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../navigators/routes_management.dart';
 import '../../res/theme/colors.dart';
 import '../../res/theme/styles.dart';
 import '../../widgets/app_text.dart';
@@ -103,60 +102,33 @@ class ScheduleNannyView extends StatelessWidget {
                               log("selected day:--$selectedDay");
                               log("focusedDay day:--$focusedDay");
 
-                              if (selectedDay.day == DateTime.now().day) {
-                                log("both date same");
-                                controller.updateSelectedDate(
-                                    date: selectedDay, focusDate: focusedDay);
-                                log("both date different :${controller.selectedDate}");
-
-                                return;
-                              } else {
-                                controller.updateSelectedDate(
-                                    date: selectedDay, focusDate: focusedDay);
-                                log("both date different :${controller.selectedDate}");
-                              }
-
-                              // Update the selected date
+                              /// used to update the  values of selected date and focus date.
                               controller.updateSelectedDate(
                                   date: selectedDay, focusDate: focusedDay);
 
-                              /** CHECK SELECTED DATE PRESENT IN AVAILABILITY */
-                              bool isContained =
-                                  controller.isOpeningTimeContained(
-                                      selectedDay,
-                                      controller
-                                              .getNannyData?.avilabilityList ??
-                                          []);
-
-                              log(
-                                  "is contained $selectedDay-----$isContained");
-                              controller.updateIsContained(val: isContained);
-                              controller.updateSelectedDate(
-                                  date: selectedDay, focusDate: focusedDay);
+                              /// used to get the data by date.
+                              controller.getNannyDataByDate(date: selectedDay);
                             },
-                            focusedDay: controller.selectedDate!,
-
+                            focusedDay: controller.focusedDay,
                             selectedDayPredicate: (day) =>
                                 controller.selectedDate == day,
-
                             eventLoader: (day) {
                               return controller.isElementEqualToData(
-                                      controller
-                                              .getNannyData!.avilabilityList ??
-                                          [],
-                                      day.day,
-                                      day.month)
+                                controller.getNannyData!.avilabilityList ?? [],
+                                day.day,
+                                day.month,
+                              )
                                   ? [
                                       '.',
                                     ]
                                   : [];
                             },
-                            // availableGestures: AvailableGestures.none,
                             onPageChanged: (focusedDay) {
-                              focusedDay = controller.selectedDate!;
-                              log("on chnage page fpcus day:--> $focusedDay");
+                              controller.focusedDay = focusedDay;
 
                               /// used to  call api when calender month change.
+                              controller.getNannyDetails(time: focusedDay);
+                              controller.update();
                             },
                           ),
                         ),
@@ -171,9 +143,10 @@ class ScheduleNannyView extends StatelessWidget {
                             children: [
                               AppText(
                                 text: Utility.getDay(
-                                    dateTime: controller.selectedDate),
-                                // text: DateFormat('dd')
-                                //     .format(controller.selectedDate!),
+                                  dateTime: controller.singleDay?.data
+                                          ?.bookingDetail?.openingTime ??
+                                      DateTime.now(),
+                                ),
                                 style: AppStyles.ubBlack30W600,
                                 maxLines: 1,
                                 textAlign: TextAlign.start,
@@ -185,19 +158,18 @@ class ScheduleNannyView extends StatelessWidget {
                                 children: [
                                   AppText(
                                     text: Utility.convertDateToMMMMYYYEEE(
-                                        controller.selectedDate ??
-                                            DateTime.now()),
-                                    // "${DateFormat('MMMM').format(controller.selectedDate ?? DateTime.now())} ${controller.selectedDate?.year}, ${DateFormat('EEEE').format(
-                                    // controller.selectedDate ?? DateTime.now(),
-                                    // )}",
-                                    // text: 'Februaery 2024 Friday',
+                                      controller.singleDay?.data?.bookingDetail
+                                              ?.openingTime ??
+                                          DateTime.now(),
+                                    ),
                                     style: AppStyles.ubGrey12W400,
                                     maxLines: 1,
                                     textAlign: TextAlign.start,
                                   ),
                                   Dimens.boxHeight8,
                                   AppText(
-                                    text: "Utility.formatTimeTo12h)",
+                                    text:
+                                        '${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.closingTime.toString())}',
                                     style: AppStyles.ubBlack14W700,
                                     maxLines: 1,
                                     textAlign: TextAlign.start,
@@ -222,7 +194,7 @@ class ScheduleNannyView extends StatelessWidget {
                               Flexible(
                                 child: AppText(
                                   text:
-                                      'This nanny is available from 10:00 AM to 12:00 PM and 02:00 PM to 05:00 PM',
+                                      'This nanny is available from  ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.closingTime.toString())} ',
                                   maxLines: 2,
                                   style: AppStyles.ubGreen12W600,
                                   textAlign: TextAlign.start,
@@ -243,7 +215,8 @@ class ScheduleNannyView extends StatelessWidget {
                           controller.startTime = await showTimePicker(
                             context: Get.context!,
                             initialTime: Utility.convertDateTimeToTimeOfDay(
-                                controller.singleDay?.data?.openingTime ??
+                                controller.singleDay?.data?.bookingDetail
+                                        ?.openingTime ??
                                     DateTime.now()),
                           );
                           controller.update();
@@ -274,7 +247,10 @@ class ScheduleNannyView extends StatelessWidget {
                               AppText(
                                 text: controller.startTime == null
                                     ? Utility.formatTimeTo12Hour(controller
-                                        .singleDay?.data?.openingTime
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
+                                        ?.openingTime
                                         .toString())
                                     : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name}',
                                 style: AppStyles.ubBlack15W600,
@@ -289,7 +265,8 @@ class ScheduleNannyView extends StatelessWidget {
                           controller.endTime = await showTimePicker(
                             context: Get.context!,
                             initialTime: Utility.convertDateTimeToTimeOfDay(
-                                controller.singleDay?.data?.openingTime ??
+                                controller.singleDay?.data?.bookingDetail
+                                        ?.closingTime ??
                                     DateTime.now()),
                           );
                           controller.update();
@@ -320,7 +297,10 @@ class ScheduleNannyView extends StatelessWidget {
                               AppText(
                                 text: controller.endTime == null
                                     ? Utility.formatTimeTo12Hour(controller
-                                        .singleDay?.data?.openingTime
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
+                                        ?.closingTime
                                         .toString())
                                     : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name}',
                                 style: AppStyles.ubBlack15W600,
@@ -332,26 +312,49 @@ class ScheduleNannyView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Dimens.boxHeight8,
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                        Assets.iconsInfoGreyCircle,
-                      ),
-                      Dimens.boxWidth8,
-                      Flexible(
-                          child: AppText(
-                        text: 'The nanny is available from 12:00 PM to 5:00 PM',
-                        maxLines: 1,
-                        style: AppStyles.ubHintColor12W500,
-                      ))
-                    ],
-                  ),
+                  if (controller.singleDay?.data?.bookedSlot?.isNotEmpty ==
+                      true) ...[
+                    Dimens.boxHeight8,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.iconsInfoGreyCircle,
+                        ),
+                        Dimens.boxWidth8,
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: AppText(
+                                text: 'The nanny is not available  ',
+                                maxLines: 1,
+                                style: AppStyles.ubHintColor12W500,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            Dimens.boxHeight5,
+                            AppText(
+                              text: controller.singleDay?.data?.bookedSlot
+                                  ?.map((e) =>
+                                      ' from ${Utility.formatTimeTo12Hour(e.openingTime.toString())} to ${Utility.formatTimeTo12Hour(e.closingTime.toString())} \n ')
+                                  .toList()
+                                  .join(', '),
+                              style: AppStyles.ubHintColor12W500,
+                              textAlign: TextAlign.left,
+                              maxLines: 4,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
                   Dimens.boxHeight16,
 
                   /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
-                  MultidropDownAppDropdown(
+                  MultiDropDownAppDropdown(
                     onItemRemoved: (p0, p1) {
                       log("p0-- $p0");
                       log("p1-- $p1");
@@ -359,7 +362,7 @@ class ScheduleNannyView extends StatelessWidget {
                     selectedItem: controller.selectedServices,
                     itemBuilderPhysics: const ScrollPhysics(),
                     onChanged: (value) {
-                      log("select bvalue -->> $value");
+                      log("select value -->> $value");
                       controller.updateSelectedServices(value: value);
                       return;
                     },
@@ -368,15 +371,12 @@ class ScheduleNannyView extends StatelessWidget {
                     prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
                     items: controller.getNannyData?.services?.toList() ?? [],
                     itemBuilder: (context, item, isSelected) {
-                      // log("$isSelected");
-                      // log("is dfasdfasdfas-- $item");
                       bool isItemSelected =
                           controller.selectedServices.contains(item);
 
                       log("is item selected already :-->. $isItemSelected");
                       return GestureDetector(
                         onTap: () {
-                          log("on taoasdfadsf");
                           if (controller.selectedServices.contains(item)) {
                             controller.selectedServices.remove(item);
                           } else {
@@ -388,7 +388,6 @@ class ScheduleNannyView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            //
                             Padding(
                               padding: Dimens.edgeInsetsH20V15,
                               child: Row(
@@ -422,7 +421,7 @@ class ScheduleNannyView extends StatelessWidget {
 
                   //** SELECT CHILDREN */
 
-                  MultidropDownAppDropdown(
+                  MultiDropDownAppDropdown(
                     onItemRemoved: (p0, p1) {
                       log("p0-- $p0");
                       log("p1-- $p1");
@@ -430,7 +429,6 @@ class ScheduleNannyView extends StatelessWidget {
                     selectedItem: controller.selectedChildList,
                     itemBuilderPhysics: const ScrollPhysics(),
                     onChanged: (value) {
-                      log("select bvalue -->> $value");
                       controller.updateSelectedChildren(value: value);
                       return;
                     },
@@ -439,19 +437,17 @@ class ScheduleNannyView extends StatelessWidget {
                     prefix: SvgPicture.asset(Assets.iconsBabyBoy),
                     items: [
                       'Select all',
-                      ...controller.childList.map((element) => element.name),
+                      ...controller.childList
+                          .map((element) => element.name.toString()),
                       "+ Add kids"
                     ],
                     itemBuilder: (context, item, isSelected) {
-                      // log("$isSelected");
-                      // log("is dfasdfasdfas-- $item");
                       bool isItemSelected =
                           controller.selectedChildList.contains(item);
 
                       log("is item selected already :-->. $isItemSelected");
                       return GestureDetector(
                         onTap: () {
-                          log("on taoasdfadsf");
                           if (controller.selectedChildList.contains(item)) {
                             controller.selectedChildList.remove(item);
                           } else {
@@ -490,7 +486,7 @@ class ScheduleNannyView extends StatelessWidget {
                   ),
 
                   // AppDropdown(
-                  //   selectedItem: '${TranslationKeys.selectChildren.tr} ',
+                  //   selectedItem: ' ',
                   //   onChanged: (value) {
                   //     log("value: $value");
                   //   },
@@ -648,13 +644,105 @@ class ScheduleNannyView extends StatelessWidget {
                       receiptHeader: 'Receipt',
                       shoBorder: false,
                       showHeader: false,
-                      totalPriceReceived: 112,
-                      netPayAbleAmount: 112 - 5,
+                      totalPriceReceived: controller.returnTotalPrice(
+                        servicesListLength: controller.selectedServices.length,
+                        totalMinutesPrice:
+                            Utility.returnPriceAccordingToMinuetBasis(
+                                childCount: controller.selectedChildList.length,
+                                minuets: Utility.calculateTotalMinutesDifference(
+                                    controller.startTime != null
+                                        ? controller.startTime ??
+                                            TimeOfDay.now()
+                                        : Utility.convertDateTimeToTimeOfDay(
+                                            controller
+                                                    .singleDay
+                                                    ?.data
+                                                    ?.bookingDetail
+                                                    ?.openingTime ??
+                                                DateTime.now()),
+                                    controller.endTime != null
+                                        ? controller.endTime ?? TimeOfDay.now()
+                                        : Utility.convertDateTimeToTimeOfDay(
+                                            controller
+                                                    .singleDay
+                                                    ?.data
+                                                    ?.bookingDetail
+                                                    ?.closingTime ??
+                                                DateTime.now()))),
+                        isIncludeServicesFee: true,
+                      ),
                       isReferralBonus: controller.isReferral ?? false,
-                      childCount: 1,
-                      servicesList: const [],
-                      totalTimeHour: 4,
-                      totalTimeHourPrice: 92,
+                      childCount: controller.selectedChildList.length,
+                      servicesList: controller.selectedServices,
+                      netPayBalAmount: controller.isReferral == true
+                          ? controller.totalPrice.value - 5
+                          : 0.0,
+                      serviceFees:
+                          controller.returnServiceFeeAccordingToTotalPrice(
+                        servicesListLength: controller.selectedServices.length,
+                        totalMinutesPrice:
+                            Utility.returnPriceAccordingToMinuetBasis(
+                                childCount: controller.selectedChildList.length,
+                                minuets: Utility.calculateTotalMinutesDifference(
+                                    controller.startTime != null
+                                        ? controller.startTime ??
+                                            TimeOfDay.now()
+                                        : Utility.convertDateTimeToTimeOfDay(
+                                            controller
+                                                    .singleDay
+                                                    ?.data
+                                                    ?.bookingDetail
+                                                    ?.openingTime ??
+                                                DateTime.now()),
+                                    controller.endTime != null
+                                        ? controller.endTime ?? TimeOfDay.now()
+                                        : Utility.convertDateTimeToTimeOfDay(
+                                            controller
+                                                    .singleDay
+                                                    ?.data
+                                                    ?.bookingDetail
+                                                    ?.closingTime ??
+                                                DateTime.now()))),
+                      ),
+                      totalTimeHour: Utility.calculateTotalMinutesDifference(
+                          controller.startTime != null
+                              ? controller.startTime ?? TimeOfDay.now()
+                              : Utility.convertDateTimeToTimeOfDay(controller
+                                      .singleDay
+                                      ?.data
+                                      ?.bookingDetail
+                                      ?.openingTime ??
+                                  DateTime.now()),
+                          controller.endTime != null
+                              ? controller.endTime ?? TimeOfDay.now()
+                              : Utility.convertDateTimeToTimeOfDay(controller
+                                      .singleDay
+                                      ?.data
+                                      ?.bookingDetail
+                                      ?.closingTime ??
+                                  DateTime.now())),
+                      totalTimeHourPrice:
+                          Utility.returnPriceAccordingToMinuetBasis(
+                              childCount: controller.selectedChildList.length,
+                              minuets: Utility.calculateTotalMinutesDifference(
+                                  controller.startTime != null
+                                      ? controller.startTime ?? TimeOfDay.now()
+                                      : Utility.convertDateTimeToTimeOfDay(
+                                          controller
+                                                  .singleDay
+                                                  ?.data
+                                                  ?.bookingDetail
+                                                  ?.openingTime ??
+                                              DateTime.now()),
+                                  controller.endTime != null
+                                      ? controller.endTime ?? TimeOfDay.now()
+                                      : Utility.convertDateTimeToTimeOfDay(
+                                          controller
+                                                  .singleDay
+                                                  ?.data
+                                                  ?.bookingDetail
+                                                  ?.closingTime ??
+                                              DateTime.now()))),
                     ),
                   ),
                   Dimens.boxHeight16,
@@ -662,30 +750,86 @@ class ScheduleNannyView extends StatelessWidget {
                     title: TranslationKeys.confirmBooking.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      //  controller.confirmBookingApi();
-                      RouteManagement.goToAddPaymentMethodScreen(
-                        isComeFromNannyProfile: true,
-                        buttonText: TranslationKeys.submit.tr,
-                        onTapButton: () {
-                          RouteManagement.goToSuccessView(
-                            buttonText: TranslationKeys.backToHome.tr,
-                            successSvg: Assets.iconsSuccess,
-                            header: TranslationKeys.nannyRequested.tr,
-                            headerStyle: AppStyles.ubDarkBlackColor24W700,
-                            subHeader:
-                                TranslationKeys.notificationNannyAccept.tr,
-                            onTapButton: () {
-                              RouteManagement.goToOffAllDashboard(
-                                  isFromSetting: false);
-                            },
-                            subTitleStyle: AppStyles.ubGrey16W500,
-                            subHeaderMaxLines: 2,
-                            headerMaxLines: 2,
-                            successImage: '',
-                            sendTipText: false,
-                          );
-                        },
+                      log('total Price:${controller.totalPrice}');
+
+                      /// used to store opening  time with date.
+
+                      DateTime startDate =
+                          controller.returnFinalTimeAccordingToDate(
+                              startTime: controller.startTime ??
+                                  Utility.convertDateTimeToTimeOfDay(controller
+                                          .singleDay
+                                          ?.data
+                                          ?.bookingDetail
+                                          ?.openingTime ??
+                                      DateTime.now()),
+                              day: controller.singleDay?.data?.bookingDetail
+                                      ?.openingTime ??
+                                  DateTime.now());
+
+                      /// used to store closing  time with date.
+                      DateTime endDate =
+                          controller.returnFinalTimeAccordingToDate(
+                              startTime: controller.endTime ??
+                                  Utility.convertDateTimeToTimeOfDay(controller
+                                          .singleDay
+                                          ?.data
+                                          ?.bookingDetail
+                                          ?.closingTime ??
+                                      DateTime.now()),
+                              day: controller.singleDay?.data?.bookingDetail
+                                      ?.closingTime ??
+                                  DateTime.now());
+
+                      /// confirm booking api.
+                      controller.confirmBookingApi(
+                        isUseReferral: controller.isReferral ?? false,
+                        nannyUserId: controller.nannyId.value,
+                        totalMinutes: Utility.calculateTotalMinutesDifference(
+                            controller.startTime != null
+                                ? controller.startTime ?? TimeOfDay.now()
+                                : Utility.convertDateTimeToTimeOfDay(controller
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
+                                        ?.openingTime ??
+                                    DateTime.now()),
+                            controller.endTime != null
+                                ? controller.endTime ?? TimeOfDay.now()
+                                : Utility.convertDateTimeToTimeOfDay(controller
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
+                                        ?.closingTime ??
+                                    DateTime.now())),
+                        totalPrice: controller.totalPrice.value,
+                        childIds: controller.selectedChildIds,
+                        openingTime: startDate,
+                        closingTime: endDate,
                       );
+                      // RouteManagement.goToAddPaymentMethodScreen(
+                      //   isComeFromNannyProfile: true,
+                      //   buttonText: TranslationKeys.submit.tr,
+                      //   onTapButton: () {
+                      //     RouteManagement.goToSuccessView(
+                      //       buttonText: TranslationKeys.backToHome.tr,
+                      //       successSvg: Assets.iconsSuccess,
+                      //       header: TranslationKeys.nannyRequested.tr,
+                      //       headerStyle: AppStyles.ubDarkBlackColor24W700,
+                      //       subHeader:
+                      //           TranslationKeys.notificationNannyAccept.tr,
+                      //       onTapButton: () {
+                      //         RouteManagement.goToOffAllDashboard(
+                      //             isFromSetting: false);
+                      //       },
+                      //       subTitleStyle: AppStyles.ubGrey16W500,
+                      //       subHeaderMaxLines: 2,
+                      //       headerMaxLines: 2,
+                      //       successImage: '',
+                      //       sendTipText: false,
+                      //     );
+                      //   },
+                      // );
                     },
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
+import 'package:northshore_nanny_flutter/app/models/booking_status_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
@@ -79,7 +80,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.arrived;
     } else if (bookingStatus == 5) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.endJob;
-    } else if (bookingStatus == 6) {
+    } else if (bookingStatus == 7) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
     }
     update();
@@ -113,6 +114,7 @@ class NannyBookingDetailController extends GetxController {
                 "  Nanny accept or reject  booking dates in nanny booking details $value");
         var response = NannyBookingDetails.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          typeOfBooking(bookingStatus: 2);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -144,8 +146,9 @@ class NannyBookingDetailController extends GetxController {
       )
           .futureValue((value) {
         printInfo(info: "Update booking status $value");
-        var response = NannyBookingDetails.fromJson(value);
+        var response = BookingStatusModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);

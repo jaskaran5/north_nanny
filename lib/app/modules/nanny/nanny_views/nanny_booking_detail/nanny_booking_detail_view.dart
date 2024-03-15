@@ -151,7 +151,7 @@ class NannyBookingDetailView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: Dimens.twoHundred,
+                                    width: Dimens.oneHundredFifty,
                                     child: AppText(
                                       text: controller.bookingDetailsModel?.data
                                           ?.userDetails?.name
@@ -245,7 +245,8 @@ class NannyBookingDetailView extends StatelessWidget {
                             [],
                     totalTimeHour:
                         controller.bookingDetailsModel?.data?.totalHour ?? 0,
-                    totalTimeHourPrice: 58,
+                    totalTimeHourPrice:
+                        controller.bookingDetailsModel?.data?.totalHour,
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
@@ -440,7 +441,11 @@ class NannyBookingDetailView extends StatelessWidget {
                                                         onTap: () {
                                                           /// report api for report the booking
                                                           controller.acceptOrRejectBookingDetail(
-                                                              bookingId: 0,
+                                                              bookingId: controller
+                                                                      .bookingDetailsModel
+                                                                      ?.data
+                                                                      ?.bookingId ??
+                                                                  0,
                                                               bookingStatus: 3,
                                                               rejectionStatus:
                                                                   controller.selectedIndex !=
@@ -474,7 +479,9 @@ class NannyBookingDetailView extends StatelessWidget {
                           onTap: () {
                             /// accept booking
                             controller.acceptOrRejectBookingDetail(
-                              bookingId: 0,
+                              bookingId: controller
+                                      .bookingDetailsModel?.data?.bookingId ??
+                                  0,
                               bookingStatus: 2,
                             );
                             controller.nannyBookingDetailStatus =
@@ -513,17 +520,32 @@ class NannyBookingDetailView extends StatelessWidget {
                       onTap: () {
                         if (controller.nannyBookingDetailStatus ==
                             NannyBookingDetailStatus.onMyWay) {
-                          controller.nannyBookingDetailStatus =
-                              NannyBookingDetailStatus.arrived;
+                          // controller.nannyBookingDetailStatus =
+                          //     NannyBookingDetailStatus.arrived;
+                          controller.updateStatus(
+                              bookingId: controller
+                                      .bookingDetailsModel?.data?.bookingId ??
+                                  0,
+                              bookingStatus: 4);
                         } else if (controller.nannyBookingDetailStatus ==
                             NannyBookingDetailStatus.arrived) {
-                          controller.nannyBookingDetailStatus =
-                              NannyBookingDetailStatus.endJob;
+                          // controller.nannyBookingDetailStatus =
+                          //     NannyBookingDetailStatus.endJob;
+                          controller.updateStatus(
+                              bookingId: controller
+                                      .bookingDetailsModel?.data?.bookingId ??
+                                  0,
+                              bookingStatus: 5);
                         } else if (controller.nannyBookingDetailStatus ==
                             NannyBookingDetailStatus.endJob) {
                           controller.initBooking();
-                          controller.nannyBookingDetailStatus =
-                              NannyBookingDetailStatus.waitingForApproval;
+                          controller.updateStatus(
+                              bookingId: controller
+                                      .bookingDetailsModel?.data?.bookingId ??
+                                  0,
+                              bookingStatus: 6);
+                          // controller.nannyBookingDetailStatus =
+                          //     NannyBookingDetailStatus.waitingForApproval;
                         }
                         controller.update();
                       },

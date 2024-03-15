@@ -47,6 +47,7 @@ class ApiUrls {
   static const String addCard = "api/UserDashBoard/AddCard";
 
   static const String saveCard = "api/UserDashBoard/SaveCard";
+  static const String nannyBookingDataByDate = "api/UserDashBoard/NannyBookingDetailByDate";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
   ///

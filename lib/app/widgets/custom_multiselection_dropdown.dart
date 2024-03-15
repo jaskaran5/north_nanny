@@ -7,9 +7,9 @@ import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
-class MultidropDownAppDropdown<T> extends StatelessWidget {
+class MultiDropDownAppDropdown<T> extends StatelessWidget {
   final ValueChanged<dynamic>? onChanged;
-  final List<dynamic>? items;
+  final List<String>? items;
   final String? title;
   final double? textSize;
   final double? height;
@@ -28,7 +28,7 @@ class MultidropDownAppDropdown<T> extends StatelessWidget {
   final bool? isSelected;
   final TextStyle? hintTextStyle;
   final TextStyle? baseTextStyle;
-  final List? selectedItem;
+  final List<String>? selectedItem;
   final double? maxHeight;
   final double? mainHeight;
   final InputDecoration? dropdownSearchDecoration;
@@ -36,7 +36,7 @@ class MultidropDownAppDropdown<T> extends StatelessWidget {
   final ScrollPhysics itemBuilderPhysics;
   final void Function(List<dynamic>, dynamic) onItemRemoved;
 
-  const MultidropDownAppDropdown({
+  const MultiDropDownAppDropdown({
     super.key,
     required this.selectedItem,
     required this.onChanged,

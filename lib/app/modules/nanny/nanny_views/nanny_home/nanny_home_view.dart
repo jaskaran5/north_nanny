@@ -177,7 +177,6 @@ class NannyHomeView extends StatelessWidget {
                                             ?.bookingRequest?[index]
                                             .bookingStatus ??
                                         0);
-
                                 RouteManagement.goToNannyBookingView();
                               },
                               child: CustomNannyHomeTile(
@@ -221,10 +220,10 @@ class NannyHomeView extends StatelessWidget {
                                               .reviewCount ??
                                           0,
                                       totalReviewsRating: controller
-                                          .nannyHomeData
-                                          .data
-                                          ?.bookingRequest?[index]
-                                          .rating ??
+                                              .nannyHomeData
+                                              .data
+                                              ?.bookingRequest?[index]
+                                              .rating ??
                                           0.0,
                                       reviewsList: controller
                                               .nannyHomeData

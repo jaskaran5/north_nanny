@@ -16,24 +16,26 @@ class CustomBookingReceiptTile extends StatelessWidget {
     this.shoBorder = true,
     this.showHeader = true,
     this.isReferralBonus = false,
-    this.netPayAbleAmount = 0,
+    this.serviceFees = 0.0,
     required this.childCount,
     required this.servicesList,
     required this.totalTimeHour,
     required this.totalTimeHourPrice,
+    this.netPayBalAmount = 0.0,
   });
 
   final String receiptHeader;
-  final double totalPriceReceived;
+  final dynamic totalPriceReceived;
+  final dynamic netPayBalAmount;
   final int childCount;
-  final int totalTimeHour;
-  final int totalTimeHourPrice;
-  final int netPayAbleAmount;
+  final dynamic totalTimeHour;
+  final dynamic totalTimeHourPrice;
 
   final List<String> servicesList;
   final bool shoBorder;
   final bool showHeader;
   final bool isReferralBonus;
+  final dynamic serviceFees;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -82,7 +84,6 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -108,14 +109,13 @@ class CustomBookingReceiptTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
-                  text: 'Total Time : $totalTimeHour Hours',
+                  text: 'Total Time : ${totalTimeHour.toString()} Minutes',
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,
                 ),
                 AppText(
-                  text:
-                      "\$$totalTimeHourPrice",
+                  text: "\$$totalTimeHourPrice",
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,
@@ -123,6 +123,26 @@ class CustomBookingReceiptTile extends StatelessWidget {
               ],
             ),
             Dimens.boxHeight10,
+            if (serviceFees != 0.0) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppText(
+                    text: 'Service fees',
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                  AppText(
+                    text: '\$$serviceFees ',
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+              Dimens.boxHeight10,
+            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -140,7 +160,6 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
               ],
             ),
-
             if (isReferralBonus) ...[
               Dimens.boxHeight10,
               Divider(
@@ -176,7 +195,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   AppText(
-                    text: '\$$netPayAbleAmount',
+                    text: '\$$netPayBalAmount ',
                     style: AppStyles.ubBlack15W600,
                     maxLines: 1,
                     textAlign: TextAlign.start,
