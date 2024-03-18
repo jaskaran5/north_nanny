@@ -13,10 +13,4 @@ class RecentChatController extends GetxController {
       print("chat list invoked value:==>> $value");
     });
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-    getRecetChatList();
-  }
 }

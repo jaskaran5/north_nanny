@@ -137,26 +137,26 @@ class CustomerHomeController extends GetxController {
 
   /// *******---------------------------->>>>>>>>>>> ON MAP CREATED
 
-  void onMapCreated({required GoogleMapController controller}) async {
-    googleMapController = controller;
+  // void onMapCreated({required GoogleMapController controller}) async {
+  //   googleMapController = controller;
 
-    // for (int a = 0; a < homeNannyList.length - 1; a++) {
-    //   markers.add(
-    //     Marker(
-    //       markerId: MarkerId("$a"),
-    //       position: LatLng(
-    //           double.tryParse(homeNannyList[a].latitude.toString())!,
-    //           double.tryParse(homeNannyList[a].longitude.toString())!),
-    //       icon: await TextOnImage(
-    //         image: homeNannyList[a].image,
-    //       ).toBitmapDescriptor(
-    //           logicalSize: const Size(200, 200),
-    //           imageSize: const Size(200, 200)),
-    //     ),
-    //   );
-    //   update();
-    // }
-  }
+  //   // for (int a = 0; a < homeNannyList.length - 1; a++) {
+  //   //   markers.add(
+  //   //     Marker(
+  //   //       markerId: MarkerId("$a"),
+  //   //       position: LatLng(
+  //   //           double.tryParse(homeNannyList[a].latitude.toString())!,
+  //   //           double.tryParse(homeNannyList[a].longitude.toString())!),
+  //   //       icon: await TextOnImage(
+  //   //         image: homeNannyList[a].image,
+  //   //       ).toBitmapDescriptor(
+  //   //           logicalSize: const Size(200, 200),
+  //   //           imageSize: const Size(200, 200)),
+  //   //     ),
+  //   //   );
+  //   //   update();
+  //   // }
+  // }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);

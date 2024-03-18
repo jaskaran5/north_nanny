@@ -10,7 +10,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
-import 'package:northshore_nanny_flutter/app/widgets/custom_multiselection_dropdown.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../res/theme/colors.dart';
@@ -354,205 +354,261 @@ class ScheduleNannyView extends StatelessWidget {
                   ],
                   Dimens.boxHeight16,
 
-                  /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
-                  MultiDropDownAppDropdown(
-                      hintText: "Type of service",
-                      onItemRemoved: (p0, p1) {
-                        log("p0-- $p0");
-                        log("p1-- $p1");
-                      },
-                      selectedItem: controller.selectedServices,
-                      itemBuilderPhysics: const ScrollPhysics(),
-                      onChanged: (value) {
-                        log("select value -->> $value");
-                        controller.updateSelectedServices(value: value);
-                        return;
-                      },
-                      // maxHeight: Dimens.twoHundredSeventy,
-                      baseTextStyle: AppStyles.ubHintColor15W500,
-                      prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
-                      items: controller.getNannyData?.services?.toList() ?? [],
-                      itemBuilder: (context, item, isSelected) {
-                        return PopupMenuItem(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: Dimens.edgeInsetsH20V15,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    AppText(
-                                      text: item.toString().tr,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.start,
-                                      style: AppStyles.ubNavyBlue15W600,
-                                    ),
-                                    // if (controller.selectedServices.value
-                                    //         .contains(item) ||
-                                    //     isSelected)
-                                    //   SvgPicture.asset(Assets.iconsCircleTick)
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                color: AppColors.dividerColor,
-                                height: Dimens.two,
-                              )
-                            ],
-                          ),
-                        );
-                      }
-
-                      // {
-                      //   bool isItemSelected =
-                      //       controller.selectedServices.contains(item);
-
-                      //   log("is item selected already :-->. $isItemSelected");
-                      //   return GestureDetector(
-                      //     onTap: () {
-                      //       if (controller.selectedServices.contains(item)) {
-                      //         controller.selectedServices.remove(item);
-                      //       } else {
-                      //         controller.selectedServices.add(item);
-                      //       }
-                      //       controller.update();
-                      //     },
-                      //     child: Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         Padding(
-                      //           padding: Dimens.edgeInsetsH20V15,
-                      //           child: Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               AppText(
-                      //                 text: item.toString().tr,
-                      //                 maxLines: 1,
-                      //                 textAlign: TextAlign.start,
-                      //                 style: AppStyles.ubNavyBlue15W600,
-                      //               ),
-                      //               // if (controller.selectedServices.value
-                      //               //         .contains(item) ||
-                      //               //     isSelected)
-                      //               //   SvgPicture.asset(Assets.iconsCircleTick)
-                      //             ],
-                      //           ),
-                      //         ),
-                      //         Divider(
-                      //           color: AppColors.dividerColor,
-                      //           height: Dimens.two,
-                      //         )
-                      //       ],
-                      //     ),
-                      //   );
-                      // },
-
+                  TextField(
+                    onTap: () {
+                      controller.showMultiSelectDialogServices(context);
+                    },
+                    readOnly: true,
+                    controller: controller.typeOfServiceTextController,
+                    maxLines: 1,
+                    minLines: 1,
+                    decoration: customFieldDeco(
+                      suffix: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 40.0,
                       ),
+                      hintText: "Type of service",
+                      prefixWidget: Padding(
+                        padding: Dimens.edgeInsets12,
+                        child: SvgPicture.asset(
+                          Assets.iconsBrifecaseCross,
+                          height: Dimens.ten,
+                          width: Dimens.ten,
+                        ),
+                      ),
+                    ),
+                    cursorColor: AppColors.blackColor,
+                    cursorWidth: Dimens.one,
+                    style: AppStyles.ubBlack15W600,
+                  ),
+
+                  // /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
+                  // MultiDropDownAppDropdown(
+                  //     hintText: "Type of service",
+                  //     onItemRemoved: (p0, p1) {
+                  //       log("p0-- $p0");
+                  //       log("p1-- $p1");
+                  //     },
+                  //     selectedItem: controller.selectedServices,
+                  //     itemBuilderPhysics: const ScrollPhysics(),
+                  //     onChanged: (value) {
+                  //       log("select value -->> $value");
+                  //       controller.updateSelectedServices(value: value);
+                  //       return;
+                  //     },
+                  //     // maxHeight: Dimens.twoHundredSeventy,
+                  //     baseTextStyle: AppStyles.ubHintColor15W500,
+                  //     prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
+                  //     items: controller.getNannyData?.services?.toList() ?? [],
+                  //     itemBuilder: (context, item, isSelected) {
+                  //       return PopupMenuItem(
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: [
+                  //             Padding(
+                  //               padding: Dimens.edgeInsetsH20V15,
+                  //               child: Row(
+                  //                 mainAxisAlignment:
+                  //                     MainAxisAlignment.spaceBetween,
+                  //                 children: [
+                  //                   AppText(
+                  //                     text: item.toString().tr,
+                  //                     maxLines: 1,
+                  //                     textAlign: TextAlign.start,
+                  //                     style: AppStyles.ubNavyBlue15W600,
+                  //                   ),
+                  //                   // if (controller.selectedServices.value
+                  //                   //         .contains(item) ||
+                  //                   //     isSelected)
+                  //                   //   SvgPicture.asset(Assets.iconsCircleTick)
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             Divider(
+                  //               color: AppColors.dividerColor,
+                  //               height: Dimens.two,
+                  //             )
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }
+
+                  //     // {
+                  //     //   bool isItemSelected =
+                  //     //       controller.selectedServices.contains(item);
+
+                  //     //   log("is item selected already :-->. $isItemSelected");
+                  //     //   return GestureDetector(
+                  //     //     onTap: () {
+                  //     //       if (controller.selectedServices.contains(item)) {
+                  //     //         controller.selectedServices.remove(item);
+                  //     //       } else {
+                  //     //         controller.selectedServices.add(item);
+                  //     //       }
+                  //     //       controller.update();
+                  //     //     },
+                  //     //     child: Column(
+                  //     //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //     //       mainAxisSize: MainAxisSize.min,
+                  //     //       children: [
+                  //     //         Padding(
+                  //     //           padding: Dimens.edgeInsetsH20V15,
+                  //     //           child: Row(
+                  //     //             mainAxisAlignment:
+                  //     //                 MainAxisAlignment.spaceBetween,
+                  //     //             children: [
+                  //     //               AppText(
+                  //     //                 text: item.toString().tr,
+                  //     //                 maxLines: 1,
+                  //     //                 textAlign: TextAlign.start,
+                  //     //                 style: AppStyles.ubNavyBlue15W600,
+                  //     //               ),
+                  //     //               // if (controller.selectedServices.value
+                  //     //               //         .contains(item) ||
+                  //     //               //     isSelected)
+                  //     //               //   SvgPicture.asset(Assets.iconsCircleTick)
+                  //     //             ],
+                  //     //           ),
+                  //     //         ),
+                  //     //         Divider(
+                  //     //           color: AppColors.dividerColor,
+                  //     //           height: Dimens.two,
+                  //     //         )
+                  //     //       ],
+                  //     //     ),
+                  //     //   );
+                  //     // },
+
+                  //     ),
 
                   Dimens.boxHeight16,
 
                   //** SELECT CHILDREN */
 
-                  MultiDropDownAppDropdown(
-                    // maxHeight: controller.childList.length * 20,
-                    // height: controller.childList.length * 20,
-                    hintText: "Select children",
-                    onItemRemoved: (p0, p1) {
-                      log("p0-- $p0");
-                      log("p1-- $p1");
+                  TextField(
+                    onTap: () {
+                      controller.showMultiSelectDialogChildren(context);
                     },
-                    selectedItem: controller.selectedChildList,
-                    itemBuilderPhysics: const ScrollPhysics(),
-                    onChanged: (value) {
-                      controller.updateSelectedChildren(value: value);
-                      return;
-                    },
-                    // maxHeight: Dimens.oneHundredEightyTwo,
-                    baseTextStyle: AppStyles.ubHintColor15W500,
-                    prefix: SvgPicture.asset(Assets.iconsBabyBoy),
-                    items: [
-                      // 'Select all',
-                      ...controller.childList
-                          .map((element) => element.name.toString()),
-                      // "+ Add kids"
-                    ],
-                    itemBuilder: (context, item, isSelected) {
-                      return PopupMenuItem(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            //
-                            Padding(
-                              padding: Dimens.edgeInsetsH20V15,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppText(
-                                    text: item.toString().tr,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.start,
-                                    style: AppStyles.ubNavyBlue15W600,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              color: AppColors.dividerColor,
-                              height: Dimens.two,
-                            )
-                          ],
+                    readOnly: true,
+                    controller: controller.selectChildrenTextController,
+                    maxLines: 1,
+                    minLines: 1,
+                    decoration: customFieldDeco(
+                      suffix: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 40.0,
+                      ),
+                      hintText: "Select Children",
+                      prefixWidget: Padding(
+                        padding: Dimens.edgeInsets12,
+                        child: SvgPicture.asset(
+                          Assets.iconsBrifecaseCross,
+                          height: Dimens.ten,
+                          width: Dimens.ten,
                         ),
-                      );
-                      // bool isItemSelected =
-                      //     controller.selectedChildList.contains(item);
-
-                      // log("is item selected already :-->. $isItemSelected");
-                      // return GestureDetector(
-                      //   onTap: () {
-                      //     if (controller.selectedChildList.contains(item)) {
-                      //       controller.selectedChildList.remove(item);
-                      //     } else {
-                      //       controller.selectedChildList.add(item);
-                      //     }
-                      //     controller.update();
-                      //   },
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     mainAxisSize: MainAxisSize.min,
-                      //     children: [
-                      //       //
-                      //       Padding(
-                      //         padding: Dimens.edgeInsetsH20V15,
-                      //         child: Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             AppText(
-                      //               text: item.toString().tr,
-                      //               maxLines: 1,
-                      //               textAlign: TextAlign.start,
-                      //               style: AppStyles.ubNavyBlue15W600,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       Divider(
-                      //         color: AppColors.dividerColor,
-                      //         height: Dimens.two,
-                      //       )
-                      //     ],
-                      //   ),
-
-                      // );
-                    },
+                      ),
+                    ),
+                    cursorColor: AppColors.blackColor,
+                    cursorWidth: Dimens.one,
+                    style: AppStyles.ubBlack15W600,
                   ),
+
+                  // MultiDropDownAppDropdown(
+                  //   // maxHeight: controller.childList.length * 20,
+                  //   // height: controller.childList.length * 20,
+                  //   hintText: "Select children",
+                  //   onItemRemoved: (p0, p1) {
+                  //     log("p0-- $p0");
+                  //     log("p1-- $p1");
+                  //   },
+                  //   selectedItem: controller.selectedChildList,
+                  //   itemBuilderPhysics: const ScrollPhysics(),
+                  //   onChanged: (value) {
+                  //     controller.updateSelectedChildren(value: value);
+                  //     return;
+                  //   },
+                  //   // maxHeight: Dimens.oneHundredEightyTwo,
+                  //   baseTextStyle: AppStyles.ubHintColor15W500,
+                  //   prefix: SvgPicture.asset(Assets.iconsBabyBoy),
+                  //   items: [
+                  //     // 'Select all',
+                  //     ...controller.childList
+                  //         .map((element) => element.name.toString()),
+                  //     // "+ Add kids"
+                  //   ],
+                  //   itemBuilder: (context, item, isSelected) {
+                  //     return PopupMenuItem(
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                  //           //
+                  //           Padding(
+                  //             padding: Dimens.edgeInsetsH20V15,
+                  //             child: Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 AppText(
+                  //                   text: item.toString().tr,
+                  //                   maxLines: 1,
+                  //                   textAlign: TextAlign.start,
+                  //                   style: AppStyles.ubNavyBlue15W600,
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           Divider(
+                  //             color: AppColors.dividerColor,
+                  //             height: Dimens.two,
+                  //           )
+                  //         ],
+                  //       ),
+                  //     );
+                  //     // bool isItemSelected =
+                  //     //     controller.selectedChildList.contains(item);
+
+                  //     // log("is item selected already :-->. $isItemSelected");
+                  //     // return GestureDetector(
+                  //     //   onTap: () {
+                  //     //     if (controller.selectedChildList.contains(item)) {
+                  //     //       controller.selectedChildList.remove(item);
+                  //     //     } else {
+                  //     //       controller.selectedChildList.add(item);
+                  //     //     }
+                  //     //     controller.update();
+                  //     //   },
+                  //     //   child: Column(
+                  //     //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     //     mainAxisSize: MainAxisSize.min,
+                  //     //     children: [
+                  //     //       //
+                  //     //       Padding(
+                  //     //         padding: Dimens.edgeInsetsH20V15,
+                  //     //         child: Row(
+                  //     //           mainAxisAlignment:
+                  //     //               MainAxisAlignment.spaceBetween,
+                  //     //           children: [
+                  //     //             AppText(
+                  //     //               text: item.toString().tr,
+                  //     //               maxLines: 1,
+                  //     //               textAlign: TextAlign.start,
+                  //     //               style: AppStyles.ubNavyBlue15W600,
+                  //     //             ),
+                  //     //           ],
+                  //     //         ),
+                  //     //       ),
+                  //     //       Divider(
+                  //     //         color: AppColors.dividerColor,
+                  //     //         height: Dimens.two,
+                  //     //       )
+                  //     //     ],
+                  //     //   ),
+
+                  //     // );
+                  //   },
+                  // ),
 
                   // AppDropdown(
                   //   selectedItem: ' ',

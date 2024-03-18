@@ -292,11 +292,12 @@ class CustomerHomeView extends StatelessWidget {
               ? GoogleMap(
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(30.7046, 76.7179),
-                    zoom: 5,
+                    zoom: 15,
                   ),
                   markers: controller.markers,
                   onMapCreated: (contro) {
-                    controller.onMapCreated(controller: contro);
+                    controller.googleMapController = contro;
+                    controller.update();
                   },
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,

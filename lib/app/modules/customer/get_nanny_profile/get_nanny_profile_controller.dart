@@ -17,6 +17,9 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/widgets/multi_selct_dialog.dart';
+import 'package:northshore_nanny_flutter/app/widgets/multi_select_children.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../models/get_nanny_booking_detail_in_customer.dart';
 
@@ -39,6 +42,9 @@ class GetNannyProfileController extends GetxController {
   RxList<ChildData> childList = <ChildData>[].obs;
   RxList<String> selectedServices = <String>[].obs;
   RxList<String> selectedChildList = <String>[].obs;
+
+  TextEditingController typeOfServiceTextController = TextEditingController();
+  TextEditingController selectChildrenTextController = TextEditingController();
 
   /// used to store child ids
   RxList<int> selectedChildIds = <int>[].obs;
@@ -429,6 +435,67 @@ class GetNannyProfileController extends GetxController {
       );
     } else {
       return DateTime.now();
+    }
+  }
+
+  void showMultiSelectDialogServices(BuildContext context) async {
+    final List<String>? selectedOptions = await showDialog<List<String>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          title: "Select Services",
+          options: getNannyData!.services!.toList(),
+          selectedOptions: selectedServices, // initially selected options
+        );
+      },
+    );
+
+    if (selectedOptions != null) {
+      selectedServices.value = selectedOptions;
+
+      String items = selectedServices.join(', ');
+
+      typeOfServiceTextController.text = items;
+      update();
+      // Do something with the selected options
+      print('Selected options: $selectedOptions');
+    }
+  }
+
+  /// REDIRECT TO ADD CHILD SCREEN
+  redirectToAddChildScreen() async {
+    bool check = await Get.toNamed(Routes.addChildProfile);
+
+    if (check) {
+      getChildListApi();
+    }
+  }
+
+  void showMultiSelectDialogChildren(BuildContext context) async {
+    final List<String>? selectedOptions = await showDialog<List<String>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialogChildren(
+          onTapOnAddChild: () {
+            Get.back();
+            redirectToAddChildScreen();
+          },
+          title: "Select Children",
+          options: childList.map((child) => child.name).toList(),
+          selectedOptions: selectedChildList, // initially selected options
+        );
+      },
+    );
+
+    if (selectedOptions != null) {
+      selectedChildList.value = selectedOptions;
+
+      String items = selectedChildList.join(', ');
+
+      selectChildrenTextController.text = items;
+      update();
+      // Do something with the selected options
+      print('Selected options: $selectedOptions');
     }
   }
 }

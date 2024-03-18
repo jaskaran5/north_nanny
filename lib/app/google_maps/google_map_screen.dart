@@ -11,49 +11,53 @@ class CurrentLocationGoogleMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var googleMapViewController = Get.put(GoogleMapViewController());
-    return Scaffold(
-        body: SizedBox(
-          height: Get.height,
-          width: Get.width,
-          child: Obx(
-            () => GoogleMap(
-                myLocationButtonEnabled: true,
-                zoomControlsEnabled: false,
-                initialCameraPosition: CameraPosition(
-                  target: googleMapViewController.currentLatLng.value!,
-                  zoom: 12.0,
-                ),
-                onMapCreated: (GoogleMapController controller) {
-                  googleMapViewController.googleMapController
-                      .complete(controller);
-                },
-                markers: <Marker>{
-                  Marker(
-                    markerId: const MarkerId('current_location'),
-                    position: googleMapViewController.currentLatLng.value ??
-                        const LatLng(0, 0),
-                    infoWindow: const InfoWindow(
-                      title: 'Current Location',
-                      snippet: 'Your current location',
+    // var googleMapViewController = Get.put(GoogleMapViewController());
+    return GetBuilder<GoogleMapViewController>(
+      builder: (googleMapViewController) {
+        return Scaffold(
+            body: SizedBox(
+              height: Get.height,
+              width: Get.width,
+              child: Obx(
+                () => GoogleMap(
+                    myLocationButtonEnabled: true,
+                    zoomControlsEnabled: false,
+                    initialCameraPosition: CameraPosition(
+                      target: googleMapViewController.currentLatLng.value!,
+                      zoom: 15.0,
                     ),
-                  ),
-                }),
-          ),
-        ),
-        floatingActionButton: CustomButton(
-          titleStyle: AppStyles.fffUrban15w600,
-          title: "Done",
-          backGroundColor: AppColors.navyBlue,
-          onTap: () {
-            if (googleMapViewController.isFromEdit.value) {
-              googleMapViewController.getEditLocation().then((value) {
-                Get.back(result: value);
-              });
-            } else {
-              googleMapViewController.saveLocationCoordinates();
-            }
-          },
-        ));
+                    onMapCreated: (GoogleMapController controller) {
+                      googleMapViewController.googleMapController
+                          .complete(controller);
+                    },
+                    markers: <Marker>{
+                      Marker(
+                        markerId: const MarkerId('current_location'),
+                        position: googleMapViewController.currentLatLng.value ??
+                            const LatLng(0, 0),
+                        infoWindow: const InfoWindow(
+                          title: 'Current Location',
+                          snippet: 'Your current location',
+                        ),
+                      ),
+                    }),
+              ),
+            ),
+            floatingActionButton: CustomButton(
+              titleStyle: AppStyles.fffUrban15w600,
+              title: "Done",
+              backGroundColor: AppColors.navyBlue,
+              onTap: () {
+                if (googleMapViewController.isFromEdit.value) {
+                  googleMapViewController.getEditLocation().then((value) {
+                    Get.back(result: value);
+                  });
+                } else {
+                  googleMapViewController.saveLocationCoordinates();
+                }
+              },
+            ));
+      },
+    );
   }
 }
