@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_dashboard_model.dart';
@@ -16,7 +18,6 @@ class NannyHomeController extends GetxController {
   /// used to switch on or off
   bool isSwitchOn = true;
 
-
   /// used to store data from backend
   var nannyHomeData = NannyDashboardModel();
 
@@ -26,9 +27,13 @@ class NannyHomeController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
+      var body = {
+        "utcDateTime": DateTime.now().toUtc().toIso8601String(),
+      };
       _apiHelper
-          .getPosts(
+          .postApi(
         ApiUrls.nannyDashboard,
+        jsonEncode(body),
       )
           .futureValue((value) {
         printInfo(info: "Get Nanny Home response value $value");

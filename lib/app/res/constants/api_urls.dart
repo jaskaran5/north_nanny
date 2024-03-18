@@ -22,6 +22,7 @@ class ApiUrls {
   static const String customerLogOut = "api/User/LogOut";
   static const String changePassword = "api/User/ChangePassword";
   static const String reviewList = "api/User/ReviewList";
+  static const String postRatingAndReview = "api/UserDashBoard/RatingAndReview";
 
   ///
   ///
@@ -37,7 +38,7 @@ class ApiUrls {
   static const String userDashBoard = "api/UserDashBoard/UserDashBoard";
   static const String favouriteNannyList =
       "api/UserDashBoard/MyFavoriteNannyList";
-  static const String ratingAndReview = "api/UserDashBoard/RatingAndReview";
+
   static const String addOrRemoveFavoriteNanny =
       "api/UserDashBoard/AddOrRemoveFavoriteNanny";
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";

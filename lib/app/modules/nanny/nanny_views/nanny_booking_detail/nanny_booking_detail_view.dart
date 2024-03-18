@@ -55,37 +55,44 @@ class NannyBookingDetailView extends StatelessWidget {
                   if (controller.nannyBookingDetailStatus ==
                           NannyBookingDetailStatus.endJob ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.waitingForApproval) ...[
-                    Container(
-                      padding: Dimens.edgeInsets16,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          Dimens.fourteen,
-                        ),
-                        border: Border.all(
-                            color: AppColors.navyBlue, width: Dimens.two),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          AppText(
-                            text: TranslationKeys.totalTimeLeft.tr,
-                            style: AppStyles.ubBlack14W700,
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                          ),
-                          Dimens.boxHeight10,
-                          AppText(
-                            text: '04:00:00',
-                            style: AppStyles.ubNavyBlue34W700,
-                            maxLines: 1,
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-                    ),
+                              NannyBookingDetailStatus.waitingForApproval &&
+                          controller.bookingDetailsModel?.data?.isJobStarted ==
+                              true) ...[
+                    GetBuilder<NannyBookingDetailController>(
+                        id: 'timer-view',
+                        builder: (context) {
+                          return Container(
+                            padding: Dimens.edgeInsets16,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.fourteen,
+                              ),
+                              border: Border.all(
+                                  color: AppColors.navyBlue, width: Dimens.two),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppText(
+                                  text: TranslationKeys.totalTimeLeft.tr,
+                                  style: AppStyles.ubBlack14W700,
+                                  textAlign: TextAlign.start,
+                                  maxLines: 1,
+                                ),
+                                Dimens.boxHeight10,
+                                AppText(
+                                  text: Utility.returnHMS(
+                                      second: controller.seconds),
+                                  style: AppStyles.ubNavyBlue34W700,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                     Dimens.boxHeight14,
                   ],
                   CustomBookingDetailView(
@@ -255,7 +262,8 @@ class NannyBookingDetailView extends StatelessWidget {
                     totalTimeHour:
                         controller.bookingDetailsModel?.data?.totalHour ?? 0,
                     totalTimeHourPrice:
-                        controller.bookingDetailsModel?.data?.totalHour,
+                        controller.bookingDetailsModel?.data?.hourlyPrice ??
+                            0.0,
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
@@ -501,12 +509,15 @@ class NannyBookingDetailView extends StatelessWidget {
                       ],
                     )
                   ],
-                  if (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.onMyWay ||
+                  if (controller.nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay && controller.bookingDetailsModel?.data?.isJobStarted == true ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.arrived ||
+                              NannyBookingDetailStatus.arrived &&
+                          controller.bookingDetailsModel?.data?.isJobStarted ==
+                              true ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.endJob) ...[
+                              NannyBookingDetailStatus.endJob &&
+                          controller.bookingDetailsModel?.data?.isJobStarted ==
+                              true) ...[
                     CustomButton(
                       title: controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay
@@ -541,10 +552,12 @@ class NannyBookingDetailView extends StatelessWidget {
                           // controller.nannyBookingDetailStatus =
                           //     NannyBookingDetailStatus.endJob;
                           controller.updateStatus(
-                              bookingId: controller
-                                      .bookingDetailsModel?.data?.bookingId ??
-                                  0,
-                              bookingStatus: 5);
+                            bookingId: controller
+                                    .bookingDetailsModel?.data?.bookingId ??
+                                0,
+                            bookingStatus: 5,
+                            startTime: DateTime.now(),
+                          );
                         } else if (controller.nannyBookingDetailStatus ==
                             NannyBookingDetailStatus.endJob) {
                           controller.initBooking();
@@ -552,7 +565,8 @@ class NannyBookingDetailView extends StatelessWidget {
                               bookingId: controller
                                       .bookingDetailsModel?.data?.bookingId ??
                                   0,
-                              bookingStatus: 6);
+                              bookingStatus: 6,
+                              endTime: DateTime.now());
                           // controller.nannyBookingDetailStatus =
                           //     NannyBookingDetailStatus.waitingForApproval;
                         }
@@ -602,6 +616,16 @@ class NannyBookingDetailView extends StatelessWidget {
                     ),
                   ],
                   Dimens.boxHeight16,
+                  if (controller.bookingDetailsModel?.data?.isJobStarted ==
+                      false) ...[
+                    CustomButton(
+                      backGroundColor: AppColors.fC3030RedColor,
+                      title: 'Decline',
+                      onTap: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
                 ],
               ),
             ),

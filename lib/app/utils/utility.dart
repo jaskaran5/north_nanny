@@ -588,4 +588,25 @@ class Utility {
     // Return the absolute value to handle cases where end time is before start time
     return differenceInMinutes.abs();
   }
+
+  /// this method is used to get greeting message.
+  static String getGreetingMessage() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good morning';
+    } else if (hour < 17) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  }
+
+  /// this method is used to return the hour, minutes, and seconds according to second.
+  static String returnHMS({required int second}) {
+    // Convert seconds to hours, minutes, and seconds
+    int hours = second ~/ 3600;
+    int minutes = (second ~/ 60) % 60;
+    int seconds = second % 60;
+    return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -23,11 +24,13 @@ class NannyBookingDetailController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
 
   late NannyBookingDetailStatus nannyBookingDetailStatus;
-
+  late Timer timer;
+  int seconds = 0;
   BookingDetailsModel? bookingDetailsModel;
 
   initBooking() {
-    if (nannyBookingDetailStatus == NannyBookingDetailStatus.endJob) {
+    if (nannyBookingDetailStatus ==
+        NannyBookingDetailStatus.waitingForApproval) {
       Timer(
         const Duration(seconds: 3),
         () {
@@ -49,6 +52,9 @@ class NannyBookingDetailController extends GetxController {
           );
         },
       );
+    }
+    if (bookingDetailsModel?.data?.isJobStarted==true) {
+      showTimer(startTime: DateTime.now());
     }
   }
 
@@ -80,7 +86,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.arrived;
     } else if (bookingStatus == 5) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.endJob;
-    } else if (bookingStatus == 7) {
+    } else if (bookingStatus == 6) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
     }
     update();
@@ -130,6 +136,8 @@ class NannyBookingDetailController extends GetxController {
   updateStatus({
     required int bookingId,
     required int bookingStatus,
+    DateTime? startTime,
+    DateTime? endTime,
   }) async {
     try {
       if (!(await Utils.hasNetwork())) {
@@ -138,7 +146,10 @@ class NannyBookingDetailController extends GetxController {
       var body = {
         "bookingId": bookingId,
         "status": bookingStatus,
+        if (startTime != null) "utcStartTime": startTime,
+        if (endTime != null) "utcEndTime": endTime,
       };
+      log('update status body -> $body');
       _apiHelper
           .postApi(
         ApiUrls.updateBookingStatus,
@@ -148,7 +159,11 @@ class NannyBookingDetailController extends GetxController {
         printInfo(info: "Update booking status $value");
         var response = BookingStatusModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
+          log('booking Type-:${response.data?.bookingStatus}');
+          if (response.data?.bookingStatus == 6) {
+            showTimer(startTime: DateTime.now());
+          }
+          typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -168,6 +183,7 @@ class NannyBookingDetailController extends GetxController {
       }
       var body = {
         "bookingId": bookingId,
+        "currentUtcTime": DateTime.now().toUtc().toIso8601String(),
       };
       debugPrint('body of booking details:$body');
       _apiHelper
@@ -190,5 +206,13 @@ class NannyBookingDetailController extends GetxController {
       printError(
           info: "Customer book nanny Customer details get  API ISSUE $s");
     }
+  }
+
+  /// used to show the start time.
+  showTimer({required DateTime startTime}) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      seconds = DateTime.now().difference(startTime).inSeconds;
+      update(['timer-view']);
+    });
   }
 }

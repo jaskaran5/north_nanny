@@ -75,7 +75,7 @@ class CustomBookingDetailView extends StatelessWidget {
                 ),
                 Dimens.boxWidth8,
                 AppText(
-                  text: '$hours hours',
+                  text: '$hours Minutes',
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,

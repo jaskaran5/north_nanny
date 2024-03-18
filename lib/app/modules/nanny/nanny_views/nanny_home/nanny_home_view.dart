@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -27,36 +26,50 @@ class NannyHomeView extends StatelessWidget {
           appBar: CustomAppbarWidget(
             leadingWidth: Dimens.zero,
             titleWidget: Container(
+              height: 100,
               padding: Dimens.edgeInsets16,
               margin: Dimens.edgeInsetsT10,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppText(
-                        text: controller.nannyHomeData.data?.address,
-                        style: AppStyles.ubLocationColor14W400,
-                        maxLines: 1,
-                      ),
-                      Dimens.boxHeight2,
-                      AppText(
-                        text:
-                            'Good morning,${controller.nannyHomeData.data?.name.toString().capitalizeFirst} ',
-                        style: AppStyles.pdBlack18W600,
-                        maxLines: 1,
-                      ),
-                    ],
+                  SizedBox(
+                    width: Dimens.twoHundredFifty,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                          text: controller.nannyHomeData.data?.address,
+                          style: AppStyles.ubLocationColor14W400,
+                          maxLines: 1,
+                        ),
+                        Dimens.boxHeight2,
+                        AppText(
+                          text:
+                              '${Utility.getGreetingMessage()},${controller.nannyHomeData.data?.name.toString().capitalizeFirst} ',
+                          style: AppStyles.pdBlack18W600,
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Transform.scale(
-                        scale: .8,
-                        child: CupertinoSwitch(
+                      SizedBox(
+                        height: Dimens.twentyTwo,
+                        width: Dimens.fortyOne,
+                        child: Switch(
+                          activeTrackColor: AppColors.navyBlue,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          inactiveTrackColor: AppColors.trackColorDCDFEB,
+                          trackOutlineWidth:
+                              MaterialStatePropertyAll(Dimens.two),
+                          thumbColor: const MaterialStatePropertyAll(
+                              AppColors.primaryColor),
                           value: controller.isSwitchOn,
                           onChanged: (value) {
                             controller.isSwitchOn = value;
@@ -64,8 +77,6 @@ class NannyHomeView extends StatelessWidget {
                             controller.update();
                           },
                           activeColor: AppColors.navyBlue,
-                          thumbColor: AppColors.primaryColor,
-                          trackColor: AppColors.trackColorDCDFEB,
                         ),
                       ),
                       Dimens.boxHeight2,
@@ -252,8 +263,8 @@ class NannyHomeView extends StatelessWidget {
                         child: Center(
                             child: Image.asset(
                           Assets.imagesNoDataPng,
-                          height: Dimens.twoHundredFifty,
-                          width: Dimens.twoHundredFifty,
+                          height: Dimens.twoHundred,
+                          width: Dimens.twoHundred,
                         )),
                       ),
               ],

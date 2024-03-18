@@ -46,8 +46,11 @@ class Data {
   List<Child>? children;
   UserDetails? userDetails;
   int? totalChildren;
+  DateTime? startTime;
+  bool? isJobStarted;
   int? totalHour;
   double? totalAmount;
+  double? hourlyPrice;
   List<RatingList>? userReviewList;
 
   Data({
@@ -66,6 +69,9 @@ class Data {
     this.totalAmount,
     this.userReviewList,
     this.bookingId,
+    this.hourlyPrice,
+    this.isJobStarted,
+    this.startTime,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -74,6 +80,9 @@ class Data {
         location: json["location"],
         latitude: json["latitude"],
         longitude: json["longitude"],
+        hourlyPrice: json["hourlyprice"] ?? 0.0,
+        isJobStarted: json["isJobStarted"] ?? false,
+        startTime: json["startTime"],
         bookingDate: json["bookingDate"] == null
             ? null
             : DateTime.parse(json["bookingDate"]),
@@ -107,6 +116,9 @@ class Data {
         "location": location,
         "latitude": latitude,
         "longitude": longitude,
+        "startTime": startTime,
+        "isJobStarted": isJobStarted,
+        "hourlyprice": hourlyPrice,
         "bookingDate": bookingDate?.toIso8601String(),
         "openingDate": openingDate?.toIso8601String(),
         "closingDate": closingDate?.toIso8601String(),
