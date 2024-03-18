@@ -33,6 +33,8 @@ class MultiDropDownAppDropdown<T> extends StatelessWidget {
   final double? mainHeight;
   final InputDecoration? dropdownSearchDecoration;
   final Widget? prefix;
+  final String? hintText;
+
   final ScrollPhysics itemBuilderPhysics;
   final void Function(List<dynamic>, dynamic) onItemRemoved;
 
@@ -65,6 +67,7 @@ class MultiDropDownAppDropdown<T> extends StatelessWidget {
     this.prefix,
     this.itemBuilderPhysics = const NeverScrollableScrollPhysics(),
     this.mainHeight,
+    this.hintText,
   });
 
   @override
@@ -76,6 +79,7 @@ class MultiDropDownAppDropdown<T> extends StatelessWidget {
             baseStyle: baseTextStyle ?? AppStyles.ubNavyBlue15W600,
             dropdownSearchDecoration: dropdownSearchDecoration ??
                 InputDecoration(
+                  hintText: hintText,
                   prefixIcon: Padding(
                     padding: Dimens.edgeInsets12,
                     child: prefix,
@@ -124,10 +128,10 @@ class MultiDropDownAppDropdown<T> extends StatelessWidget {
             },
             itemBuilder: itemBuilder,
             listViewProps: ListViewProps(physics: itemBuilderPhysics),
-            constraints: BoxConstraints(
-              minHeight: mainHeight ?? Dimens.ninety,
-              maxHeight: maxHeight ?? Dimens.hundredFive,
-            ),
+            // constraints: const BoxConstraints(
+            //     // minHeight: mainHeight ?? Dimens.ninety,
+            //     // maxHeight: maxHeight ?? Dimens.hundredFive
+            //     ),
           ),
           dropdownButtonProps: dropDownButtonProps ??
               DropdownButtonProps(

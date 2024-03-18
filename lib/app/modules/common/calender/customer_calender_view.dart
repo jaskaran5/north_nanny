@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_ca
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_date_format_tile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_dot.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
@@ -107,13 +109,18 @@ class CustomerCalenderView extends StatelessWidget {
                                   BookingDetailController>()) {
                                 BookingDetailBinding().dependencies();
                               }
+                              Get.find<BookingDetailController>().updateId(
+                                  id: controller.userBookingData!.bookingId);
                               Get.find<BookingDetailController>()
                                       .bookingDetailStatus =
                                   controller.selectedDay.day ==
                                           DateTime.now().day
                                       ? BookingDetailStatus.present
                                       : BookingDetailStatus.past;
-                              Get.to(const BookingDetailView());
+                              Get.to(const BookingDetailView(),
+                                  arguments: controller
+                                      .userBookingData!.bookingId
+                                      .toString());
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -221,17 +228,26 @@ class CustomerCalenderView extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Container(
-                                          height: Dimens.hundred,
-                                          width: Dimens.eightySix,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimens.ten),
-                                          ),
-                                          child: Image.asset(
-                                            Assets.iconsImage,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
+                                            height: Dimens.hundred,
+                                            width: Dimens.eightySix,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimens.ten),
+                                            ),
+                                            child: CustomCacheNetworkImage(
+                                                img: controller
+                                                        .singleDateBookingData
+                                                        ?.image ??
+                                                    '',
+                                                size: 100,
+                                                imageRadius: 15)
+
+                                            //  Image.asset(
+                                            //   Assets.iconsImage,
+                                            //   fit: BoxFit.contain,
+                                            // ),
+                                            ),
                                         Dimens.boxWidth16,
                                         Column(
                                           mainAxisAlignment:
@@ -284,7 +300,7 @@ class CustomerCalenderView extends StatelessWidget {
                                                       children: [
                                                         TextSpan(
                                                           text:
-                                                              '(${controller.singleDateBookingData?.reviewCount} reviews)',
+                                                              ' (${controller.singleDateBookingData?.reviewCount} reviews)',
                                                           style: AppStyles
                                                               .ubLightNavy12W400,
                                                         ),
@@ -300,7 +316,7 @@ class CustomerCalenderView extends StatelessWidget {
                                               child: AppText(
                                                 text: controller
                                                         .singleDateBookingData
-                                                        ?.name ??
+                                                        ?.aboutMe ??
                                                     '',
                                                 maxLines: 4,
                                                 style:

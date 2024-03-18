@@ -329,23 +329,24 @@ class ScheduleNannyView extends StatelessWidget {
                           children: [
                             Flexible(
                               child: AppText(
-                                text: 'The nanny is not available  ',
-                                maxLines: 1,
+                                text:
+                                    'The nanny is not available ${controller.singleDay?.data?.bookedSlot?.map((e) => 'from ${Utility.formatTimeTo12Hour(e.openingTime.toString())} to ${Utility.formatTimeTo12Hour(e.closingTime.toString())} ').toList().join(',\n ')} ',
+                                maxLines: 2,
                                 style: AppStyles.ubHintColor12W500,
                                 textAlign: TextAlign.left,
                               ),
                             ),
-                            Dimens.boxHeight5,
-                            AppText(
-                              text: controller.singleDay?.data?.bookedSlot
-                                  ?.map((e) =>
-                                      ' from ${Utility.formatTimeTo12Hour(e.openingTime.toString())} to ${Utility.formatTimeTo12Hour(e.closingTime.toString())} \n ')
-                                  .toList()
-                                  .join(', '),
-                              style: AppStyles.ubHintColor12W500,
-                              textAlign: TextAlign.left,
-                              maxLines: 4,
-                            )
+                            // Dimens.boxHeight5,
+                            // AppText(
+                            //   text: controller.singleDay?.data?.bookedSlot
+                            //       ?.map((e) =>
+                            //           ' from ${Utility.formatTimeTo12Hour(e.openingTime.toString())} to ${Utility.formatTimeTo12Hour(e.closingTime.toString())} \n ')
+                            //       .toList()
+                            //       .join(', '),
+                            //   style: AppStyles.ubHintColor12W500,
+                            //   textAlign: TextAlign.left,
+                            //   maxLines: 4,
+                            // )
                           ],
                         )
                       ],
@@ -355,73 +356,112 @@ class ScheduleNannyView extends StatelessWidget {
 
                   /// TYPE OF SERVICE ==========>>>>>>>>> DROPDOWN <<<<<<-------
                   MultiDropDownAppDropdown(
-                    onItemRemoved: (p0, p1) {
-                      log("p0-- $p0");
-                      log("p1-- $p1");
-                    },
-                    selectedItem: controller.selectedServices,
-                    itemBuilderPhysics: const ScrollPhysics(),
-                    onChanged: (value) {
-                      log("select value -->> $value");
-                      controller.updateSelectedServices(value: value);
-                      return;
-                    },
-                    maxHeight: Dimens.twoHundredSeventy,
-                    baseTextStyle: AppStyles.ubHintColor15W500,
-                    prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
-                    items: controller.getNannyData?.services?.toList() ?? [],
-                    itemBuilder: (context, item, isSelected) {
-                      bool isItemSelected =
-                          controller.selectedServices.contains(item);
-
-                      log("is item selected already :-->. $isItemSelected");
-                      return GestureDetector(
-                        onTap: () {
-                          if (controller.selectedServices.contains(item)) {
-                            controller.selectedServices.remove(item);
-                          } else {
-                            controller.selectedServices.add(item);
-                          }
-                          controller.update();
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: Dimens.edgeInsetsH20V15,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppText(
-                                    text: item.toString().tr,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.start,
-                                    style: AppStyles.ubNavyBlue15W600,
-                                  ),
-                                  // if (controller.selectedServices.value
-                                  //         .contains(item) ||
-                                  //     isSelected)
-                                  //   SvgPicture.asset(Assets.iconsCircleTick)
-                                ],
+                      hintText: "Type of service",
+                      onItemRemoved: (p0, p1) {
+                        log("p0-- $p0");
+                        log("p1-- $p1");
+                      },
+                      selectedItem: controller.selectedServices,
+                      itemBuilderPhysics: const ScrollPhysics(),
+                      onChanged: (value) {
+                        log("select value -->> $value");
+                        controller.updateSelectedServices(value: value);
+                        return;
+                      },
+                      // maxHeight: Dimens.twoHundredSeventy,
+                      baseTextStyle: AppStyles.ubHintColor15W500,
+                      prefix: SvgPicture.asset(Assets.iconsBrifecaseCross),
+                      items: controller.getNannyData?.services?.toList() ?? [],
+                      itemBuilder: (context, item, isSelected) {
+                        return PopupMenuItem(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: Dimens.edgeInsetsH20V15,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    AppText(
+                                      text: item.toString().tr,
+                                      maxLines: 1,
+                                      textAlign: TextAlign.start,
+                                      style: AppStyles.ubNavyBlue15W600,
+                                    ),
+                                    // if (controller.selectedServices.value
+                                    //         .contains(item) ||
+                                    //     isSelected)
+                                    //   SvgPicture.asset(Assets.iconsCircleTick)
+                                  ],
+                                ),
                               ),
-                            ),
-                            Divider(
-                              color: AppColors.dividerColor,
-                              height: Dimens.two,
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                              Divider(
+                                color: AppColors.dividerColor,
+                                height: Dimens.two,
+                              )
+                            ],
+                          ),
+                        );
+                      }
+
+                      // {
+                      //   bool isItemSelected =
+                      //       controller.selectedServices.contains(item);
+
+                      //   log("is item selected already :-->. $isItemSelected");
+                      //   return GestureDetector(
+                      //     onTap: () {
+                      //       if (controller.selectedServices.contains(item)) {
+                      //         controller.selectedServices.remove(item);
+                      //       } else {
+                      //         controller.selectedServices.add(item);
+                      //       }
+                      //       controller.update();
+                      //     },
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         Padding(
+                      //           padding: Dimens.edgeInsetsH20V15,
+                      //           child: Row(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceBetween,
+                      //             children: [
+                      //               AppText(
+                      //                 text: item.toString().tr,
+                      //                 maxLines: 1,
+                      //                 textAlign: TextAlign.start,
+                      //                 style: AppStyles.ubNavyBlue15W600,
+                      //               ),
+                      //               // if (controller.selectedServices.value
+                      //               //         .contains(item) ||
+                      //               //     isSelected)
+                      //               //   SvgPicture.asset(Assets.iconsCircleTick)
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         Divider(
+                      //           color: AppColors.dividerColor,
+                      //           height: Dimens.two,
+                      //         )
+                      //       ],
+                      //     ),
+                      //   );
+                      // },
+
+                      ),
 
                   Dimens.boxHeight16,
 
                   //** SELECT CHILDREN */
 
                   MultiDropDownAppDropdown(
+                    // maxHeight: controller.childList.length * 20,
+                    // height: controller.childList.length * 20,
+                    hintText: "Select children",
                     onItemRemoved: (p0, p1) {
                       log("p0-- $p0");
                       log("p1-- $p1");
@@ -432,7 +472,7 @@ class ScheduleNannyView extends StatelessWidget {
                       controller.updateSelectedChildren(value: value);
                       return;
                     },
-                    maxHeight: Dimens.twoHundredSeventy,
+                    // maxHeight: Dimens.oneHundredEightyTwo,
                     baseTextStyle: AppStyles.ubHintColor15W500,
                     prefix: SvgPicture.asset(Assets.iconsBabyBoy),
                     items: [
@@ -442,19 +482,7 @@ class ScheduleNannyView extends StatelessWidget {
                       // "+ Add kids"
                     ],
                     itemBuilder: (context, item, isSelected) {
-                      bool isItemSelected =
-                          controller.selectedChildList.contains(item);
-
-                      log("is item selected already :-->. $isItemSelected");
-                      return GestureDetector(
-                        onTap: () {
-                          if (controller.selectedChildList.contains(item)) {
-                            controller.selectedChildList.remove(item);
-                          } else {
-                            controller.selectedChildList.add(item);
-                          }
-                          controller.update();
-                        },
+                      return PopupMenuItem(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -482,6 +510,47 @@ class ScheduleNannyView extends StatelessWidget {
                           ],
                         ),
                       );
+                      // bool isItemSelected =
+                      //     controller.selectedChildList.contains(item);
+
+                      // log("is item selected already :-->. $isItemSelected");
+                      // return GestureDetector(
+                      //   onTap: () {
+                      //     if (controller.selectedChildList.contains(item)) {
+                      //       controller.selectedChildList.remove(item);
+                      //     } else {
+                      //       controller.selectedChildList.add(item);
+                      //     }
+                      //     controller.update();
+                      //   },
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     mainAxisSize: MainAxisSize.min,
+                      //     children: [
+                      //       //
+                      //       Padding(
+                      //         padding: Dimens.edgeInsetsH20V15,
+                      //         child: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             AppText(
+                      //               text: item.toString().tr,
+                      //               maxLines: 1,
+                      //               textAlign: TextAlign.start,
+                      //               style: AppStyles.ubNavyBlue15W600,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       Divider(
+                      //         color: AppColors.dividerColor,
+                      //         height: Dimens.two,
+                      //       )
+                      //     ],
+                      //   ),
+
+                      // );
                     },
                   ),
 
@@ -783,6 +852,21 @@ class ScheduleNannyView extends StatelessWidget {
 
                       /// confirm booking api.
                       controller.confirmBookingApi(
+                        hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
+                            childCount: controller.selectedChildList.length,
+                            minuets: Utility.calculateTotalMinutesDifference(
+                                controller.startTime != null
+                                    ? controller.startTime ?? TimeOfDay.now()
+                                    : Utility.convertDateTimeToTimeOfDay(
+                                        controller.singleDay?.data
+                                                ?.bookingDetail?.openingTime ??
+                                            DateTime.now()),
+                                controller.endTime != null
+                                    ? controller.endTime ?? TimeOfDay.now()
+                                    : Utility.convertDateTimeToTimeOfDay(
+                                        controller.singleDay?.data
+                                                ?.bookingDetail?.closingTime ??
+                                            DateTime.now()))),
                         isUseReferral: controller.isReferral ?? false,
                         nannyUserId: controller.nannyId.value,
                         totalMinutes: Utility.calculateTotalMinutesDifference(

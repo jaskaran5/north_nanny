@@ -41,20 +41,20 @@ class FavouriteListResponseModel {
 }
 
 class FavouriteNanny {
-  int? id;
-  int? gender;
-  String? name;
-  String? image;
+  dynamic id;
+  dynamic gender;
+  dynamic name;
+  dynamic image;
   dynamic isFavorite;
-  String? aboutMe;
-  double? distance;
-  int? age;
-  String? experience;
-  String? location;
-  String? latitude;
-  String? longitude;
-  int? reviewCount;
-  int? rating;
+  dynamic aboutMe;
+  dynamic distance;
+  dynamic age;
+  dynamic experience;
+  dynamic location;
+  dynamic latitude;
+  dynamic longitude;
+  dynamic reviewCount;
+  dynamic rating;
   List<dynamic>? ratingList;
 
   FavouriteNanny({
@@ -80,7 +80,7 @@ class FavouriteNanny {
         gender: json["gender"] ?? 0,
         name: json["name"] ?? '',
         image: json["image"] ?? '',
-        isFavorite: json["isFavorite"] ?? '',
+        isFavorite: json["isFavorite"] ?? false,
         aboutMe: json["aboutMe"] ?? '',
         distance: json["distance"]?.toDouble(),
         age: json["age"] ?? '',

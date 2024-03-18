@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:northshore_nanny_flutter/app/data/notifications/firebase_helper.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/utils/initializers.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
@@ -32,7 +33,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    socketConnection();
+
     super.initState();
+  }
+
+  socketConnection() async {
+    final signalRHelper = SignalRHelper();
+    await signalRHelper.init();
   }
 
   @override

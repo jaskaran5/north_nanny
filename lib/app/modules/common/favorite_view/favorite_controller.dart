@@ -26,20 +26,28 @@ class FavoriteController extends GetxController {
         var response = FavouriteListResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           favouriteListNanny.value = response.data ?? [];
-          toast(msg: response.message.toString(), isError: false);
+          // toast(msg: response.message.toString(), isError: false);
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
+        update();
       }, retryFunction: () {});
     } catch (e, s) {
-      toast(msg: e.toString(), isError: true);
+      // toast(msg: e.toString(), isError: true);
       printError(info: "Favourite list  post API ISSUE $s");
     }
   }
 
+  // @override
+  // void onInit() {
+  //   getFavouriteNannyListApi();
+  //   super.onInit();
+  // }
+
   @override
-  void onInit() {
+  void onReady() {
     getFavouriteNannyListApi();
-    super.onInit();
+
+    super.onReady();
   }
 }

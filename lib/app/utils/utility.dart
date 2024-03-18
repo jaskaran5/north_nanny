@@ -533,22 +533,27 @@ class Utility {
       {required int childCount, required int minuets}) {
     if (minuets != 0) {
       if (childCount == 1) {
-        return (HourlyChildrenRateList.oneChild.ratePricePerChildren / 60) *
-            minuets;
+        return ((HourlyChildrenRateList.oneChild.ratePricePerChildren / 60) *
+                minuets)
+            .toStringAsFixed(2);
       } else if (childCount == 2) {
-        return (HourlyChildrenRateList.twoChildren.ratePricePerChildren / 60) *
-            minuets;
+        return ((HourlyChildrenRateList.twoChildren.ratePricePerChildren / 60) *
+                minuets)
+            .toStringAsFixed(2);
       } else if (childCount == 3) {
-        return (HourlyChildrenRateList.threeChildren.ratePricePerChildren /
-                60) *
-            minuets;
+        return ((HourlyChildrenRateList.threeChildren.ratePricePerChildren /
+                    60) *
+                minuets)
+            .toStringAsFixed(2);
       } else if (childCount == 4) {
-        return (HourlyChildrenRateList.forChildren.ratePricePerChildren / 60) *
-            minuets;
+        return ((HourlyChildrenRateList.forChildren.ratePricePerChildren / 60) *
+                minuets)
+            .toStringAsFixed(2);
       } else if (childCount > 4) {
-        return (HourlyChildrenRateList.forPlusChildren.ratePricePerChildren /
-                60) *
-            minuets;
+        return ((HourlyChildrenRateList.forPlusChildren.ratePricePerChildren /
+                    60) *
+                minuets)
+            .toStringAsFixed(2);
       } else {
         return 0.0;
       }

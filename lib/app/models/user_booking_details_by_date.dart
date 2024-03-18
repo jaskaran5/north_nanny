@@ -53,6 +53,7 @@ class UserBookingDataByDate {
   dynamic bookingStatus;
   dynamic ratingList;
   dynamic bookingId;
+  dynamic aboutMe;
 
   UserBookingDataByDate({
     this.openingTime,
@@ -67,6 +68,7 @@ class UserBookingDataByDate {
     this.bookingStatus,
     this.ratingList,
     this.bookingId,
+    this.aboutMe,
   });
 
   factory UserBookingDataByDate.fromJson(Map<String, dynamic> json) =>
@@ -83,6 +85,7 @@ class UserBookingDataByDate {
             : List<String>.from(json["services"]!.map((x) => x)),
         childCount: json["childCount"],
         name: json["name"],
+        aboutMe: json["about"],
         image: json["image"],
         reviewCount: json["reviewCount"],
         rating: json["rating"],
@@ -105,5 +108,6 @@ class UserBookingDataByDate {
         "bookingStatus": bookingStatus,
         "ratingList": ratingList,
         "bookingId": bookingId,
+        "aboutMe": aboutMe,
       };
 }

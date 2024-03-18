@@ -1,10 +1,14 @@
 class ApiUrls {
   const ApiUrls._();
 
+  ///---------------------------------SOCKET URL
+  ///
+  static const String socketUrl =
+      "https://px2jr0cf-44387.inc1.devtunnels.ms/chat";
+
   ///-------------- *******  COMMON API ----------------------------------------------------------------
   ///
-  ///
-  ///
+
   static const String baseUrl = "https://api.northshore.harishparas.com/";
   static const String customerLogin = "api/User/LogIn";
   static const String customerSignup = "api/User/SignUp";
@@ -37,7 +41,7 @@ class ApiUrls {
   static const String addOrRemoveFavoriteNanny =
       "api/UserDashBoard/AddOrRemoveFavoriteNanny";
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";
-  static const String bookingDetails = "api/UserDashBoard/BookingDetail";
+  static const String bookingDetailsById = "api/UserDashBoard/BookingDetail";
   static const String myFavoriteNannyList =
       "api/UserDashBoard/MyFavoriteNannyList";
   static const String getAllNannyBookingDates =

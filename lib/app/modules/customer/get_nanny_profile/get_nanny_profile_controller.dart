@@ -336,6 +336,7 @@ class GetNannyProfileController extends GetxController {
     required int nannyUserId,
     required int totalMinutes,
     required double totalPrice,
+    required double hourlyPrice,
     required List<int> childIds,
     required DateTime openingTime,
     required DateTime closingTime,
@@ -354,6 +355,7 @@ class GetNannyProfileController extends GetxController {
         "services": selectedServices,
         "childId": childIds,
         "totalHour": totalMinutes,
+        "hourlyPrice": hourlyPrice,
         "totalBillAmount": isUseReferral ? totalPrice - 5 : totalPrice,
       };
       log('confirm Api body:$body');
