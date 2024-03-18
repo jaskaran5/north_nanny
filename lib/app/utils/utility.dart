@@ -555,7 +555,7 @@ class Utility {
                 minuets)
             .toStringAsFixed(2);
       } else {
-        return 0.0;
+        return '0.0';
       }
     }
   }

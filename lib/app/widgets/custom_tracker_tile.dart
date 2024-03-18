@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
 import '../res/constants/assets.dart';
 import '../res/theme/colors.dart';
@@ -51,10 +52,15 @@ class CustomTrackerTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimens.ten),
                   ),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.contain,
-                  ),
+                  child: image.isNotEmpty
+                      ? CustomCacheNetworkImage(
+                          img: image,
+                          size: Dimens.hundred,
+                          imageRadius: Dimens.ten)
+                      : Image.asset(
+                          Assets.imagesUserAvatar,
+                          fit: BoxFit.contain,
+                        ),
                 ),
                 Dimens.boxWidth16,
                 Column(

@@ -46,8 +46,8 @@ class BookingDetailController extends GetxController {
     // super.onInit();
   }
 
-  updateId({id}) {
-    bookingId.value = id;
+  updateId({required int id}) {
+    bookingId.value = id.toString();
     update();
   }
 
@@ -75,6 +75,7 @@ class BookingDetailController extends GetxController {
         return;
       }
       var body = {
+        'currentUtcTime':DateTime.now(),
         "dateTime": bookingId.value,
       };
       _apiHelper.postApi(ApiUrls.bookingDetailsById, body).futureValue((value) {

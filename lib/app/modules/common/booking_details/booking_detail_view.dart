@@ -1,17 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:northshore_nanny_flutter/app/models/user_booking_details_by_date.dart';
+import 'package:northshore_nanny_flutter/app/models/booking_data_by_date_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/child_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/send_tip_view/send_tip_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
-import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_booking_children_tile.dart';
@@ -197,34 +193,27 @@ class BookingDetailView extends StatelessWidget {
                   CustomBookingDetailView(
                     bookingHeader: 'Booking details',
                     time: '01:00 PM to 05:00 PM',
-                    location: controller.bookingDataById!.location!,
+                    location:
+                        controller.bookingDataById?.location.toString() ?? '',
                     date: DateTime.now(),
                     hours: '4 hours',
                   ),
                   Dimens.boxHeight16,
-                  const CustomBookingServiceTile(
+                   CustomBookingServiceTile(
                     serviceHeader: 'Service Type',
-                    serviceDetailsList: [
-                      "Housekeeping",
-                      "Driving"
-
-                      //
-                      // Services.homeWorkHelp.serviceName,
-                      // Services.driving.serviceName,
-                    ],
+                    serviceDetailsList: controller.bookingDataById?.servicesType ?? [],
                   ),
                   Dimens.boxHeight16,
 
                   ///CHILDREN PROFILE
                   CustomBookingChildrenTile(
                     childrenHeader: 'Children Profile',
-                    childrenDetailsList: const [],
-                    // isExpand: controller.isExpandChildren,
+                    childrenDetailsList:const [],
                     expansionCallback: (index) {},
                   ),
                   Dimens.boxHeight16,
-                  const CustomTrackerTile(
-                    image: Assets.iconsImage,
+                   CustomTrackerTile(
+                    image:  controller.bookingDataById?.userDetails?.image.toString() ?? '',
                     svgPath: Assets.iconsChatWhite,
                     name: 'Chiristina Wang',
                     rating: '4.5 ',
@@ -238,12 +227,12 @@ class BookingDetailView extends StatelessWidget {
                     ],
                   ),
                   Dimens.boxHeight16,
-                  const CustomBookingReceiptTile(
+                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    totalPriceReceived: 92,
-                    childCount: 0,
-                    servicesList: [],
-                    totalTimeHour: 0,
+                    totalPriceReceived: controller.bookingDataById?.totalAmount,
+                    childCount:  controller.bookingDataById?.totalChildern ?? 0,
+                    servicesList: const [],
+                    totalTimeHour: controller.bookingDataById?.totalHour,
                     totalTimeHourPrice: 0,
                   ),
                   Dimens.boxHeight16,

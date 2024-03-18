@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -110,17 +109,14 @@ class CustomerCalenderView extends StatelessWidget {
                                 BookingDetailBinding().dependencies();
                               }
                               Get.find<BookingDetailController>().updateId(
-                                  id: controller.userBookingData!.bookingId);
+                                  id: controller.singleDateBookingData?.bookingId);
                               Get.find<BookingDetailController>()
                                       .bookingDetailStatus =
                                   controller.selectedDay.day ==
                                           DateTime.now().day
                                       ? BookingDetailStatus.present
                                       : BookingDetailStatus.past;
-                              Get.to(const BookingDetailView(),
-                                  arguments: controller
-                                      .userBookingData!.bookingId
-                                      .toString());
+                              Get.to(const BookingDetailView(),);
                             },
                             child: Container(
                               decoration: BoxDecoration(

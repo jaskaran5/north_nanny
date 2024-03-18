@@ -336,7 +336,7 @@ class GetNannyProfileController extends GetxController {
     required int nannyUserId,
     required int totalMinutes,
     required double totalPrice,
-    required double hourlyPrice,
+    required String hourlyPrice,
     required List<int> childIds,
     required DateTime openingTime,
     required DateTime closingTime,
@@ -355,7 +355,7 @@ class GetNannyProfileController extends GetxController {
         "services": selectedServices,
         "childId": childIds,
         "totalHour": totalMinutes,
-        "hourlyPrice": hourlyPrice,
+        "hourlyPrice": double.parse(hourlyPrice),
         "totalBillAmount": isUseReferral ? totalPrice - 5 : totalPrice,
       };
       log('confirm Api body:$body');
@@ -390,10 +390,10 @@ class GetNannyProfileController extends GetxController {
   /// used to get total price according  to services fees
   returnTotalPrice({
     required int servicesListLength,
-    required double totalMinutesPrice,
+    required String totalMinutesPrice,
     required bool isIncludeServicesFee,
   }) {
-    var value = servicesListLength * 10 + totalMinutesPrice;
+    var value = servicesListLength * 10 + double.parse(totalMinutesPrice);
     if (isIncludeServicesFee) {
       /// 0.03 is deduction strip.
       var serviceFee = (value * 0.03);
@@ -408,8 +408,8 @@ class GetNannyProfileController extends GetxController {
 
   /// method used to get the service fee total of 3% {total*0.03}
   returnServiceFeeAccordingToTotalPrice(
-      {required int servicesListLength, required double totalMinutesPrice}) {
-    var value = servicesListLength * 10 + totalMinutesPrice;
+      {required int servicesListLength, required String totalMinutesPrice}) {
+    var value = servicesListLength * 10 + double.parse(totalMinutesPrice);
     var servicesFee = (value * 0.03);
 
     /// 0.03 is deduction strip.
