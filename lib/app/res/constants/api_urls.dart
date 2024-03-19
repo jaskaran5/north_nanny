@@ -47,7 +47,7 @@ class ApiUrls {
   static const String getAllNannyBookingDates =
       "api/UserDashBoard/GetAllNannyBookingDates";
 
-  static const String userBookingDeatil = "api/UserDashBoard/UserBookingDeatil";
+  // static const String userBookingDeatil = "api/UserDashBoard/UserBookingDeatil";
   static const String bookAppointment = "api/UserDashBoard/BookAppointment";
   static const String addCard = "api/UserDashBoard/AddCard";
 

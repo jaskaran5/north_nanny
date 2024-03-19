@@ -35,9 +35,10 @@ class BookingDetailController extends GetxController {
 
   /// used to show the start time.
   showTimer({required DateTime startTime}) {
+    log('Timer data $startTime');
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       seconds = DateTime.now().difference(startTime).inSeconds;
-      update(['customer-timer-view']);
+      update(['customerTimerView']);
     });
   }
 
@@ -91,6 +92,19 @@ class BookingDetailController extends GetxController {
         var response = BookingDataByIdResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDataById = response.data;
+          if (bookingDataById?.startTime != null &&
+              bookingDataById?.bookingStatus == 5) {
+            showTimer(
+                startTime: bookingDataById?.startTime != null
+                    ? DateTime.now().add(Duration(
+                        seconds: Utility.calculateDifferenceInSeconds(
+                            bookingDataById?.startTime ?? DateTime.now())))
+                    : DateTime.now());
+          }
+          if (bookingDataById?.bookingStatus == 6) {
+            timer.cancel();
+            seconds = 0;
+          }
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -109,7 +123,6 @@ class BookingDetailController extends GetxController {
     } else if (bookingStatus == 3) {
       bookingDetailStatus = BookingDetailStatus.rejected;
     } else if (bookingStatus == 5) {
-      showTimer(startTime: DateTime.now());
       bookingDetailStatus = BookingDetailStatus.arrived;
     } else if (bookingStatus == 6) {
       timer.cancel();
@@ -235,19 +248,5 @@ class BookingDetailController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "update booking status  API ISSUE $s");
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  ///method used to add the  time previous
-  addSecondsToTimer() {
-    if (bookingDataById?.startTime != null) {
-      seconds = Utility.calculateDifferenceInSeconds(
-          bookingDataById?.startTime ?? DateTime.now());
-    }
-    update(['customer-timer-view']);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_booking_details.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -97,9 +98,8 @@ class NannyCalenderController extends GetxController {
       required int month}) {
     for (var value in daysList) {
       if (value.day == day && value.month == month) {
+        debugPrint('true');
         return true;
-      } else {
-        return false;
       }
     }
     return false;

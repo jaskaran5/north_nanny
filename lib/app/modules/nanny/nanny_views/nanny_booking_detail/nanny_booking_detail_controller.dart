@@ -53,9 +53,6 @@ class NannyBookingDetailController extends GetxController {
         },
       );
     }
-    if (bookingDetailsModel?.data?.isJobStarted == true) {
-      showTimer(startTime: DateTime.now());
-    }
   }
 
   /// report list
@@ -69,7 +66,7 @@ class NannyBookingDetailController extends GetxController {
   void dispose() {
     super.dispose();
     timer.cancel();
-    seconds=0;
+    seconds = 0;
   }
 
   /// used to store the rejected reason.
@@ -91,13 +88,12 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.rejected;
     } else if (bookingStatus == 4) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.arrived;
-      showTimer(startTime: DateTime.now());
     } else if (bookingStatus == 5) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.endJob;
     } else if (bookingStatus == 6) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
       timer.cancel();
-      seconds=0;
+      seconds = 0;
     }
     update();
   }
@@ -172,7 +168,11 @@ class NannyBookingDetailController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           log('booking Type-:${response.data?.bookingStatus}');
           if (response.data?.bookingStatus == 6) {
-            showTimer(startTime: DateTime.now());
+            showTimer(
+                startTime: DateTime.now().add(Duration(
+                    seconds: Utility.calculateDifferenceInSeconds(
+                        bookingDetailsModel?.data?.startTime ??
+                            DateTime.now()))));
           }
           typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
           update();

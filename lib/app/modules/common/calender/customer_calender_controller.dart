@@ -11,24 +11,25 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import '../../../data/api/api_helper.dart';
 
 class CustomerCalenderController extends GetxController {
-  DateTime selectedDay = DateTime.now();
+  DateTime?selectedDay ;
+  DateTime focusDay = DateTime.now();
   final ApiHelper _apiHelper = ApiHelper.to;
 //
   /// used to store availability list
-  List<UserBookingData> userBookingDataList = [];
+  UserBookingDetailsResponseModel? userBookingDetail;
   UserBookingDataByDate? singleDateBookingData;
 
-  getCustomerAllBookingDetailsApi() async {
+  getCustomerAllBookingDetailsApi({required DateTime date}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
 
-      var body = {"dateTime": DateTime.now().toUtc().toIso8601String()};
+      var body = {"utcDateTime": date.toUtc().toIso8601String()};
 
       log("body is ->> ${body.entries}");
 
-      _apiHelper.postApi(ApiUrls.userBookingDeatil, body).futureValue(
+      _apiHelper.postApi(ApiUrls.getAllNannyBookingDates, body).futureValue(
         (value) {
           printInfo(info: "get customer booking list  api:-->> $value");
 
@@ -37,13 +38,11 @@ class CustomerCalenderController extends GetxController {
           if (res.response == AppConstants.apiResponseSuccess) {
             log("user booking details =---->>SUCCESS");
 
-            userBookingDataList = res.data ?? [];
+            userBookingDetail = res;
           }
           update();
         },
-        retryFunction: () {
-          getCustomerAllBookingDetailsApi();
-        },
+        retryFunction: () {},
       );
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
@@ -54,14 +53,17 @@ class CustomerCalenderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCustomerAllBookingDetailsApi();
-    // getSelectedDateBookingDetail(selectedDate: DateTime.now().toUtc());
+    getCustomerAllBookingDetailsApi(date: DateTime.now());
+    getSelectedDateBookingDetail(selectedDate: DateTime.now());
   }
 
-  /// used to check element have event or not
-  bool isElementEqualToData(List<UserBookingData> list, int day, int month) {
-    for (var value in list) {
-      if (value.openingTime?.day == day && value.openingTime?.month == month) {
+  /// this  method used to check the which days have events
+  isEvent(
+      {required List<DateTime> daysList,
+      required int day,
+      required int month}) {
+    for (var value in daysList) {
+      if (value.day == day && value.month == month) {
         return true;
       }
     }

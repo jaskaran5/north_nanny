@@ -838,157 +838,165 @@ Widget availabilityView({required NannyProfileController controller}) =>
                 onTap: () {
                   controller.startTime = null;
                   controller.endTime = null;
-                  Get.dialog(
-                    GetBuilder<NannyProfileController>(
-                        builder: (nannyController) {
-                      return Center(
-                        child: Padding(
-                          padding: Dimens.edgeInsetsL16R16,
-                          child: Material(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(Dimens.twenty),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
-                                borderRadius:
-                                    BorderRadius.circular(Dimens.twenty),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: Dimens.edgeInsets10,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        AppText(
-                                          text: TranslationKeys
-                                              .addAvailability.tr,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.left,
-                                          style: AppStyles.ubBlack16W700,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                          child: SvgPicture.asset(
-                                            Assets.iconsRemoveBottomSheet,
+                  if (controller.selectedDate != null ||
+                      (controller.rangeStartDate != null &&
+                          controller.rangeEndDate != null)) {
+                    Get.dialog(
+                      GetBuilder<NannyProfileController>(
+                          builder: (nannyController) {
+                        return Center(
+                          child: Padding(
+                            padding: Dimens.edgeInsetsL16R16,
+                            child: Material(
+                              color: AppColors.primaryColor,
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.twenty),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.twenty),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: Dimens.edgeInsets10,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppText(
+                                            text: TranslationKeys
+                                                .addAvailability.tr,
+                                            maxLines: 1,
+                                            textAlign: TextAlign.left,
+                                            style: AppStyles.ubBlack16W700,
                                           ),
-                                        ),
-                                      ],
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.back();
+                                            },
+                                            child: SvgPicture.asset(
+                                              Assets.iconsRemoveBottomSheet,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Divider(
-                                    color: AppColors.lightNavyBlue,
-                                    height: Dimens.one,
-                                  ),
-                                  Dimens.boxHeight14,
-                                  Padding(
-                                    padding: Dimens.edgeInsets16,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TextField(
-                                          maxLines: 1,
-                                          minLines: 1,
-                                          readOnly: true,
-                                          onTap: () async {
-                                            nannyController.startTime =
-                                                await showTimePicker(
-                                              context: Get.context!,
-                                              initialTime: nannyController
-                                                          .startTime !=
-                                                      null
-                                                  ? nannyController.startTime!
-                                                  : TimeOfDay.now(),
-                                            );
-                                            nannyController.update();
-                                            log('startTime:${nannyController.startTime}');
-                                          },
-                                          decoration: customFieldDeco(
-                                            hintStyle:
-                                                nannyController.startTime ==
+                                    Divider(
+                                      color: AppColors.lightNavyBlue,
+                                      height: Dimens.one,
+                                    ),
+                                    Dimens.boxHeight14,
+                                    Padding(
+                                      padding: Dimens.edgeInsets16,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextField(
+                                            maxLines: 1,
+                                            minLines: 1,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              nannyController.startTime =
+                                                  await showTimePicker(
+                                                context: Get.context!,
+                                                initialTime: nannyController
+                                                            .startTime !=
                                                         null
-                                                    ? null
-                                                    : AppStyles.ubBlack15W600,
-                                            hintText: nannyController
-                                                        .startTime ==
-                                                    null
-                                                ? TranslationKeys.startTime.tr
-                                                : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
-                                          ),
-                                          cursorColor: AppColors.blackColor,
-                                          cursorWidth: Dimens.one,
-                                          style: AppStyles.ubBlack15W600,
-                                        ),
-                                        Dimens.boxHeight14,
-                                        TextField(
-                                          maxLines: 1,
-                                          readOnly: true,
-                                          onTap: () async {
-                                            nannyController.endTime =
-                                                await showTimePicker(
-                                              context: Get.context!,
-                                              initialTime:
-                                                  nannyController.endTime !=
+                                                    ? nannyController.startTime!
+                                                    : TimeOfDay.now(),
+                                              );
+                                              nannyController.update();
+                                              log('startTime:${nannyController.startTime}');
+                                            },
+                                            decoration: customFieldDeco(
+                                              hintStyle:
+                                                  nannyController.startTime ==
                                                           null
-                                                      ? nannyController.endTime!
-                                                      : TimeOfDay.now(),
-                                            );
-                                            nannyController.update();
-                                            log('endTime:${nannyController.endTime}');
-                                          },
-                                          minLines: 1,
-                                          decoration: customFieldDeco(
-                                            hintStyle:
-                                                nannyController.endTime == null
-                                                    ? null
-                                                    : AppStyles.ubBlack15W600,
-                                            hintText: nannyController.endTime ==
-                                                    null
-                                                ? TranslationKeys.endTime.tr
-                                                : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+                                                      ? null
+                                                      : AppStyles.ubBlack15W600,
+                                              hintText: nannyController
+                                                          .startTime ==
+                                                      null
+                                                  ? TranslationKeys.startTime.tr
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
+                                            ),
+                                            cursorColor: AppColors.blackColor,
+                                            cursorWidth: Dimens.one,
+                                            style: AppStyles.ubBlack15W600,
                                           ),
-                                          cursorColor: AppColors.blackColor,
-                                          cursorWidth: Dimens.one,
-                                          style: AppStyles.ubBlack15W600,
-                                        ),
-                                        Dimens.boxHeight14,
-                                        CustomButton(
-                                          backGroundColor: AppColors.navyBlue,
-                                          title: TranslationKeys.submit.tr,
-                                          onTap: () {
-                                            /// api for add availability validator
-                                            nannyController.addAvailabilityValidator(
-                                                availabilityDatesList:
-                                                    Utility.getDaysInBetween(
-                                                        startDate: controller
-                                                                .rangeStartDate ??
-                                                            DateTime.now(),
-                                                        endDate: controller
-                                                                .rangeEndDate ??
-                                                            DateTime.now()),
-                                                startTime: controller.startTime,
-                                                endTime: controller.endTime);
-                                          },
-                                        ),
-                                        Dimens.boxHeight10,
-                                      ],
+                                          Dimens.boxHeight14,
+                                          TextField(
+                                            maxLines: 1,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              nannyController.endTime =
+                                                  await showTimePicker(
+                                                context: Get.context!,
+                                                initialTime: nannyController
+                                                            .endTime !=
+                                                        null
+                                                    ? nannyController.endTime!
+                                                    : TimeOfDay.now(),
+                                              );
+                                              nannyController.update();
+                                              log('endTime:${nannyController.endTime}');
+                                            },
+                                            minLines: 1,
+                                            decoration: customFieldDeco(
+                                              hintStyle:
+                                                  nannyController.endTime ==
+                                                          null
+                                                      ? null
+                                                      : AppStyles.ubBlack15W600,
+                                              hintText: nannyController
+                                                          .endTime ==
+                                                      null
+                                                  ? TranslationKeys.endTime.tr
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+                                            ),
+                                            cursorColor: AppColors.blackColor,
+                                            cursorWidth: Dimens.one,
+                                            style: AppStyles.ubBlack15W600,
+                                          ),
+                                          Dimens.boxHeight14,
+                                          CustomButton(
+                                            backGroundColor: AppColors.navyBlue,
+                                            title: TranslationKeys.submit.tr,
+                                            onTap: () {
+                                              /// api for add availability validator
+                                              nannyController.addAvailabilityValidator(
+                                                  availabilityDatesList:
+                                                      Utility.getDaysInBetween(
+                                                          startDate: controller
+                                                                  .rangeStartDate ??
+                                                              DateTime.now(),
+                                                          endDate: controller
+                                                                  .rangeEndDate ??
+                                                              DateTime.now()),
+                                                  startTime:
+                                                      controller.startTime,
+                                                  endTime: controller.endTime);
+                                            },
+                                          ),
+                                          Dimens.boxHeight10,
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
-                  );
+                        );
+                      }),
+                    );
+                  }
                 },
               ),
             ),

@@ -77,6 +77,7 @@ class CustomerCalenderView extends StatelessWidget {
                       ),
                       onDaySelected: (selectedDay, focusedDay) {
                         controller.selectedDay = selectedDay;
+                        controller.focusDay = focusedDay;
 
                         controller.update();
 
@@ -85,12 +86,20 @@ class CustomerCalenderView extends StatelessWidget {
                       },
                       selectedDayPredicate: (day) =>
                           controller.selectedDay == day,
-                      focusedDay: controller.selectedDay,
+                      focusedDay: controller.focusDay,
+                      onPageChanged: (focusedDay) {
+                        controller.focusDay = focusedDay;
+
+                        /// get events of other month .
+                        controller.getCustomerAllBookingDetailsApi(
+                            date: focusedDay);
+                      },
                       eventLoader: (day) {
-                        return controller.isElementEqualToData(
-                                controller.userBookingDataList,
-                                day.day,
-                                day.month)
+                        return controller.isEvent(
+                          daysList: controller.userBookingDetail?.data ?? [],
+                          day: day.day,
+                          month: day.month,
+                        )
                             ? [
                                 '.',
                               ]
@@ -98,10 +107,11 @@ class CustomerCalenderView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight32,
-                    controller.isElementEqualToData(
-                                controller.userBookingDataList,
-                                controller.selectedDay.day,
-                                controller.selectedDay.month) &&
+                    controller.isEvent(
+                                daysList:
+                                    controller.userBookingDetail?.data ?? [],
+                                day: controller.selectedDay?.day ?? 0,
+                                month: controller.selectedDay?.month ?? 0) &&
                             controller.singleDateBookingData != null
                         ? GestureDetector(
                             onTap: () {
@@ -139,9 +149,10 @@ class CustomerCalenderView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         CustomDateFormatTile(
-                                          day: controller.selectedDay.day
-                                              .toString()
-                                              .padLeft(2, '0'),
+                                          day: controller.selectedDay?.day
+                                                  .toString()
+                                                  .padLeft(2, '0') ??
+                                              '',
                                           dateFormatInMonthYearDayOfWeek:
                                               Utility.convertDateToMMMMYYYEEE(
                                                   controller
