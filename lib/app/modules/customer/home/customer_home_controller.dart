@@ -2,18 +2,21 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
@@ -30,6 +33,8 @@ class CustomerHomeController extends GetxController {
   double distanceHigherValue = 11;
   double ageLowerValue = 13;
   double ageHigherValue = 50;
+  RxString address = ''.obs;
+
   final debounce = Debouncer(delay: const Duration(seconds: 1));
 
   /// SHOW NANNY TILE
@@ -133,6 +138,31 @@ class CustomerHomeController extends GetxController {
       isNannyMarkerVisible.value = false;
     }
     update();
+  }
+
+  ///------------>>> GET ADDRESS FROM COORDINATES
+
+  Future<String> getAddressFromCoordinates(
+      double latitude, double longitude) async {
+    log("lat-home--$latitude");
+    log("lat-home-long-$longitude");
+
+    try {
+      List<Placemark> placeMarks =
+          await placemarkFromCoordinates(latitude, longitude);
+      Placemark place = placeMarks[0];
+      String formattedAddress =
+          "${place.street}, ${place.locality}, ${place.country}";
+
+      log("address:-->. $formattedAddress");
+      address.value = "${place.locality},${place.country}";
+      update();
+
+      return formattedAddress;
+    } catch (e) {
+      log("Error: $e");
+      return '';
+    }
   }
 
   /// *******---------------------------->>>>>>>>>>> ON MAP CREATED
@@ -329,6 +359,13 @@ class CustomerHomeController extends GetxController {
   void onReady() async {
     getDashboardApi();
     super.onReady();
+
+    var address = getAddressFromCoordinates(
+      Storage.getValue(StringConstants.latitude),
+      Storage.getValue(StringConstants.longitude),
+    );
+
+    log("customer home address :--->>$address");
     // await setMarkers();
   }
 

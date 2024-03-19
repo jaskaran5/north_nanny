@@ -102,7 +102,7 @@ class ChatList {
         "userId": userId,
         "name": name,
         "image": image,
-        "dateTime": dateTime?.toIso8601String(),
+        "dateTime": dateTime,
         "lastMessage": lastMessage,
         "isOnline": isOnline,
         "chatType": chatType,

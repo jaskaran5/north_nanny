@@ -53,14 +53,21 @@ class RecentChatView extends StatelessWidget {
                       Dimens.boxHeight10,
                       //check
                       ListView.builder(
-                        itemCount: 16,
+                        itemCount: controller.recetChatList.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           Color textColor =
                               index % 2 == 0 ? Colors.black : Colors.blue;
 
-                          return const CustomeReectChatListTile();
+                          return GestureDetector(
+                            onTap: () {
+                              controller.redirectToChatScreen();
+                            },
+                            child: CustomeReectChatListTile(
+                              chatData: controller.recetChatList[index],
+                            ),
+                          );
                         },
                       )
                     ],

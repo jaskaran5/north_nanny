@@ -45,4 +45,6 @@ class AppColors {
 
   static const Color purpleLightColor8F94AE = Color(0xff8F94AE);
   static const Color greyColor3B3C42 = Color(0xff3B3C42);
+  static const Color offlineColor = Color(0xff8F94AE);
+  static const Color onlineColor = Color(0xff74C720);
 }

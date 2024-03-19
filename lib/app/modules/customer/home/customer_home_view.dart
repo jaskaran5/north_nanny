@@ -37,9 +37,10 @@ class CustomerHomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppText(
-                              text: 'Chicago, Naperville',
+                              text: controller.address.value,
                               style: AppStyles.ubLocationColor14W400,
                               maxLines: 1,
                             ),

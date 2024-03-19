@@ -40,6 +40,7 @@ class RecentChatController extends GetxController {
 
       recetChatList = res.data?.chatList ?? [];
       log("$tag chat list argumaents are:-->> ${arguments?[0]}");
+      log("$tag recetChatList:-->> $recetChatList");
     });
 
     var res = await _hubConnection.invoke('ChatList', args: []);
