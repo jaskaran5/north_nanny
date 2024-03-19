@@ -509,15 +509,16 @@ class NannyBookingDetailView extends StatelessWidget {
                       ],
                     )
                   ],
-                  if (controller.nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay && controller.bookingDetailsModel?.data?.isJobStarted == true ||
-                      controller.nannyBookingDetailStatus ==
+                  if (controller.bookingDetailsModel?.data?.isJobStarted ==
+                              true &&
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.onMyWay ||
+                      (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.arrived &&
                           controller.bookingDetailsModel?.data?.isJobStarted ==
-                              true ||
-                      controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.endJob &&
-                          controller.bookingDetailsModel?.data?.isJobStarted ==
-                              true) ...[
+                              true) ||
+                      (controller.nannyBookingDetailStatus ==
+                          NannyBookingDetailStatus.endJob)) ...[
                     CustomButton(
                       title: controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay
@@ -617,7 +618,11 @@ class NannyBookingDetailView extends StatelessWidget {
                   ],
                   Dimens.boxHeight16,
                   if (controller.bookingDetailsModel?.data?.isJobStarted ==
-                      false) ...[
+                              false &&
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.onMyWay ||
+                      controller.nannyBookingDetailStatus ==
+                          NannyBookingDetailStatus.arrived) ...[
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
                       title: 'Decline',

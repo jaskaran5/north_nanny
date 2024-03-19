@@ -22,14 +22,14 @@ class SignalRHelper {
 
   Future<void> init() async {
     var token = await Storage.getValue(StringConstants.token);
-    print("access token :--->> $token");
+    log("access token :--->> $token");
 
     try {
       if (token != null && token.isNotEmpty) {
         final String accessToken =
             token.split('Bearer').last.replaceAll(" ", "");
 
-        print("access token :--->> $accessToken");
+        log("access token :--->> $accessToken");
         hubConnection = HubConnectionBuilder()
             .withUrl(
               ApiUrls.socketUrl,
@@ -54,19 +54,19 @@ class SignalRHelper {
   /// START CONNECTION
   Future<void> startConnection() async {
     log("start scoket connection called");
-    print("hubconnectionn state:--->>${hubConnection.state}");
+    log("hubconnectionn state:--->>${hubConnection.state}");
 
     try {
-      print("hubconnectionn state try:--->>${hubConnection.state}");
+      log("hubconnectionn state try:--->>${hubConnection.state}");
 
       await hubConnection.start();
       isConnected = true;
       isUserConnected = true;
-      print("hubconnectionn state try:--->>${hubConnection.state}");
+      log("hubconnectionn state try:--->>${hubConnection.state}");
 
       // Utils.printLog("Connected: ${hubConnection.connectionId}");
     } catch (e) {
-      print("hubconnectionn state else:--->>${hubConnection.state}");
+      log("hubconnectionn state else:--->>${hubConnection.state}");
       Utils.printLog("Connection error: $e");
       isConnected = false;
       isUserConnected = false;

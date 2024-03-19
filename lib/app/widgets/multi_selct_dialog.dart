@@ -15,10 +15,10 @@ class MultiSelectDialog extends StatefulWidget {
   });
 
   @override
-  _MultiSelectDialogState createState() => _MultiSelectDialogState();
+  MultiSelectDialogState createState() => MultiSelectDialogState();
 }
 
-class _MultiSelectDialogState extends State<MultiSelectDialog> {
+class MultiSelectDialogState extends State<MultiSelectDialog> {
   final List<String> _selectedOptions = [];
 
   @override

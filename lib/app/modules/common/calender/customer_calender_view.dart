@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_calender_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
@@ -12,10 +11,10 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.
 import 'package:northshore_nanny_flutter/app/widgets/custom_date_format_tile_view.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_dot.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../res/constants/assets.dart';
-import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
 import '../../../widgets/app_text.dart';
@@ -46,6 +45,7 @@ class CustomerCalenderView extends StatelessWidget {
                         defaultTextStyle: AppStyles.ubBlack15W600,
                         weekendTextStyle: AppStyles.ubBlack15W600,
                         outsideTextStyle: AppStyles.ubHintColor15W500,
+                        isTodayHighlighted: false,
                         todayDecoration: const BoxDecoration(
                           color: AppColors.navyBlue,
                           shape: BoxShape.circle,
@@ -99,24 +99,24 @@ class CustomerCalenderView extends StatelessWidget {
                     ),
                     Dimens.boxHeight32,
                     controller.isElementEqualToData(
-                            controller.userBookingDataList,
-                            controller.selectedDay.day,
-                            controller.selectedDay.month)
+                                controller.userBookingDataList,
+                                controller.selectedDay.day,
+                                controller.selectedDay.month) &&
+                            controller.singleDateBookingData != null
                         ? GestureDetector(
                             onTap: () {
                               if (!Get.isRegistered<
                                   BookingDetailController>()) {
                                 BookingDetailBinding().dependencies();
                               }
-                              Get.find<BookingDetailController>().updateId(
-                                  id: controller.singleDateBookingData?.bookingId);
                               Get.find<BookingDetailController>()
-                                      .bookingDetailStatus =
-                                  controller.selectedDay.day ==
-                                          DateTime.now().day
-                                      ? BookingDetailStatus.present
-                                      : BookingDetailStatus.past;
-                              Get.to(const BookingDetailView(),);
+                                  .getBookingDataById(
+                                      bookingId: controller
+                                          .singleDateBookingData?.bookingId);
+                              Get.find<BookingDetailController>().typeOfBooking(
+                                  bookingStatus: controller
+                                      .singleDateBookingData?.bookingStatus);
+                              RouteManagement.goToCustomerBookingDetailView();
                             },
                             child: Container(
                               decoration: BoxDecoration(

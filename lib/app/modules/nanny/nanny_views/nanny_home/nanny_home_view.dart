@@ -181,6 +181,7 @@ class NannyHomeView extends StatelessWidget {
                                                 ?.bookingRequest?[index]
                                                 .bookingId ??
                                             0);
+
                                 nannyBookingDetailsController.typeOfBooking(
                                     bookingStatus: controller
                                             .nannyHomeData

@@ -97,7 +97,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
                 AppText(
                   text:
-                      "\$ ${childCount == 1 ? HourlyChildrenRateList.oneChild.ratePricePerChildren : childCount == 2 ? HourlyChildrenRateList.twoChildren.ratePricePerChildren : childCount == 3 ? HourlyChildrenRateList.threeChildren.ratePricePerChildren : childCount == 4 ? HourlyChildrenRateList.forChildren.ratePricePerChildren : ''}",
+                      "\$ ${childCount == 1 ? HourlyChildrenRateList.oneChild.ratePricePerChildren : childCount == 2 ? HourlyChildrenRateList.twoChildren.ratePricePerChildren : childCount == 3 ? HourlyChildrenRateList.threeChildren.ratePricePerChildren : childCount == 4 ? HourlyChildrenRateList.forChildren.ratePricePerChildren : '0.0'}",
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,

@@ -560,20 +560,7 @@ class Utility {
     }
   }
 
-  /// this is used to return a hours according to time
-  static int calculateHoursBetween(TimeOfDay startTime, TimeOfDay endTime) {
-    int startMinutes = startTime.hour * 60 + startTime.minute;
-    int endMinutes = endTime.hour * 60 + endTime.minute;
-
-    int differenceInMinutes = endMinutes - startMinutes;
-
-    // Calculate hours and remaining minutes
-    int hours = differenceInMinutes ~/ 60;
-    int minutes = differenceInMinutes % 60;
-    log('difference in hours :$hours $minutes');
-    return hours;
-  }
-
+  /// this is used to return a minutes according to time
   static int calculateTotalMinutesDifference(
       TimeOfDay startTime, TimeOfDay endTime) {
     // Convert start time to minutes
@@ -608,5 +595,14 @@ class Utility {
     int minutes = (second ~/ 60) % 60;
     int seconds = second % 60;
     return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  /// this method is used to return seconds difference according to dateTime
+  static int calculateDifferenceInSeconds(DateTime givenTime) {
+    DateTime now = DateTime.now();
+    Duration difference = givenTime.difference(now);
+    int differenceInSeconds = difference.inSeconds;
+    log('difference in seconds -: $differenceInSeconds');
+    return differenceInSeconds;
   }
 }

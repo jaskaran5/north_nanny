@@ -8,6 +8,7 @@ import 'package:signalr_netcore/signalr_client.dart';
 
 class RecentChatController extends GetxController {
   String tag = "Socket";
+  //
   final SignalRHelper _socketHelper = SignalRHelper();
   late HubConnection _hubConnection;
 
