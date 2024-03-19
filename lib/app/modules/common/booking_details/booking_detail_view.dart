@@ -40,7 +40,7 @@ class BookingDetailView extends StatelessWidget {
                   if (controller.bookingDetailStatus ==
                       BookingDetailStatus.arrived) ...[
                     GetBuilder<BookingDetailController>(
-                      id: 'customer-timer-view',
+                      id: 'customerTimerView',
                       builder: (controller) => Container(
                         padding: Dimens.edgeInsets16,
                         width: Get.width,

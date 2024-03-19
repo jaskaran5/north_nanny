@@ -59,6 +59,7 @@ class RecentChatView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           Color textColor =
                               index % 2 == 0 ? Colors.black : Colors.blue;
+                          //
 
                           return GestureDetector(
                             onTap: () {

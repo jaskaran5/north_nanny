@@ -92,10 +92,10 @@ class NannyCalenderView extends StatelessWidget {
                       },
                       eventLoader: (day) {
                         return controller.isEvent(
-                                daysList:
-                                    controller.nannyBookingDetails?.data ?? [],
-                                day: day.day,
-                                month: day.month)
+                          daysList: controller.nannyBookingDetails?.data ?? [],
+                          day: day.day,
+                          month: day.month,
+                        )
                             ? [
                                 '.',
                               ]

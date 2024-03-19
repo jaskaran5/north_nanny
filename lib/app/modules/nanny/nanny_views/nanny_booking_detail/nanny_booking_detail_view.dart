@@ -619,13 +619,13 @@ class NannyBookingDetailView extends StatelessWidget {
                   Dimens.boxHeight16,
                   if (controller.bookingDetailsModel?.data?.isJobStarted ==
                               false &&
-                          controller.nannyBookingDetailStatus ==
+                          (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.arrived) ...[
+                          NannyBookingDetailStatus.arrived)) ...[
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
-                      title: 'Decline',
+                      title: 'Declined',
                       onTap: () {
                         Get.back();
                       },
