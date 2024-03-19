@@ -16,7 +16,6 @@ class CustomerCalenderController extends GetxController {
 //
   /// used to store availability list
   List<UserBookingData> userBookingDataList = [];
-  UserBookingData? userBookingData;
   UserBookingDataByDate? singleDateBookingData;
 
   getCustomerAllBookingDetailsApi() async {
@@ -31,7 +30,7 @@ class CustomerCalenderController extends GetxController {
 
       _apiHelper.postApi(ApiUrls.userBookingDeatil, body).futureValue(
         (value) {
-          printInfo(info: "get customer profile api:-->> $value");
+          printInfo(info: "get customer booking list  api:-->> $value");
 
           var res = UserBookingDetailsResponseModel.fromJson(value);
 
@@ -54,9 +53,9 @@ class CustomerCalenderController extends GetxController {
 
   @override
   void onInit() {
-    getCustomerAllBookingDetailsApi();
-    getSelectedDateBookingDetail(selectedDate: DateTime.now().toUtc());
     super.onInit();
+    getCustomerAllBookingDetailsApi();
+    // getSelectedDateBookingDetail(selectedDate: DateTime.now().toUtc());
   }
 
   /// used to check element have event or not

@@ -57,6 +57,8 @@ class ApiUrls {
       "api/UserDashBoard/NannyBookingDetailByDate";
   static const String userBookingDataByDate =
       "api/UserDashBoard/UserBookingDeatilByDate";
+  static const String updateCustomerBookingStatus =
+      "api/UserDashBoard/UpdateBookingStatus";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
   ///

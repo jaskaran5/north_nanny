@@ -53,7 +53,7 @@ class NannyBookingDetailController extends GetxController {
         },
       );
     }
-    if (bookingDetailsModel?.data?.isJobStarted==true) {
+    if (bookingDetailsModel?.data?.isJobStarted == true) {
       showTimer(startTime: DateTime.now());
     }
   }
@@ -64,6 +64,13 @@ class NannyBookingDetailController extends GetxController {
     'Job is too far away',
     'Other'
   ];
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
+    seconds=0;
+  }
 
   /// used to store the rejected reason.
   String? rejectionReason;
@@ -84,10 +91,13 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.rejected;
     } else if (bookingStatus == 4) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.arrived;
+      showTimer(startTime: DateTime.now());
     } else if (bookingStatus == 5) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.endJob;
     } else if (bookingStatus == 6) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
+      timer.cancel();
+      seconds=0;
     }
     update();
   }
@@ -146,8 +156,9 @@ class NannyBookingDetailController extends GetxController {
       var body = {
         "bookingId": bookingId,
         "status": bookingStatus,
-        if (startTime != null) "utcStartTime": startTime,
-        if (endTime != null) "utcEndTime": endTime,
+        if (startTime != null)
+          "utcStartTime": startTime.toUtc().toIso8601String(),
+        if (endTime != null) "utcEndTime": endTime.toUtc().toIso8601String(),
       };
       log('update status body -> $body');
       _apiHelper

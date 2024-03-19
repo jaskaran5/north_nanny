@@ -320,4 +320,9 @@ abstract class RouteManagement {
   // static void goToRatingReviewView({argument}) {
   //   Get.toNamed(Routes.ratingReviewView, arguments: argument ?? 0);
   // }
+
+  /// go to customer booking details view.
+  static void goToCustomerBookingDetailView() {
+    Get.toNamed(Routes.bookingDetailsView);
+  }
 }

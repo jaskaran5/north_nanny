@@ -93,33 +93,6 @@ class GetNannyProfileController extends GetxController {
     }
   }
 
-  //Update selected services
-  updateSelectedServices({required List<dynamic> value}) {
-    selectedServices.clear();
-    for (var element in value) {
-      selectedServices.add(element.toString());
-    }
-    update();
-    log("selected services are:-->> $selectedServices");
-  }
-
-  //Update selected CHILDREN
-  updateSelectedChildren({required List<dynamic> value}) {
-    selectedChildList.clear();
-    selectedChildIds.clear();
-    for (var element in value) {
-      selectedChildList.add(element.toString());
-      for (var value in childList) {
-        if (value.name == element) {
-          selectedChildIds.add(value.childId ?? 0);
-        }
-      }
-    }
-    log('child Ids List: $selectedChildIds');
-    update();
-    log("selected Children  are:-->> $selectedChildList");
-  }
-
   /// used to check element have event or not
   bool isElementEqualToData(List<AvilabilityList> list, int day, int month) {
     for (var value in list) {
@@ -296,7 +269,7 @@ class GetNannyProfileController extends GetxController {
 
           update();
 
-          log("child list data is :-->> ${childList.value.toString()}");
+          log("child list data is :-->> ${childList.toString()}");
         } else {
           toast(msg: res.message!, isError: true);
         }
@@ -438,6 +411,16 @@ class GetNannyProfileController extends GetxController {
     }
   }
 
+  /// REDIRECT TO ADD CHILD SCREEN
+  redirectToAddChildScreen() async {
+    bool check = await Get.toNamed(Routes.addChildProfile);
+
+    if (check) {
+      getChildListApi();
+    }
+  }
+
+  /// used to show selected services list .
   void showMultiSelectDialogServices(BuildContext context) async {
     final List<String>? selectedOptions = await showDialog<List<String>>(
       context: context,
@@ -458,19 +441,11 @@ class GetNannyProfileController extends GetxController {
       typeOfServiceTextController.text = items;
       update();
       // Do something with the selected options
-      print('Selected options: $selectedOptions');
+      log('Selected Services List : $selectedOptions');
     }
   }
 
-  /// REDIRECT TO ADD CHILD SCREEN
-  redirectToAddChildScreen() async {
-    bool check = await Get.toNamed(Routes.addChildProfile);
-
-    if (check) {
-      getChildListApi();
-    }
-  }
-
+  /// used to show selected children list.
   void showMultiSelectDialogChildren(BuildContext context) async {
     final List<String>? selectedOptions = await showDialog<List<String>>(
       context: context,
@@ -489,13 +464,22 @@ class GetNannyProfileController extends GetxController {
 
     if (selectedOptions != null) {
       selectedChildList.value = selectedOptions;
+      selectedChildIds.clear();
+      for (var i = 0; i < selectedChildList.length; i++) {
+        for (var element in childList) {
+          if (element.name == selectedChildList[i].toString()) {
+            selectedChildIds.add(element.childId ?? 0);
+          }
+        }
+      }
 
       String items = selectedChildList.join(', ');
 
       selectChildrenTextController.text = items;
+      log('child Ids List: $selectedChildIds');
       update();
       // Do something with the selected options
-      print('Selected options: $selectedOptions');
+      log('Selected child list: $selectedOptions');
     }
   }
 }

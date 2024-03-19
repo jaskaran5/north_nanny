@@ -4,7 +4,6 @@ import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_ca
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 

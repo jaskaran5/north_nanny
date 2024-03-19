@@ -19,8 +19,11 @@ class CustomTrackerTile extends StatelessWidget {
     required this.rating,
     required this.reviews,
     required this.description,
-    required this.servicesList,
     this.onTapSvg,
+    required this.distance,
+    required this.age,
+    required this.experience,
+    required this.onTapRatingAndReview,
   });
   final String image;
   final String svgPath;
@@ -28,8 +31,11 @@ class CustomTrackerTile extends StatelessWidget {
   final String rating;
   final String reviews;
   final String description;
-  final List<String> servicesList;
+  final String distance;
+  final int age;
+  final String experience;
   final Function()? onTapSvg;
+  final Function() onTapRatingAndReview;
   @override
   Widget build(BuildContext context) => Container(
         padding: Dimens.edgeInsets16,
@@ -42,8 +48,6 @@ class CustomTrackerTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
@@ -60,74 +64,78 @@ class CustomTrackerTile extends StatelessWidget {
                       : Image.asset(
                           Assets.imagesUserAvatar,
                           fit: BoxFit.contain,
+                          height: Dimens.hundred,
+                          width: Dimens.eightySix,
                         ),
                 ),
-                Dimens.boxWidth16,
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AppText(
-                          text: name,
-                          style: AppStyles.ubWhite14700,
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                        ),
-                        Dimens.boxWidth55,
-                        GestureDetector(
-                          onTap: onTapSvg,
-                          child: SvgPicture.asset(
-                            svgPath,
+                Dimens.boxWidth10,
+                SizedBox(
+                  width: Dimens.oneHundredNinety,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppText(
+                            text: name,
+                            style: AppStyles.ubWhite14700,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
                           ),
-                        ),
-                      ],
-                    ),
-                    Dimens.boxHeight4,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(Assets.iconsStar),
-                        Dimens.boxWidth4,
-                        RichText(
-                          text: TextSpan(
-                            text: rating,
-                            style: AppStyles.ubLightNavy12W500,
-                            children: [
-                              TextSpan(
-                                text: reviews,
-                                style: AppStyles.ubLightNavy12W400,
+                          GestureDetector(
+                            onTap: onTapSvg,
+                            child: SvgPicture.asset(
+                              svgPath,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Dimens.boxHeight4,
+                      GestureDetector(
+                        onTap: onTapRatingAndReview,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(Assets.iconsStar),
+                            Dimens.boxWidth4,
+                            RichText(
+                              text: TextSpan(
+                                text: '$rating ',
+                                style: AppStyles.ubLightNavy12W500,
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        '($reviews ${TranslationKeys.reviews.tr})',
+                                    style: AppStyles.ubLightNavy12W400,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    Dimens.boxHeight4,
-                    SizedBox(
-                      width: Dimens.oneHundredEightyTwo,
-                      child: AppText(
+                      ),
+                      Dimens.boxHeight4,
+                      AppText(
                         text: description,
                         maxLines: 4,
                         style: AppStyles.ubLightNavy10W400,
                         textAlign: TextAlign.start,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
             Dimens.boxHeight14,
-            SizedBox(
-              height: Dimens.thirty,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                  servicesList.length,
-                  (index) => Container(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: Dimens.thirty,
+                  child: Container(
                     height: Dimens.twentyFive,
                     padding: Dimens.edgeInsets6,
                     margin: Dimens.edgeInsetsR16,
@@ -137,13 +145,50 @@ class CustomTrackerTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(Dimens.eight),
                     ),
                     child: AppText(
-                      text: servicesList[index].toString(),
+                      text: '${TranslationKeys.distance.tr} : $distance',
                       style: AppStyles.ubLightNavy10W400,
                       maxLines: 1,
                     ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: Dimens.thirty,
+                  child: Container(
+                    height: Dimens.twentyFive,
+                    padding: Dimens.edgeInsets6,
+                    margin: Dimens.edgeInsetsR16,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.trackerBackgroundColor,
+                      borderRadius: BorderRadius.circular(Dimens.eight),
+                    ),
+                    child: AppText(
+                      text: '${TranslationKeys.age.tr} : $age',
+                      style: AppStyles.ubLightNavy10W400,
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Dimens.thirty,
+                  child: Container(
+                    height: Dimens.twentyFive,
+                    padding: Dimens.edgeInsets6,
+                    margin: Dimens.edgeInsetsR16,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.trackerBackgroundColor,
+                      borderRadius: BorderRadius.circular(Dimens.eight),
+                    ),
+                    child: AppText(
+                      text:
+                          '${TranslationKeys.experience.tr} : $experience yrs',
+                      style: AppStyles.ubLightNavy10W400,
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Dimens.boxHeight14,
             AppText(

@@ -27,11 +27,12 @@ enum HourlyChildrenRateList {
 }
 
 enum BookingDetailStatus {
-  present,
-  past,
-  review,
+  booked,
+  arrived,
   complete,
-  now,
+  giveReview,
+  reviewComplete,
+  rejected,
 }
 
 enum NannyBookingDetailStatus {

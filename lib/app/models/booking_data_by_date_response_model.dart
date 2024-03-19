@@ -1,8 +1,7 @@
-// To parse this JSON data, do
-//
-//     final bookingDataByIdResponseModel = bookingDataByIdResponseModelFromJson(jsonString);
-
 import 'dart:convert';
+
+import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 
 BookingDataByIdResponseModel bookingDataByIdResponseModelFromJson(String str) =>
     BookingDataByIdResponseModel.fromJson(json.decode(str));
@@ -38,8 +37,9 @@ class BookingDataByIdResponseModel {
 }
 
 class BookingDataById {
-  dynamic bookingId;
-  dynamic hourlyprice;
+  int? bookingStatus;
+  int? bookingId;
+  dynamic hourlyPrice;
   int? userId;
   String? location;
   String? latitude;
@@ -47,18 +47,21 @@ class BookingDataById {
   DateTime? bookingDate;
   DateTime? openingDate;
   DateTime? closingDate;
-  dynamic startTime;
+  DateTime? startTime;
   List<String>? servicesType;
   List<Child>? children;
   UserDetails? userDetails;
-  int? totalChildern;
+  int? totalChildren;
   int? totalHour;
   double? totalAmount;
   dynamic userReviewList;
+  bool? isJobStarted;
+  bool? isUseReferrals;
 
   BookingDataById({
+    this.bookingStatus,
     this.bookingId,
-    this.hourlyprice,
+    this.hourlyPrice,
     this.userId,
     this.location,
     this.latitude,
@@ -70,16 +73,19 @@ class BookingDataById {
     this.servicesType,
     this.children,
     this.userDetails,
-    this.totalChildern,
+    this.totalChildren,
     this.totalHour,
     this.totalAmount,
     this.userReviewList,
+    this.isJobStarted,
+    this.isUseReferrals,
   });
 
   factory BookingDataById.fromJson(Map<String, dynamic> json) =>
       BookingDataById(
+        bookingStatus: json["bookingStatus"],
         bookingId: json["bookingId"],
-        hourlyprice: json["hourlyprice"],
+        hourlyPrice: json["hourlyprice"],
         userId: json["userId"],
         location: json["location"],
         latitude: json["latitude"],
@@ -93,7 +99,9 @@ class BookingDataById {
         closingDate: json["closingDate"] == null
             ? null
             : DateTime.parse(json["closingDate"]),
-        startTime: json["startTime"],
+        startTime: json["startTime"] == null
+            ? null
+            : DateTime.parse(json["closingDate"]),
         servicesType: json["servicesType"] == null
             ? []
             : List<String>.from(json["servicesType"]!.map((x) => x)),
@@ -103,15 +111,18 @@ class BookingDataById {
         userDetails: json["userDetails"] == null
             ? null
             : UserDetails.fromJson(json["userDetails"]),
-        totalChildern: json["totalChildern"],
+        totalChildren: json["totalChildern"],
         totalHour: json["totalHour"],
         totalAmount: json["totalAmount"]?.toDouble(),
         userReviewList: json["userReviewList"],
+        isJobStarted: json["isJobStarted"],
+        isUseReferrals: json["isUseReferals"],
       );
 
   Map<String, dynamic> toJson() => {
+        "bookingStatus": bookingStatus,
         "bookingId": bookingId,
-        "hourlyprice": hourlyprice,
+        "hourlyprice": hourlyPrice,
         "userId": userId,
         "location": location,
         "latitude": latitude,
@@ -119,55 +130,19 @@ class BookingDataById {
         "bookingDate": bookingDate?.toIso8601String(),
         "openingDate": openingDate?.toIso8601String(),
         "closingDate": closingDate?.toIso8601String(),
-        "startTime": startTime,
+        "startTime": startTime?.toIso8601String(),
         "servicesType": servicesType == null
             ? []
             : List<dynamic>.from(servicesType!.map((x) => x)),
-        "children": children == null
-            ? []
-            : List<dynamic>.from(children!.map((x) => x.toJson())),
+        "children":
+            children == null ? [] : List<dynamic>.from(children!.map((x) => x)),
         "userDetails": userDetails?.toJson(),
-        "totalChildern": totalChildern,
+        "totalChildern": totalChildren,
         "totalHour": totalHour,
         "totalAmount": totalAmount,
         "userReviewList": userReviewList,
-      };
-}
-
-class Child {
-  String? name;
-  String? age;
-  int? gender;
-  String? allergiesDietaryAndRestrictions;
-  String? medicalCondition;
-  String? aboutChild;
-
-  Child({
-    this.name,
-    this.age,
-    this.gender,
-    this.allergiesDietaryAndRestrictions,
-    this.medicalCondition,
-    this.aboutChild,
-  });
-
-  factory Child.fromJson(Map<String, dynamic> json) => Child(
-        name: json["name"],
-        age: json["age"],
-        gender: json["gender"],
-        allergiesDietaryAndRestrictions:
-            json["allergiesDietaryAndRestrictions"],
-        medicalCondition: json["medicalCondition"],
-        aboutChild: json["aboutChild"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "age": age,
-        "gender": gender,
-        "allergiesDietaryAndRestrictions": allergiesDietaryAndRestrictions,
-        "medicalCondition": medicalCondition,
-        "aboutChild": aboutChild,
+        "isJobStarted": isJobStarted,
+        "isUseReferals": isUseReferrals,
       };
 }
 
@@ -175,13 +150,17 @@ class UserDetails {
   int? userId;
   String? name;
   String? image;
-  int? rating;
+  dynamic rating;
   dynamic review;
   String? location;
   String? latitude;
   String? longitude;
   String? aboutMe;
   int? reviewCount;
+  int? age;
+  dynamic distance;
+  String? experience;
+  List<RatingList>? ratingList;
 
   UserDetails({
     this.userId,
@@ -194,6 +173,10 @@ class UserDetails {
     this.longitude,
     this.aboutMe,
     this.reviewCount,
+    this.age,
+    this.distance,
+    this.experience,
+    this.ratingList,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
@@ -207,6 +190,13 @@ class UserDetails {
         longitude: json["longitude"],
         aboutMe: json["aboutMe"],
         reviewCount: json["reviewCount"],
+        age: json["age"],
+        distance: json["diatance"],
+        experience: json["experience"],
+        ratingList: json["ratingList"] == null
+            ? []
+            : List<RatingList>.from(
+                json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -220,5 +210,11 @@ class UserDetails {
         "longitude": longitude,
         "aboutMe": aboutMe,
         "reviewCount": reviewCount,
+        "age": age,
+        "diatance": distance,
+        "experience": experience,
+        "ratingList": ratingList == null
+            ? []
+            : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
       };
 }

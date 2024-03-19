@@ -82,7 +82,9 @@ class Data {
         longitude: json["longitude"],
         hourlyPrice: json["hourlyprice"] ?? 0.0,
         isJobStarted: json["isJobStarted"] ?? false,
-        startTime: json["startTime"],
+        startTime: json["startTime"] == null
+            ? null
+            : DateTime.parse(json["startTime"]),
         bookingDate: json["bookingDate"] == null
             ? null
             : DateTime.parse(json["bookingDate"]),
@@ -116,7 +118,7 @@ class Data {
         "location": location,
         "latitude": latitude,
         "longitude": longitude,
-        "startTime": startTime,
+        "startTime": startTime?.toIso8601String(),
         "isJobStarted": isJobStarted,
         "hourlyprice": hourlyPrice,
         "bookingDate": bookingDate?.toIso8601String(),

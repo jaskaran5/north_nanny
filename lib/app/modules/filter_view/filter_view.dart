@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
-import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../res/constants/assets.dart';
 import '../../res/theme/colors.dart';
