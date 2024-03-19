@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_recant_chat_list.dart';
 
 class RecentChatView extends StatelessWidget {
-  const RecentChatView({super.key});
-
+  RecentChatView({super.key}) {
+    // print("RecentChatView");
+    // contrller.invokedRecentChat();
+  }
+  // final contrller = Get.put(RecentChatController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder(

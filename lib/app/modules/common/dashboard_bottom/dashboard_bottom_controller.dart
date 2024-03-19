@@ -49,7 +49,7 @@ class DashboardBottomController extends GetxController {
   /// CUSTOMER
   List bottomBarScreenListCustomer = [
     const CustomerHomeView(),
-    const RecentChatView(),
+    RecentChatView(),
     const NotificationView(),
     const CustomerCalenderView(),
     const SettingView(),
@@ -58,7 +58,7 @@ class DashboardBottomController extends GetxController {
   /// NANNY
   List bottomBarScreenListNanny = [
     const NannyHomeView(),
-    const RecentChatView(),
+    RecentChatView(),
     const NotificationView(),
     const NannyCalenderView(),
     const SettingView(),

@@ -3,8 +3,7 @@ class ApiUrls {
 
   ///---------------------------------SOCKET URL
   ///
-  static const String socketUrl =
-      "https://px2jr0cf-44387.inc1.devtunnels.ms/chat";
+  static const String socketUrl = "https://api.northshore.harishparas.com/chat";
 
   ///-------------- *******  COMMON API ----------------------------------------------------------------
   ///

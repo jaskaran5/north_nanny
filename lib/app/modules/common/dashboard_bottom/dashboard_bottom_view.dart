@@ -14,8 +14,8 @@ class DashboardBottomView extends StatelessWidget {
   const DashboardBottomView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder<DashboardBottomController>(
-      init: DashboardBottomController(),
-      builder: (controller) => Scaffold(
+        init: DashboardBottomController(),
+        builder: (controller) => Scaffold(
           bottomNavigationBar: BottomNavigationBar(
             showUnselectedLabels: true,
             onTap: (value) => controller.selectedBottomTab = value,
@@ -80,5 +80,7 @@ class DashboardBottomView extends StatelessWidget {
               ? controller.bottomBarScreenListCustomer
                   .elementAt(controller.selectedTabIndex.value)
               : controller.bottomBarScreenListNanny
-                  .elementAt(controller.selectedTabIndex.value)));
+                  .elementAt(controller.selectedTabIndex.value),
+        ),
+      );
 }

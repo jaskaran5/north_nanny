@@ -1,16 +1,49 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
+import 'package:signalr_netcore/signalr_client.dart';
 
 class RecentChatController extends GetxController {
-  final signalRHelper = SignalRHelper();
+  String tag = "Socket";
+  final SignalRHelper _socketHelper = SignalRHelper();
+  late HubConnection _hubConnection;
+
+  List<ChatList> recetChatList = [];
+
+  @override
+  onInit() {
+    if (_socketHelper.isConnected == false) {
+      _socketHelper.reconnect();
+    }
+    _hubConnection = _socketHelper.getHubConnection();
+    super.onInit();
+    invokedRecentChat();
+
+    //   getRecetChatList();
+  }
+
   redirectToChatScreen() {
     Get.to(const ChatView());
   }
 
-  getRecetChatList() {
-    signalRHelper.hubConnection.invoke('ChatList').then((value) {
-      print("chat list invoked value:==>> $value");
+  Future<void> invokedRecentChat() async {
+    log("$tag chat list argumaents are:-->> invokedRecentChat");
+    _hubConnection.off("MyChatList");
+    _hubConnection.on("MyChatList", (arguments) {
+      var data = arguments?[0] as Map<String, dynamic>;
+
+      var res = ChatListResponseModel.fromJson(data);
+
+      recetChatList = res.data?.chatList ?? [];
+      log("$tag chat list argumaents are:-->> ${arguments?[0]}");
     });
+
+    var res = await _hubConnection.invoke('ChatList', args: []);
+    log("$tag ChatList : $res");
   }
+
+  getChatList() {}
 }

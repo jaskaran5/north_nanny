@@ -51,6 +51,7 @@ class SignalRHelper {
     }
   }
 
+  /// START CONNECTION
   Future<void> startConnection() async {
     log("start scoket connection called");
     print("hubconnectionn state:--->>${hubConnection.state}");
@@ -93,6 +94,7 @@ class SignalRHelper {
     });
   }
 
+  /// RECONNECT USER
   void reconnect() async {
     if (!isConnected) {
       await startConnection();
@@ -100,6 +102,8 @@ class SignalRHelper {
   }
 
   HubConnection getHubConnection() => hubConnection;
+
+  /// DISCONNECT USER
 
   void disconnectUser() {
     hubConnection.stop();
