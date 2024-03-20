@@ -4,8 +4,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_data_by_date_response_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -27,9 +29,12 @@ class BookingDetailController extends GetxController {
   bool isExpandChildren = false;
   final ApiHelper _apiHelper = ApiHelper.to;
 
+  /// used to initialize socket.
+  SignalRHelper socket = SignalRHelper();
+
   BookingDataById? bookingDataById;
 
-  /// used to show timmer
+  /// used to show timer
   late Timer timer;
   int seconds = 0;
 
@@ -248,5 +253,21 @@ class BookingDetailController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "update booking status  API ISSUE $s");
     }
+  }
+
+  /// socket api used to get lat long and save to the nanny lat longs.
+  updateNannyLatLong() async {
+    socket.hubConnection.on('TranckNannyResponse', (arguments) {
+      log('arguments :$arguments');
+    });
+  }
+
+  /// used to initialize google Map
+  late GoogleMapController googleMapController;
+
+  /// used to initialize google map controller.
+  void onMapCreated(GoogleMapController controller) async {
+    googleMapController = controller;
+    update(['tracking']);
   }
 }

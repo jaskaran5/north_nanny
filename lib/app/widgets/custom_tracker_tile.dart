@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
@@ -24,6 +25,11 @@ class CustomTrackerTile extends StatelessWidget {
     required this.age,
     required this.experience,
     required this.onTapRatingAndReview,
+    required this.latitude,
+    required this.longitude,
+    required this.polyline,
+    required this.markers,
+    this.onMapCreated,
   });
   final String image;
   final String svgPath;
@@ -36,6 +42,11 @@ class CustomTrackerTile extends StatelessWidget {
   final String experience;
   final Function()? onTapChat;
   final Function() onTapRatingAndReview;
+  final double latitude;
+  final double longitude;
+  final Set<Polyline> polyline;
+  final Set<Marker> markers;
+  final Function(GoogleMapController)? onMapCreated;
   @override
   Widget build(BuildContext context) => Container(
         padding: Dimens.edgeInsets16,
@@ -203,7 +214,17 @@ class CustomTrackerTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimens.ten),
               ),
-              child: Image.asset(Assets.imagesMap),
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(latitude, longitude), zoom: Dimens.ten),
+                myLocationEnabled: false,
+                scrollGesturesEnabled: true,
+                zoomGesturesEnabled: true,
+                onMapCreated: onMapCreated,
+                markers: markers,
+                polylines: polyline,
+                mapType: MapType.normal,
+              ),
             ),
           ],
         ),

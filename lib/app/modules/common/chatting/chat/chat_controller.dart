@@ -20,6 +20,8 @@ class ChatController extends GetxController {
   RxList messageList = <RxList>[].obs;
   SingleChatData? singleChatData;
 
+  //
+
   RxString otherUserId = ''.obs;
   RxBool isOnline = false.obs;
 

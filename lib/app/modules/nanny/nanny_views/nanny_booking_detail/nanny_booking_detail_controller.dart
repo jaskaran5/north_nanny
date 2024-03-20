@@ -65,6 +65,7 @@ class NannyBookingDetailController extends GetxController {
       );
     }
     if (isGoogleControllerInitialize) {
+      log('map initialize:$isGoogleControllerInitialize');
       getCurrentLocation();
     }
   }
@@ -257,7 +258,7 @@ class NannyBookingDetailController extends GetxController {
   Position? currentPosition;
 
   /// used to stop the tracking and enable
-  late StreamSubscription<Position>? locationStream;
+   StreamSubscription<Position>? locationStream;
 
   /// used to update current location on basis of tracking
   Future<void> getCurrentLocation() async {
@@ -299,11 +300,8 @@ class NannyBookingDetailController extends GetxController {
               );
             }
             log('nanny Booking Status  :$nannyBookingDetailStatus and ${(nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay || nannyBookingDetailStatus == NannyBookingDetailStatus.arrived)}');
-            if ((nannyBookingDetailStatus ==
-                    NannyBookingDetailStatus.onMyWay) ||
-                (nannyBookingDetailStatus ==
-                        NannyBookingDetailStatus.arrived) ==
-                    true) {
+            if (nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay ||
+                nannyBookingDetailStatus == NannyBookingDetailStatus.arrived) {
               locationStream = Geolocator.getPositionStream(
                       locationSettings: locationSettings)
                   .listen((Position? position) async {
@@ -380,12 +378,14 @@ class NannyBookingDetailController extends GetxController {
     required double longitude,
   }) async {
     log('latitude:${latitude.toString()} ,longitude:${longitude.toString()} ,  bookingId:$bookingId, toUserId:$toUserId');
-    final result = await socketHelper.hubConnection.invoke('TrackNanny', args: [
+    socketHelper.hubConnection.on('TranckNannyResponse', (arguments) {
+      log(' send lat long according to current location ========> $arguments');
+    });
+    await socketHelper.hubConnection.invoke('TrackNanny', args: [
       toUserId,
       bookingId,
       latitude.toString(),
       longitude.toString(),
     ]);
-    log(' send lat long according to current location ========> ${result.toString()}');
   }
 }
