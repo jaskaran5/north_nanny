@@ -19,7 +19,7 @@ class CustomTrackerTile extends StatelessWidget {
     required this.rating,
     required this.reviews,
     required this.description,
-    this.onTapSvg,
+    this.onTapChat,
     required this.distance,
     required this.age,
     required this.experience,
@@ -34,7 +34,7 @@ class CustomTrackerTile extends StatelessWidget {
   final String distance;
   final int age;
   final String experience;
-  final Function()? onTapSvg;
+  final Function()? onTapChat;
   final Function() onTapRatingAndReview;
   @override
   Widget build(BuildContext context) => Container(
@@ -86,7 +86,7 @@ class CustomTrackerTile extends StatelessWidget {
                             textAlign: TextAlign.start,
                           ),
                           GestureDetector(
-                            onTap: onTapSvg,
+                            onTap: onTapChat,
                             child: SvgPicture.asset(
                               svgPath,
                             ),

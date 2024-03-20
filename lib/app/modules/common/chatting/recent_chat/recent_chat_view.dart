@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
@@ -61,13 +63,8 @@ class RecentChatView extends StatelessWidget {
                               index % 2 == 0 ? Colors.black : Colors.blue;
                           //
 
-                          return GestureDetector(
-                            onTap: () {
-                              controller.redirectToChatScreen();
-                            },
-                            child: CustomeReectChatListTile(
-                              chatData: controller.recetChatList[index],
-                            ),
+                          return CustomeReectChatListTile(
+                            chatData: controller.recetChatList[index],
                           );
                         },
                       )

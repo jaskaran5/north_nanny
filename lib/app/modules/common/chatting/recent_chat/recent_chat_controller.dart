@@ -9,8 +9,8 @@ import 'package:signalr_netcore/signalr_client.dart';
 class RecentChatController extends GetxController {
   String tag = "Socket";
   //
-  final SignalRHelper _socketHelper = SignalRHelper();
-  late HubConnection _hubConnection;
+  final _socketHelper = SignalRHelper();
+  // late HubConnection _hubConnection;
 
   List<ChatList> recetChatList = [];
 
@@ -19,7 +19,7 @@ class RecentChatController extends GetxController {
     if (_socketHelper.isConnected == false) {
       _socketHelper.reconnect();
     }
-    _hubConnection = _socketHelper.getHubConnection();
+    _socketHelper.hubConnection = _socketHelper.getHubConnection();
     super.onInit();
     invokedRecentChat();
 
@@ -32,8 +32,8 @@ class RecentChatController extends GetxController {
 
   Future<void> invokedRecentChat() async {
     log("$tag chat list argumaents are:-->> invokedRecentChat");
-    _hubConnection.off("MyChatList");
-    _hubConnection.on("MyChatList", (arguments) {
+    _socketHelper.hubConnection.off("MyChatList");
+    _socketHelper.hubConnection.on("MyChatList", (arguments) {
       var data = arguments?[0] as Map<String, dynamic>;
 
       var res = ChatListResponseModel.fromJson(data);
@@ -41,9 +41,10 @@ class RecentChatController extends GetxController {
       recetChatList = res.data?.chatList ?? [];
       log("$tag chat list argumaents are:-->> ${arguments?[0]}");
       log("$tag recetChatList:-->> $recetChatList");
+      update();
     });
 
-    var res = await _hubConnection.invoke('ChatList', args: []);
+    var res = await _socketHelper.hubConnection.invoke('ChatList', args: []);
     log("$tag ChatList : $res");
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -44,7 +46,7 @@ class ChatView extends StatelessWidget {
                               ),
                             ),
                             CustomCacheNetworkImage(
-                              img: '',
+                              img: controller.getNannyData?.image ?? '',
                               size: Dimens.forty,
                               imageRadius: Dimens.hundred,
                             ),
@@ -54,22 +56,26 @@ class ChatView extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  'Christina wang',
+                                  controller.getNannyData?.name ?? '',
                                   textAlign: TextAlign.center,
                                   style: AppStyles.ubBlack16W700,
                                 ),
                                 Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.circle,
-                                      color: Colors.green,
+                                      color: controller.isOnline.value
+                                          ? AppColors.onlineColor
+                                          : AppColors.offlineColor,
                                       size: 10,
                                     ),
                                     const SizedBox(
                                       width: 4,
                                     ),
                                     Text(
-                                      'Online',
+                                      controller.isOnline.value
+                                          ? 'Online'
+                                          : 'offline',
                                       textAlign: TextAlign.center,
                                       style: AppStyles.ubGrey12W400,
                                     ),
@@ -174,15 +180,25 @@ class ChatView extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             if (controller.chatTextController.text.trim() ==
                                 '') {
-                              toast(  msg: '"Please Enter your message"',isError: true);
+                              toast(
+                                  msg: '"Please Enter your message"',
+                                  isError: true);
                             } else {
-                              controller.sendChatMessage(
+                              log("else part called");
+                              await controller.sendMessage(
+                                  toUserId: int.parse(
+                                      controller.otherUserId.value.toString()),
                                   message:
                                       controller.chatTextController.text.trim(),
-                                  receiverId: 1);
+                                  date:
+                                      DateTime.now().toUtc().toIso8601String(),
+                                  fileType: null,
+                                  isFile: false,
+                                  type: 1);
+                              ();
                               controller.chatTextController.text = '';
                             }
                           },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -142,6 +143,12 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   CustomTrackerTile(
+                    onTapChat: () {
+                      Get.to(const ChatView(),
+                          arguments: controller
+                              .bookingDataById?.userDetails?.userId
+                              .toString());
+                    },
                     image: controller.bookingDataById?.userDetails?.image
                             .toString() ??
                         '',
