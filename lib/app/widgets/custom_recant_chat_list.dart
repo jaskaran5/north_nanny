@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_new_message_count_icon.dart';
+
+import '../modules/common/chatting/recent_chat/recent_chat_controller.dart';
 
 class CustomRecentChatListTile extends StatelessWidget {
 
