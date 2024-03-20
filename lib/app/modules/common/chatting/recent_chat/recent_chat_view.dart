@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_recant_chat_list.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class RecentChatView extends StatelessWidget {
   RecentChatView({super.key}) {
@@ -52,21 +55,23 @@ class RecentChatView extends StatelessWidget {
                       ),
                       Dimens.boxHeight10,
                       //check
-                      ListView.builder(
-                        itemCount: controller.recetChatList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-
-                          return GestureDetector(
-                            onTap: () {
-                              controller.redirectToChatScreen();
-                            },
-                            child: CustomRecentChatListTile(
-                              chatData: controller.recetChatList[index],
-                            ),
-                          );
-                        },
+                      Skeletonizer(
+                        enabled: controller.isShimmerEnabled.value,
+                        child: ListView.builder(
+                          itemCount: controller.recetChatList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                controller.redirectToChatScreen();
+                              },
+                              child: CustomRecentChatListTile(
+                                chatData: controller.recetChatList[index],
+                              ),
+                            );
+                          },
+                        ),
                       )
                     ],
                   ),

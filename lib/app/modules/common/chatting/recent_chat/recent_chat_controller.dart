@@ -7,6 +7,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_soc
 
 class RecentChatController extends GetxController {
   String tag = "Socket";
+
+  RxBool isShimmerEnabled = true.obs;
   //
   final _socketHelper = SignalRHelper();
   // late HubConnection _hubConnection;
@@ -40,6 +42,7 @@ class RecentChatController extends GetxController {
       recetChatList = res.data?.chatList ?? [];
       log("$tag chat list argumaents are:-->> ${arguments?[0]}");
       log("$tag recetChatList:-->> $recetChatList");
+      isShimmerEnabled.value = false;
       update();
     });
 

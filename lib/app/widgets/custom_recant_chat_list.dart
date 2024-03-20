@@ -10,12 +10,11 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_new_message_count_ic
 import '../modules/common/chatting/recent_chat/recent_chat_controller.dart';
 
 class CustomRecentChatListTile extends StatelessWidget {
-
   const CustomRecentChatListTile({
     super.key,
     required this.chatData,
   });
- final  ChatList? chatData;
+  final ChatList? chatData;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class CustomRecentChatListTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        chatData?.name ?? '',
+                        chatData?.fullName ?? '',
                         style: AppStyles.ubBlack14W700,
                         maxLines: 1,
                       ),

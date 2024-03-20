@@ -193,8 +193,6 @@ class ChatView extends StatelessWidget {
                                       controller.otherUserId.value.toString()),
                                   message:
                                       controller.chatTextController.text.trim(),
-                                  date:
-                                      DateTime.now().toUtc().toIso8601String(),
                                   fileType: null,
                                   isFile: false,
                                   type: 1);

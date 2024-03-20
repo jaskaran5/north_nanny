@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
+import 'package:northshore_nanny_flutter/app/models/send_chat_message_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
@@ -17,6 +18,7 @@ class ChatController extends GetxController {
   final _socketHelper = SignalRHelper();
 
   RxList messageList = <RxList>[].obs;
+  SingleChatData? singleChatData;
 
   RxString otherUserId = ''.obs;
   RxBool isOnline = false.obs;
@@ -46,7 +48,6 @@ class ChatController extends GetxController {
     sendMessage(
         toUserId: int.parse(otherUserId.value),
         message: chatTextController.text.trim(),
-        date: null,
         fileType: null,
         isFile: false,
         type: 1);
@@ -65,6 +66,8 @@ class ChatController extends GetxController {
 
     log("user id -->> ${otherUserId.value}");
     getNannyDetailsById();
+
+    listenSocket();
   }
 
   /// GET NANNY DETAILS
@@ -109,7 +112,6 @@ class ChatController extends GetxController {
     int? type,
     String? fileType,
     bool? isFile,
-    String? date,
   }) async {
     // SendMessage(int ToUserId, string Message, int Type, string FileType,2 bool IsFile, string Date)
     print('Send message data ======> ${[
@@ -118,7 +120,7 @@ class ChatController extends GetxController {
       type!,
       fileType,
       isFile,
-      date
+      DateTime.now().toUtc()
     ].toString()}');
     // String Date =
     //     DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().toUtc());
@@ -128,13 +130,12 @@ class ChatController extends GetxController {
           toUserId!,
           message,
           type,
-          fileType!,
+          "",
           isFile!,
-          date!
+          DateTime.now().toUtc().toIso8601String()
         ]).catchError((e) => printInfo(info: e.toString()));
     print('Message sent Received Data ========> ${result.toString()}');
 
-    listenMessage();
     // messageList.add(
     // 0,
     // MessageList(
@@ -158,5 +159,9 @@ class ChatController extends GetxController {
         log("arguments :-->> $arguments");
       },
     );
+  }
+
+  listenSocket() {
+    listenMessage();
   }
 }
