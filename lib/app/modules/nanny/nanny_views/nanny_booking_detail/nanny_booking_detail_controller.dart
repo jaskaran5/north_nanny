@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_status_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
@@ -19,14 +23,21 @@ import '../../../../res/constants/enums.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/custom_toast.dart';
 import '../../../../utils/utility.dart';
+import 'package:permission_handler/permission_handler.dart' as permission;
 
 class NannyBookingDetailController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
+
+  /// used to initiate socket
+  final SignalRHelper socketHelper = SignalRHelper();
 
   late NannyBookingDetailStatus nannyBookingDetailStatus;
   late Timer timer;
   int seconds = 0;
   BookingDetailsModel? bookingDetailsModel;
+
+  /// used to check google map controller is Initialize or not
+  bool isGoogleControllerInitialize = false;
 
   initBooking() {
     if (nannyBookingDetailStatus ==
@@ -53,6 +64,9 @@ class NannyBookingDetailController extends GetxController {
         },
       );
     }
+    if (isGoogleControllerInitialize) {
+      getCurrentLocation();
+    }
   }
 
   /// report list
@@ -67,6 +81,7 @@ class NannyBookingDetailController extends GetxController {
     super.dispose();
     timer.cancel();
     seconds = 0;
+    googleMapController.dispose();
   }
 
   /// used to store the rejected reason.
@@ -225,5 +240,152 @@ class NannyBookingDetailController extends GetxController {
       seconds = DateTime.now().difference(startTime).inSeconds;
       update(['timer-view']);
     });
+  }
+
+  /// ------------------- Tracking things start here --------------------
+  ///
+  /// used to initialize google Map
+  late GoogleMapController googleMapController;
+
+  void onMapCreated(GoogleMapController controller) async {
+    googleMapController = controller;
+    isGoogleControllerInitialize = true;
+    update(['tracking']);
+  }
+
+  /// current position
+  Position? currentPosition;
+
+  /// used to stop the tracking and enable
+  late StreamSubscription<Position>? locationStream;
+
+  /// used to update current location on basis of tracking
+  Future<void> getCurrentLocation() async {
+    try {
+      var status = await getLocationPermissionStatus();
+      if (status != null && status) {
+        try {
+          var permissionStatus = await permission.Permission.location.request();
+          if (permissionStatus == permission.PermissionStatus.granted) {
+            LocationSettings locationSettings = const LocationSettings();
+
+            if (Platform.isAndroid) {
+              locationSettings = AndroidSettings(
+                  accuracy: LocationAccuracy.bestForNavigation,
+                  distanceFilter: 10,
+                  forceLocationManager: false,
+                  intervalDuration: const Duration(seconds: 7),
+                  foregroundNotificationConfig:
+                      const ForegroundNotificationConfig(
+                          notificationText:
+                              "Location is being used for navigation",
+                          notificationTitle: "North-Nanny",
+                          enableWakeLock: true,
+                          setOngoing: true,
+                          notificationIcon:
+                              AndroidResource(name: "@mipmap/ic_launcher")));
+            } else if (Platform.isIOS) {
+              locationSettings = AppleSettings(
+                  accuracy: LocationAccuracy.bestForNavigation,
+                  activityType: ActivityType.automotiveNavigation,
+                  distanceFilter: 10,
+                  timeLimit: const Duration(seconds: 10),
+                  showBackgroundLocationIndicator: true,
+                  allowBackgroundLocationUpdates: true);
+            } else {
+              locationSettings = const LocationSettings(
+                accuracy: LocationAccuracy.high,
+                distanceFilter: 10,
+              );
+            }
+            log('nanny Booking Status  :$nannyBookingDetailStatus and ${(nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay || nannyBookingDetailStatus == NannyBookingDetailStatus.arrived)}');
+            if ((nannyBookingDetailStatus ==
+                    NannyBookingDetailStatus.onMyWay) ||
+                (nannyBookingDetailStatus ==
+                        NannyBookingDetailStatus.arrived) ==
+                    true) {
+              locationStream = Geolocator.getPositionStream(
+                      locationSettings: locationSettings)
+                  .listen((Position? position) async {
+                log('-----------------------position --- $position -------------------> ');
+                if (position != null) {
+                  currentPosition = position;
+
+                  log("**************** POSITION :  -->> ${currentPosition!.latitude},${currentPosition!.longitude}");
+
+                  /// used to send the data according to lat long.
+                  updateLatLong(
+                      toUserId:
+                          bookingDetailsModel?.data?.userDetails?.userId ?? 0,
+                      bookingId: bookingDetailsModel?.data?.bookingId ?? 0,
+                      latitude: position.latitude,
+                      longitude: position.longitude);
+
+                  /// used to animate the controller based on lat long.
+                  googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                          target:
+                              LatLng(position.latitude, position.longitude))));
+                  log('-----------------------tracking on -------------------> ');
+                }
+
+                update(['tracking-view']);
+              });
+            }
+            if (nannyBookingDetailStatus == NannyBookingDetailStatus.endJob) {
+              locationStream?.pause();
+              log('-----------------------tracking off -------------------> ');
+            }
+            update(['tracking-view']);
+          }
+        } catch (e) {
+          log(e.toString());
+        }
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  /// used to get current location
+  Future<bool?> getLocationPermissionStatus() async {
+    try {
+      var permissionStatus = await permission.Permission.location.request();
+      if (permissionStatus == permission.PermissionStatus.granted) {
+        return true;
+      } else if (permissionStatus == permission.PermissionStatus.denied) {
+        return false;
+      } else if (permissionStatus ==
+          permission.PermissionStatus.permanentlyDenied) {
+        return false;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getCurrentLocation();
+  }
+
+  /// socket method which is use to update the  lat long
+  updateLatLong({
+    required int toUserId,
+    required int bookingId,
+    required double latitude,
+    required double longitude,
+  }) async {
+    log('latitude:${latitude.toString()} ,longitude:${longitude.toString()} ,  bookingId:$bookingId, toUserId:$toUserId');
+    final result = await socketHelper.hubConnection.invoke('TrackNanny', args: [
+      toUserId,
+      bookingId,
+      latitude.toString(),
+      longitude.toString(),
+    ]);
+    log(' send lat long according to current location ========> ${result.toString()}');
   }
 }

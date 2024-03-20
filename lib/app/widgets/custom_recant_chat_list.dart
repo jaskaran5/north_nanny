@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
-import 'package:northshore_nanny_flutter/app/utils/date_helper.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_new_message_count_icon.dart';
 
-class CustomeReectChatListTile extends StatelessWidget {
-  ChatList? chatData;
-  CustomeReectChatListTile({
+class CustomRecentChatListTile extends StatelessWidget {
+
+  const CustomRecentChatListTile({
     super.key,
     required this.chatData,
   });
+ final  ChatList? chatData;
 
   @override
   Widget build(BuildContext context) {

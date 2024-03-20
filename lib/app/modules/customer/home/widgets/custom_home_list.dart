@@ -9,7 +9,7 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network.dart';
 
 class HomeCustomListView extends StatelessWidget {
-  HomeCustomListView({
+  const HomeCustomListView({
     super.key,
     required this.image,
     required this.name,
@@ -23,7 +23,7 @@ class HomeCustomListView extends StatelessWidget {
     required this.age,
     required this.experience,
     this.onTapRating,
-    this.canClose,
+    this.canClose = false,
     this.onTapClose,
   });
 
@@ -36,7 +36,7 @@ class HomeCustomListView extends StatelessWidget {
   final String distance;
   final String age;
   final String experience;
-  bool? canClose = false;
+  final bool? canClose;
 
   final bool isHeartTapped;
   final Function() onTapHeartIcon;
@@ -45,13 +45,7 @@ class HomeCustomListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-        // List.generate(
-        //   3,
-        //   (index) =>
-
-        Container(
+    return Container(
       height: Dimens.oneHundredEightyTwo,
       padding: Dimens.edgeInsets16,
       margin: Dimens.edgeInsetsB16,

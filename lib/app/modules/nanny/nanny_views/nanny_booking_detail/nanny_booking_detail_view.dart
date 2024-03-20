@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
@@ -130,7 +131,9 @@ class NannyBookingDetailView extends StatelessWidget {
                     },
                   ),
                   Dimens.boxHeight14,
-                  CustomBookingTrackLocation(
+                  GetBuilder<NannyBookingDetailController>(
+                    id: 'tracking-view',
+                    builder: (trackController) => CustomBookingTrackLocation(
                       firstWidget: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +148,7 @@ class NannyBookingDetailView extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.circular(Dimens.ten),
                                 ),
-                                child: controller.bookingDetailsModel?.data
+                                child: trackController.bookingDetailsModel?.data
                                             ?.userDetails?.image?.isEmpty ==
                                         true
                                     ? Image.asset(
@@ -155,7 +158,7 @@ class NannyBookingDetailView extends StatelessWidget {
                                         width: Dimens.seventy,
                                       )
                                     : CustomCacheNetworkImage(
-                                        img: controller.bookingDetailsModel
+                                        img: trackController.bookingDetailsModel
                                                 ?.data?.userDetails?.image ??
                                             '',
                                         size: Dimens.seventy,
@@ -169,8 +172,8 @@ class NannyBookingDetailView extends StatelessWidget {
                                   SizedBox(
                                     width: Dimens.oneHundredFifty,
                                     child: AppText(
-                                      text: controller.bookingDetailsModel?.data
-                                          ?.userDetails?.name
+                                      text: trackController.bookingDetailsModel
+                                          ?.data?.userDetails?.name
                                           .toString(),
                                       style: AppStyles.ubWhite14700,
                                       maxLines: 2,
@@ -182,19 +185,19 @@ class NannyBookingDetailView extends StatelessWidget {
                                     onTap: () {
                                       Utility.openBottomSheet(
                                         CustomReviewBottomSheet(
-                                          totalReviews: controller
+                                          totalReviews: trackController
                                                   .bookingDetailsModel
                                                   ?.data
                                                   ?.userDetails
                                                   ?.reviewCount ??
                                               0,
-                                          totalReviewsRating: controller
+                                          totalReviewsRating: trackController
                                                   .bookingDetailsModel
                                                   ?.data
                                                   ?.userDetails
                                                   ?.rating ??
                                               0.0,
-                                          reviewsList: controller
+                                          reviewsList: trackController
                                                   .bookingDetailsModel
                                                   ?.data
                                                   ?.userReviewList ??
@@ -212,8 +215,11 @@ class NannyBookingDetailView extends StatelessWidget {
                                         ),
                                         Dimens.boxWidth2,
                                         AppText(
-                                          text: controller.bookingDetailsModel
-                                              ?.data?.userDetails?.rating
+                                          text: trackController
+                                              .bookingDetailsModel
+                                              ?.data
+                                              ?.userDetails
+                                              ?.rating
                                               .toString(),
                                           style: AppStyles.ubWhite12W500,
                                           maxLines: 1,
@@ -222,7 +228,7 @@ class NannyBookingDetailView extends StatelessWidget {
                                         Dimens.boxWidth2,
                                         AppText(
                                           text:
-                                              '(${controller.bookingDetailsModel?.data?.userDetails?.reviewCount} ${TranslationKeys.reviews.tr})',
+                                              '(${trackController.bookingDetailsModel?.data?.userDetails?.reviewCount} ${TranslationKeys.reviews.tr})',
                                           style: AppStyles.ubWhite12W400,
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
@@ -234,19 +240,64 @@ class NannyBookingDetailView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          if (controller.nannyBookingDetailStatus ==
+                          if (trackController.nannyBookingDetailStatus ==
                                   NannyBookingDetailStatus.onMyWay ||
-                              controller.nannyBookingDetailStatus ==
+                              trackController.nannyBookingDetailStatus ==
                                   NannyBookingDetailStatus.arrived ||
-                              controller.nannyBookingDetailStatus ==
+                              trackController.nannyBookingDetailStatus ==
                                   NannyBookingDetailStatus.endJob)
                             SvgPicture.asset(Assets.iconsChatWhite),
                         ],
                       ),
-                      showTrackLocation: controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.reviewComplete
-                          ? false
-                          : true),
+                      showTrackLocation:
+                          trackController.nannyBookingDetailStatus ==
+                                  NannyBookingDetailStatus.reviewComplete
+                              ? false
+                              : true,
+                      latitude: trackController.currentPosition?.latitude ?? 0.0,
+                      longitude: trackController.currentPosition?.longitude ?? 0.0,
+                      polyline: {
+                        Polyline(
+                          polylineId: const PolylineId('line'),
+                          color: AppColors.navyBlue3288DE,
+                          points: [
+                            LatLng(
+                                double.parse(trackController
+                                        .bookingDetailsModel?.data?.latitude ??
+                                    '0.0'),
+                                double.parse(trackController
+                                        .bookingDetailsModel?.data?.longitude ??
+                                    '0.0')),
+                            LatLng(
+                                double.parse(trackController.bookingDetailsModel
+                                        ?.data?.userDetails?.latitude ??
+                                    '0.0'),
+                                double.parse(trackController.bookingDetailsModel
+                                        ?.data?.userDetails?.longitude ??
+                                    '0.0')),
+                          ],
+                        ),
+                      },
+                      markers: {
+                        Marker(
+                          markerId: MarkerId(trackController.bookingDetailsModel
+                                  ?.data?.userDetails?.latitude
+                                  .toString() ??
+                              ''),
+                          flat: true,
+                          position: LatLng(
+                            double.parse(trackController.bookingDetailsModel
+                                    ?.data?.userDetails?.latitude ??
+                                '0.0'),
+                            double.parse(trackController.bookingDetailsModel
+                                    ?.data?.userDetails?.longitude ??
+                                '0.0'),
+                          ),
+                        )
+                      },
+                      onMapCreated: trackController.onMapCreated,
+                    ),
+                  ),
                   Dimens.boxHeight14,
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
@@ -618,11 +669,11 @@ class NannyBookingDetailView extends StatelessWidget {
                   ],
                   Dimens.boxHeight16,
                   if (controller.bookingDetailsModel?.data?.isJobStarted ==
-                              false &&
-                          (controller.nannyBookingDetailStatus ==
+                          false &&
+                      (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
-                      controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.arrived)) ...[
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.arrived)) ...[
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
                       title: 'Declined',

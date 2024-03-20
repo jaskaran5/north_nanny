@@ -17,11 +17,11 @@ class MultiSelectDialogChildren extends StatefulWidget {
   });
 
   @override
-  _MultiSelectDialogChildrenState createState() =>
-      _MultiSelectDialogChildrenState();
+  MultiSelectDialogChildrenState createState() =>
+      MultiSelectDialogChildrenState();
 }
 
-class _MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
+class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
   late List<String> _selectedOptions;
 
   @override

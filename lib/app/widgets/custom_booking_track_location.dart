@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
-import '../res/constants/assets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import '../res/theme/styles.dart';
@@ -10,9 +9,21 @@ import 'app_text.dart';
 
 class CustomBookingTrackLocation extends StatelessWidget {
   const CustomBookingTrackLocation(
-      {super.key, required this.firstWidget, required this.showTrackLocation});
+      {super.key,
+      required this.firstWidget,
+      required this.showTrackLocation,
+      required this.latitude,
+      required this.longitude,
+      required this.polyline,
+      required this.markers,
+      this.onMapCreated});
   final Widget firstWidget;
   final bool showTrackLocation;
+  final double latitude;
+  final double longitude;
+  final Set<Polyline> polyline;
+  final Set<Marker> markers;
+  final Function(GoogleMapController)? onMapCreated;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -40,7 +51,17 @@ class CustomBookingTrackLocation extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimens.ten),
                 ),
-                child: Image.asset(Assets.imagesMap, fit: BoxFit.cover),
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(latitude, longitude), zoom: Dimens.ten),
+                  myLocationEnabled: false,
+                  scrollGesturesEnabled: true,
+                  zoomGesturesEnabled: true,
+                  onMapCreated: onMapCreated,
+                  markers: markers,
+                  polylines: polyline,
+                  mapType: MapType.normal,
+                ),
               ),
             ],
           ],

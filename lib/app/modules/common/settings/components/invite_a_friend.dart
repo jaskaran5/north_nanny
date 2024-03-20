@@ -18,11 +18,6 @@ class InviteAFriendView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GetBuilder<SettingController>(
       init: SettingController(),
-
-      //     initState: (_) {
-      //   Get.find<SettingController>().getAndUpdateLoginType();
-      // },
-
       builder: (controller) {
         return Scaffold(
           appBar: const CustomAppbarWidget(),

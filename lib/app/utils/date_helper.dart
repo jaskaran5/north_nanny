@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 
 class DateHelper {
   static const _locale = 'en';
-  static const int _SECOND_MILLIS = 1000;
-  static const int _MINUTE_MILLIS = 60 * _SECOND_MILLIS;
-  static const int _HOUR_MILLIS = 60 * _MINUTE_MILLIS;
+  static const int secondMiles = 1000;
+  static const int minuteMiles = 60 * secondMiles;
+  static const int hourMiles = 60 * minuteMiles;
   static final _timeFormat12 = DateFormat("hh:mm a", _locale);
   static final _timeFormat24 = DateFormat("HH:mm:ss", _locale);
   static final _timeFormat24Post = DateFormat("HH:mm", _locale);
@@ -16,23 +16,23 @@ class DateHelper {
   static final _dateFormatMedication = DateFormat("MM/dd/yyyy", _locale);
   static final _dateFormatSinceWithDate = DateFormat("MMM dd, yyyy", _locale);
   static final _dateFormatGetEvent = DateFormat("yyyy-MM-dd", _locale);
-  static final _chatTime = DateFormat("yyyy-MM-dd", _locale);
+  static final chatTime = DateFormat("yyyy-MM-dd", _locale);
   static final _dateFormatEvent = DateFormat("dd MMM yyyy", _locale);
   static final _joiningDate = DateFormat("dd MMM yyyy", _locale);
-  static final _dateFormatEventDetail = DateFormat("EEEE, MMM dd", _locale);
+  static final dateFormatEventDetail = DateFormat("EEEE, MMM dd", _locale);
   static final _dateFormatNotification = DateFormat("MMM dd", _locale);
   static final _expiryMonthCard = DateFormat("MM", _locale);
   static final _expiryYearCard = DateFormat("dd", _locale);
   static final _addCardDateFormat = DateFormat("MM/yyyy", _locale);
-  static final _dateFormateWithoutString = DateFormat("yyyy-MM-dd", _locale);
-  static final _dateFormateNoString = DateFormat("dd/MM/yyyy", _locale);
-  static final _walletScreenFormate = DateFormat("MMMdd,yyyy h:mm a", _locale);
-  static final _dateTimeFormat = DateFormat("dd MM yyyy HH:mm", _locale);
+  static final dateFormatWithoutString = DateFormat("yyyy-MM-dd", _locale);
+  static final dateFormatNoString = DateFormat("dd/MM/yyyy", _locale);
+  static final walletScreenFormat = DateFormat("MMMdd,yyyy h:mm a", _locale);
+  static final dateTimeFormat = DateFormat("dd MM yyyy HH:mm", _locale);
   static final _nameOfDay = DateFormat('EEEE', _locale);
   static final _dob = DateFormat('dd-MM-yyyy', _locale);
   static final _journalDate = DateFormat('MM-dd-yyyy', _locale);
   static final _calenderEvent = DateFormat('MM-yyyy', _locale);
-  static final _isoTime = DateFormat('yyyy-MM-dd HH:mm:ss', _locale);
+  static final isoTime = DateFormat('yyyy-MM-dd HH:mm:ss', _locale);
 
   static DateFormat getDateFormat(String dateFormat) {
     return DateFormat(dateFormat, _locale);
@@ -162,7 +162,7 @@ class DateHelper {
     }
 
     final int diff = now - time;
-    if (diff < _MINUTE_MILLIS) {
+    if (diff < minuteMiles) {
       return "now";
     } else if (isToday(date)) {
       return formatTimeTo12Hour(dateTimeString);
@@ -217,7 +217,7 @@ class DateHelper {
 
   static String getReservationDate(DateTime? date) {
     if (date == null) return "";
-    return _dateFormateWithoutString.format(date);
+    return dateFormatWithoutString.format(date);
   }
 
   static String getSince(DateTime? date) {
@@ -232,7 +232,7 @@ class DateHelper {
 
   static String getUpdateDateMyPostList(DateTime? dateTime) {
     if (dateTime == null) return "0";
-    return _dateFormateNoString.format(dateTime);
+    return dateFormatNoString.format(dateTime);
   }
 
   static String getPickupTimeMyPostList(String? time) {
@@ -251,7 +251,7 @@ class DateHelper {
     return _dateFormatGetEvent.format(date!);
   }
 
-  static String convertDateto24Post(DateTime? dateTime) {
+  static String convertDateTo24Post(DateTime? dateTime) {
     return _timeFormat24Post.format(dateTime!);
   }
 
@@ -259,8 +259,8 @@ class DateHelper {
     if (time == null) {
       return '';
     } else {
-      var date = _dateFormateWithoutString.parse(time);
-      return _dateFormateNoString.format(date);
+      var date = dateFormatWithoutString.parse(time);
+      return dateFormatNoString.format(date);
     }
   }
 
@@ -268,7 +268,7 @@ class DateHelper {
     if (time == null) {
       return '';
     }
-    var date = _dateFormateWithoutString.parse(time);
+    var date = dateFormatWithoutString.parse(time);
     return _dateFormatLog.format(date);
   }
 

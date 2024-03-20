@@ -26,7 +26,7 @@ class ManageChildProfileView extends StatelessWidget {
             title: TranslationKeys.mangeChildProfile.tr,
             centerTitle: false,
           ),
-          body: controller.childList.value.isNotEmpty
+          body: controller.childList.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.fromLTRB(Dimens.sixteen, Dimens.sixteen,
                       Dimens.sixteen, Dimens.fiftyThree),

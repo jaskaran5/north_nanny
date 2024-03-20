@@ -296,8 +296,8 @@ class CustomerHomeView extends StatelessWidget {
                     zoom: 15,
                   ),
                   markers: controller.markers,
-                  onMapCreated: (contro) {
-                    controller.googleMapController = contro;
+                  onMapCreated: (control) {
+                    controller.googleMapController = control;
                     controller.update();
                   },
                   myLocationEnabled: true,
