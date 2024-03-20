@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -142,51 +143,107 @@ class BookingDetailView extends StatelessWidget {
                     ),
                     Dimens.boxHeight16,
                   ],
-                  CustomTrackerTile(
-                    onTapChat: () {
-                      Get.to(const ChatView(),
-                          arguments: controller
-                              .bookingDataById?.userDetails?.userId
-                              .toString());
-                    },
-                    image: controller.bookingDataById?.userDetails?.image
-                            .toString() ??
-                        '',
-                    svgPath: Assets.iconsChatWhite,
-                    name: controller.bookingDataById?.userDetails?.name ?? '',
-                    rating: controller.bookingDataById?.userDetails?.rating
-                            .toString() ??
-                        '',
-                    reviews: controller
-                            .bookingDataById?.userDetails?.reviewCount
-                            .toString() ??
-                        '',
-                    description: controller
-                            .bookingDataById?.userDetails?.aboutMe
-                            .toString() ??
-                        '',
-                    distance: controller.bookingDataById?.userDetails?.distance
-                            .toString() ??
-                        '0',
-                    age: controller.bookingDataById?.userDetails?.age ?? 0,
-                    experience: controller
-                            .bookingDataById?.userDetails?.experience
-                            ?.split(' ')
-                            .first
-                            .toString() ??
-                        '',
-                    onTapRatingAndReview: () {
-                      Utility.openBottomSheet(CustomReviewBottomSheet(
-                          totalReviews: controller
-                                  .bookingDataById?.userDetails?.reviewCount ??
+                  GetBuilder<BookingDetailController>(
+                      id: 'tracking',
+                      builder: (trackingController) {
+                        return CustomTrackerTile(
+                          onTapChat: () {
+                            Get.to(const ChatView(),
+                                arguments: trackingController
+                                    .bookingDataById?.userDetails?.userId
+                                    .toString());
+                          },
+                          image: trackingController
+                                  .bookingDataById?.userDetails?.image
+                                  .toString() ??
+                              '',
+                          svgPath: Assets.iconsChatWhite,
+                          name: trackingController
+                                  .bookingDataById?.userDetails?.name ??
+                              '',
+                          rating: trackingController
+                                  .bookingDataById?.userDetails?.rating
+                                  .toString() ??
+                              '',
+                          reviews: trackingController
+                                  .bookingDataById?.userDetails?.reviewCount
+                                  .toString() ??
+                              '',
+                          description: trackingController
+                                  .bookingDataById?.userDetails?.aboutMe
+                                  .toString() ??
+                              '',
+                          distance: trackingController
+                                  .bookingDataById?.userDetails?.distance
+                                  .toString() ??
+                              '0',
+                          age: trackingController
+                                  .bookingDataById?.userDetails?.age ??
                               0,
-                          totalReviewsRating:
-                              controller.bookingDataById?.userDetails?.rating,
-                          reviewsList: controller
-                                  .bookingDataById?.userDetails?.ratingList ??
-                              []));
-                    },
-                  ),
+                          experience: trackingController
+                                  .bookingDataById?.userDetails?.experience
+                                  ?.split(' ')
+                                  .first
+                                  .toString() ??
+                              '',
+                          onTapRatingAndReview: () {
+                            Utility.openBottomSheet(CustomReviewBottomSheet(
+                                totalReviews: trackingController.bookingDataById
+                                        ?.userDetails?.reviewCount ??
+                                    0,
+                                totalReviewsRating: trackingController
+                                    .bookingDataById?.userDetails?.rating,
+                                reviewsList: trackingController.bookingDataById
+                                        ?.userDetails?.ratingList ??
+                                    []));
+                          },
+                          onMapCreated: trackingController.onMapCreated,
+                          latitude: double.parse(trackingController
+                                  .bookingDataById?.userDetails?.latitude ??
+                              '0.0'),
+                          longitude: double.parse(trackingController
+                                  .bookingDataById?.userDetails?.longitude ??
+                              '0.0'),
+                          polyline: {
+                            Polyline(
+                              polylineId: const PolylineId('poly'),
+                              points: [
+                                LatLng(
+                                  double.parse(trackingController
+                                          .bookingDataById?.latitude ??
+                                      '0.0'),
+                                  double.parse(trackingController
+                                          .bookingDataById?.longitude ??
+                                      '0.0'),
+                                ),
+                                LatLng(
+                                  double.parse(trackingController
+                                          .bookingDataById
+                                          ?.userDetails
+                                          ?.latitude ??
+                                      '0.0'),
+                                  double.parse(trackingController
+                                          .bookingDataById
+                                          ?.userDetails
+                                          ?.longitude ??
+                                      '0.0'),
+                                ),
+                              ],
+                            ),
+                          },
+                          markers: {
+                            Marker(
+                                markerId: const MarkerId('customer'),
+                                position: LatLng(
+                                    double.parse(trackingController
+                                            .bookingDataById?.latitude ??
+                                        '0.0'),
+                                    double.parse(trackingController
+                                            .bookingDataById?.longitude ??
+                                        '0.0')))
+                          },
+                        );
+                      }),
                   Dimens.boxHeight16,
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
