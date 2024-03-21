@@ -24,12 +24,8 @@ class CustomTrackerTile extends StatelessWidget {
     required this.distance,
     required this.age,
     required this.experience,
-    required this.onTapRatingAndReview,
-    required this.latitude,
-    required this.longitude,
-    required this.polyline,
-    required this.markers,
-    this.onMapCreated,
+    required this.onTapRatingAndReview, required this.secondWidget,
+
   });
   final String image;
   final String svgPath;
@@ -42,11 +38,8 @@ class CustomTrackerTile extends StatelessWidget {
   final String experience;
   final Function()? onTapChat;
   final Function() onTapRatingAndReview;
-  final double latitude;
-  final double longitude;
-  final Set<Polyline> polyline;
-  final Set<Marker> markers;
-  final Function(GoogleMapController)? onMapCreated;
+  final Widget secondWidget;
+
   @override
   Widget build(BuildContext context) => Container(
         padding: Dimens.edgeInsets16,
@@ -209,27 +202,7 @@ class CustomTrackerTile extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Dimens.boxHeight14,
-            Container(
-              height: Dimens.hundredFourteen,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimens.ten),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(Dimens.ten),
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude, longitude),
-                      zoom: Dimens.fifteen),
-                  myLocationEnabled: false,
-                  indoorViewEnabled: true,
-                  myLocationButtonEnabled: true,
-                  onMapCreated: onMapCreated,
-                  markers: markers,
-                  polylines: polyline,
-                  mapType: MapType.normal,
-                ),
-              ),
-            ),
+         secondWidget,
           ],
         ),
       );

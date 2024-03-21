@@ -186,13 +186,15 @@ class NannyBookingDetailController extends GetxController {
           log('booking Type-:${response.data?.bookingStatus}');
           if (response.data?.bookingStatus == 6) {
             showTimer(
-                startTime: DateTime.now().add(Duration(
-                    seconds: Utility.calculateDifferenceInSeconds(
-                        bookingDetailsModel?.data?.startTime ??
-                            DateTime.now()))));
+              startTime: DateTime.now().add(
+                Duration(
+                  seconds: Utility.calculateDifferenceInSeconds(
+                      bookingDetailsModel?.data?.startTime ?? DateTime.now()),
+                ),
+              ),
+            );
           }
           typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
-          update();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
@@ -224,6 +226,14 @@ class NannyBookingDetailController extends GetxController {
         var response = BookingDetailsModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDetailsModel = response;
+          showTimer(
+            startTime: DateTime.now().add(
+              Duration(
+                seconds: Utility.calculateDifferenceInSeconds(
+                    response.data?.startTime ?? DateTime.now()),
+              ),
+            ),
+          );
           update();
           getCurrentLocation();
         } else {
@@ -241,7 +251,7 @@ class NannyBookingDetailController extends GetxController {
   showTimer({required DateTime startTime}) {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       seconds = DateTime.now().difference(startTime).inSeconds;
-      update(['timer-view']);
+      update(['timer_view']);
     });
   }
 
@@ -366,12 +376,6 @@ class NannyBookingDetailController extends GetxController {
       return false;
     }
   }
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   getCurrentLocation();
-  // }
 
   /// socket method which is use to update the  lat long
   updateLatLong({

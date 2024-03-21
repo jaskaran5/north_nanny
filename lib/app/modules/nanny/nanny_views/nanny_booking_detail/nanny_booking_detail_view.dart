@@ -58,7 +58,7 @@ class NannyBookingDetailView extends StatelessWidget {
                       controller.bookingDetailsModel?.data?.isJobStarted ==
                           true) ...[
                     GetBuilder<NannyBookingDetailController>(
-                      id: 'timer-view',
+                      id: 'timer_view',
                       builder: (context) => Container(
                         padding: Dimens.edgeInsets16,
                         width: Get.width,
@@ -250,11 +250,17 @@ class NannyBookingDetailView extends StatelessWidget {
                           trackController.nannyBookingDetailStatus ==
                                   NannyBookingDetailStatus.reviewComplete
                               ? false
-                              : true,
-                      latitude:
-                          trackController.currentPosition?.latitude ?? 0.0,
-                      longitude:
-                          trackController.currentPosition?.longitude ?? 0.0,
+                              : trackController.bookingDetailsModel != null
+                                  ? true
+                                  : false,
+                      latitude: trackController.currentPosition?.latitude ??
+                          double.parse(trackController
+                                  .bookingDetailsModel?.data?.latitude ??
+                              '0.0'),
+                      longitude: trackController.currentPosition?.longitude ??
+                          double.parse(trackController
+                                  .bookingDetailsModel?.data?.longitude ??
+                              '0.0'),
                       polyline: {
                         Polyline(
                           polylineId: const PolylineId('line'),

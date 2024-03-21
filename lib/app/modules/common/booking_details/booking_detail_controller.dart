@@ -104,7 +104,7 @@ class BookingDetailController extends GetxController {
                 startTime: bookingDataById?.startTime != null
                     ? DateTime.now().add(Duration(
                         seconds: Utility.calculateDifferenceInSeconds(
-                            bookingDataById?.startTime ?? DateTime.now())))
+                            response.data?.startTime ?? DateTime.now())))
                     : DateTime.now());
           }
           if (bookingDataById?.bookingStatus == 6) {
@@ -164,6 +164,7 @@ class BookingDetailController extends GetxController {
         var response = BookingStatusModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           Get.back();
+
           /// used to show the alert dialog when the user mark as complete and reject the booking .
 
           Utility.showAlertDialog(
@@ -277,14 +278,7 @@ class BookingDetailController extends GetxController {
   }
 
   /// used to initialize google Map
- late GoogleMapController googleMapController;
-
-  /// used to initialize google map controller.
-  void onMapCreated(GoogleMapController controller) async {
-    googleMapController = controller;
-    log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    update(['customer_tracking']);
-  }
+  GoogleMapController? googleMapController;
 
   @override
   void onInit() {
