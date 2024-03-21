@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
@@ -15,26 +16,30 @@ class SenderTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              // margin: const EdgeInsets.only(bottom: 38, left: 50),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 15,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.trackerBackgroundColor,
-                borderRadius:  BorderRadius.only(
-                  topLeft: Radius.circular(Dimens.twenty),
-                  topRight: Radius.circular(Dimens.twenty),
-                  bottomLeft: Radius.circular(Dimens.twenty),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: Get.width / 1.6),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                // margin: const EdgeInsets.only(bottom: 38, left: 50),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 15,
                 ),
-              ),
-              child: Text(
-                title!,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.left,
+                decoration: BoxDecoration(
+                  color: AppColors.trackerBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimens.fifteen),
+                    topRight: Radius.circular(Dimens.fifteen),
+                    bottomLeft: Radius.circular(Dimens.fifteen),
+                  ),
+                ),
+                child: Text(
+                  title!,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ),
             const CustomSenderChatTimeTile(

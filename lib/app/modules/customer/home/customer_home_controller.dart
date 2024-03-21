@@ -51,6 +51,8 @@ class CustomerHomeController extends GetxController {
   RxString nannyAge = ''.obs;
   RxString nannyExperience = ''.obs;
 
+  RxBool isNannyDataLoading = true.obs;
+
   /// FILTER
 
   RxString filterMinMiles = "0".obs;
@@ -97,8 +99,8 @@ class CustomerHomeController extends GetxController {
   List<String> genderList = GenderConstant.values
       .map((e) => e.genderName.capitalizeFirst.toString())
       .toList();
-  RxBool showListView = false.obs;
-  RxBool isGoogleMap = true.obs;
+  RxBool showListView = true.obs;
+  RxBool isGoogleMap = false.obs;
   Set<Marker> markers = {};
 
   RxList<NannyDataList> homeNannyList = <NannyDataList>[].obs;
@@ -280,6 +282,7 @@ class CustomerHomeController extends GetxController {
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
           homeNannyList.value = res.data ?? [];
+          isNannyDataLoading.value = false;
           update();
 
           if (res.data != []) {
@@ -436,6 +439,7 @@ class CustomerHomeController extends GetxController {
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
           homeNannyList.value = res.data ?? [];
+          isNannyDataLoading.value = false;
 
           update();
 
@@ -473,6 +477,8 @@ class CustomerHomeController extends GetxController {
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
           homeNannyList.value = res.data ?? [];
+          isNannyDataLoading.value = false;
+
           update();
         }
       }, retryFunction: getDashboardApi);

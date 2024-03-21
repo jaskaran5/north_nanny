@@ -27,8 +27,8 @@ class RecentChatController extends GetxController {
     //   getRecetChatList();
   }
 
-  redirectToChatScreen() {
-    Get.to(const ChatView());
+  redirectToChatScreen({required String id}) {
+    Get.to(const ChatView(), arguments: id);
   }
 
   Future<void> invokedRecentChat() async {

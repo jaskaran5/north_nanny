@@ -1,14 +1,19 @@
 import 'dart:developer';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
-import 'package:northshore_nanny_flutter/app/models/send_chat_message_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/send_messgae_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 
@@ -17,33 +22,20 @@ class ChatController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
   final _socketHelper = SignalRHelper();
 
-  RxList messageList = <RxList>[].obs;
-  SingleChatData? singleChatData;
+  RxBool isSkeletonizer = true.obs;
+
+  RxString loginType = ''.obs;
+  RxInt myUserId = 0.obs;
+
+  RxList<MessageList> messageList = <MessageList>[].obs;
+  // SingleChatData? singleChatData;
 
   //
 
   RxString otherUserId = ''.obs;
   RxBool isOnline = false.obs;
 
-  GetNannyData? getNannyData;
-
-  RxList chatMessageList = [
-    {"senderType": "parents", "msg": "hello"},
-    {"senderType": "nanny", "msg": "sdf"},
-    {"senderType": "parents", "msg": "165"},
-    {"senderType": "nanny", "msg": "re"},
-    {"senderType": "parents", "msg": "423"},
-    {"senderType": "parents", "msg": "hello"},
-    {"senderType": "nanny", "msg": "sdf"},
-    {"senderType": "parents", "msg": "165"},
-    {"senderType": "nanny", "msg": "re"},
-    {"senderType": "parents", "msg": "423"},
-    {"senderType": "parents", "msg": "hello"},
-    {"senderType": "nanny", "msg": "sdf"},
-    {"senderType": "parents", "msg": "165"},
-    {"senderType": "nanny", "msg": "re"},
-    {"senderType": "parents", "msg": "423"},
-  ].obs;
+  UserData? getUserData;
 
   sendChatMessage() {
     log("on lcick on send chat message called");
@@ -56,8 +48,20 @@ class ChatController extends GetxController {
     // final chatProvider = locator<ChatProvider>();
   }
 
+  Future<void> getLoginType() async {
+    loginType.value = await Storage.getValue(StringConstants.loginType);
+    myUserId.value = await Storage.getValue(StringConstants.userId);
+    update();
+
+    loginType.value == StringConstants.customer
+        ? getNannyDetailsById()
+        : getCustomerDetailsById();
+  }
+
   @override
   void onInit() {
+    getLoginType().then((value) => null);
+
     if (_socketHelper.isConnected == false) {
       _socketHelper.reconnect();
     }
@@ -67,9 +71,10 @@ class ChatController extends GetxController {
     super.onInit();
 
     log("user id -->> ${otherUserId.value}");
-    getNannyDetailsById();
 
     listenSocket();
+
+    getSingleChatDetails();
   }
 
   /// GET NANNY DETAILS
@@ -91,10 +96,16 @@ class ChatController extends GetxController {
         var response = GetNannyDetailsResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           // isDataLoading.value = false;
-          getNannyData = response.data!;
-          isOnline.value = getNannyData?.isOnline ?? false;
+
+          getUserData = UserData(
+              image: response.data?.image ?? '',
+              isOnline: response.data?.isOnline ?? false,
+              name: response.data?.name ?? '');
+          isOnline.value = response.data?.isOnline ?? false;
 
           update();
+
+          print("get user data -->> $getUserData");
         } else {
           // toast(msg: response.message.toString(), isError: true);
         }
@@ -135,35 +146,140 @@ class ChatController extends GetxController {
           "",
           isFile!,
           DateTime.now().toUtc().toIso8601String()
-        ]).catchError((e) => printInfo(info: e.toString()));
+        ]);
     print('Message sent Received Data ========> ${result.toString()}');
-
-    // messageList.add(
-    // 0,
-    // MessageList(
-    //     message: message,
-    //     fromUserId: AppLocalStorage().userId,
-    //     toUserId: toUserId,
-    //     timeStamp: DateFormat('hh:mm a').format(DateTime.now()),
-    //     date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-    //     isFile: isFile,
-    //     isImageFile: isFile,
-    //     imageFile: imageFile,
-    //     uniqueReference: uniqueReference),
-    // );
-    // scrollToBottom();
   }
 
+//listen send message
   listenMessage() {
     final result = _socketHelper.hubConnection.on(
       'ReciveMessage',
       (arguments) {
         log("arguments :-->> $arguments");
+
+        var data = arguments?[0] as Map<String, dynamic>;
+
+        var res = SendMessageResponseModel.fromJson(data);
+        messageList.insert(
+            0,
+            MessageList(
+                date: res.data?.time ?? DateTime.now(),
+                fileLink: res.data?.fileLink ?? '',
+                fromUserId: myUserId.value,
+                id: res.data?.chatId,
+                isChatDeleted: '',
+                isFile: res.data?.isFile,
+                message: res.data?.messageDescription,
+                toUserId: res.data?.toUserId,
+                toUserImage: res.data?.toUserImage));
+
+        update();
       },
     );
   }
 
   listenSocket() {
     listenMessage();
+    listenSingleChatDetails();
+    listenTyping();
+  }
+
+  /// PICK DOCUMENT FILES
+  pickDocumentFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['docx', 'pdf', 'png', 'jpeg', 'jpg', 'pdf', 'mp4'],
+    );
+  }
+
+  // INVOKE SINGLE CHAT DETAILS
+
+  getSingleChatDetails() async {
+    final result = await _socketHelper.hubConnection
+        .invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
+  }
+
+  //========--------->>>>>>>>>>>>>>> LISTER SINGLE CHAT DATA
+
+  listenSingleChatDetails() {
+    final result = _socketHelper.hubConnection.on(
+      'ChatDetailResponse',
+      (arguments) {
+        log("arguments :-->> $arguments");
+
+        var data = arguments?[0] as Map<String, dynamic>;
+
+        var res = SingleChatDataResponseModel.fromJson(data);
+
+        messageList.value = (res.data?.messageList ?? []).reversed.toList();
+        isSkeletonizer.value = false;
+
+        update();
+      },
+    );
+  }
+
+  /// GET CUSTOMER BY ID
+  getCustomerDetailsById() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      var body = {
+        "userId": otherUserId.value,
+      };
+
+      log("get nanny profile body:------ $body");
+
+      _apiHelper.postApi(ApiUrls.getCustomerProfileById, body).futureValue(
+          (value) {
+        printInfo(info: "post availability nanny  response value $value");
+        var response = CustomerDetailsResponseModel.fromJson(value);
+
+        log("response.response :${response.response}");
+        if (response.response == AppConstants.apiResponseSuccess) {
+          log("success called-----------");
+          getUserData = UserData(
+              image: response.data?.image ?? '',
+              isOnline: response.data?.isOnline ?? false,
+              name: response.data?.name ?? '');
+          // getNannyData = response;
+          isOnline.value = response.data?.isOnline ?? false;
+
+          update();
+
+          print("get user data -->> $getUserData");
+        } else {}
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+
+      printError(info: "post availability  Nanny  API ISSUE $s");
+    }
+  }
+
+//---------->>>>>>>>>>.... TYPING INVOKE
+  typingInvoke() {
+    _socketHelper.hubConnection
+        .invoke("Typing", args: [int.parse(otherUserId.value)]);
+
+    log("typing invoke called");
+  }
+
+//--------->>>>>>>>>>>>>>>>> LISTEN INVOKE
+  listenTyping() {
+    _socketHelper.hubConnection.on("TypingResponse", (arguments) {
+      log("typing response argumnets-->. $arguments");
+    });
+  }
+
+  //--------->>>>>>>>>    CLEAR CHAT
+
+  clearChat() {
+    _socketHelper.hubConnection.invoke("DeleteChat", args: [
+      int.parse(otherUserId.value),
+      DateTime.now().toUtc().toIso8601String()
+    ]);
   }
 }

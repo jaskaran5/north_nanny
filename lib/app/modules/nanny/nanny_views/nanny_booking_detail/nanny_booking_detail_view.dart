@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
@@ -246,7 +247,17 @@ class NannyBookingDetailView extends StatelessWidget {
                                   NannyBookingDetailStatus.arrived ||
                               trackController.nannyBookingDetailStatus ==
                                   NannyBookingDetailStatus.endJob)
-                            SvgPicture.asset(Assets.iconsChatWhite),
+                            GestureDetector(
+                                onTap: () {
+                                  Get.to(const ChatView(),
+                                      arguments: trackController
+                                          .bookingDetailsModel
+                                          ?.data
+                                          ?.userDetails
+                                          ?.userId
+                                          .toString());
+                                },
+                                child: SvgPicture.asset(Assets.iconsChatWhite)),
                         ],
                       ),
                       showTrackLocation:
@@ -254,8 +265,10 @@ class NannyBookingDetailView extends StatelessWidget {
                                   NannyBookingDetailStatus.reviewComplete
                               ? false
                               : true,
-                      latitude: trackController.currentPosition?.latitude ?? 0.0,
-                      longitude: trackController.currentPosition?.longitude ?? 0.0,
+                      latitude:
+                          trackController.currentPosition?.latitude ?? 0.0,
+                      longitude:
+                          trackController.currentPosition?.longitude ?? 0.0,
                       polyline: {
                         Polyline(
                           polylineId: const PolylineId('line'),

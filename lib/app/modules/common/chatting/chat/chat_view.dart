@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
@@ -12,6 +13,7 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -21,197 +23,216 @@ class ChatView extends StatelessWidget {
     return GetBuilder<ChatController>(
       init: ChatController(),
       builder: (controller) {
-        return Scaffold(
-            backgroundColor: AppColors.profileBackgroundColor,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Container(
-                    padding: Dimens.edgeInsets10,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
+        return KeyboardVisibilityBuilder(
+          builder: (ctx, isKeyboardVisible) {
+            if (isKeyboardVisible) {
+              controller.typingInvoke();
+            }
+            log("is keyboard visible:---->>. $isKeyboardVisible");
+            return Scaffold(
+                backgroundColor: AppColors.profileBackgroundColor,
+                body: SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: Dimens.edgeInsets10,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: SvgPicture.asset(
-                                Assets.iconsBackArrow,
-                              ),
-                            ),
-                            CustomCacheNetworkImage(
-                              img: controller.getNannyData?.image ?? '',
-                              size: Dimens.forty,
-                              imageRadius: Dimens.hundred,
-                            ),
-                            Dimens.boxWidth10,
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  controller.getNannyData?.name ?? '',
-                                  textAlign: TextAlign.center,
-                                  style: AppStyles.ubBlack16W700,
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: SvgPicture.asset(
+                                    Assets.iconsBackArrow,
+                                  ),
                                 ),
-                                Row(
+                                CustomCacheNetworkImage(
+                                  img: controller.getUserData?.image ?? '',
+                                  size: Dimens.forty,
+                                  imageRadius: Dimens.hundred,
+                                ),
+                                Dimens.boxWidth10,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(
-                                      Icons.circle,
-                                      color: controller.isOnline.value
-                                          ? AppColors.onlineColor
-                                          : AppColors.offlineColor,
-                                      size: 10,
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
                                     Text(
-                                      controller.isOnline.value
-                                          ? 'Online'
-                                          : 'offline',
+                                      controller.getUserData?.name ?? '',
                                       textAlign: TextAlign.center,
-                                      style: AppStyles.ubGrey12W400,
+                                      style: AppStyles.ubBlack16W700,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.circle,
+                                          color: controller.isOnline.value
+                                              ? AppColors.onlineColor
+                                              : AppColors.offlineColor,
+                                          size: 10,
+                                        ),
+                                        const SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text(
+                                          controller.isOnline.value
+                                              ? 'Online'
+                                              : 'offline',
+                                          textAlign: TextAlign.center,
+                                          style: AppStyles.ubGrey12W400,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
+
+                            PopupMenuButton(
+                              padding: Dimens.edgeInsets0,
+                              position: PopupMenuPosition.under,
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.eight)),
+                              icon: SvgPicture.asset(Assets.iconsMore),
+                              itemBuilder: (BuildContext context) {
+                                return [
+                                  const PopupMenuItem(
+                                      child: Text("Clear Chat")),
+                                  const PopupMenuItem(
+                                      child: Text(
+                                    "Delete Chat",
+                                    style: TextStyle(color: Colors.red),
+                                  )),
+                                ];
+                              },
+                            ),
+                            // GestureDetector(
+                            //   child: SvgPicture.asset(Assets.iconsMore),
+                            // )
                           ],
                         ),
-
-                        PopupMenuButton(
-                          padding: Dimens.edgeInsets0,
-                          position: PopupMenuPosition.under,
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.eight)),
-                          icon: SvgPicture.asset(Assets.iconsMore),
-                          itemBuilder: (BuildContext context) {
-                            return [
-                              const PopupMenuItem(child: Text("Clear Chat")),
-                              const PopupMenuItem(
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: Dimens.edgeInsets10,
+                          child: Visibility(
+                            visible: true,
+                            replacement: const Center(),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 20,
                                   child: Text(
-                                "Delete Chat",
-                                style: TextStyle(color: Colors.red),
-                              )),
-                            ];
-                          },
+                                    "Today",
+                                    style: AppStyles.ubPurpleLight12W400,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Skeletonizer(
+                                    enabled: controller.isSkeletonizer.value,
+                                    child: ListView.builder(
+                                      reverse: true,
+                                      itemCount: controller.messageList.length,
+                                      itemBuilder: (context, index) {
+                                        return controller.messageList[index]
+                                                    .toUserId ==
+                                                controller.myUserId.value
+                                            ? ReceiverTile(
+                                                title: controller
+                                                        .messageList[index]
+                                                        .message ??
+                                                    '',
+                                              )
+                                            : SenderTile(
+                                                title: controller
+                                                        .messageList[index]
+                                                        .message ??
+                                                    "");
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        // GestureDetector(
-                        //   child: SvgPicture.asset(Assets.iconsMore),
-                        // )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: Dimens.edgeInsets10,
-                      child: Visibility(
-                        visible: true,
-                        replacement: const Center(),
-                        child: Column(
+                      ),
+                      Padding(
+                        padding: Dimens.edgeInsetsL16R16B16,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: 20,
-                              child: Text(
-                                "Today",
-                                style: AppStyles.ubPurpleLight12W400,
+                            Container(
+                              width: Get.width * .76,
+                              padding: Dimens.edgeInsets4,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: TextFormField(
+                                controller: controller.chatTextController,
+                                decoration: InputDecoration(
+                                    hintText: 'Write a message',
+                                    border: InputBorder.none,
+                                    prefixIcon: IconButton(
+                                      icon: SvgPicture.asset(
+                                        Assets.iconsAttachments,
+                                        fit: BoxFit.cover,
+                                        height: Dimens.twentyFive,
+                                        width: Dimens.twentyFive,
+                                      ),
+                                      onPressed: () {
+                                        log("on click on pick document");
+                                        controller.pickDocumentFile();
+                                      },
+                                    )),
                               ),
                             ),
-                            Expanded(
-                              child: ListView.builder(
-                                reverse: true,
-                                itemCount: 10,
-                                itemBuilder: (context, index) {
-                                  return controller.chatMessageList[index]
-                                              ['senderType'] ==
-                                          'parents'
-                                      ? ReceiverTile(
-                                          title:
-                                              controller.chatMessageList[index]
-                                                      ['message'] ??
-                                                  "message",
-                                        )
-                                      : SenderTile(
-                                          title:
-                                              controller.chatMessageList[index]
-                                                      ['message'] ??
-                                                  'title',
-                                        );
-                                },
+                            InkWell(
+                              onTap: () async {
+                                if (controller.chatTextController.text.trim() ==
+                                    '') {
+                                  toast(
+                                      msg: '"Please Enter your message"',
+                                      isError: true);
+                                } else {
+                                  log("else part called");
+                                  await controller.sendMessage(
+                                      toUserId: int.parse(controller
+                                          .otherUserId.value
+                                          .toString()),
+                                      message: controller
+                                          .chatTextController.text
+                                          .trim(),
+                                      fileType: null,
+                                      isFile: false,
+                                      type: 1);
+                                  ();
+                                  controller.chatTextController.text = '';
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                Assets.iconsChatSend,
+                                height: Dimens.fifty,
+                                width: Dimens.fifty,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Padding(
-                    padding: Dimens.edgeInsetsL16R16B16,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: Get.width * .76,
-                          padding: Dimens.edgeInsets4,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: TextFormField(
-                            controller: controller.chatTextController,
-                            decoration: InputDecoration(
-                                hintText: 'Write a message',
-                                border: InputBorder.none,
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(
-                                    Assets.iconsAttachments,
-                                  ),
-                                )),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            if (controller.chatTextController.text.trim() ==
-                                '') {
-                              toast(
-                                  msg: '"Please Enter your message"',
-                                  isError: true);
-                            } else {
-                              log("else part called");
-                              await controller.sendMessage(
-                                  toUserId: int.parse(
-                                      controller.otherUserId.value.toString()),
-                                  message:
-                                      controller.chatTextController.text.trim(),
-                                  fileType: null,
-                                  isFile: false,
-                                  type: 1);
-                              ();
-                              controller.chatTextController.text = '';
-                            }
-                          },
-                          child: SvgPicture.asset(
-                            Assets.iconsChatSend,
-                            height: Dimens.fifty,
-                            width: Dimens.fifty,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ));
+                ));
+          },
+        );
       },
     );
   }

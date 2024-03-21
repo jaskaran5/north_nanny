@@ -68,6 +68,9 @@ class ApiUrls {
   static const String addOrEditBankDetails =
       'api/NannyDashBoard/AddOrEditBankDetail';
   static const String getNannyProfile = 'api/NannyDashBoard/MyProfile';
+  static const String getCustomerProfileById =
+      'api/NannyDashBoard/CustomerDetail';
+
   static const String addAvailability = 'api/NannyDashBoard/AddAvailability';
   static const String nannyDashboard = 'api/NannyDashBoard/HomeDashBoard';
   static const String setAvailability =

@@ -64,9 +64,13 @@ class RecentChatView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                controller.redirectToChatScreen();
+                                controller.redirectToChatScreen(
+                                    id: controller.recetChatList[index].userId!
+                                        .toString());
                               },
                               child: CustomRecentChatListTile(
+                                image:
+                                    controller.recetChatList[index].image ?? '',
                                 chatData: controller.recetChatList[index],
                               ),
                             );

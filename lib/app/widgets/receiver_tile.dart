@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 
 import 'custom_receiver_chat_time_tile.dart';
 
@@ -21,12 +22,12 @@ class ReceiverTile extends StatelessWidget {
                 horizontal: 18,
                 vertical: 15,
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(Dimens.fifteen),
+                  topRight: Radius.circular(Dimens.fifteen),
+                  bottomRight: Radius.circular(Dimens.fifteen),
                 ),
               ),
               child: Text(

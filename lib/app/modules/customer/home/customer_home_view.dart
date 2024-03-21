@@ -15,6 +15,7 @@ import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../widgets/review_custom_bottom_sheet.dart';
 import 'customer_home_controller.dart';
 
@@ -315,71 +316,75 @@ class CustomerHomeView extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Padding(
-                      padding: Dimens.edgeInsets16,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.homeNannyList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              log("selected Nanny id:-->>${controller.homeNannyList[index].id}");
-                              RouteManagement.goToGetNannyProfileView(
-                                  argument: controller.homeNannyList[index].id);
-                            },
-                            child: HomeCustomListView(
-                              // servicesListData: controller,
-                              distance:
-                                  ((controller.homeNannyList[index].distance)!
-                                          .toInt())
-                                      .toString(),
-
-                              age: controller.homeNannyList[index].age
-                                  .toString(),
-                              experience: (controller
-                                      .homeNannyList[index].experience
-                                      .toString())
-                                  .split(' ')
-                                  .first,
-
-                              description:
-                                  controller.homeNannyList[index].aboutMe,
-                              image: controller.homeNannyList[index].image,
-                              name: controller.homeNannyList[index].name,
-                              rating: controller.homeNannyList[index].rating
-                                  .toString(),
-                              reviews:
-                                  '(${controller.homeNannyList[index].reviewCount} reviews)',
-                              // servicesList: controller.homeCustomList,
-                              isHeartTapped:
-                                  controller.homeNannyList[index].isFavorite!,
-                              heartSvg: Assets.iconsHeartOutline,
-                              onTapHeartIcon: () {
-                                controller.toggleFavouriteAndUnFavouriteApi(
-                                    isFavourite: !controller
-                                        .homeNannyList[index].isFavorite!,
-                                    userId:
-                                        controller.homeNannyList[index].id!);
+                  : Skeletonizer(
+                      enabled: controller.isNannyDataLoading.value,
+                      child: Padding(
+                        padding: Dimens.edgeInsets16,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.homeNannyList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                log("selected Nanny id:-->>${controller.homeNannyList[index].id}");
+                                RouteManagement.goToGetNannyProfileView(
+                                    argument:
+                                        controller.homeNannyList[index].id);
                               },
-                              onTapRating: () {
-                                Utility.openBottomSheet(
-                                  const CustomReviewBottomSheet(
-                                    totalReviews: 21,
-                                    totalReviewsRating: 4.5,
-                                    reviewsList: [],
-                                    // [
-                                    //   'Michael Johnson',
-                                    //   'Giorgio Chiellini',
-                                    //   'Michael Johnson',
-                                    //   'Alex Morgan',
-                                    //   'Giorgio Chiellini'
-                                    // ],
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
+                              child: HomeCustomListView(
+                                // servicesListData: controller,
+                                distance:
+                                    ((controller.homeNannyList[index].distance)!
+                                            .toInt())
+                                        .toString(),
+
+                                age: controller.homeNannyList[index].age
+                                    .toString(),
+                                experience: (controller
+                                        .homeNannyList[index].experience
+                                        .toString())
+                                    .split(' ')
+                                    .first,
+
+                                description:
+                                    controller.homeNannyList[index].aboutMe,
+                                image: controller.homeNannyList[index].image,
+                                name: controller.homeNannyList[index].name,
+                                rating: controller.homeNannyList[index].rating
+                                    .toString(),
+                                reviews:
+                                    '(${controller.homeNannyList[index].reviewCount} reviews)',
+                                // servicesList: controller.homeCustomList,
+                                isHeartTapped:
+                                    controller.homeNannyList[index].isFavorite!,
+                                heartSvg: Assets.iconsHeartOutline,
+                                onTapHeartIcon: () {
+                                  controller.toggleFavouriteAndUnFavouriteApi(
+                                      isFavourite: !controller
+                                          .homeNannyList[index].isFavorite!,
+                                      userId:
+                                          controller.homeNannyList[index].id!);
+                                },
+                                onTapRating: () {
+                                  Utility.openBottomSheet(
+                                    const CustomReviewBottomSheet(
+                                      totalReviews: 21,
+                                      totalReviewsRating: 4.5,
+                                      reviewsList: [],
+                                      // [
+                                      //   'Michael Johnson',
+                                      //   'Giorgio Chiellini',
+                                      //   'Michael Johnson',
+                                      //   'Alex Morgan',
+                                      //   'Giorgio Chiellini'
+                                      // ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
         ),
