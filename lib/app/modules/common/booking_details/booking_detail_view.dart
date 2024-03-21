@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -144,106 +146,183 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   GetBuilder<BookingDetailController>(
-                      id: 'tracking',
-                      builder: (trackingController) {
-                        return CustomTrackerTile(
-                          onTapChat: () {
-                            Get.to(const ChatView(),
-                                arguments: trackingController
-                                    .bookingDataById?.userDetails?.userId
-                                    .toString());
-                          },
-                          image: trackingController
-                                  .bookingDataById?.userDetails?.image
-                                  .toString() ??
-                              '',
-                          svgPath: Assets.iconsChatWhite,
-                          name: trackingController
-                                  .bookingDataById?.userDetails?.name ??
-                              '',
-                          rating: trackingController
-                                  .bookingDataById?.userDetails?.rating
-                                  .toString() ??
-                              '',
-                          reviews: trackingController
-                                  .bookingDataById?.userDetails?.reviewCount
-                                  .toString() ??
-                              '',
-                          description: trackingController
-                                  .bookingDataById?.userDetails?.aboutMe
-                                  .toString() ??
-                              '',
-                          distance: trackingController
-                                  .bookingDataById?.userDetails?.distance
-                                  .toString() ??
-                              '0',
-                          age: trackingController
-                                  .bookingDataById?.userDetails?.age ??
-                              0,
-                          experience: trackingController
-                                  .bookingDataById?.userDetails?.experience
-                                  ?.split(' ')
-                                  .first
-                                  .toString() ??
-                              '',
-                          onTapRatingAndReview: () {
-                            Utility.openBottomSheet(CustomReviewBottomSheet(
-                                totalReviews: trackingController.bookingDataById
-                                        ?.userDetails?.reviewCount ??
-                                    0,
-                                totalReviewsRating: trackingController
-                                    .bookingDataById?.userDetails?.rating,
-                                reviewsList: trackingController.bookingDataById
-                                        ?.userDetails?.ratingList ??
-                                    []));
-                          },
-                          onMapCreated: trackingController.onMapCreated,
-                          latitude: double.parse(trackingController
-                                  .bookingDataById?.userDetails?.latitude ??
-                              '0.0'),
-                          longitude: double.parse(trackingController
-                                  .bookingDataById?.userDetails?.longitude ??
-                              '0.0'),
-                          polyline: {
-                            Polyline(
-                              polylineId: const PolylineId('poly'),
-                              points: [
-                                LatLng(
-                                  double.parse(trackingController
-                                          .bookingDataById?.latitude ??
-                                      '0.0'),
-                                  double.parse(trackingController
-                                          .bookingDataById?.longitude ??
-                                      '0.0'),
-                                ),
-                                LatLng(
-                                  double.parse(trackingController
+                    id: 'customer_tracking',
+                    builder: (trackingController) => trackingController
+                                .bookingDataById !=
+                            null
+                        ? CustomTrackerTile(
+                            onTapChat: () {
+                              Get.to(const ChatView(),
+                                  arguments: trackingController
+                                      .bookingDataById?.userDetails?.userId
+                                      .toString());
+                            },
+                            image: trackingController
+                                    .bookingDataById?.userDetails?.image
+                                    .toString() ??
+                                '',
+                            svgPath: Assets.iconsChatWhite,
+                            name: trackingController
+                                    .bookingDataById?.userDetails?.name ??
+                                '',
+                            rating: trackingController
+                                    .bookingDataById?.userDetails?.rating
+                                    .toString() ??
+                                '',
+                            reviews: trackingController
+                                    .bookingDataById?.userDetails?.reviewCount
+                                    .toString() ??
+                                '',
+                            description: trackingController
+                                    .bookingDataById?.userDetails?.aboutMe
+                                    .toString() ??
+                                '',
+                            distance: trackingController
+                                    .bookingDataById?.userDetails?.distance
+                                    .toString() ??
+                                '0',
+                            age: trackingController
+                                    .bookingDataById?.userDetails?.age ??
+                                0,
+                            experience: trackingController
+                                    .bookingDataById?.userDetails?.experience
+                                    ?.split(' ')
+                                    .first
+                                    .toString() ??
+                                '',
+                            onTapRatingAndReview: () {
+                              Utility.openBottomSheet(CustomReviewBottomSheet(
+                                  totalReviews: trackingController
                                           .bookingDataById
                                           ?.userDetails
-                                          ?.latitude ??
-                                      '0.0'),
-                                  double.parse(trackingController
+                                          ?.reviewCount ??
+                                      0,
+                                  totalReviewsRating: trackingController
+                                      .bookingDataById?.userDetails?.rating,
+                                  reviewsList: trackingController
                                           .bookingDataById
                                           ?.userDetails
-                                          ?.longitude ??
-                                      '0.0'),
+                                          ?.ratingList ??
+                                      []));
+                            },
+                            secondWidget: Container(
+                              height: Dimens.hundredFourteen,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimens.ten),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(Dimens.ten),
+                                child: GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                      target: LatLng(
+                                          double.parse(trackingController
+                                                  .bookingDataById?.latitude ??
+                                              '0.0'),
+                                          double.parse(trackingController
+                                                  .bookingDataById?.longitude ??
+                                              '0.0')),
+                                      zoom: Dimens.fifteen),
+                                  myLocationEnabled: false,
+                                  indoorViewEnabled: true,
+                                  myLocationButtonEnabled: true,
+                                  onMapCreated: (googleController) {
+                                    trackingController.googleMapController =
+                                        googleController;
+
+                                    log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  ');
+
+                                    trackingController
+                                        .update(['customer_tracking']);
+                                  },
+                                  markers: {
+                                    Marker(
+                                      markerId: MarkerId(trackingController
+                                              .bookingDataById?.latitude ??
+                                          ''),
+                                      position: LatLng(
+                                        trackingController
+                                                    .trackerLocationModel !=
+                                                null
+                                            ? double.parse(trackingController
+                                                    .trackerLocationModel
+                                                    ?.data
+                                                    ?.latitude
+                                                    .toString() ??
+                                                '0.0')
+                                            : double.parse(trackingController
+                                                    .bookingDataById
+                                                    ?.userDetails
+                                                    ?.latitude ??
+                                                '0.0'),
+                                        trackingController
+                                                    .trackerLocationModel !=
+                                                null
+                                            ? double.parse(trackingController
+                                                    .trackerLocationModel
+                                                    ?.data
+                                                    ?.longitude ??
+                                                '0.0')
+                                            : double.parse(trackingController
+                                                    .bookingDataById
+                                                    ?.userDetails
+                                                    ?.longitude ??
+                                                '0.0'),
+                                      ),
+                                      flat: true,
+                                    ),
+                                  },
+                                  polylines: {
+                                    Polyline(
+                                      polylineId: const PolylineId('nannyLine'),
+                                      color: AppColors.navyBlue3288DE,
+                                      points: [
+                                        LatLng(
+                                          double.parse(trackingController
+                                                  .bookingDataById?.latitude ??
+                                              '0.0'),
+                                          double.parse(trackingController
+                                                  .bookingDataById?.longitude ??
+                                              '0.0'),
+                                        ),
+                                        LatLng(
+                                          trackingController
+                                                      .trackerLocationModel !=
+                                                  null
+                                              ? double.parse(trackingController
+                                                      .trackerLocationModel
+                                                      ?.data
+                                                      ?.latitude
+                                                      .toString() ??
+                                                  '0.0')
+                                              : double.parse(trackingController
+                                                      .bookingDataById
+                                                      ?.userDetails
+                                                      ?.latitude ??
+                                                  '0.0'),
+                                          trackingController
+                                                      .trackerLocationModel !=
+                                                  null
+                                              ? double.parse(trackingController
+                                                      .trackerLocationModel
+                                                      ?.data
+                                                      ?.longitude ??
+                                                  '0.0')
+                                              : double.parse(trackingController
+                                                      .bookingDataById
+                                                      ?.userDetails
+                                                      ?.longitude ??
+                                                  '0.0'),
+                                        ),
+                                      ],
+                                    ),
+                                  },
+                                  mapType: MapType.normal,
                                 ),
-                              ],
+                              ),
                             ),
-                          },
-                          markers: {
-                            Marker(
-                                markerId: const MarkerId('customer'),
-                                position: LatLng(
-                                    double.parse(trackingController
-                                            .bookingDataById?.latitude ??
-                                        '0.0'),
-                                    double.parse(trackingController
-                                            .bookingDataById?.longitude ??
-                                        '0.0')))
-                          },
-                        );
-                      }),
+                          )
+                        : const CircularProgressIndicator(),
+                  ),
                   Dimens.boxHeight16,
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',

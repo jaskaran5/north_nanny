@@ -173,7 +173,7 @@ class NannyHomeView extends StatelessWidget {
                                 }
                                 var nannyBookingDetailsController =
                                     Get.find<NannyBookingDetailController>();
-                                nannyBookingDetailsController
+                                 nannyBookingDetailsController
                                     .getBookingDetailOfCustomer(
                                         bookingId: controller
                                                 .nannyHomeData
