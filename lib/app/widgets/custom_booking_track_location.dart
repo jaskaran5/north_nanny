@@ -53,13 +53,9 @@ class CustomBookingTrackLocation extends StatelessWidget {
                 ),
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude, longitude), zoom: Dimens.ten),
+                      target: LatLng(latitude, longitude), zoom: Dimens.twelve),
                   myLocationEnabled: false,
-                  scrollGesturesEnabled: true,
-                  zoomGesturesEnabled: true,
-                  zoomControlsEnabled: true,
-                  buildingsEnabled: true,
-                  mapToolbarEnabled: true,
+                  indoorViewEnabled: true,
                   onMapCreated: onMapCreated,
                   markers: markers,
                   polylines: polyline,

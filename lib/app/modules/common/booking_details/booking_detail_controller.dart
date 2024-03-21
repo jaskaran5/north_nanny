@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_data_by_date_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/tracking_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
@@ -163,6 +164,8 @@ class BookingDetailController extends GetxController {
         var response = BookingStatusModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           Get.back();
+          /// used to show the alert dialog when the user mark as complete and reject the booking .
+
           Utility.showAlertDialog(
             title: 'Congratulations',
             firstButtonTitle: 'No',
@@ -255,19 +258,37 @@ class BookingDetailController extends GetxController {
     }
   }
 
+  /// used to get lat lon according to nanny position.
+  TrackerLocationModel? trackerLocationModel;
+
   /// socket api used to get lat long and save to the nanny lat longs.
   updateNannyLatLong() async {
     socket.hubConnection.on('TranckNannyResponse', (arguments) {
-      log('arguments :$arguments');
+      var value = arguments?[0] as Map<String, dynamic>;
+      var response = TrackerLocationModel.fromJson(value);
+      log('tracking lat long Response:$response');
+      if (response.response == AppConstants.apiResponseSuccess) {
+        trackerLocationModel = response;
+      } else {
+        toast(msg: response.message.toString(), isError: true);
+      }
+      update(['customer_tracking']);
     });
   }
 
   /// used to initialize google Map
-  late GoogleMapController googleMapController;
+ late GoogleMapController googleMapController;
 
   /// used to initialize google map controller.
   void onMapCreated(GoogleMapController controller) async {
     googleMapController = controller;
-    update(['tracking']);
+    log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+    update(['customer_tracking']);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    updateNannyLatLong();
   }
 }

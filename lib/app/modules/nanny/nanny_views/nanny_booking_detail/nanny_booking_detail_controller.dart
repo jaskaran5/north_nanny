@@ -39,7 +39,7 @@ class NannyBookingDetailController extends GetxController {
   /// used to check google map controller is Initialize or not
   bool isGoogleControllerInitialize = false;
 
-  initBooking() {
+  initBooking() async {
     if (nannyBookingDetailStatus ==
         NannyBookingDetailStatus.waitingForApproval) {
       Timer(
@@ -64,10 +64,10 @@ class NannyBookingDetailController extends GetxController {
         },
       );
     }
-    if (isGoogleControllerInitialize) {
-      log('map initialize:$isGoogleControllerInitialize');
-      getCurrentLocation();
-    }
+    // if (isGoogleControllerInitialize && bookingDetailsModel!=null) {
+    //   log('map initialize:$isGoogleControllerInitialize');
+    //   await getCurrentLocation();
+    // }
   }
 
   /// report list
@@ -82,7 +82,7 @@ class NannyBookingDetailController extends GetxController {
     super.dispose();
     timer.cancel();
     seconds = 0;
-    googleMapController.dispose();
+    googleMapController?.dispose();
   }
 
   /// used to store the rejected reason.
@@ -110,6 +110,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
       timer.cancel();
       seconds = 0;
+      update(['timer-view']);
     }
     update();
   }
@@ -203,7 +204,7 @@ class NannyBookingDetailController extends GetxController {
   }
 
   /// get booking details of customer
-  getBookingDetailOfCustomer({required int bookingId}) async {
+  Future<void> getBookingDetailOfCustomer({required int bookingId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
@@ -224,6 +225,7 @@ class NannyBookingDetailController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDetailsModel = response;
           update();
+          getCurrentLocation();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
@@ -246,7 +248,7 @@ class NannyBookingDetailController extends GetxController {
   /// ------------------- Tracking things start here --------------------
   ///
   /// used to initialize google Map
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
 
   void onMapCreated(GoogleMapController controller) async {
     googleMapController = controller;
@@ -258,7 +260,7 @@ class NannyBookingDetailController extends GetxController {
   Position? currentPosition;
 
   /// used to stop the tracking and enable
-   StreamSubscription<Position>? locationStream;
+  StreamSubscription<Position>? locationStream;
 
   /// used to update current location on basis of tracking
   Future<void> getCurrentLocation() async {
@@ -275,7 +277,7 @@ class NannyBookingDetailController extends GetxController {
                   accuracy: LocationAccuracy.bestForNavigation,
                   distanceFilter: 10,
                   forceLocationManager: false,
-                  intervalDuration: const Duration(seconds: 7),
+                  // intervalDuration: const Duration(seconds: 5),
                   foregroundNotificationConfig:
                       const ForegroundNotificationConfig(
                           notificationText:
@@ -290,13 +292,14 @@ class NannyBookingDetailController extends GetxController {
                   accuracy: LocationAccuracy.bestForNavigation,
                   activityType: ActivityType.automotiveNavigation,
                   distanceFilter: 10,
-                  timeLimit: const Duration(seconds: 10),
+                  // timeLimit: const Duration(seconds: 5),
                   showBackgroundLocationIndicator: true,
                   allowBackgroundLocationUpdates: true);
             } else {
               locationSettings = const LocationSettings(
                 accuracy: LocationAccuracy.high,
                 distanceFilter: 10,
+                // timeLimit: Duration(seconds: 5),
               );
             }
             log('nanny Booking Status  :$nannyBookingDetailStatus and ${(nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay || nannyBookingDetailStatus == NannyBookingDetailStatus.arrived)}');
@@ -320,7 +323,7 @@ class NannyBookingDetailController extends GetxController {
                       longitude: position.longitude);
 
                   /// used to animate the controller based on lat long.
-                  googleMapController.animateCamera(
+                  googleMapController?.animateCamera(
                       CameraUpdate.newCameraPosition(CameraPosition(
                           target:
                               LatLng(position.latitude, position.longitude))));
@@ -329,8 +332,8 @@ class NannyBookingDetailController extends GetxController {
 
                 update(['tracking-view']);
               });
-            }
-            if (nannyBookingDetailStatus == NannyBookingDetailStatus.endJob) {
+            } else if (nannyBookingDetailStatus ==
+                NannyBookingDetailStatus.waitingForApproval) {
               locationStream?.pause();
               log('-----------------------tracking off -------------------> ');
             }
@@ -364,11 +367,11 @@ class NannyBookingDetailController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    getCurrentLocation();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   getCurrentLocation();
+  // }
 
   /// socket method which is use to update the  lat long
   updateLatLong({
@@ -378,14 +381,13 @@ class NannyBookingDetailController extends GetxController {
     required double longitude,
   }) async {
     log('latitude:${latitude.toString()} ,longitude:${longitude.toString()} ,  bookingId:$bookingId, toUserId:$toUserId');
-    socketHelper.hubConnection.on('TranckNannyResponse', (arguments) {
-      log(' send lat long according to current location ========> $arguments');
-    });
+
     await socketHelper.hubConnection.invoke('TrackNanny', args: [
       toUserId,
       bookingId,
       latitude.toString(),
       longitude.toString(),
     ]);
+    log('lat long sent');
   }
 }

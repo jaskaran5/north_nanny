@@ -214,16 +214,20 @@ class CustomTrackerTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimens.ten),
               ),
-              child: GoogleMap(
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(latitude, longitude), zoom: Dimens.ten),
-                myLocationEnabled: false,
-                scrollGesturesEnabled: true,
-                zoomGesturesEnabled: true,
-                onMapCreated: onMapCreated,
-                markers: markers,
-                polylines: polyline,
-                mapType: MapType.normal,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Dimens.ten),
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(latitude, longitude),
+                      zoom: Dimens.fifteen),
+                  myLocationEnabled: false,
+                  indoorViewEnabled: true,
+                  myLocationButtonEnabled: true,
+                  onMapCreated: onMapCreated,
+                  markers: markers,
+                  polylines: polyline,
+                  mapType: MapType.normal,
+                ),
               ),
             ),
           ],

@@ -54,46 +54,43 @@ class NannyBookingDetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.endJob ||
-                      controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.waitingForApproval &&
-                          controller.bookingDetailsModel?.data?.isJobStarted ==
-                              true) ...[
+                          NannyBookingDetailStatus.endJob &&
+                      controller.bookingDetailsModel?.data?.isJobStarted ==
+                          true) ...[
                     GetBuilder<NannyBookingDetailController>(
-                        id: 'timer-view',
-                        builder: (context) {
-                          return Container(
-                            padding: Dimens.edgeInsets16,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.fourteen,
-                              ),
-                              border: Border.all(
-                                  color: AppColors.navyBlue, width: Dimens.two),
+                      id: 'timer-view',
+                      builder: (context) => Container(
+                        padding: Dimens.edgeInsets16,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Dimens.fourteen,
+                          ),
+                          border: Border.all(
+                              color: AppColors.navyBlue, width: Dimens.two),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppText(
+                              text: TranslationKeys.totalTimeLeft.tr,
+                              style: AppStyles.ubBlack14W700,
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                AppText(
-                                  text: TranslationKeys.totalTimeLeft.tr,
-                                  style: AppStyles.ubBlack14W700,
-                                  textAlign: TextAlign.start,
-                                  maxLines: 1,
-                                ),
-                                Dimens.boxHeight10,
-                                AppText(
-                                  text: Utility.returnHMS(
-                                      second: controller.seconds),
-                                  style: AppStyles.ubNavyBlue34W700,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                ),
-                              ],
+                            Dimens.boxHeight10,
+                            AppText(
+                              text:
+                                  Utility.returnHMS(second: controller.seconds),
+                              style: AppStyles.ubNavyBlue34W700,
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
                             ),
-                          );
-                        }),
+                          ],
+                        ),
+                      ),
+                    ),
                     Dimens.boxHeight14,
                   ],
                   CustomBookingDetailView(
@@ -254,20 +251,28 @@ class NannyBookingDetailView extends StatelessWidget {
                                   NannyBookingDetailStatus.reviewComplete
                               ? false
                               : true,
-                      latitude: trackController.currentPosition?.latitude ?? 0.0,
-                      longitude: trackController.currentPosition?.longitude ?? 0.0,
+                      latitude:
+                          trackController.currentPosition?.latitude ?? 0.0,
+                      longitude:
+                          trackController.currentPosition?.longitude ?? 0.0,
                       polyline: {
                         Polyline(
                           polylineId: const PolylineId('line'),
                           color: AppColors.navyBlue3288DE,
                           points: [
                             LatLng(
-                                double.parse(trackController
-                                        .bookingDetailsModel?.data?.latitude ??
-                                    '0.0'),
-                                double.parse(trackController
-                                        .bookingDetailsModel?.data?.longitude ??
-                                    '0.0')),
+                                trackController.currentPosition?.latitude ??
+                                    double.parse(trackController
+                                            .bookingDetailsModel
+                                            ?.data
+                                            ?.latitude ??
+                                        '0.0'),
+                                trackController.currentPosition?.longitude ??
+                                    double.parse(trackController
+                                            .bookingDetailsModel
+                                            ?.data
+                                            ?.longitude ??
+                                        '0.0')),
                             LatLng(
                                 double.parse(trackController.bookingDetailsModel
                                         ?.data?.userDetails?.latitude ??
