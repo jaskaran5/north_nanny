@@ -31,6 +31,7 @@ class _PdfViewState extends State<PdfView> {
         onPageStarted: (String url) {
           log("on page started called ");
         },
+        //
         onProgress: (int progress) {
           log("progress is:-->> $progress");
         },

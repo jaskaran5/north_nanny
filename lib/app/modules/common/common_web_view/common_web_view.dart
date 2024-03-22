@@ -1,24 +1,25 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CommonWebView extends StatefulWidget {
-  const CommonWebView({super.key});
-
+  const CommonWebView({super.key, required this.appBarTitle});
+  final String appBarTitle;
   @override
   State<CommonWebView> createState() => _CommonWebViewState();
 }
 
 class _CommonWebViewState extends State<CommonWebView> {
   late final WebViewController controller;
-
-  // var loadingPercentage = 0;
-  // var error = false;
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -32,28 +33,27 @@ class _CommonWebViewState extends State<CommonWebView> {
         },
         onProgress: (int progress) {
           log("progress is:-->> $progress");
+          if (progress == 100) {
+            isLoading = false;
+            setState(() {});
+          }
         },
         onPageFinished: (String url) {},
-        // onWebResourceError: (WebResourceError error) =>
-        // setState(() => = true
-
-        // ),
         onNavigationRequest: (NavigationRequest request) =>
             NavigationDecision.navigate,
       ),
     );
-    controller.loadRequest(Uri.parse("https://www.codemicros.com"));
+    controller.loadRequest(Uri.parse(
+        widget.appBarTitle == TranslationKeys.aboutUs.tr
+            ? AppConstants.aboutUsWebViewUrl
+            : 'https://www.codemicros.com'));
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (Constants.privacyPolicy.isEmpty || error == true) {
-    //   return const Center(child: Text("Error."));
-    // }
-
     return Scaffold(
       appBar: CustomAppbarWidget(
-        title: "Common web view",
+        title: widget.appBarTitle,
         centerTitle: true,
         isLeading: true,
         leading: IconButton(
@@ -66,8 +66,13 @@ class _CommonWebViewState extends State<CommonWebView> {
             )),
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
-          WebViewWidget(controller: controller),
+          isLoading
+              ? Center(
+                  child: Lottie.asset(Assets.animationNannyAni),
+                )
+              : WebViewWidget(controller: controller),
         ],
       ),
     );

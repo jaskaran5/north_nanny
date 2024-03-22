@@ -112,7 +112,8 @@ class SettingView extends StatelessWidget {
             } else if (index == 3) {
               RouteManagement.goToChangePasswordScreen();
             } else if (index == 4) {
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.aboutUs.tr);
             } else if (index == 5) {
               RouteManagement.goToInviteAFriendView();
             } else if (index == 6) {
@@ -122,9 +123,11 @@ class SettingView extends StatelessWidget {
             } else if (index == 8) {
               RouteManagement.goToFAQ();
             } else if (index == 9) {
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.termAndConditions.tr);
             } else if (index == 10) {
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 11) {
               Utility.openBottomSheet(CustomLogOut(
                 onTapLogOut: () {
@@ -162,7 +165,8 @@ class SettingView extends StatelessWidget {
             } else if (index == 2) {
               /**  ABOUT US */
 
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.aboutUs.tr);
             } else if (index == 3) {
               /** INVITE A FIREND  */
 
@@ -182,11 +186,13 @@ class SettingView extends StatelessWidget {
             } else if (index == 7) {
               /** TERMS AND CONDITIONS */
 
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.termAndConditions.tr);
             } else if (index == 8) {
               /** PRIVACY POLICY */
 
-              controller.redirectToCommonWebView();
+              controller.redirectToCommonWebView(
+                  appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 9) {
               /** LOG OUT */
 

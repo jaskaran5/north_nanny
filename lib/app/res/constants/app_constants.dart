@@ -10,6 +10,8 @@ class AppConstants {
   static const String fontFamilyPlayfairDisplay = 'PlayfairDisplay';
   static const String fontFamilyUrbanist = 'Urbanist';
   static const int apiResponseSuccess = 1;
+  static const String aboutUsWebViewUrl =
+      "https://api.northshore.harishparas.com/StaticContent/About-us.html";
 
   static const Duration timeOutDuration = Duration(seconds: 60);
 }

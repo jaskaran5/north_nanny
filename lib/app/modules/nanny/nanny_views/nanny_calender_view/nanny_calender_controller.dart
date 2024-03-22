@@ -89,6 +89,7 @@ class NannyCalenderController extends GetxController {
   void onInit() {
     super.onInit();
     getAllBookings(time: DateTime.now());
+    getSelectedDateBookingDetail(selectedDate: DateTime.now());
   }
 
   /// this  method used to check the which days have events

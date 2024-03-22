@@ -269,8 +269,10 @@ class SettingController extends GetxController {
   ];
 
   /// REDIRECT TO COMMON WEB VIEW
-  redirectToCommonWebView() {
-    Get.to(() => const CommonWebView());
+  redirectToCommonWebView({required String appBarTitle}) {
+    Get.to(() => CommonWebView(
+          appBarTitle: appBarTitle,
+        ));
   }
 
   /// invite friend list to do
