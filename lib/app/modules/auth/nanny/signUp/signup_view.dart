@@ -197,7 +197,10 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(const CommonWebView());
+                                              Get.to(CommonWebView(
+                                                appBarTitle: TranslationKeys
+                                                    .termAndConditions.tr,
+                                              ));
                                             },
                                         ),
                                         TextSpan(
@@ -210,7 +213,12 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(const CommonWebView());
+                                              Get.to(
+                                                CommonWebView(
+                                                  appBarTitle: TranslationKeys
+                                                      .privacyPolicy.tr,
+                                                ),
+                                              );
                                             },
                                         ),
                                       ],

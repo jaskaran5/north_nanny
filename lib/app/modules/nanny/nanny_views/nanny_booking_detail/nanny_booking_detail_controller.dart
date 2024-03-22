@@ -327,8 +327,15 @@ class NannyBookingDetailController extends GetxController {
               );
             }
             log('nanny Booking Status  :$nannyBookingDetailStatus and ${(nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay || nannyBookingDetailStatus == NannyBookingDetailStatus.arrived)}');
-            if (nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay ||
-                nannyBookingDetailStatus == NannyBookingDetailStatus.arrived) {
+            if ((nannyBookingDetailStatus == NannyBookingDetailStatus.onMyWay ||
+                    nannyBookingDetailStatus ==
+                        NannyBookingDetailStatus.arrived) &&
+                bookingDetailsModel?.data?.openingDate?.day ==
+                    DateTime.now().day &&
+                bookingDetailsModel?.data?.openingDate?.month ==
+                    DateTime.now().month &&
+                bookingDetailsModel?.data?.openingDate?.year ==
+                    DateTime.now().year) {
               locationStream = Geolocator.getPositionStream(
                       locationSettings: locationSettings)
                   .listen((Position? position) async {
