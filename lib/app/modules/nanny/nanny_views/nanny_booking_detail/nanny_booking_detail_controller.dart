@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_details_model.dart';
 import 'package:northshore_nanny_flutter/app/models/booking_status_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/rating_and_review/rating_and_review_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/rating_and_review/rating_and_review_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -56,6 +58,18 @@ class NannyBookingDetailController extends GetxController {
             subTitleMaxLine: 1,
             onTapButton: () {
               Utility.closeDialog();
+              if (!Get.isRegistered<RatingAndReviewController>()) {
+                RatingAndReviewBinding().dependencies();
+              }
+              Get.find<RatingAndReviewController>().storeUserData(
+                  name: bookingDetailsModel?.data?.userDetails?.name ?? '',
+                  image: bookingDetailsModel?.data?.userDetails?.image ?? '',
+                  userReviews:
+                      bookingDetailsModel?.data?.userDetails?.reviewCount ?? 0,
+                  toUserId: bookingDetailsModel?.data?.userDetails?.userId ?? 0,
+                  bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
+                  userRating:
+                      bookingDetailsModel?.data?.userDetails?.rating ?? 0.0);
               RouteManagement.goToRatingReviewScreen();
             },
             isImage: true,

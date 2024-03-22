@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -9,6 +8,7 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
 class SendTipView extends StatelessWidget {
   const SendTipView(
@@ -43,13 +43,13 @@ class SendTipView extends StatelessWidget {
                           ? CircleAvatar(
                               radius: Dimens.hundred,
                               backgroundImage: const AssetImage(
-                                Assets.iconsImage,
+                                Assets.imagesUserAvatar,
                               ),
                             )
-                          : CachedNetworkImage(
-                              imageUrl: image,
-                              height: Dimens.thirtyFour,
-                              width: Dimens.thirtyFour,
+                          : CustomCacheNetworkImage(
+                              img: image,
+                              size: Dimens.thirtyFour,
+                              imageRadius: Dimens.hundred,
                             ),
                     ),
                     Dimens.boxHeight10,

@@ -356,11 +356,10 @@ class Validator {
     required String confirmPassword,
     required String oldPassword,
   }) {
-     if (oldPassword.isEmpty) {
-    error = "Please enter your old Password ";
-    return false;
-    }
-     else if (newPassword.isEmpty) {
+    if (oldPassword.isEmpty) {
+      error = "Please enter your old Password ";
+      return false;
+    } else if (newPassword.isEmpty) {
       error = "Please enter your New Password";
       return false;
     } else if (newPassword.length > 15) {
@@ -387,8 +386,21 @@ class Validator {
     } else if (newPassword != confirmPassword) {
       error = "Confirm Password is not match";
       return false;
-    }  else if (oldPassword == newPassword) {
+    } else if (oldPassword == newPassword) {
       error = "Please enter new password which is not match with old password";
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /// used for review and rating validator.
+  ratingAndReviewValidator({required double rating, required String message}) {
+    if (rating == 0.0) {
+      error = 'Please give rating';
+      return false;
+    } else if (message.isEmpty) {
+      error = 'Please enter your review';
       return false;
     } else {
       return true;

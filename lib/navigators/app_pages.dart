@@ -418,13 +418,5 @@ class AppPages {
       transition: Transition.leftToRight,
     ),
 
-    /** --- REDIRECT TO ------ RATING AND REVIEW  -------  */
-    GetPage<RatingReviewView>(
-      name: Routes.ratingReviewView,
-      transitionDuration: transitionDuration,
-      page: RatingReviewView.new,
-      binding: RatingReviewBinding(),
-      transition: Transition.leftToRight,
-    ),
   ];
 }
