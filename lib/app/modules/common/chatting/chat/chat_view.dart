@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:lottie/lottie.dart';
+import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
@@ -26,7 +31,9 @@ class ChatView extends StatelessWidget {
         return KeyboardVisibilityBuilder(
           builder: (ctx, isKeyboardVisible) {
             if (isKeyboardVisible) {
-              controller.typingInvoke();
+              // controller.typingInvoke();
+            } else if (!isKeyboardVisible) {
+              // controller.stopTypingInvoke();
             }
             log("is keyboard visible:---->>. $isKeyboardVisible");
             return Scaffold(
@@ -62,11 +69,16 @@ class ChatView extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      controller.getUserData?.name ?? '',
-                                      textAlign: TextAlign.center,
-                                      style: AppStyles.ubBlack16W700,
+                                    SizedBox(
+                                      width: Get.width * .55,
+                                      child: Text(
+                                        controller.getUserData?.name ?? '',
+                                        textAlign: TextAlign.start,
+                                        style: AppStyles.ubBlack16W700,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     Row(
                                       children: [
@@ -104,13 +116,19 @@ class ChatView extends StatelessWidget {
                               icon: SvgPicture.asset(Assets.iconsMore),
                               itemBuilder: (BuildContext context) {
                                 return [
-                                  const PopupMenuItem(
-                                      child: Text("Clear Chat")),
-                                  const PopupMenuItem(
-                                      child: Text(
-                                    "Delete Chat",
-                                    style: TextStyle(color: Colors.red),
-                                  )),
+                                  PopupMenuItem(
+                                      onTap: () {
+                                        controller.clearChat();
+                                      },
+                                      child: const Text("Clear Chat")),
+                                  PopupMenuItem(
+                                      onTap: () {
+                                        controller.clearChat();
+                                      },
+                                      child: const Text(
+                                        "Delete Chat",
+                                        style: TextStyle(color: Colors.red),
+                                      )),
                                 ];
                               },
                             ),
@@ -128,40 +146,123 @@ class ChatView extends StatelessWidget {
                             replacement: const Center(),
                             child: Column(
                               children: [
-                                SizedBox(
-                                  height: 20,
-                                  child: Text(
-                                    "Today",
-                                    style: AppStyles.ubPurpleLight12W400,
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   height: 20,
+                                //   child: Text(
+                                //     "Today",
+                                //     style: AppStyles.ubPurpleLight12W400,
+                                //   ),
+                                // ),
                                 Expanded(
                                   child: Skeletonizer(
                                     enabled: controller.isSkeletonizer.value,
-                                    child: ListView.builder(
+                                    child: GroupedListView<MessageList, String>(
+                                      elements: controller.messageList,
+                                      shrinkWrap: true,
                                       reverse: true,
-                                      itemCount: controller.messageList.length,
-                                      itemBuilder: (context, index) {
-                                        return controller.messageList[index]
-                                                    .toUserId ==
+                                      groupHeaderBuilder: (element) {
+                                        return Text(
+                                            controller.isMessageDateEqualToday(
+                                                element.date.toString()));
+                                      },
+                                      groupBy: (message) => Utility
+                                          .convertStringToDateFormatDDMMYY(
+                                              message.date.toString()),
+                                      groupSeparatorBuilder:
+                                          (String groupByValue) => (Text(Utility
+                                              .convertStringToDateFormatDDMMYY(
+                                                  groupByValue))),
+                                      itemBuilder: (context, messageList) {
+                                        return messageList.toUserId ==
                                                 controller.myUserId.value
                                             ? ReceiverTile(
-                                                title: controller
-                                                        .messageList[index]
-                                                        .message ??
-                                                    '',
+                                                onTapOnPdf: () {
+                                                  Get.to(PdfView(
+                                                      url: messageList
+                                                          .fileLink));
+                                                },
+                                                fileType: messageList.fileType,
+                                                isFile:
+                                                    messageList.isFile ?? false,
+                                                fileLink: messageList
+                                                        .fileLink!.isEmpty
+                                                    ? null
+                                                    : messageList.fileLink,
+                                                time:
+                                                    messageList.date.toString(),
+                                                title:
+                                                    messageList.message ?? '',
                                               )
                                             : SenderTile(
-                                                title: controller
-                                                        .messageList[index]
-                                                        .message ??
-                                                    "");
+                                                onTapOnPdf: () {
+                                                  Get.to(PdfView(
+                                                      url: messageList
+                                                          .fileLink));
+                                                },
+                                                fileType: messageList.fileType,
+                                                isFile:
+                                                    messageList.isFile ?? false,
+                                                fileLink: messageList.fileLink,
+                                                time:
+                                                    messageList.date.toString(),
+                                                title:
+                                                    messageList.message ?? "");
                                       },
+                                      itemComparator: (item1, item2) => Utility
+                                              .convertStringToDateFormatDDMMYY(
+                                                  item1.date.toString())
+                                          .compareTo(Utility
+                                              .convertStringToDateFormatDDMMYY(
+                                                  item2.date
+                                                      .toString())), // optional
+                                      useStickyGroupSeparators:
+                                          true, // optional
+                                      floatingHeader: true, // optional
+                                      order: GroupedListOrder.ASC, // optional
                                     ),
+
+                                    //  ListView.builder(
+                                    //   reverse: true,
+                                    //   itemCount: controller.messageList.length,
+                                    //   itemBuilder: (context, index) {
+                                    //     return controller.messageList[index]
+                                    //                 .toUserId ==
+                                    //             controller.myUserId.value
+                                    //         ? ReceiverTile(
+                                    //             time: controller
+                                    //                 .messageList[index].date
+                                    //                 .toString(),
+                                    //             title: controller
+                                    //                     .messageList[index]
+                                    //                     .message ??
+                                    //                 '',
+                                    //           )
+                                    //         : SenderTile(
+                                    //             time: controller
+                                    //                 .messageList[index].date
+                                    //                 .toString(),
+                                    //             title: controller
+                                    //                     .messageList[index]
+                                    //                     .message ??
+                                    //                 "");
+                                    //   },
+                                    // ),
                                   ),
                                 ),
                               ],
                             ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Visibility(
+                          visible: controller.isTypingVisible.value,
+                          child: Padding(
+                            padding: Dimens.edgeInsetsL16R16B16,
+                            child: Lottie.asset(
+                                Assets.animationTypingIndicatorAnimation,
+                                fit: BoxFit.cover),
                           ),
                         ),
                       ),
@@ -171,13 +272,24 @@ class ChatView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: Get.width * .76,
+                              width: controller.isSendMessageVisible.value
+                                  ? Get.width * .76
+                                  : Get.width * .9,
                               padding: Dimens.edgeInsets4,
                               decoration: BoxDecoration(
                                 color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextFormField(
+                                onChanged: (value) {
+                                  if (value.trim().isNotEmpty) {
+                                    controller.updateSendMessageVisibility(
+                                        isVisible: true);
+                                  } else {
+                                    controller.updateSendMessageVisibility(
+                                        isVisible: false);
+                                  }
+                                },
                                 controller: controller.chatTextController,
                                 decoration: InputDecoration(
                                     hintText: 'Write a message',
@@ -191,38 +303,43 @@ class ChatView extends StatelessWidget {
                                       ),
                                       onPressed: () {
                                         log("on click on pick document");
+                                        // controller.pickDocuments();
                                         controller.pickDocumentFile();
                                       },
                                     )),
                               ),
                             ),
-                            InkWell(
-                              onTap: () async {
-                                if (controller.chatTextController.text.trim() ==
-                                    '') {
-                                  toast(
-                                      msg: '"Please Enter your message"',
-                                      isError: true);
-                                } else {
-                                  log("else part called");
-                                  await controller.sendMessage(
-                                      toUserId: int.parse(controller
-                                          .otherUserId.value
-                                          .toString()),
-                                      message: controller
-                                          .chatTextController.text
-                                          .trim(),
-                                      fileType: null,
-                                      isFile: false,
-                                      type: 1);
-                                  ();
-                                  controller.chatTextController.text = '';
-                                }
-                              },
-                              child: SvgPicture.asset(
-                                Assets.iconsChatSend,
-                                height: Dimens.fifty,
-                                width: Dimens.fifty,
+                            Visibility(
+                              visible: controller.isSendMessageVisible.value,
+                              child: InkWell(
+                                onTap: () async {
+                                  if (controller.chatTextController.text
+                                          .trim() ==
+                                      '') {
+                                    toast(
+                                        msg: '"Please Enter your message"',
+                                        isError: true);
+                                  } else {
+                                    log("else part called");
+                                    await controller.sendMessage(
+                                        toUserId: int.parse(controller
+                                            .otherUserId.value
+                                            .toString()),
+                                        message: controller
+                                            .chatTextController.text
+                                            .trim(),
+                                        fileType: null,
+                                        isFile: false,
+                                        type: 1);
+                                    ();
+                                    controller.chatTextController.text = '';
+                                  }
+                                },
+                                child: SvgPicture.asset(
+                                  Assets.iconsChatSend,
+                                  height: Dimens.fifty,
+                                  width: Dimens.fifty,
+                                ),
                               ),
                             ),
                           ],

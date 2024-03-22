@@ -77,20 +77,21 @@ class MessageList {
   DateTime? date;
   dynamic toUserImage;
   bool? isFile;
-  String? fileLink;
+  dynamic fileLink;
   dynamic isChatDeleted;
+  dynamic fileType;
 
-  MessageList({
-    this.id,
-    this.toUserId,
-    this.fromUserId,
-    this.message,
-    this.date,
-    this.toUserImage,
-    this.isFile,
-    this.fileLink,
-    this.isChatDeleted,
-  });
+  MessageList(
+      {this.id,
+      this.toUserId,
+      this.fromUserId,
+      this.message,
+      this.date,
+      this.toUserImage,
+      this.isFile,
+      this.fileLink,
+      this.isChatDeleted,
+      this.fileType});
 
   factory MessageList.fromJson(Map<String, dynamic> json) => MessageList(
         id: json["id"],
@@ -102,6 +103,7 @@ class MessageList {
         isFile: json["isFile"],
         fileLink: json["fileLink"],
         isChatDeleted: json["isChatDeleted"],
+        fileType: json["fileType"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -114,5 +116,6 @@ class MessageList {
         "isFile": isFile,
         "fileLink": fileLink,
         "isChatDeleted": isChatDeleted,
+        "fileType": fileType
       };
 }

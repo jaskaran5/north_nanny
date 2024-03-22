@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
@@ -9,6 +13,7 @@ import 'package:northshore_nanny_flutter/app/models/customer_details_response_mo
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/send_messgae_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
@@ -19,6 +24,11 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 
 class ChatController extends GetxController {
   TextEditingController chatTextController = TextEditingController();
+
+  RxBool isSendMessageVisible = false.obs;
+
+  late KeyboardVisibilityController keyboardVisibilityController;
+
   final ApiHelper _apiHelper = ApiHelper.to;
   final _socketHelper = SignalRHelper();
 
@@ -34,8 +44,56 @@ class ChatController extends GetxController {
 
   RxString otherUserId = ''.obs;
   RxBool isOnline = false.obs;
+  RxBool isTypingVisible = false.obs;
 
   UserData? getUserData;
+
+  updateSendMessageVisibility({isVisible}) {
+    isSendMessageVisible.value = isVisible;
+    update();
+  }
+
+  updateTypingVisibility({isVisible}) {
+    isTypingVisible.value = isVisible;
+    update();
+  }
+
+  String isMessageDateEqualToday(String dateTimeString) {
+    DateTime providedDate = DateTime.parse(dateTimeString);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime yesterday = today.subtract(const Duration(days: 1));
+
+    for (var value in messageList) {
+      if (value.date?.day == providedDate.day &&
+          value.date?.month == providedDate.month &&
+          value.date?.year == providedDate.year) {
+        if (value.date?.day == today.day) {
+          log("both are equal");
+          return "Today";
+        } else if (value.date?.day == yesterday.day) {
+          log("both are not equal");
+
+          return "Yesterday";
+        } else {
+          log("asdfads-->${value.date}");
+          log("asdfads-->$today");
+
+          log("both are -----equal${value.date?.day}");
+          log("both are -----equal${providedDate.day}");
+
+          log("both are -----equal${value.date?.month}");
+          log("both are -----equal${providedDate.month}");
+
+          log("both are -----equal${value.date?.year}");
+          log("both are -----equal${providedDate.year}");
+
+          return "${value.date?.day}-${value.date?.month}-${value.date?.year}";
+        }
+      }
+    }
+    return "";
+  }
 
   sendChatMessage() {
     log("on lcick on send chat message called");
@@ -138,15 +196,17 @@ class ChatController extends GetxController {
     // String Date =
     //     DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().toUtc());
 
-    final result = await _socketHelper.hubConnection.invoke('SendMessage',
-        args: [
-          toUserId!,
-          message,
-          type,
-          "",
-          isFile!,
-          DateTime.now().toUtc().toIso8601String()
-        ]);
+    // int ToUserId, string Message, int Type, string FileType, bool IsFile, string Date
+
+    final result =
+        await _socketHelper.hubConnection.invoke('SendMessage', args: [
+      toUserId!,
+      message,
+      type,
+      fileType ?? '',
+      isFile!,
+      DateTime.now().toUtc().toIso8601String()
+    ]);
     print('Message sent Received Data ========> ${result.toString()}');
   }
 
@@ -169,11 +229,14 @@ class ChatController extends GetxController {
                 id: res.data?.chatId,
                 isChatDeleted: '',
                 isFile: res.data?.isFile,
+                fileType: res.data?.fileType,
                 message: res.data?.messageDescription,
                 toUserId: res.data?.toUserId,
                 toUserImage: res.data?.toUserImage));
 
         update();
+
+        Get.find<RecentChatController>().invokedRecentChat();
       },
     );
   }
@@ -182,14 +245,35 @@ class ChatController extends GetxController {
     listenMessage();
     listenSingleChatDetails();
     listenTyping();
+    stopTypingListen();
   }
 
-  /// PICK DOCUMENT FILES
-  pickDocumentFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+  Future<void> pickDocumentFile() async {
+    await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['docx', 'pdf', 'png', 'jpeg', 'jpg', 'pdf', 'mp4'],
-    );
+      allowedExtensions: ['docx', 'png', 'jpeg', 'jpg', 'pdf', 'mp4'],
+    ).then((value) {
+      if (value != null) {
+        File imageFile = File(value.files.single.path ?? '');
+        print("filePath-->${imageFile.path.split(".").last}");
+        List<int> imageBytes = imageFile.readAsBytesSync();
+        String base64Image = base64Encode(imageBytes);
+        DateTime now = DateTime.now();
+        int milliseconds = now.millisecondsSinceEpoch;
+
+        sendMessage(
+          toUserId: int.parse(otherUserId.value),
+          message: base64Image,
+          type: 1,
+          fileType: imageFile.path.split(".").last,
+          isFile: true,
+        ).then((_) {
+          log("success");
+        }).catchError((error) {
+          log("error");
+        });
+      }
+    });
   }
 
   // INVOKE SINGLE CHAT DETAILS
@@ -271,6 +355,7 @@ class ChatController extends GetxController {
   listenTyping() {
     _socketHelper.hubConnection.on("TypingResponse", (arguments) {
       log("typing response argumnets-->. $arguments");
+      updateTypingVisibility(isVisible: true);
     });
   }
 
@@ -281,5 +366,56 @@ class ChatController extends GetxController {
       int.parse(otherUserId.value),
       DateTime.now().toUtc().toIso8601String()
     ]);
+  }
+
+  //-------->>>>>  STOP TYPING INVOKE
+  stopTypingInvoke() {
+    _socketHelper.hubConnection
+        .invoke("StopTyping", args: [int.parse(otherUserId.value)]);
+
+    log("stop typng invoke called");
+  }
+
+  //-------->>>>>  STOP TYPING INVOKE
+  stopTypingListen() {
+    _socketHelper.hubConnection.on(
+      "StopTypingResponse",
+      (arguments) {
+        updateTypingVisibility(isVisible: false);
+        log("stop typing argumnets ---->>>> $arguments");
+      },
+    );
+
+    log("stop typng invoke called");
+  }
+
+  pickDocuments() {
+    ImagePicker()
+        .pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000)
+        .then((value) async {
+      if (value != null) {
+        File imageFile = File(value.path);
+        print("filePath-->${imageFile.path.split(".").last}");
+        List<int> imageBytes = imageFile.readAsBytesSync();
+        String base64Image = base64Encode(imageBytes);
+        DateTime now = DateTime.now();
+        int milliseconds = now.millisecondsSinceEpoch;
+
+        // var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
+        // bool isHorizontalImage = decodedImage.width > decodedImage.height;
+        // print("isHorizontalImage-->$isHorizontalImage");
+        sendMessage(
+          toUserId: int.parse(otherUserId.value),
+          message: base64Image,
+          type: 1,
+
+          fileType: imageFile.path.split(".").last,
+          isFile: true,
+          // imageFile: value.path,
+          //  uniqueReference: milliseconds.toString(),
+        );
+        // genderMatchController.scrollToBottom();
+      }
+    });
   }
 }

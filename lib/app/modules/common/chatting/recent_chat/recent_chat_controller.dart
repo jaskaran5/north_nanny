@@ -33,7 +33,7 @@ class RecentChatController extends GetxController {
 
   Future<void> invokedRecentChat() async {
     log("$tag chat list argumaents are:-->> invokedRecentChat");
-    _socketHelper.hubConnection.off("MyChatList");
+    // _socketHelper.hubConnection.off("MyChatList");
     _socketHelper.hubConnection.on("MyChatList", (arguments) {
       var data = arguments?[0] as Map<String, dynamic>;
 
@@ -47,7 +47,9 @@ class RecentChatController extends GetxController {
     });
 
     var res = await _socketHelper.hubConnection.invoke('ChatList', args: []);
+
     log("$tag ChatList : $res");
+    update();
   }
 
   getChatList() {}

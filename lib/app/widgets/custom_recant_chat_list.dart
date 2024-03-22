@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -69,15 +69,24 @@ class CustomRecentChatListTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      chatData?.fullName ?? '',
-                      style: AppStyles.ubBlack14W700,
-                      maxLines: 1,
+                    SizedBox(
+                      width: Get.width * .5,
+                      child: Text(
+                        chatData?.fullName ?? '',
+                        style: AppStyles.ubBlack14W700,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Dimens.boxHeight8,
-                    Text(
-                      chatData?.lastMessage ?? '',
-                      style: AppStyles.ubGrey12W500,
+                    SizedBox(
+                      width: Get.width * .5,
+                      child: Text(
+                        chatData?.lastMessage ?? '',
+                        style: AppStyles.ubGrey12W500,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
                     ),
                   ],
                 ),
