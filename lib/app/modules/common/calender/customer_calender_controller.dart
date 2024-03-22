@@ -11,7 +11,7 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import '../../../data/api/api_helper.dart';
 
 class CustomerCalenderController extends GetxController {
-  DateTime?selectedDay ;
+  DateTime? selectedDay;
   DateTime focusDay = DateTime.now();
   final ApiHelper _apiHelper = ApiHelper.to;
 //

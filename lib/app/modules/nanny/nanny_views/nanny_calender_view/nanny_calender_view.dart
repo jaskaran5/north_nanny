@@ -45,7 +45,8 @@ class NannyCalenderView extends StatelessWidget {
                         defaultTextStyle: AppStyles.ubBlack15W600,
                         weekendTextStyle: AppStyles.ubBlack15W600,
                         outsideTextStyle: AppStyles.ubHintColor15W500,
-                        isTodayHighlighted: false,
+                        isTodayHighlighted:
+                            controller.selectedDay != null ? false : true,
                         todayDecoration: const BoxDecoration(
                           color: AppColors.navyBlue,
                           shape: BoxShape.circle,
@@ -103,224 +104,249 @@ class NannyCalenderView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight32,
-                    if (controller.nannyBookingDetail?.data != null)
-                      GestureDetector(
-                        onTap: () {
-                          if (!Get.isRegistered<
-                              NannyBookingDetailController>()) {
-                            NannyBookingDetailBinding().dependencies();
-                          }
-                          Get.find<NannyBookingDetailController>()
-                              .typeOfBooking(
-                                  bookingStatus: controller.nannyBookingDetail
-                                          ?.data?.bookingStatus ??
-                                      0);
-                          Get.find<NannyBookingDetailController>()
-                              .getBookingDetailOfCustomer(
-                                  bookingId: controller.nannyBookingDetail?.data
-                                          ?.bookingId ??
-                                      0);
-                          RouteManagement.goToNannyBookingView();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimens.fourteen),
-                            border: Border.all(
-                              color: AppColors.navyBlue,
-                              width: Dimens.two,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: Dimens.edgeInsets16,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomDateFormatTile(
-                                      day: Utility.getDay(
-                                          dateTime: controller
+                    controller.nannyBookingDetail?.data != null
+                        ? GestureDetector(
+                            onTap: () {
+                              if (!Get.isRegistered<
+                                  NannyBookingDetailController>()) {
+                                NannyBookingDetailBinding().dependencies();
+                              }
+                              Get.find<NannyBookingDetailController>()
+                                  .typeOfBooking(
+                                      bookingStatus: controller
                                               .nannyBookingDetail
                                               ?.data
-                                              ?.openingTime),
-                                      dateFormatInMonthYearDayOfWeek:
-                                          Utility.convertDateToMMMMYYYEEE(
-                                              controller.nannyBookingDetail
-                                                      ?.data?.openingTime ??
-                                                  DateTime.now()),
-                                      timing:
-                                          '${Utility.formatTimeTo12Hour(controller.nannyBookingDetail?.data?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.nannyBookingDetail?.data?.closingTime.toString())}',
-                                      totalPrice: controller.nannyBookingDetail
-                                              ?.data?.billAmount
-                                              .toString() ??
-                                          '',
-                                    ),
-                                    Dimens.boxHeight16,
-                                    Divider(
-                                      color: AppColors.dividerColor,
-                                      height: Dimens.one,
-                                    ),
-                                    Dimens.boxHeight16,
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CustomDot(
-                                            size: Dimens.four,
-                                            color: AppColors.blackColor),
-                                        Dimens.boxWidth4,
-                                        AppText(
-                                          text: controller.nannyBookingDetail
-                                              ?.data?.services
-                                              ?.join(', ')
-                                              .capitalizeFirst,
-                                          style: AppStyles.ubGrey15W500,
-                                          maxLines: 3,
-                                          textAlign: TextAlign.start,
-                                        ),
-                                      ],
-                                    ),
-                                    Dimens.boxHeight16,
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CustomDot(
-                                            size: Dimens.four,
-                                            color: AppColors.blackColor),
-                                        Dimens.boxWidth4,
-                                        AppText(
-                                          text:
-                                              '${controller.nannyBookingDetail?.data?.childCount == 1 ? '${controller.nannyBookingDetail?.data?.childCount.toString()} ${TranslationKeys.child.tr}' : '${controller.nannyBookingDetail?.data?.childCount.toString()} ${TranslationKeys.children.tr}'} ',
-                                          style: AppStyles.ubGrey15W500,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.start,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                              ?.bookingStatus ??
+                                          0);
+                              Get.find<NannyBookingDetailController>()
+                                  .getBookingDetailOfCustomer(
+                                      bookingId: controller.nannyBookingDetail
+                                              ?.data?.bookingId ??
+                                          0);
+                              RouteManagement.goToNannyBookingView();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.fourteen),
+                                border: Border.all(
+                                  color: AppColors.navyBlue,
+                                  width: Dimens.two,
                                 ),
                               ),
-                              Container(
-                                padding: Dimens.edgeInsets10,
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  color: AppColors.navyBlue,
-                                  border: Border.all(
-                                    color: AppColors.navyBlue,
-                                    width: Dimens.two,
-                                  ),
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(Dimens.ten),
-                                    bottomRight: Radius.circular(Dimens.ten),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      height: Dimens.fifty,
-                                      width: Dimens.fifty,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          Dimens.ten,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: Dimens.edgeInsets16,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomDateFormatTile(
+                                          day: Utility.getDay(
+                                              dateTime: controller
+                                                  .nannyBookingDetail
+                                                  ?.data
+                                                  ?.openingTime),
+                                          dateFormatInMonthYearDayOfWeek:
+                                              Utility.convertDateToMMMMYYYEEE(
+                                                  controller.nannyBookingDetail
+                                                          ?.data?.openingTime ??
+                                                      DateTime.now()),
+                                          timing:
+                                              '${Utility.formatTimeTo12Hour(controller.nannyBookingDetail?.data?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.nannyBookingDetail?.data?.closingTime.toString())}',
+                                          totalPrice: controller
+                                                  .nannyBookingDetail
+                                                  ?.data
+                                                  ?.billAmount
+                                                  .toString() ??
+                                              '',
                                         ),
-                                      ),
-                                      child: controller.nannyBookingDetail?.data
-                                                  ?.image?.isEmpty ==
-                                              true
-                                          ? Image.asset(
-                                              Assets.imagesUserAvatar,
-                                              fit: BoxFit.contain,
-                                            )
-                                          : CustomCacheNetworkImage(
-                                              img: controller.nannyBookingDetail
-                                                      ?.data?.image ??
-                                                  '',
-                                              size: Dimens.fifty,
-                                              imageRadius: Dimens.ten),
+                                        Dimens.boxHeight16,
+                                        Divider(
+                                          color: AppColors.dividerColor,
+                                          height: Dimens.one,
+                                        ),
+                                        Dimens.boxHeight16,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomDot(
+                                                size: Dimens.four,
+                                                color: AppColors.blackColor),
+                                            Dimens.boxWidth4,
+                                            AppText(
+                                              text: controller
+                                                  .nannyBookingDetail
+                                                  ?.data
+                                                  ?.services
+                                                  ?.join(', ')
+                                                  .capitalizeFirst,
+                                              style: AppStyles.ubGrey15W500,
+                                              maxLines: 3,
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
+                                        ),
+                                        Dimens.boxHeight16,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomDot(
+                                                size: Dimens.four,
+                                                color: AppColors.blackColor),
+                                            Dimens.boxWidth4,
+                                            AppText(
+                                              text:
+                                                  '${controller.nannyBookingDetail?.data?.childCount == 1 ? '${controller.nannyBookingDetail?.data?.childCount.toString()} ${TranslationKeys.child.tr}' : '${controller.nannyBookingDetail?.data?.childCount.toString()} ${TranslationKeys.children.tr}'} ',
+                                              style: AppStyles.ubGrey15W500,
+                                              maxLines: 1,
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    Dimens.boxWidth16,
-                                    Column(
+                                  ),
+                                  Container(
+                                    padding: Dimens.edgeInsets10,
+                                    width: Get.width,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.navyBlue,
+                                      border: Border.all(
+                                        color: AppColors.navyBlue,
+                                        width: Dimens.two,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(Dimens.ten),
+                                        bottomRight:
+                                            Radius.circular(Dimens.ten),
+                                      ),
+                                    ),
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        SizedBox(
-                                          width: Dimens.twoHundred,
-                                          child: AppText(
-                                            text: controller
-                                                .nannyBookingDetail?.data?.name
-                                                .toString(),
-                                            style: AppStyles.ubWhite14700,
-                                            maxLines: 2,
-                                            textAlign: TextAlign.start,
+                                        Container(
+                                          height: Dimens.fifty,
+                                          width: Dimens.fifty,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              Dimens.ten,
+                                            ),
                                           ),
+                                          child: controller.nannyBookingDetail
+                                                      ?.data?.image?.isEmpty ==
+                                                  true
+                                              ? Image.asset(
+                                                  Assets.imagesUserAvatar,
+                                                  fit: BoxFit.contain,
+                                                )
+                                              : CustomCacheNetworkImage(
+                                                  img: controller
+                                                          .nannyBookingDetail
+                                                          ?.data
+                                                          ?.image ??
+                                                      '',
+                                                  size: Dimens.fifty,
+                                                  imageRadius: Dimens.ten),
                                         ),
-                                        Dimens.boxHeight4,
-                                        GestureDetector(
-                                          onTap: () {
-                                            Utility.openBottomSheet(
-                                              CustomReviewBottomSheet(
-                                                totalReviews: controller
-                                                        .nannyBookingDetail
-                                                        ?.data
-                                                        ?.reviewCount ??
-                                                    0,
-                                                totalReviewsRating: controller
-                                                        .nannyBookingDetail
-                                                        ?.data
-                                                        ?.rating ??
-                                                    0.0,
-                                                reviewsList: controller
-                                                        .nannyBookingDetail
-                                                        ?.data
-                                                        ?.ratingList ??
-                                                    [],
+                                        Dimens.boxWidth16,
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              width: Dimens.twoHundred,
+                                              child: AppText(
+                                                text: controller
+                                                    .nannyBookingDetail
+                                                    ?.data
+                                                    ?.name
+                                                    .toString(),
+                                                style: AppStyles.ubWhite14700,
+                                                maxLines: 2,
+                                                textAlign: TextAlign.start,
                                               ),
-                                            );
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.iconsStar),
-                                              Dimens.boxWidth4,
-                                              RichText(
-                                                text: TextSpan(
-                                                  text:
-                                                      '${controller.nannyBookingDetail?.data?.rating.toString()} ',
-                                                  style: AppStyles
-                                                      .ubLightNavy12W500,
-                                                  children: [
-                                                    TextSpan(
+                                            ),
+                                            Dimens.boxHeight4,
+                                            GestureDetector(
+                                              onTap: () {
+                                                Utility.openBottomSheet(
+                                                  CustomReviewBottomSheet(
+                                                    totalReviews: controller
+                                                            .nannyBookingDetail
+                                                            ?.data
+                                                            ?.reviewCount ??
+                                                        0,
+                                                    totalReviewsRating: controller
+                                                            .nannyBookingDetail
+                                                            ?.data
+                                                            ?.rating ??
+                                                        0.0,
+                                                    reviewsList: controller
+                                                            .nannyBookingDetail
+                                                            ?.data
+                                                            ?.ratingList ??
+                                                        [],
+                                                  ),
+                                                );
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      Assets.iconsStar),
+                                                  Dimens.boxWidth4,
+                                                  RichText(
+                                                    text: TextSpan(
                                                       text:
-                                                          '(${controller.nannyBookingDetail?.data?.reviewCount.toString()} ${TranslationKeys.reviews.tr})',
+                                                          '${controller.nannyBookingDetail?.data?.rating.toString()} ',
                                                       style: AppStyles
-                                                          .ubLightNavy12W400,
+                                                          .ubLightNavy12W500,
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              '(${controller.nannyBookingDetail?.data?.reviewCount.toString()} ${TranslationKeys.reviews.tr})',
+                                                          style: AppStyles
+                                                              .ubLightNavy12W400,
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                                maxLines: 1,
+                                                    maxLines: 1,
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              )
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Dimens.boxHeight50,
+                              AppText(
+                                text: TranslationKeys.noBookings.tr,
+                                style: AppStyles.ubNavyBlue20W600,
+                                maxLines: 1,
+                              ),
                             ],
                           ),
-                        ),
-                      ),
                   ],
                 ),
               ),

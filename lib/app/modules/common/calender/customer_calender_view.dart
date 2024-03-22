@@ -45,7 +45,7 @@ class CustomerCalenderView extends StatelessWidget {
                         defaultTextStyle: AppStyles.ubBlack15W600,
                         weekendTextStyle: AppStyles.ubBlack15W600,
                         outsideTextStyle: AppStyles.ubHintColor15W500,
-                        isTodayHighlighted: false,
+                        isTodayHighlighted: controller.selectedDay != null ? false : true,
                         todayDecoration: const BoxDecoration(
                           color: AppColors.navyBlue,
                           shape: BoxShape.circle,
