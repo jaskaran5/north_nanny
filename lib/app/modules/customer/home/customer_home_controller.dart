@@ -12,6 +12,7 @@ import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -28,6 +29,7 @@ class CustomerHomeController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
 
   String? selectedGender = '';
+  final _socketHelper = SignalRHelper();
 
   double distanceLowerValue = Dimens.zero;
   double distanceHigherValue = 11;
@@ -364,8 +366,8 @@ class CustomerHomeController extends GetxController {
     super.onReady();
 
     var address = getAddressFromCoordinates(
-      Storage.getValue(StringConstants.latitude),
-      Storage.getValue(StringConstants.longitude),
+      Storage.getValue(StringConstants.latitude) ?? 0.0,
+      Storage.getValue(StringConstants.longitude) ?? 0.0,
     );
 
     log("customer home address :--->>$address");
@@ -495,5 +497,16 @@ class CustomerHomeController extends GetxController {
       _searchNannyByName(name: name.trim());
       // }
     });
+  }
+
+  @override
+  void onInit() {
+    socketConnection();
+    super.onInit();
+  }
+
+  socketConnection() async {
+    // final signalRHelper = SignalRHelper();
+    await _socketHelper.init();
   }
 }

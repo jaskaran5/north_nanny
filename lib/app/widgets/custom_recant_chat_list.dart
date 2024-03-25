@@ -5,6 +5,8 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/date_helper.dart';
+import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_new_message_count_icon.dart';
 
 import '../modules/common/chatting/recent_chat/recent_chat_controller.dart';
@@ -30,15 +32,10 @@ class CustomRecentChatListTile extends StatelessWidget {
               children: [
                 Stack(children: [
                   (chatData!.image!.isNotEmpty)
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(
-                            chatData!.image!,
-                            height: Dimens.fifty,
-                            width: Dimens.fifty,
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                      ? CustomCacheNetworkImage(
+                          img: chatData!.image!,
+                          size: Dimens.fifty,
+                          imageRadius: Dimens.fifty)
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(30),
                           child: Image.asset(
@@ -96,9 +93,9 @@ class CustomRecentChatListTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      // DateHelper.getDateTimeAgo(chatData!.dateTime.toString())
+                      DateHelper.getDateTimeAgo(chatData!.dateTime.toString()),
                       //         .toString() ??
-                      '5 min ago',
+                      // '5 min ago',
                       style: AppStyles.ubChatTimeColor12W400,
                     ),
                     Dimens.boxHeight8,

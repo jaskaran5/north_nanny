@@ -220,33 +220,6 @@ class ChatView extends StatelessWidget {
                                       floatingHeader: true, // optional
                                       order: GroupedListOrder.ASC, // optional
                                     ),
-
-                                    //  ListView.builder(
-                                    //   reverse: true,
-                                    //   itemCount: controller.messageList.length,
-                                    //   itemBuilder: (context, index) {
-                                    //     return controller.messageList[index]
-                                    //                 .toUserId ==
-                                    //             controller.myUserId.value
-                                    //         ? ReceiverTile(
-                                    //             time: controller
-                                    //                 .messageList[index].date
-                                    //                 .toString(),
-                                    //             title: controller
-                                    //                     .messageList[index]
-                                    //                     .message ??
-                                    //                 '',
-                                    //           )
-                                    //         : SenderTile(
-                                    //             time: controller
-                                    //                 .messageList[index].date
-                                    //                 .toString(),
-                                    //             title: controller
-                                    //                     .messageList[index]
-                                    //                     .message ??
-                                    //                 "");
-                                    //   },
-                                    // ),
                                   ),
                                 ),
                               ],

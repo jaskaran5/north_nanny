@@ -32,16 +32,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    socketConnection();
+  // void initState() {
+  //   socketConnection();
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
-  socketConnection() async {
-    final signalRHelper = SignalRHelper();
-    await signalRHelper.init();
-  }
+  // socketConnection() async {
+  //   final signalRHelper = SignalRHelper();
+  //   await signalRHelper.init();
+  // }
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
