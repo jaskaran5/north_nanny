@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/firebase_options.dart';
+
+import '../../res/constants/string_contants.dart';
 
 class FCMService {
   static final FCMService _fcmService = FCMService._internal();
@@ -15,28 +16,20 @@ class FCMService {
 
   FCMService._internal();
 
-  // FirebaseMessaging? _messaging;
-
-  ///TODO:
-  ///[@Firebase_initialized]
-  // init() {
-  //   _messaging = FirebaseMessaging.instance;
-
-  // }
-
   static late FirebaseMessaging messaging;
 
+  /// used to initialize the firebase notifications.
   static Future<void> init() async {
-    log("Firebasee helperrrr");
+    log("Firebase helper ");
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     messaging = FirebaseMessaging.instance;
 
     await permissionHandler().then((authorized) async {
       log("IS AUTHORIZED:  $authorized");
-      /* if (authorized) {
+      if (authorized) {
         await setupMessaging();
-      }*/
+      }
     });
   }
 
@@ -59,7 +52,7 @@ class FCMService {
     await messaging.getToken().then((token) async {
       log("fcm token is :--->> $token");
 
-      Storage.saveValue(StringConstants.deviceToken, token);
+      Storage.saveValue(StringConstants.fcmToken, token);
 
       // final session = locator<Session>();
       // logMe("firebase-token: $token");
@@ -72,7 +65,8 @@ class FCMService {
     String token = '';
     await messaging.getToken().then((value) {
       token = value!;
-      //TODO: SAVING_FIREBASE_TOKEN_TO_LOCAL_STORAGE
+
+      /// SAVING_FIREBASE_TOKEN_TO_LOCAL_STORAGE
       // AppLocalDb().setFirebaseToken(token);
     });
     log('============FCM Token ---> $token');
@@ -92,7 +86,7 @@ class FCMService {
     });
   }
 
-  ///Todo: handle click
+  //// handle click
   _handleMessageClick(RemoteMessage message) {
     ///Handle all message notification click
     log("====>newMessage${message.data.toString()}");
@@ -101,6 +95,6 @@ class FCMService {
     }
     // print('=========> Notification Clicked - ${message.toString()}');
 
-    ///TODo: handle notification click event here
+    //// handle notification click event here
   }
 }

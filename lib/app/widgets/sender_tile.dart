@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
-import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import 'custom_sender_chat_time_tile.dart';
 
