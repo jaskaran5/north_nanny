@@ -17,12 +17,15 @@ class SenderTile extends StatelessWidget {
     this.onTapOnPdf,
     this.onTapOnVideo,
     this.onTapOnImage,
+    this.thumbImage,
   });
   final String? title;
   final String? time;
   final String? fileLink;
   final bool isFile;
   final String? fileType;
+  final String? thumbImage;
+
   final VoidCallback? onTapOnPdf;
   final VoidCallback? onTapOnVideo;
   final VoidCallback? onTapOnImage;
@@ -86,8 +89,23 @@ class SenderTile extends StatelessWidget {
       // Show video player widget here
       return GestureDetector(
         onTap: onTapOnVideo,
-        child: const SizedBox(
-          child: Icon(Icons.video_call),
+        child: SizedBox(
+          height: 100,
+          width: 100,
+          child: Stack(
+            children: [
+              CustomCacheNetworkImage(
+                img: thumbImage!,
+                size: 100,
+                imageRadius: 10,
+              ),
+              const Center(
+                  child: Icon(
+                Icons.slow_motion_video_outlined,
+                color: Colors.white,
+              ))
+            ],
+          ),
         ),
       ); // Replace this with your video player widget
     } else {

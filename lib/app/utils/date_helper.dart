@@ -142,13 +142,12 @@ class DateHelper {
     return formattedTime;
   }
 
-  static String getDateTimeAgo(String? dateTimeString) {
-    log("date time :-->> $dateTimeString");
-    if (dateTimeString == null) {
-      return "";
-    }
+  static String getDateTimeAgo(String dateTimeString) {
+    log("dateTimeString:-->> $dateTimeString");
+    DateTime date = DateTime.parse(dateTimeString);
+    // var date = DateTime.parse(dateTimeString).toLocal();
 
-    var date = DateTime.parse(dateTimeString).toLocal();
+    log("date:-->> $date");
     var now = DateTime.now().toLocal();
 
     var difference = now.difference(date);
@@ -167,7 +166,8 @@ class DateHelper {
       return "${difference.inDays} days ago";
     } else {
       // If it's more than a week, return the formatted date
-      return _dateFormatLog.format(date);
+      var dateFormatLog = DateFormat('yyyy-MM-dd HH:mm:ss');
+      return dateFormatLog.format(date);
     }
   }
 

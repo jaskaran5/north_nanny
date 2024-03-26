@@ -16,11 +16,14 @@ class ReceiverTile extends StatelessWidget {
     required this.isFile,
     this.onTapOnVideo,
     this.onTapOnImage,
+    this.thumbImage,
   });
   final String? title;
   final String? time;
   final String? fileLink;
   final String? fileType;
+  final String? thumbImage;
+
   final bool isFile;
   final VoidCallback? onTapOnPdf;
   final VoidCallback? onTapOnVideo;
@@ -91,7 +94,11 @@ class ReceiverTile extends StatelessWidget {
       // Show video player widget here
       return GestureDetector(
         onTap: onTapOnVideo,
-        child: const SizedBox(child: Icon(Icons.video_call)),
+        child: CustomCacheNetworkImage(
+          img: thumbImage!,
+          size: 100,
+          imageRadius: 10,
+        ),
       ); // Replace this with your video player widget
     } else {
       return const SizedBox();

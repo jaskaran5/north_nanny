@@ -80,6 +80,7 @@ class MessageList {
   dynamic fileLink;
   dynamic isChatDeleted;
   dynamic fileType;
+  dynamic thumbImage;
 
   MessageList(
       {this.id,
@@ -91,20 +92,21 @@ class MessageList {
       this.isFile,
       this.fileLink,
       this.isChatDeleted,
+      this.thumbImage,
       this.fileType});
 
   factory MessageList.fromJson(Map<String, dynamic> json) => MessageList(
-        id: json["id"],
-        toUserId: json["toUserId"],
-        fromUserId: json["fromUserId"],
-        message: json["message"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        toUserImage: json["toUserImage"],
-        isFile: json["isFile"],
-        fileLink: json["fileLink"],
-        isChatDeleted: json["isChatDeleted"],
-        fileType: json["fileType"],
-      );
+      id: json["id"],
+      toUserId: json["toUserId"],
+      fromUserId: json["fromUserId"],
+      message: json["message"],
+      date: json["date"] == null ? null : DateTime.parse(json["date"]),
+      toUserImage: json["toUserImage"],
+      isFile: json["isFile"],
+      fileLink: json["fileLink"],
+      isChatDeleted: json["isChatDeleted"],
+      fileType: json["fileType"],
+      thumbImage: json["thumbImage"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -116,6 +118,7 @@ class MessageList {
         "isFile": isFile,
         "fileLink": fileLink,
         "isChatDeleted": isChatDeleted,
-        "fileType": fileType
+        "fileType": fileType,
+        "thumbImage": thumbImage
       };
 }

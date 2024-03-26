@@ -93,7 +93,7 @@ class CustomRecentChatListTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      DateHelper.getDateTimeAgo(chatData!.dateTime?.toString()),
+                      DateHelper.getDateTimeAgo(chatData!.dateTime.toString()),
                       style: AppStyles.ubChatTimeColor12W400,
                     ),
                     Dimens.boxHeight8,

@@ -180,6 +180,8 @@ class ChatView extends StatelessWidget {
                                         return messageList.toUserId ==
                                                 controller.myUserId.value
                                             ? ReceiverTile(
+                                                thumbImage:
+                                                    messageList.thumbImage,
                                                 onTapOnPdf: () {
                                                   Get.to(PDFScreen(
                                                     path: messageList.fileLink,
@@ -206,6 +208,8 @@ class ChatView extends StatelessWidget {
                                                     messageList.message ?? '',
                                               )
                                             : SenderTile(
+                                                thumbImage:
+                                                    messageList.thumbImage,
                                                 onTapOnImage: () {
                                                   Get.to(() => FullViewImage(
                                                         url: messageList

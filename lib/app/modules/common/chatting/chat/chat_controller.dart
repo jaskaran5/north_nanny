@@ -40,6 +40,8 @@ class ChatController extends GetxController {
   RxString loginType = ''.obs;
   RxInt myUserId = 0.obs;
 
+  RxString thumbnailPath = ''.obs;
+
   RxList<MessageList> messageList = <MessageList>[].obs;
   // SingleChatData? singleChatData;
 
@@ -208,7 +210,9 @@ class ChatController extends GetxController {
       type,
       fileType ?? '',
       isFile!,
-      DateTime.now().toUtc().toIso8601String()
+      DateTime.now().toUtc().toIso8601String(),
+      thumbnailPath.value,
+      'png'
     ]);
     print('Message sent Received Data ========> ${result.toString()}');
   }
@@ -256,7 +260,7 @@ class ChatController extends GetxController {
     await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['docx', 'png', 'jpeg', 'jpg', 'pdf', 'mp4'],
-    ).then((value) {
+    ).then((value) async {
       if (value != null) {
         File imageFile = File(value.files.single.path ?? '');
         print("filePath-->${imageFile.path.split(".").last}");
@@ -265,7 +269,25 @@ class ChatController extends GetxController {
 
         log("file is video -->> ${imageFile.path.split('.').last}");
         if (imageFile.path.split('.').last == "mp4") {
-          extractThumbnail(imageFile.path);
+          thumbnailPath.value =
+              await extractThumbnailAsBase64(imageFile.path) ?? '';
+
+          update();
+
+          DateTime now = DateTime.now();
+          int milliseconds = now.millisecondsSinceEpoch;
+
+          sendMessage(
+            toUserId: int.parse(otherUserId.value),
+            message: base64Image,
+            type: 1,
+            fileType: imageFile.path.split(".").last,
+            isFile: true,
+          ).then((_) {
+            log("success");
+          }).catchError((error) {
+            log("error");
+          });
         }
 
         DateTime now = DateTime.now();
@@ -286,30 +308,36 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> extractThumbnail(String videoPath) async {
-    final uint8list = await VideoThumbnail.thumbnailData(
-      video: videoPath,
-      imageFormat: ImageFormat.JPEG,
-      maxWidth: 128,
-      quality: 25,
-    );
+  Future<String?> extractThumbnailAsBase64(String videoPath) async {
+    try {
+      final thumbnailPath = (await getTemporaryDirectory()).path;
+      final thumbnailFile = await VideoThumbnail.thumbnailFile(
+        video: videoPath,
+        thumbnailPath: thumbnailPath,
+        imageFormat: ImageFormat.PNG,
+        // maxHeight: 64,
+        quality: 75,
+      );
 
-    String imagePath = await saveImage(uint8list!);
-    print('Thumbnail saved at: $imagePath');
-  }
+      if (thumbnailFile != null) {
+        print('Thumbnail saved at: $thumbnailFile');
 
-  Future<String> saveImage(Uint8List imageData) async {
-    // Get the temporary directory using path_provider package
-    Directory tempDir = await getTemporaryDirectory();
+        // Read the thumbnail file as bytes
+        final bytes = await File(thumbnailFile).readAsBytes();
 
-    // Create a temporary file inside the temporary directory
-    File imageFile = await File('${tempDir.path}/thumbnail.jpg').create();
+        // Encode the bytes to Base64
+        final base64Data = base64Encode(bytes);
 
-    // Write the image data to the temporary file
-    await imageFile.writeAsBytes(imageData);
-
-    // Return the path of the saved image file
-    return imageFile.path;
+        // Return the Base64-encoded thumbnail data
+        return base64Data;
+      } else {
+        print('Failed to generate thumbnail.');
+        return null;
+      }
+    } catch (e) {
+      print('Error extracting thumbnail: $e');
+      return null;
+    }
   }
 
   // INVOKE SINGLE CHAT DETAILS
@@ -439,9 +467,6 @@ class ChatController extends GetxController {
         DateTime now = DateTime.now();
         int milliseconds = now.millisecondsSinceEpoch;
 
-        // var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
-        // bool isHorizontalImage = decodedImage.width > decodedImage.height;
-        // print("isHorizontalImage-->$isHorizontalImage");
         sendMessage(
           toUserId: int.parse(otherUserId.value),
           message: base64Image,
