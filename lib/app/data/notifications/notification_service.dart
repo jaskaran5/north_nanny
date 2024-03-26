@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-// class LocalNotificationService {
-//   //Todo: implements controller to singleTon
-//   static final LocalNotificationService _localNotificationService =
-//       LocalNotificationService._internal();
-=======
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
@@ -15,7 +9,6 @@ class LocalNotificationService {
   /// implements controller to singleTon
   static final LocalNotificationService _localNotificationService =
       LocalNotificationService._internal();
->>>>>>> 88c422b1012f3f840d03667a89320413171c5a05
 
   factory LocalNotificationService() {
     return _localNotificationService;
