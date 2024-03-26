@@ -104,6 +104,7 @@ class SenderTile extends StatelessWidget {
                   child: Icon(
                 Icons.slow_motion_video_outlined,
                 color: Colors.white,
+                size: 40,
               ))
             ],
           ),

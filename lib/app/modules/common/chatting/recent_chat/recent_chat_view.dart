@@ -56,20 +56,20 @@ class RecentChatView extends StatelessWidget {
                       Skeletonizer(
                         enabled: controller.isShimmerEnabled.value,
                         child: ListView.builder(
-                          itemCount: controller.recetChatList.length,
+                          itemCount: controller.recentChatList.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
                                 controller.redirectToChatScreen(
-                                    id: controller.recetChatList[index].userId!
+                                    id: controller.recentChatList[index].userId!
                                         .toString());
                               },
                               child: CustomRecentChatListTile(
-                                image:
-                                    controller.recetChatList[index].image ?? '',
-                                chatData: controller.recetChatList[index],
+                                image: controller.recentChatList[index].image ??
+                                    '',
+                                chatData: controller.recentChatList[index],
                               ),
                             );
                           },

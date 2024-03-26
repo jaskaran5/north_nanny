@@ -94,10 +94,24 @@ class ReceiverTile extends StatelessWidget {
       // Show video player widget here
       return GestureDetector(
         onTap: onTapOnVideo,
-        child: CustomCacheNetworkImage(
-          img: thumbImage!,
-          size: 100,
-          imageRadius: 10,
+        child: SizedBox(
+          height: 100,
+          width: 100,
+          child: Stack(
+            children: [
+              CustomCacheNetworkImage(
+                img: thumbImage!,
+                size: 100,
+                imageRadius: 10,
+              ),
+              const Center(
+                  child: Icon(
+                Icons.slow_motion_video_outlined,
+                color: Colors.white,
+                size: 40,
+              ))
+            ],
+          ),
         ),
       ); // Replace this with your video player widget
     } else {

@@ -145,21 +145,27 @@ class DateHelper {
   static String getDateTimeAgo(String dateTimeString) {
     log("dateTimeString:-->> $dateTimeString");
     DateTime date = DateTime.parse(dateTimeString);
+
+    var test = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date.toString(), true);
+
+    var localDate = test.toLocal();
     // var date = DateTime.parse(dateTimeString).toLocal();
 
     log("date:-->> $date");
     var now = DateTime.now().toLocal();
 
-    var difference = now.difference(date);
+    var difference = now.difference(localDate);
 
     if (difference.isNegative) {
       return ""; // Invalid date
     }
 
-    if (difference.inSeconds < 60) {
+    if ((difference.inSeconds < 60) && (difference.inSeconds != 0)) {
+      return "${difference.inSeconds} sec ago";
+    } else if (difference.inSeconds == 0) {
       return "now";
     } else if (difference.inMinutes < 60) {
-      return "${difference.inMinutes} minutes ago";
+      return "${difference.inMinutes} min ago";
     } else if (difference.inHours < 24) {
       return "${difference.inHours} hours ago";
     } else if (difference.inDays < 7) {

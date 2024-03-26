@@ -10,8 +10,8 @@ import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_mo
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat_image_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/pdf/pdf_viwer.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/video_player/video_player.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/pdf/pdf_viwer.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/video_player/video_player.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -149,13 +149,6 @@ class ChatView extends StatelessWidget {
                             replacement: const Center(),
                             child: Column(
                               children: [
-                                // SizedBox(
-                                //   height: 20,
-                                //   child: Text(
-                                //     "Today",
-                                //     style: AppStyles.ubPurpleLight12W400,
-                                //   ),
-                                // ),
                                 Expanded(
                                   child: Skeletonizer(
                                     enabled: controller.isSkeletonizer.value,
@@ -186,9 +179,6 @@ class ChatView extends StatelessWidget {
                                                   Get.to(PDFScreen(
                                                     path: messageList.fileLink,
                                                   ));
-                                                  // Get.to(PdfView(
-                                                  //     url: messageList
-                                                  //         .fileLink));
                                                 },
                                                 onTapOnVideo: () {
                                                   Get.to(VideoPlayerView(
@@ -220,9 +210,6 @@ class ChatView extends StatelessWidget {
                                                   Get.to(PDFScreen(
                                                     path: messageList.fileLink,
                                                   ));
-                                                  // Get.to(PdfView(
-                                                  //     url: messageList
-                                                  //         .fileLink));
                                                 },
                                                 onTapOnVideo: () {
                                                   Get.to(VideoPlayerView(

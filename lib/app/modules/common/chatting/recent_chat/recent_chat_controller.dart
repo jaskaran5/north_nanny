@@ -6,55 +6,54 @@ import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_v
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 
 class RecentChatController extends GetxController {
-  String tag = "Socket";
-
+  final String _logTag = "Socket";
   RxBool isShimmerEnabled = true.obs;
-  //
-  final _socketHelper = SignalRHelper();
-  // late HubConnection _hubConnection;
 
-  List<ChatList> recetChatList = [];
+  // Assuming SignalRHelper is adjusted to manage hubConnection initialization.
+  final SignalRHelper _socketHelper = SignalRHelper();
+
+  List<ChatList> recentChatList = [];
 
   @override
-  onInit() {
-    if (_socketHelper.isConnected == false) {
-      _socketHelper.reconnect();
-    }
-    _socketHelper.hubConnection = _socketHelper.getHubConnection();
+  void onInit() {
     super.onInit();
-    invokedRecentChat();
-
-    //   getRecetChatList();
+    _initializeSignalRConnection();
   }
 
-  redirectToChatScreen({required String id}) {
+  void redirectToChatScreen({required String id}) {
     Get.to(const ChatView(), arguments: id);
   }
 
-  Future<void> invokedRecentChat() async {
-    log("$tag chat list argumaents are:-->> invokedRecentChat");
-    // _socketHelper.hubConnection.off("MyChatList");
-    _socketHelper.hubConnection.on("MyChatList", (arguments) {
-      var data = arguments?[0] as Map<String, dynamic>;
-
-      var res = ChatListResponseModel.fromJson(data);
-
-      recetChatList = res.data?.chatList ?? [];
-      log("$tag chat list argumaents are:-->> ${arguments?[0]}");
-      log("$tag recetChatList:-->> $recetChatList");
-      print("$tag recetChatList:-->> $recetChatList");
-
-      isShimmerEnabled.value = false;
-      update();
-    });
-
-    var res = await _socketHelper.hubConnection.invoke('ChatList', args: []);
-
-    log("$tag ChatList : $res");
-    print("$tag ChatList : $res");
-
-    update();
+  Future<void> _initializeSignalRConnection() async {
+    if (!_socketHelper.isConnected) {
+      _socketHelper.reconnect();
+    }
+    _setupSignalRListeners();
+    invokeRecentChat();
   }
 
-  getChatList() {}
+  void _setupSignalRListeners() {
+    _socketHelper.hubConnection.on("MyChatList", (arguments) {
+      try {
+        log("argument recent chat:-->>$arguments");
+        var data = arguments?[0] as Map<String, dynamic>;
+        var response = ChatListResponseModel.fromJson(data);
+        recentChatList = response.data?.chatList ?? [];
+        isShimmerEnabled.value = false;
+        update();
+      } catch (e) {
+        log('$_logTag: Error processing chat list: $e');
+      }
+    });
+  }
+
+  Future<void> invokeRecentChat() async {
+    try {
+      var response =
+          await _socketHelper.hubConnection.invoke('ChatList', args: []);
+      log('$_logTag ChatList Response: $response');
+    } catch (e) {
+      log('$_logTag: Error invoking ChatList: $e');
+    }
+  }
 }

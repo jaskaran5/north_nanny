@@ -75,9 +75,15 @@ class ChatController extends GetxController {
           value.date?.year == providedDate.year) {
         if (value.date?.day == today.day) {
           log("both are equal");
+          log("both are equal:${value.date?.day}");
+          log("both are equal: ${today.day}");
+
           return "Today";
         } else if (value.date?.day == yesterday.day) {
           log("both are not equal");
+          log("both are equal:${value.date?.day}");
+          log("both are equal: ${today.day}");
+          log("both are equal: ${yesterday.day}");
 
           return "Yesterday";
         } else {
@@ -243,7 +249,7 @@ class ChatController extends GetxController {
 
         update();
 
-        Get.find<RecentChatController>().invokedRecentChat();
+        Get.find<RecentChatController>().invokeRecentChat();
       },
     );
   }
