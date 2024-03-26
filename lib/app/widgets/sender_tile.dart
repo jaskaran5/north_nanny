@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
-import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import 'custom_sender_chat_time_tile.dart';
 
@@ -30,18 +28,18 @@ class SenderTile extends StatelessWidget {
   final VoidCallback? onTapOnPdf;
   final VoidCallback? onTapOnVideo;
 
-  void generateThumbnailFromVideo() async {
-    final fileName = await VideoThumbnail.thumbnailFile(
-      video:
-          "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-      thumbnailPath: (await getTemporaryDirectory()).path,
-      imageFormat: ImageFormat.PNG,
-      maxHeight: 64,
-      quality: 75,
-    );
+  // void generateThumbnailFromVideo() async {
+  //   final fileName = await VideoThumbnail.thumbnailFile(
+  //     video:
+  //         "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+  //     thumbnailPath: (await getTemporaryDirectory()).path,
+  //     imageFormat: ImageFormat.PNG,
+  //     maxHeight: 64,
+  //     quality: 75,
+  //   );
 
-    log("url:--> $fileName");
-  }
+  //   log("url:--> $fileName");
+  // }
 
   @override
   Widget build(BuildContext context) {

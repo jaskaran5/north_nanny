@@ -34,5 +34,6 @@ class StringConstants {
 
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';
+  static const String fcmToken = 'fcmToken';
   static const String googleApiKey = 'AIzaSyDIS_1NhEtKDRcMY9pDdaH4H0Y0h-G09CU';
 }

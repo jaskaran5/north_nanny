@@ -1,158 +1,173 @@
+<<<<<<< HEAD
 // class LocalNotificationService {
 //   //Todo: implements controller to singleTon
 //   static final LocalNotificationService _localNotificationService =
 //       LocalNotificationService._internal();
+=======
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:typed_data';
 
-//   factory LocalNotificationService() {
-//     return _localNotificationService;
-//   }
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 
-//   LocalNotificationService._internal();
+class LocalNotificationService {
+  /// implements controller to singleTon
+  static final LocalNotificationService _localNotificationService =
+      LocalNotificationService._internal();
+>>>>>>> 88c422b1012f3f840d03667a89320413171c5a05
 
-//   //Todo: implements initialized plugin of localNotification
-//   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//       FlutterLocalNotificationsPlugin();
+  factory LocalNotificationService() {
+    return _localNotificationService;
+  }
 
-//   //Todo: created init function to initialized in main.dart
-//   init() async {
-//     const AndroidInitializationSettings initializationSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/ic_launcher');
+  LocalNotificationService._internal();
 
-//     final DarwinInitializationSettings initializationSettingsIOS =
-//         DarwinInitializationSettings(
-//       requestSoundPermission: true,
-//       requestBadgePermission: true,
-//       requestAlertPermission: true,
-//       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
-//     );
+  /// implements initialized plugin of localNotification
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-//     final InitializationSettings initializationSettings =
-//         InitializationSettings(
-//             android: initializationSettingsAndroid,
-//             iOS: initializationSettingsIOS,
-//             macOS: null);
+  /// created init function to initialized in main.dart
+  init() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-//     await flutterLocalNotificationsPlugin.initialize(
-//       initializationSettings,
-//       // onSelectNotification: selectNotification
-//       onDidReceiveNotificationResponse: (details) {
-//         log(details.toString());
-//       },
-//       onDidReceiveBackgroundNotificationResponse: (details) {
-//         log("background :$details");
-//       },
-//     );
+    final DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+    );
 
-//     /*final bool result =*/
-//     await flutterLocalNotificationsPlugin
-//         .resolvePlatformSpecificImplementation<
-//             IOSFlutterLocalNotificationsPlugin>()
-//         ?.requestPermissions(
-//           alert: true,
-//           badge: true,
-//           sound: true,
-//         );
-//   }
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+            macOS: null);
 
-//   //TODO: ON_SELECT_NOTIFICATION_[selectNotification]
-//   Future selectNotification(String? message) async {
-//     //Todo:Handle notification tapped logic here
-//     print('=========> Notification Clicked - ${message.toString()}');
-//     var data = jsonDecode(message!);
-//     if (data["type"] == "newMessage") {}
-//   }
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      // onSelectNotification: selectNotification
+      onDidReceiveNotificationResponse: (details) {
+        log(details.toString());
+      },
+      onDidReceiveBackgroundNotificationResponse: (details) {
+        log("background :$details");
+      },
+    );
 
-//   /// TODO: ON_RECEIVE_NOTIFICATION_[onDidReceiveLocalNotification]
-//   void onDidReceiveLocalNotification(
-//       int id, String? payload, String? payload1, String? payload2) async {
-//     //Todo:Handle notification logic here
-//   }
+    /*final bool result =*/
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
 
-//   showNotification({
-//     int id = 123,
-//     String? title,
-//     String? message,
-//     String? image,
-//     Map<String, dynamic>? payload,
-//   }) async {
-//     //Todo:Create channel specifics for android
-//     AndroidNotificationDetails androidPlatformChannelSpecifics =
-//         const AndroidNotificationDetails(
-//       'Cash_Crop',
-//       'Cash Crop',
-//       channelDescription: 'Cash Crop Channel',
-//       importance: Importance.max,
-//       priority: Priority.high,
-//       ticker: 'ticker',
-//     );
+  /// ON_SELECT_NOTIFICATION_[selectNotification]
+  Future selectNotification(String? message) async {
+    ///Handle notification tapped logic here
+    log('=========> Notification Clicked - ${message.toString()}');
+    var data = jsonDecode(message!);
+    if (data["type"] == "newMessage") {}
+  }
 
-//     //Todo:create platform channel specifics
-//     NotificationDetails platformChannelSpecifics = NotificationDetails(
-//       android: androidPlatformChannelSpecifics,
-//       //Todo: iOS: iOSPlatformChannelSpecifics,
-//     );
+  /// / ON_RECEIVE_NOTIFICATION_[onDidReceiveLocalNotification]
+  void onDidReceiveLocalNotification(
+      int id, String? payload, String? payload1, String? payload2) async {
+    ///Handle notification logic here
+  }
 
-//     //Todo:show notification
-//     await flutterLocalNotificationsPlugin.show(
-//         id, title, message, platformChannelSpecifics,
-//         payload: json.encode(payload));
-//   }
+  showNotification({
+    int id = 123,
+    String? title,
+    String? message,
+    String? image,
+    Map<String, dynamic>? payload,
+  }) async {
+    ///Create channel specifics for android
+    AndroidNotificationDetails androidPlatformChannelSpecifics =
+        const AndroidNotificationDetails(
+      'Cash_Crop',
+      'Cash Crop',
+      channelDescription: 'Cash Crop Channel',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
 
-//   Future<void> showBigPictureNotification({
-//     int id = 123,
-//     String? title,
-//     String? message,
-//     String? image,
-//     String? payload,
-//   }) async {
-//     final ByteArrayAndroidBitmap largeIcon = ByteArrayAndroidBitmap(
-//       await _getByteArrayFromUrl(
-//         image!,
-//       ),
-//     );
-//     final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
-//       await _getByteArrayFromUrl(
-//         image,
-//       ),
-//     );
+    ///create platform channel specifics
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
 
-//     final BigPictureStyleInformation bigPictureStyleInformation =
-//         BigPictureStyleInformation(
-//       bigPicture,
-//       largeIcon: largeIcon,
-//       // contentTitle: 'overridden <b>big</b> content title',
-//       htmlFormatContentTitle: true,
-//       // summaryText: 'summary <i>text</i>',
-//       htmlFormatSummaryText: true,
-//     );
+      /// iOS: iOSPlatformChannelSpecifics,
+    );
 
-//     final AndroidNotificationDetails androidPlatformChannelSpecifics =
-//         AndroidNotificationDetails('Boome_Influencer', 'Boome Influencer',
-//             channelDescription: 'Boome Influencer Channel',
-//             importance: Importance.max,
-//             priority: Priority.high,
-//             ticker: 'ticker',
-//             styleInformation: bigPictureStyleInformation);
+    ///show notification
+    await flutterLocalNotificationsPlugin.show(
+        id, title, message, platformChannelSpecifics,
+        payload: json.encode(payload));
+  }
 
-//     //Todo:Image for iOS
+  Future<void> showBigPictureNotification({
+    int id = 123,
+    String? title,
+    String? message,
+    String? image,
+    String? payload,
+  }) async {
+    final ByteArrayAndroidBitmap largeIcon = ByteArrayAndroidBitmap(
+      await _getByteArrayFromUrl(
+        image!,
+      ),
+    );
+    final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
+      await _getByteArrayFromUrl(
+        image,
+      ),
+    );
 
-//     //Todo:Create channel specifics for iOS
-//     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
-//         DarwinNotificationDetails();
+    final BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(
+      bigPicture,
+      largeIcon: largeIcon,
+      // contentTitle: 'overridden <b>big</b> content title',
+      htmlFormatContentTitle: true,
+      // summaryText: 'summary <i>text</i>',
+      htmlFormatSummaryText: true,
+    );
 
-//     //Todo:Create Notification detail
-//     final NotificationDetails platformChannelSpecifics = NotificationDetails(
-//         android: androidPlatformChannelSpecifics,
-//         iOS: iOSPlatformChannelSpecifics);
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('Boome_Influencer', 'Boome Influencer',
+            channelDescription: 'Boome Influencer Channel',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker',
+            styleInformation: bigPictureStyleInformation);
 
-//     //Todo:Show notification
-//     await flutterLocalNotificationsPlugin.show(
-//         id, title, message, platformChannelSpecifics);
-//   }
+    ///Image for iOS
 
-//   Future<Uint8List> _getByteArrayFromUrl(String url) async {
-//     //Todo:Convert image url to byte array
-//     final http.Response response = await http.get(Uri.parse(url));
-//     return response.bodyBytes;
-//   }
-// }
+    ///Create channel specifics for iOS
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails();
+
+    ///Create Notification detail
+    final NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    ///Show notification
+    await flutterLocalNotificationsPlugin.show(
+        id, title, message, platformChannelSpecifics);
+  }
+
+  Future<Uint8List> _getByteArrayFromUrl(String url) async {
+    ///Convert image url to byte array
+    final http.Response response = await http.get(Uri.parse(url));
+    return response.bodyBytes;
+  }
+}
