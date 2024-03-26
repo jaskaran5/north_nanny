@@ -22,6 +22,8 @@ class ApiUrls {
   static const String changePassword = "api/User/ChangePassword";
   static const String reviewList = "api/User/ReviewList";
   static const String postRatingAndReview = "api/UserDashBoard/RatingAndReview";
+  static const String readNotification = "api/User/ReadNotification";
+  static const String notificationList = "api/User/NotificationList";
 
   ///
   ///
