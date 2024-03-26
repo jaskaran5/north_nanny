@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -123,9 +124,8 @@ class SignupViewController extends GetxController {
       Storage.removeValue(StringConstants.token);
     }
 
-    //  String? deviceToken = await FirebaseMessaging.instance.getToken();
-    // final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
-    // log("fcm token : $deviceToken");
+    final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
+    log("fcm token : $deviceToken");
 
     try {
       if (!(await Utils.hasNetwork())) {
@@ -135,7 +135,7 @@ class SignupViewController extends GetxController {
       var body = {
         "email": emailTextEditingController.text.trim(),
         "password": passwordTextEditingController.text.trim(),
-        "deviceToken": "deviceToken",
+        "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": type,
         // "latitude": Storage.getValue(StringConstants.latitude) ?? 30.7046 ??

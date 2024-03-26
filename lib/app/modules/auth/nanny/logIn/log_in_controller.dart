@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
@@ -114,8 +115,9 @@ class LogInController extends GetxController {
       Storage.removeValue(StringConstants.token);
     }
     try {
-      // final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
-      // log("fcm token : $deviceToken");
+      final deviceToken = await FirebaseMessaging.instance.getToken() ?? "";
+      log("fcm token : $deviceToken");
+
       if (!(await Utils.hasNetwork())) {
         return;
       }
@@ -123,7 +125,7 @@ class LogInController extends GetxController {
       var body = {
         "email": emailTextEditingController.text.trim(),
         "password": passwordTextEditingController.text.trim(),
-        "deviceToken": "deviceToken",
+        "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": userType,
         "latitude":
@@ -140,9 +142,9 @@ class LogInController extends GetxController {
           /******* NANNY ----------->>>>>>>> */
           var res = LoginResponseDataModel.fromJson(value);
           if (res.response == AppConstants.apiResponseSuccess) {
-            Storage.saveValue(StringConstants.userId, res.data!.user!.id);
+            Storage.saveValue(StringConstants.userId, res.data?.user!.id);
 
-            Storage.saveValue(StringConstants.token, res.data!.token);
+            Storage.saveValue(StringConstants.token, res.data?.token);
             if (res.data?.user?.isProfileCreated == false) {
               RouteManagement.goToCreateNannyProfile();
             } else if (res.data?.user?.isServicesCreated == false) {
