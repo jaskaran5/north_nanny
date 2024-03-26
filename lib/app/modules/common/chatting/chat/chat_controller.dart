@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +22,8 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ChatController extends GetxController {
   TextEditingController chatTextController = TextEditingController();
@@ -246,6 +249,7 @@ class ChatController extends GetxController {
     listenSingleChatDetails();
     listenTyping();
     stopTypingListen();
+    listenBlockUnblockUser();
   }
 
   Future<void> pickDocumentFile() async {
@@ -258,6 +262,11 @@ class ChatController extends GetxController {
         print("filePath-->${imageFile.path.split(".").last}");
         List<int> imageBytes = imageFile.readAsBytesSync();
         String base64Image = base64Encode(imageBytes);
+
+        log("file is video -->> ${imageFile.path.split('.').last}");
+        if (imageFile.path.split('.').last == "mp4") {
+          extractThumbnail(imageFile.path);
+        }
 
         DateTime now = DateTime.now();
         int milliseconds = now.millisecondsSinceEpoch;
@@ -275,6 +284,32 @@ class ChatController extends GetxController {
         });
       }
     });
+  }
+
+  Future<void> extractThumbnail(String videoPath) async {
+    final uint8list = await VideoThumbnail.thumbnailData(
+      video: videoPath,
+      imageFormat: ImageFormat.JPEG,
+      maxWidth: 128,
+      quality: 25,
+    );
+
+    String imagePath = await saveImage(uint8list!);
+    print('Thumbnail saved at: $imagePath');
+  }
+
+  Future<String> saveImage(Uint8List imageData) async {
+    // Get the temporary directory using path_provider package
+    Directory tempDir = await getTemporaryDirectory();
+
+    // Create a temporary file inside the temporary directory
+    File imageFile = await File('${tempDir.path}/thumbnail.jpg').create();
+
+    // Write the image data to the temporary file
+    await imageFile.writeAsBytes(imageData);
+
+    // Return the path of the saved image file
+    return imageFile.path;
   }
 
   // INVOKE SINGLE CHAT DETAILS
@@ -420,5 +455,37 @@ class ChatController extends GetxController {
         // genderMatchController.scrollToBottom();
       }
     });
+  }
+
+  //** COMPRESS VIDEO */
+
+  // Future<MediaInfo?> compressVideo(path) async {
+  //   MediaInfo? mediaInfo = await VideoCompress.compressVideo(
+  //     path,
+  //     quality: VideoQuality.DefaultQuality,
+  //     deleteOrigin: false, // It's false by default
+  //   );
+  //   return mediaInfo;
+  // }
+
+  //** block / unblock user */
+
+  blockUnblockUser({isBlock}) {
+    _socketHelper.hubConnection
+        .invoke("BlockUser", args: [int.parse(otherUserId.value), isBlock]);
+
+    log("blockUnblockUser listen called");
+  }
+
+  //** LISTEN block / unblock user */
+  listenBlockUnblockUser() {
+    _socketHelper.hubConnection.on(
+      "BlockUserResponse",
+      (arguments) {
+        log("block unblock response data:$arguments");
+      },
+    );
+
+    log("blockUnblockUser listen called");
   }
 }

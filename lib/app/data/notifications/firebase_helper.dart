@@ -18,83 +18,80 @@ class FCMService {
 
   static late FirebaseMessaging messaging;
 
-  /// used to initialize the firebase notifications.
   static Future<void> init() async {
-    log("Firebase helper ");
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
-    messaging = FirebaseMessaging.instance;
+    try {
+      log("Initializing Firebase...");
+      await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform);
+      messaging = FirebaseMessaging.instance;
+      log("Firebase initialized.");
 
-    await permissionHandler().then((authorized) async {
-      log("IS AUTHORIZED:  $authorized");
-      if (authorized) {
-        await setupMessaging();
-      }
-    });
+      await permissionHandler();
+      await setupMessaging();
+    } catch (e) {
+      log("Error initializing Firebase: $e");
+    }
   }
 
   static Future<bool> permissionHandler() async {
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+    try {
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
 
-    log('User granted permission: ${settings.authorizationStatus}');
-    return settings.authorizationStatus == AuthorizationStatus.authorized;
+      log('User granted permission: ${settings.authorizationStatus}');
+      return settings.authorizationStatus == AuthorizationStatus.authorized;
+    } catch (e) {
+      log("Error handling permissions: $e");
+      return false;
+    }
   }
 
   static Future<void> setupMessaging() async {
-    await messaging.getToken().then((token) async {
-      log("fcm token is :--->> $token");
-
-      Storage.saveValue(StringConstants.fcmToken, token);
-
-      // final session = locator<Session>();
-      // logMe("firebase-token: $token");
-      // session.setFcmToken = token!;
-    });
-    // await incomingNotificationHandling();
+    try {
+      String? token = await messaging.getToken();
+      log("FCM token: $token");
+      if (token != null) {
+        Storage.saveValue(StringConstants.fcmToken, token);
+      }
+    } catch (e) {
+      log("Error setting up messaging: $e");
+    }
   }
 
   Future<String> getFCMToken() async {
-    String token = '';
-    await messaging.getToken().then((value) {
-      token = value!;
-
-      /// SAVING_FIREBASE_TOKEN_TO_LOCAL_STORAGE
-      // AppLocalDb().setFirebaseToken(token);
-    });
-    log('============FCM Token ---> $token');
-    return token;
-  }
-
-  ///TODO
-  showForGroundMessage() {
-    FirebaseMessaging.onMessage.listen((message) {
-      log(message.notification!.body.toString());
-      log(message.notification!.title.toString());
-      _handleMessageClick(message);
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      log("notification click in forground");
-      _handleMessageClick(message);
-    });
-  }
-
-  //// handle click
-  _handleMessageClick(RemoteMessage message) {
-    ///Handle all message notification click
-    log("====>newMessage${message.data.toString()}");
-    if (message.data["type"] == "subcriptionSuccess") {
-      log("====>newMessage${message.data.toString()}");
+    try {
+      String token = await messaging.getToken() ?? '';
+      log('FCM Token: $token');
+      return token;
+    } catch (e) {
+      log("Error getting FCM token: $e");
+      return '';
     }
-    // print('=========> Notification Clicked - ${message.toString()}');
+  }
 
-    //// handle notification click event here
+  void showForegroundMessage() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log("Foreground message received: ${message.data}");
+      _handleMessageClick(message);
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log("Notification clicked in foreground");
+      _handleMessageClick(message);
+    });
+  }
+
+  void _handleMessageClick(RemoteMessage message) {
+    log("Handling message click: ${message.data}");
+    if (message.data["type"] == "subscriptionSuccess") {
+      log("Subscription success message received");
+    }
+    // Handle notification click event here
   }
 }

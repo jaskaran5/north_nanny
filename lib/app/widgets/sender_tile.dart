@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../res/theme/dimens.dart';
 import 'custom_sender_chat_time_tile.dart';
@@ -19,6 +16,7 @@ class SenderTile extends StatelessWidget {
     required this.isFile,
     this.onTapOnPdf,
     this.onTapOnVideo,
+    this.onTapOnImage,
   });
   final String? title;
   final String? time;
@@ -27,6 +25,7 @@ class SenderTile extends StatelessWidget {
   final String? fileType;
   final VoidCallback? onTapOnPdf;
   final VoidCallback? onTapOnVideo;
+  final VoidCallback? onTapOnImage;
 
   // void generateThumbnailFromVideo() async {
   //   final fileName = await VideoThumbnail.thumbnailFile(
@@ -47,41 +46,18 @@ class SenderTile extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 20.0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: Get.width / 1.6),
-                child: isFile ? _buildFileWidget() : _buildTextWidget()
-                // ? CustomCacheNetworkImage(
-                //     img: fileLink!, size: 100, imageRadius: 10)
-                // : Container(
-                //     margin: const EdgeInsets.only(bottom: 10),
-                //     // margin: const EdgeInsets.only(bottom: 38, left: 50),
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 18,
-                //       vertical: 15,
-                //     ),
-                //     decoration: BoxDecoration(
-                //       color: AppColors.trackerBackgroundColor,
-                //       borderRadius: BorderRadius.only(
-                //         topLeft: Radius.circular(Dimens.fifteen),
-                //         topRight: Radius.circular(Dimens.fifteen),
-                //         bottomLeft: Radius.circular(Dimens.fifteen),
-                //       ),
-                //     ),
-                //     child: Text(
-                //       title!,
-                //       style: const TextStyle(color: Colors.white),
-                //       textAlign: TextAlign.left,
-                //     ),
-                //   ),
-
-                ),
+                child: isFile ? _buildFileWidget() : _buildTextWidget()),
             CustomSenderChatTimeTile(
               text: Utility.formatTimeTo12Hour(time),
-            )
+            ),
           ],
         ),
       ),
@@ -90,10 +66,13 @@ class SenderTile extends StatelessWidget {
 
   Widget _buildFileWidget() {
     if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
-      return CustomCacheNetworkImage(
-        img: fileLink!,
-        size: 100,
-        imageRadius: 10,
+      return GestureDetector(
+        onTap: onTapOnImage,
+        child: CustomCacheNetworkImage(
+          img: fileLink!,
+          size: 100,
+          imageRadius: 10,
+        ),
       );
     } else if ((fileType == "pdf") || (fileType == "docx")) {
       return GestureDetector(
@@ -118,7 +97,7 @@ class SenderTile extends StatelessWidget {
 
   Widget _buildTextWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10, right: 50),
+      margin: const EdgeInsets.only(bottom: 10, right: 0),
       padding: const EdgeInsets.symmetric(
         horizontal: 18,
         vertical: 15,

@@ -85,9 +85,9 @@ class LocalNotificationService {
     ///Create channel specifics for android
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
-      'Cash_Crop',
-      'Cash Crop',
-      channelDescription: 'Cash Crop Channel',
+      'Northshore nanny',
+      'Northshore nanny',
+      channelDescription: 'Northshore nanny Channel',
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
@@ -135,8 +135,8 @@ class LocalNotificationService {
     );
 
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('Boome_Influencer', 'Boome Influencer',
-            channelDescription: 'Boome Influencer Channel',
+        AndroidNotificationDetails('Northshore nanny', 'Northshore nanny',
+            channelDescription: 'Nothshore nanny',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker',

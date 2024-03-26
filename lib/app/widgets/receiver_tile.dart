@@ -14,6 +14,8 @@ class ReceiverTile extends StatelessWidget {
     this.fileType,
     this.onTapOnPdf,
     required this.isFile,
+    this.onTapOnVideo,
+    this.onTapOnImage,
   });
   final String? title;
   final String? time;
@@ -21,6 +23,8 @@ class ReceiverTile extends StatelessWidget {
   final String? fileType;
   final bool isFile;
   final VoidCallback? onTapOnPdf;
+  final VoidCallback? onTapOnVideo;
+  final VoidCallback? onTapOnImage;
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +71,13 @@ class ReceiverTile extends StatelessWidget {
 
   Widget _buildFileWidget() {
     if ((fileType == "jpg") || (fileType == "jpeg")) {
-      return CustomCacheNetworkImage(
-        img: fileLink!,
-        size: 100,
-        imageRadius: 10,
+      return GestureDetector(
+        onTap: onTapOnImage,
+        child: CustomCacheNetworkImage(
+          img: fileLink!,
+          size: 100,
+          imageRadius: 10,
+        ),
       );
     } else if ((fileType == "pdf") || (fileType == "docx")) {
       return GestureDetector(
@@ -82,9 +89,10 @@ class ReceiverTile extends StatelessWidget {
       );
     } else if (fileType == "mp4") {
       // Show video player widget here
-      return const SizedBox(
-          child: Icon(
-              Icons.video_call)); // Replace this with your video player widget
+      return GestureDetector(
+        onTap: onTapOnVideo,
+        child: const SizedBox(child: Icon(Icons.video_call)),
+      ); // Replace this with your video player widget
     } else {
       return const SizedBox();
     }

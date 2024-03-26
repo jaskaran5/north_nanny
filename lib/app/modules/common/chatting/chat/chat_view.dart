@@ -8,6 +8,7 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat_image_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/pdf/pdf_viwer.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/video_player/video_player.dart';
@@ -125,10 +126,10 @@ class ChatView extends StatelessWidget {
                                       child: const Text("Clear Chat")),
                                   PopupMenuItem(
                                       onTap: () {
-                                        controller.clearChat();
+                                        // controller.blockUnblockUser(isBlock: controller.getUserData.is);
                                       },
                                       child: const Text(
-                                        "Delete Chat",
+                                        "Block",
                                         style: TextStyle(color: Colors.red),
                                       )),
                                 ];
@@ -180,9 +181,17 @@ class ChatView extends StatelessWidget {
                                                 controller.myUserId.value
                                             ? ReceiverTile(
                                                 onTapOnPdf: () {
-                                                  Get.to(PdfView(
-                                                      url: messageList
-                                                          .fileLink));
+                                                  Get.to(PDFScreen(
+                                                    path: messageList.fileLink,
+                                                  ));
+                                                  // Get.to(PdfView(
+                                                  //     url: messageList
+                                                  //         .fileLink));
+                                                },
+                                                onTapOnVideo: () {
+                                                  Get.to(VideoPlayerView(
+                                                    url: messageList.fileLink,
+                                                  ));
                                                 },
                                                 fileType: messageList.fileType,
                                                 isFile:
@@ -197,6 +206,12 @@ class ChatView extends StatelessWidget {
                                                     messageList.message ?? '',
                                               )
                                             : SenderTile(
+                                                onTapOnImage: () {
+                                                  Get.to(() => FullViewImage(
+                                                        url: messageList
+                                                            .fileLink,
+                                                      ));
+                                                },
                                                 onTapOnPdf: () {
                                                   Get.to(PDFScreen(
                                                     path: messageList.fileLink,
@@ -226,9 +241,8 @@ class ChatView extends StatelessWidget {
                                               .convertStringToDateFormatDDMMYY(
                                                   item2.date
                                                       .toString())), // optional
-                                      useStickyGroupSeparators:
-                                          true, // optional
-                                      floatingHeader: true, // optional
+                                      useStickyGroupSeparators: true,
+                                      floatingHeader: true,
                                       // order: GroupedListOrder.DESC, // optional
                                     ),
                                   ),

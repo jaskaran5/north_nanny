@@ -42,6 +42,8 @@ class RecentChatController extends GetxController {
       recetChatList = res.data?.chatList ?? [];
       log("$tag chat list argumaents are:-->> ${arguments?[0]}");
       log("$tag recetChatList:-->> $recetChatList");
+      print("$tag recetChatList:-->> $recetChatList");
+
       isShimmerEnabled.value = false;
       update();
     });
@@ -49,6 +51,8 @@ class RecentChatController extends GetxController {
     var res = await _socketHelper.hubConnection.invoke('ChatList', args: []);
 
     log("$tag ChatList : $res");
+    print("$tag ChatList : $res");
+
     update();
   }
 
