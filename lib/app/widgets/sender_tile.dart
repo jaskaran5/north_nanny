@@ -1,10 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../res/theme/dimens.dart';
 import 'custom_sender_chat_time_tile.dart';

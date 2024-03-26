@@ -1,12 +1,14 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:northshore_nanny_flutter/app/data/notifications/firebase_helper.dart';
 import 'package:northshore_nanny_flutter/app/utils/initializers.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
+
+import 'app/data/notifications/notification_services.dart';
 
 void main() async {
   await _setup();
@@ -17,8 +19,11 @@ void main() async {
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  /// used to initialize the firebase on app.
+  await Firebase.initializeApp();
+
   /// used to initialize the  firebase messaging.
-  FCMService.init();
+  await NotificationService().init();
 
   /// used to initialize the local storage.
   await GetStorage.init();
