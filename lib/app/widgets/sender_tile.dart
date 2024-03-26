@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
@@ -16,6 +20,7 @@ class SenderTile extends StatelessWidget {
     this.fileType,
     required this.isFile,
     this.onTapOnPdf,
+    this.onTapOnVideo,
   });
   final String? title;
   final String? time;
@@ -23,9 +28,24 @@ class SenderTile extends StatelessWidget {
   final bool isFile;
   final String? fileType;
   final VoidCallback? onTapOnPdf;
+  final VoidCallback? onTapOnVideo;
+
+  void generateThumbnailFromVideo() async {
+    final fileName = await VideoThumbnail.thumbnailFile(
+      video:
+          "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+      thumbnailPath: (await getTemporaryDirectory()).path,
+      imageFormat: ImageFormat.PNG,
+      maxHeight: 64,
+      quality: 75,
+    );
+
+    log("url:--> $fileName");
+  }
 
   @override
   Widget build(BuildContext context) {
+    // generateThumbnailFromVideo();
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
@@ -71,7 +91,7 @@ class SenderTile extends StatelessWidget {
   }
 
   Widget _buildFileWidget() {
-    if ((fileType == "jpg") || (fileType == "jpeg")) {
+    if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
       return CustomCacheNetworkImage(
         img: fileLink!,
         size: 100,
@@ -87,8 +107,11 @@ class SenderTile extends StatelessWidget {
       );
     } else if (fileType == "mp4") {
       // Show video player widget here
-      return const SizedBox(
-        child: Icon(Icons.video_call),
+      return GestureDetector(
+        onTap: onTapOnVideo,
+        child: const SizedBox(
+          child: Icon(Icons.video_call),
+        ),
       ); // Replace this with your video player widget
     } else {
       return const SizedBox();

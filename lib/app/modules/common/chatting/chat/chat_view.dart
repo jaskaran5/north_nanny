@@ -9,6 +9,8 @@ import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/pdf/pdf_viwer.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/video_player/video_player.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -157,6 +159,7 @@ class ChatView extends StatelessWidget {
                                   child: Skeletonizer(
                                     enabled: controller.isSkeletonizer.value,
                                     child: GroupedListView<MessageList, String>(
+                                      sort: false,
                                       elements: controller.messageList,
                                       shrinkWrap: true,
                                       reverse: true,
@@ -195,9 +198,17 @@ class ChatView extends StatelessWidget {
                                               )
                                             : SenderTile(
                                                 onTapOnPdf: () {
-                                                  Get.to(PdfView(
-                                                      url: messageList
-                                                          .fileLink));
+                                                  Get.to(PDFScreen(
+                                                    path: messageList.fileLink,
+                                                  ));
+                                                  // Get.to(PdfView(
+                                                  //     url: messageList
+                                                  //         .fileLink));
+                                                },
+                                                onTapOnVideo: () {
+                                                  Get.to(VideoPlayerView(
+                                                    url: messageList.fileLink,
+                                                  ));
                                                 },
                                                 fileType: messageList.fileType,
                                                 isFile:
@@ -218,7 +229,7 @@ class ChatView extends StatelessWidget {
                                       useStickyGroupSeparators:
                                           true, // optional
                                       floatingHeader: true, // optional
-                                      order: GroupedListOrder.ASC, // optional
+                                      // order: GroupedListOrder.DESC, // optional
                                     ),
                                   ),
                                 ),

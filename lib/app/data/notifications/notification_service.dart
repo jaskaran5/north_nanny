@@ -1,10 +1,3 @@
-// import 'dart:convert';
-// import 'dart:developer';
-// import 'dart:typed_data';
-
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:http/http.dart' as http;
-
 // class LocalNotificationService {
 //   //Todo: implements controller to singleTon
 //   static final LocalNotificationService _localNotificationService =

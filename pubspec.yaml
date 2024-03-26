@@ -71,6 +71,8 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   grouped_list: ^5.1.2
   video_player: ^2.8.3
+  video_thumbnail: ^0.5.3
+  path_provider: ^2.1.2
 
   # insta_login: ^0.0.2
 #  share_plus: 7.2.1

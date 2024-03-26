@@ -191,7 +191,7 @@ class ChatController extends GetxController {
       type!,
       fileType,
       isFile,
-      DateTime.now().toUtc()
+      DateTime.now().toUtc().toIso8601String()
     ].toString()}');
     // String Date =
     //     DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().toUtc());
@@ -258,6 +258,7 @@ class ChatController extends GetxController {
         print("filePath-->${imageFile.path.split(".").last}");
         List<int> imageBytes = imageFile.readAsBytesSync();
         String base64Image = base64Encode(imageBytes);
+
         DateTime now = DateTime.now();
         int milliseconds = now.millisecondsSinceEpoch;
 
@@ -295,7 +296,9 @@ class ChatController extends GetxController {
 
         var res = SingleChatDataResponseModel.fromJson(data);
 
-        messageList.value = (res.data?.messageList ?? []).reversed.toList();
+        messageList.value = res.data?.messageList ?? [];
+        messageList.sort((a, b) => b.date!.compareTo(a.date!));
+        messageList.refresh();
         isSkeletonizer.value = false;
 
         update();

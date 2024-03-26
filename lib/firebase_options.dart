@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAXzXwI0yPU4zM8RkO0pZ5NejekDmjzt9k',
-    appId: '1:833242348271:android:27e017734af5a5a90e791a',
-    messagingSenderId: '833242348271',
-    projectId: 'northshore-nanny',
-    storageBucket: 'northshore-nanny.appspot.com',
+    apiKey: 'AIzaSyBplYL8sELbZMbyXSRgd8hNdZqMhglU7EA',
+    appId: '1:992680560870:android:fb103c391b017e67e61327',
+    messagingSenderId: '992680560870',
+    projectId: 'north-shore-nanny',
+    storageBucket: 'north-shore-nanny.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDeL1zITjpWhnTVc_VDiA6ldH88oztK_v8',
-    appId: '1:833242348271:ios:b67b92e2c00d824c0e791a',
-    messagingSenderId: '833242348271',
-    projectId: 'northshore-nanny',
-    storageBucket: 'northshore-nanny.appspot.com',
+    apiKey: 'AIzaSyD1Pou2dj9nZRm0yn8gejKJz-0RVhTmqvQ',
+    appId: '1:992680560870:ios:82d042340fe0f5cce61327',
+    messagingSenderId: '992680560870',
+    projectId: 'north-shore-nanny',
+    storageBucket: 'north-shore-nanny.appspot.com',
     iosBundleId: 'com.mygoodhorse.com.au.mgh',
   );
 }
