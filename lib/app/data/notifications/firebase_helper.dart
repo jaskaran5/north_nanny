@@ -1,132 +1,138 @@
-// import 'dart:developer';
+import 'dart:developer';
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-// import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
-// import 'package:northshore_nanny_flutter/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// import '../../res/constants/string_contants.dart';
+import '../../../firebase_options.dart';
 
-// class FCMService {
-//   static final FCMService _fcmService = FCMService._internal();
+class FCMService {
+  static final FCMService _fcmService = FCMService._internal();
 
-//   factory FCMService() {
-//     return _fcmService;
-//   }
+  factory FCMService() {
+    return _fcmService;
+  }
 
-//   FCMService._internal();
-//   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//       FlutterLocalNotificationsPlugin();
+  /// it is used to make the instance of localNotification.
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-//   static late FirebaseMessaging messaging;
+  FCMService._internal();
 
-//   static Future<void> init() async {
-//     try {
-//       log("Initializing Firebase...");
-//       await Firebase.initializeApp(
-//           options: DefaultFirebaseOptions.currentPlatform);
-//       messaging = FirebaseMessaging.instance;
-//       log("Firebase initialized.");
+  static late FirebaseMessaging messaging;
 
-//       await permissionHandler();
-//       await setupMessaging();
-//     } catch (e) {
-//       log("Error initializing Firebase: $e");
-//     }
-//   }
+  Future<void> init() async {
+    log("Firebase helper");
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    messaging = FirebaseMessaging.instance;
+    const String iconNotification = '@drawable/ic_notification';
 
-//   static Future<bool> permissionHandler() async {
-//     try {
-//       NotificationSettings settings = await messaging.requestPermission(
-//         alert: true,
-//         announcement: false,
-//         badge: true,
-//         carPlay: false,
-//         criticalAlert: false,
-//         provisional: false,
-//         sound: true,
-//       );
+    const initializationSettingsAndroid =
+        AndroidInitializationSettings(iconNotification);
 
-//       log('User granted permission: ${settings.authorizationStatus}');
-//       return settings.authorizationStatus == AuthorizationStatus.authorized;
-//     } catch (e) {
-//       log("Error handling permissions: $e");
-//       return false;
-//     }
-//   }
+    const darwinInitializationSettings = DarwinInitializationSettings(
+        requestSoundPermission: true,
+        requestAlertPermission: true,
+        requestBadgePermission: true);
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: darwinInitializationSettings);
 
-//   static Future<void> setupMessaging() async {
-//     try {
-//       String? token = await messaging.getToken();
-//       log("FCM token: $token");
-//       // if (token != null) {
-//       //   Storage.saveValue(StringConstants.fcmToken, token);
-//       // }
-//     } catch (e) {
-//       log("Error setting up messaging: $e");
-//     }
-//   }
+    /// used to check the notification.
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: selectNotification);
 
-//   Future<String> getFCMToken() async {
-//     try {
-//       String token = await messaging.getToken() ?? '';
-//       log('FCM Token: $token');
-//       return token;
-//     } catch (e) {
-//       log("Error getting FCM token: $e");
-//       return '';
-//     }
-//   }
+    await permissionHandler().then((authorized) async {
+      log("IS AUTHORIZED:  $authorized");
+      if (authorized) {
+        setupMessaging();
+      }
+    });
+  }
 
-//   showForegroundMessage() {
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       log("Foreground message received: ${message.data}");
+  static Future<bool> permissionHandler() async {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-//       NotificationEntity notificationEntity =
-//           NotificationEntity.fromJson(message.data);
-//       debugPrint(message.data.toString());
-//       notificationEntity.title = notificationEntity.title ?? "NorthShoreNanny";
-//       notificationEntity.body = notificationEntity.body;
-//       showNotifications(notificationEntity);
+    log('User granted permission: ${settings.authorizationStatus}');
+    return settings.authorizationStatus == AuthorizationStatus.authorized;
+  }
 
-//       _handleMessageClick(message);
-//     });
-//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       log("Notification clicked in foreground");
-//       _handleMessageClick(message);
-//     });
-//   }
+  Future<void> setupMessaging() async {
+    await messaging.getToken().then((token) async {
+      log("fcm token is :--->> $token");
+      await showForGroundMessage();
+    });
+  }
 
-//   void _handleMessageClick(RemoteMessage message) {
-//     log("Handling message click: ${message.data}");
-//     if (message.data["type"] == "subscriptionSuccess") {
-//       log("Subscription success message received");
-//     }
-//     // Handle notification click event here
-//   }
+  Future<String> getFCMToken() async {
+    String token = '';
+    await messaging.getToken().then((value) {
+      token = value ?? '';
+    });
+    log('============FCM Token ---> $token');
+    return token;
+  }
 
-//   Future<void> showNotifications(NotificationEntity notificationEntity) async {
-//     log("message noptificaop:-->> ${notificationEntity.title}");
-//     // await flutterLocalNotificationsPlugin.show(
-//     //     notificationEntity.,
-//     //     notificationEntity.title,
-//     //     notificationEntity.body,
-//     //     NotificationDetails(
-//     //       android: AndroidNotificationDetails(
-//     //         "asdf",
-//     //         "asdf",
-//     //         channelDescription: "channel.description",
-//     //         icon: "@mipmap/ic_launcher",
-//     //         channelShowBadge: true,
-//     //         playSound: true,
-//     //         priority: Priority.high,
-//     //         importance: Importance.high,
-//     //         styleInformation: BigTextStyleInformation(notificationEntity.body!),
-//     //       ),
-//     //     ),
-//     //     payload: convertNotificationEntityToString(notificationEntity));
-//   }
-// }
+  ///TODO
+  showForGroundMessage() {
+    FirebaseMessaging.onMessage.listen((message) {
+      log("----------------------->>>>>>>.message ------>>>>${message.notification!.body}");
+      log('body: ${message.notification?.body.toString()}');
+      log('title:${message.notification?.title.toString()}');
+      final data = message.data;
+      log('notification data -------->>>>>>>> $data');
+      _showNotification(message);
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      log("notification click in foreground");
+      handleMessageClick(message);
+    });
+  }
+
+  ///Todo: handle click
+  handleMessageClick(RemoteMessage message) {
+    ///Handle all message notification click
+    log("====>newMessage${message.data.toString()}");
+    if (message.data["type"] == "subcriptionSuccess") {
+      log("====>newMessage${message.data.toString()}");
+    }
+    // log('=========> Notification Clicked - ${message.toString()}');
+
+    ///TODo: handle notification click event here
+  }
+
+  /// used to show the notifications.
+  Future<void> _showNotification(RemoteMessage message) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      message.senderId ?? '',
+      'NorthShoreNanny',
+      channelDescription: 'nanny channel description',
+      icon: "@drawable/ic_notification",
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+
+    /// this code os used to show the local notification in app.
+    await flutterLocalNotificationsPlugin.show(152, message.notification?.title,
+        message.notification?.body ?? '', notificationDetails,
+        payload: message.data.toString());
+  }
+
+  selectNotification(NotificationResponse notificationResponse) {
+    log('Notification Tapped:$notificationResponse');
+  }
+}

@@ -64,7 +64,7 @@ class LocalNotificationService {
   //TODO: ON_SELECT_NOTIFICATION_[selectNotification]
   Future selectNotification(String? message) async {
     //Todo:Handle notification tapped logic here
-    print('=========> Notification Clicked - ${message.toString()}');
+    log('=========> Notification Clicked - ${message.toString()}');
     var data = jsonDecode(message!);
     if (data["type"] == "newMessage") {}
   }
