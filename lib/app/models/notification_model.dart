@@ -7,13 +7,13 @@ String notificationEntityModelToJson(NotificationEntityModel data) =>
     json.encode(data.toJson());
 
 class NotificationEntityModel {
-  String? datetime;
-  int? bookingStatus;
-  int? notificationType;
-  int? notificationId;
-  String? body;
-  String? title;
-  int? bookingId;
+  dynamic datetime;
+  dynamic bookingStatus;
+  dynamic notificationType;
+  dynamic notificationId;
+  dynamic body;
+  dynamic title;
+  dynamic bookingId;
 
   NotificationEntityModel({
     this.datetime,

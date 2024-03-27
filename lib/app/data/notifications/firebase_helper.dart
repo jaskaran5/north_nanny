@@ -99,7 +99,7 @@ class FCMService {
     return token;
   }
 
-  ///TODO
+  ///used to show the notification.
   showForGroundMessage() {
     FirebaseMessaging.onMessage.listen((message) {
       log("----------------------->>>>>>>.message ------>>>>${message.notification!.body}");
@@ -151,32 +151,37 @@ class FCMService {
 
     /// this code os used to show the local notification in app.
     await flutterLocalNotificationsPlugin.show(
-        response.notificationId ?? 0,
-        message.notification?.title,
-        message.notification?.body ?? '',
-        notificationDetails,
-        payload: message.data.toString());
+      int.parse(response.notificationId.toString()),
+      message.notification?.title,
+      message.notification?.body ?? '',
+      notificationDetails,
+      payload: message.data.toString(),
+    );
   }
 
   /// used to on tap notification
-  selectNotification(NotificationResponse notificationResponse) {
+  selectNotification(NotificationResponse notificationResponse) async {
     log('Notification Tapped payload :${notificationResponse.payload}');
+    Map<String, dynamic> notificationJsonResponse =
+        jsonDecode(notificationResponse.payload ?? '');
+    log('payload to map json :$notificationJsonResponse');
 
     /// this is used to convert notification
     var response = NotificationEntityModel.fromJson(
-        jsonDecode(notificationResponse.payload ?? ''));
+      notificationJsonResponse,
+    );
+    log('Notification Tap response: $response');
+    var logInType = await Storage.getValue(StringConstants.loginType);
 
-    var logInType = Storage.getValue(StringConstants.loginType);
-
-    log('Notification LogIn Type :$logInType  and  response $response');
+    log('Notification Tap LogIn Type :$logInType  and  response $response');
 
     if (!Get.isRegistered<NotificationController>()) {
       NotificationBinding().dependencies();
     }
 
     /// api used to read the notification
-    Get.find<NotificationController>()
-        .postNotificationRead(notificationId: response.notificationId ?? 0);
+    Get.find<NotificationController>().postNotificationRead(
+        notificationId: int.parse(response.notificationId));
 
     if (logInType == StringConstants.nanny) {
       if (!Get.isRegistered<NannyBookingDetailController>()) {
@@ -187,11 +192,11 @@ class FCMService {
 
       /// used to  get the booking detail.
       nannyBookingDetailsController.getBookingDetailOfCustomer(
-          bookingId: response.bookingId ?? 0);
+          bookingId: int.parse(response.bookingId));
 
       /// used to  store  the booking Status.
       nannyBookingDetailsController.typeOfBooking(
-          bookingStatus: response.bookingStatus ?? 0);
+          bookingStatus: int.parse(response.bookingStatus));
 
       /// going to route.
       RouteManagement.goToNannyBookingView();
@@ -202,11 +207,11 @@ class FCMService {
 
       /// used to  get the booking detail.
       Get.find<BookingDetailController>()
-          .getBookingDataById(bookingId: response.bookingId ?? 0);
+          .getBookingDataById(bookingId: int.parse(response.bookingId));
 
       /// used to  store  the booking Status.
       Get.find<BookingDetailController>()
-          .typeOfBooking(bookingStatus: response.bookingStatus ?? 0);
+          .typeOfBooking(bookingStatus: int.parse(response.bookingStatus));
 
       /// going to route.
       RouteManagement.goToCustomerBookingDetailView();
