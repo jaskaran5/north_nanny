@@ -86,6 +86,8 @@ class ChatController extends GetxController {
           log("both are equal: ${today.day}");
           log("both are equal: ${yesterday.day}");
 
+          //
+
           return "Yesterday";
         } else {
           log("asdfads-->${value.date}");
