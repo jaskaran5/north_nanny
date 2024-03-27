@@ -11,14 +11,12 @@ class CustomNotificationTile extends StatelessWidget {
     required this.notificationSubHeading,
     required this.notificationTime,
     required this.isNotificationRead,
-    required this.containerColor,
   });
 
   final String notificationHeading;
   final String notificationSubHeading;
   final String notificationTime;
   final bool isNotificationRead;
-  final Color containerColor;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -26,7 +24,9 @@ class CustomNotificationTile extends StatelessWidget {
         margin: Dimens.edgeInsetsB16,
         height: Dimens.hundredFortyFive,
         decoration: BoxDecoration(
-          color: containerColor,
+          color: isNotificationRead == false
+              ? AppColors.notificationBackgroundColor
+              : AppColors.primaryColor,
           borderRadius: BorderRadius.circular(Dimens.fourteen),
           border: Border.all(
             color: AppColors.d8E6F6BorderColor,
