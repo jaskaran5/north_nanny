@@ -18,20 +18,16 @@
 	<string>NorthShore Nanny</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<string>0</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -44,6 +40,13 @@
 	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>

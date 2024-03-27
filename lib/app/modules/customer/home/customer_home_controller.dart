@@ -30,6 +30,7 @@ class CustomerHomeController extends GetxController {
 
   String? selectedGender = '';
   final _socketHelper = SignalRHelper();
+  RxBool nannyListLoading = true.obs;
 
   double distanceLowerValue = Dimens.zero;
   double distanceHigherValue = 11;
@@ -283,6 +284,8 @@ class CustomerHomeController extends GetxController {
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
+
+          nannyListLoading.value = false;
           homeNannyList.value = res.data ?? [];
           isNannyDataLoading.value = false;
           update();

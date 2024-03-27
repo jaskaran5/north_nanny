@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBplYL8sELbZMbyXSRgd8hNdZqMhglU7EA',
-    appId: '1:992680560870:android:fb103c391b017e67e61327',
+    appId: '1:992680560870:android:055f6e5c0e19cab5e61327',
     messagingSenderId: '992680560870',
     projectId: 'north-shore-nanny',
     storageBucket: 'north-shore-nanny.appspot.com',
@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD1Pou2dj9nZRm0yn8gejKJz-0RVhTmqvQ',
-    appId: '1:992680560870:ios:82d042340fe0f5cce61327',
+    appId: '1:992680560870:ios:6ac01b29b84e3adae61327',
     messagingSenderId: '992680560870',
     projectId: 'north-shore-nanny',
     storageBucket: 'north-shore-nanny.appspot.com',
-    iosBundleId: 'com.mygoodhorse.com.au.mgh',
+    iosBundleId: 'com.northshorenanny.northshorenanny',
   );
 }

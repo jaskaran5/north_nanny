@@ -1,4 +1,4 @@
-package com.northshore_nanny.northshore_nanny_flutter
+package com.northshorenanny.northshorenanny
 
 import io.flutter.embedding.android.FlutterActivity
 

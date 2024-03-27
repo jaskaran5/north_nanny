@@ -271,12 +271,6 @@ class CustomerHomeView extends StatelessWidget {
                                       totalReviews: 21,
                                       totalReviewsRating: 4.5,
                                       reviewsList: [],
-                                      //   'Michael Johnson',
-                                      //   'Giorgio Chiellini',
-                                      //   'Michael Johnson',
-                                      //   'Alex Morgan',
-                                      //   'Giorgio Chiellini'
-                                      // ],
                                     ),
                                   );
                                 },
