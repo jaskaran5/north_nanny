@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/get_notification_list_model.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 
 import '../../../data/api/api_helper.dart';
@@ -11,6 +13,9 @@ import '../../../utils/custom_toast.dart';
 class NotificationController extends GetxController {
   /// api wrapper object.
   final ApiHelper _apiHelper = ApiHelper.to;
+
+  /// this instance used to store the list of notifications.
+  NotificationListModel? notificationListModel;
 
   /// used to get notification list
   getNotificationList() async {
@@ -26,6 +31,13 @@ class NotificationController extends GetxController {
       )
           .futureValue((value) {
         printInfo(info: "Get Notification List  response value $value");
+        var response = NotificationListModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          notificationListModel = response;
+          update();
+        } else {
+          toast(msg: response.message, isError: true);
+        }
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
@@ -33,7 +45,7 @@ class NotificationController extends GetxController {
     }
   }
 
-  /// used to get notification list
+  /// used to read the  notification list.
   postNotificationRead({required int notificationId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
@@ -54,11 +66,9 @@ class NotificationController extends GetxController {
     }
   }
 
-
   @override
   void onInit() {
     super.onInit();
     getNotificationList();
   }
-
 }

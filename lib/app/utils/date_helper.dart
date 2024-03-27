@@ -9,7 +9,7 @@ class DateHelper {
   static final _timeFormat12 = DateFormat("hh:mm a", _locale);
   static final _timeFormat24 = DateFormat("HH:mm:ss", _locale);
   static final timeFormat24Post = DateFormat("HH:mm", _locale);
-  static final _dateFormatLog = DateFormat("dd MMM yyyy", _locale);
+  static final dateFormatLog = DateFormat("dd MMM yyyy", _locale);
   static final _dateFormatSince = DateFormat("MMM dd, yyyy", _locale);
   static final _dateFormatWithTime = DateFormat("MMM dd, yyyy h:mm a", _locale);
   static final _dateFormatMedication = DateFormat("MM/dd/yyyy", _locale);
