@@ -61,13 +61,12 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
               : const CircularProgressIndicator(),
         ),
         floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FloatingActionButton(
               onPressed: _rewind,
               child: const Icon(Icons.fast_rewind),
             ),
-            const SizedBox(width: 20), // Provide some space between the buttons
+            // Provide some space between the buttons
             FloatingActionButton(
               onPressed: () {
                 setState(() {
@@ -82,13 +81,14 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
                 _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
               ),
             ),
-            const SizedBox(width: 20), // Provide some space between the buttons
+
             FloatingActionButton(
               onPressed: _fastForward,
               child: const Icon(Icons.fast_forward),
             ),
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       ),
     );
   }

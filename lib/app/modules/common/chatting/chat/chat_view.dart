@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat_image_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/pdf/pdf_viwer.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/video_player/video_player.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
@@ -21,7 +20,6 @@ import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -57,7 +55,7 @@ class ChatView extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Get.back(result: "true");
                                   },
                                   icon: SvgPicture.asset(
                                     Assets.iconsBackArrow,
@@ -126,7 +124,7 @@ class ChatView extends StatelessWidget {
                                       child: const Text("Clear Chat")),
                                   PopupMenuItem(
                                       onTap: () {
-                                        // controller.blockUnblockUser(isBlock: controller.getUserData.is);
+                                        controller.blockUnblockUser();
                                       },
                                       child: const Text(
                                         "Block",
@@ -150,92 +148,84 @@ class ChatView extends StatelessWidget {
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Skeletonizer(
-                                    enabled: controller.isSkeletonizer.value,
-                                    child: GroupedListView<MessageList, String>(
-                                      sort: false,
-                                      elements: controller.messageList,
-                                      shrinkWrap: true,
-                                      reverse: true,
-                                      groupHeaderBuilder: (element) {
-                                        return Text(
-                                            controller.isMessageDateEqualToday(
-                                                element.date.toString()));
-                                      },
-                                      groupBy: (message) => Utility
-                                          .convertStringToDateFormatDDMMYY(
-                                              message.date.toString()),
-                                      groupSeparatorBuilder:
-                                          (String groupByValue) => (Text(Utility
-                                              .convertStringToDateFormatDDMMYY(
-                                                  groupByValue))),
-                                      itemBuilder: (context, messageList) {
-                                        return messageList.toUserId ==
-                                                controller.myUserId.value
-                                            ? ReceiverTile(
-                                                thumbImage:
-                                                    messageList.thumbImage,
-                                                onTapOnPdf: () {
-                                                  Get.to(PDFScreen(
-                                                    path: messageList.fileLink,
-                                                  ));
-                                                },
-                                                onTapOnVideo: () {
-                                                  Get.to(VideoPlayerView(
-                                                    url: messageList.fileLink,
-                                                  ));
-                                                },
-                                                fileType: messageList.fileType,
-                                                isFile:
-                                                    messageList.isFile ?? false,
-                                                fileLink: messageList
-                                                        .fileLink!.isEmpty
-                                                    ? null
-                                                    : messageList.fileLink,
-                                                time:
-                                                    messageList.date.toString(),
-                                                title:
-                                                    messageList.message ?? '',
-                                              )
-                                            : SenderTile(
-                                                thumbImage:
-                                                    messageList.thumbImage,
-                                                onTapOnImage: () {
-                                                  Get.to(() => FullViewImage(
-                                                        url: messageList
-                                                            .fileLink,
-                                                      ));
-                                                },
-                                                onTapOnPdf: () {
-                                                  Get.to(PDFScreen(
-                                                    path: messageList.fileLink,
-                                                  ));
-                                                },
-                                                onTapOnVideo: () {
-                                                  Get.to(VideoPlayerView(
-                                                    url: messageList.fileLink,
-                                                  ));
-                                                },
-                                                fileType: messageList.fileType,
-                                                isFile:
-                                                    messageList.isFile ?? false,
-                                                fileLink: messageList.fileLink,
-                                                time:
-                                                    messageList.date.toString(),
-                                                title:
-                                                    messageList.message ?? "");
-                                      },
-                                      itemComparator: (item1, item2) => Utility
-                                              .convertStringToDateFormatDDMMYY(
-                                                  item1.date.toString())
-                                          .compareTo(Utility
-                                              .convertStringToDateFormatDDMMYY(
-                                                  item2.date
-                                                      .toString())), // optional
-                                      useStickyGroupSeparators: true,
-                                      floatingHeader: true,
-                                      // order: GroupedListOrder.DESC, // optional
-                                    ),
+                                  child: GroupedListView<MessageList, String>(
+                                    sort: false,
+                                    elements: controller.messageList,
+                                    shrinkWrap: true,
+                                    reverse: true,
+                                    groupHeaderBuilder: (element) {
+                                      return Text(
+                                          controller.isMessageDateEqualToday(
+                                              element.date.toString()));
+                                    },
+                                    groupBy: (message) =>
+                                        Utility.convertStringToDateFormatDDMMYY(
+                                            message.date.toString()),
+                                    groupSeparatorBuilder:
+                                        (String groupByValue) => (Text(Utility
+                                            .convertStringToDateFormatDDMMYY(
+                                                groupByValue))),
+                                    itemBuilder: (context, messageList) {
+                                      return messageList.toUserId ==
+                                              controller.myUserId.value
+                                          ? ReceiverTile(
+                                              thumbImage:
+                                                  messageList.thumbImage,
+                                              onTapOnPdf: () {
+                                                Get.to(PDFScreen(
+                                                  path: messageList.fileLink,
+                                                ));
+                                              },
+                                              onTapOnVideo: () {
+                                                Get.to(VideoPlayerView(
+                                                  url: messageList.fileLink,
+                                                ));
+                                              },
+                                              fileType: messageList.fileType,
+                                              isFile:
+                                                  messageList.isFile ?? false,
+                                              fileLink:
+                                                  messageList.fileLink!.isEmpty
+                                                      ? null
+                                                      : messageList.fileLink,
+                                              time: messageList.date.toString(),
+                                              title: messageList.message ?? '',
+                                            )
+                                          : SenderTile(
+                                              thumbImage:
+                                                  messageList.thumbImage,
+                                              onTapOnImage: () {
+                                                Get.to(() => FullViewImage(
+                                                      url: messageList.fileLink,
+                                                    ));
+                                              },
+                                              onTapOnPdf: () {
+                                                Get.to(PDFScreen(
+                                                  path: messageList.fileLink,
+                                                ));
+                                              },
+                                              onTapOnVideo: () {
+                                                Get.to(VideoPlayerView(
+                                                  url: messageList.fileLink,
+                                                ));
+                                              },
+                                              fileType: messageList.fileType,
+                                              isFile:
+                                                  messageList.isFile ?? false,
+                                              fileLink: messageList.fileLink,
+                                              time: messageList.date.toString(),
+                                              title: messageList.message ?? "");
+                                    },
+                                    itemComparator: (item1, item2) => Utility
+                                            .convertStringToDateFormatDDMMYY(
+                                                item1.date.toString())
+                                        .compareTo(Utility
+                                            .convertStringToDateFormatDDMMYY(
+                                                item2.date
+                                                    .toString())), // optional
+                                    useStickyGroupSeparators: true,
+                                    floatingHeader: true,
+                                    // order: GroupedListOrder.DESC, // optional
                                   ),
                                 ),
                               ],
@@ -322,6 +312,8 @@ class ChatView extends StatelessWidget {
                                         type: 1);
                                     ();
                                     controller.chatTextController.text = '';
+                                    controller.updateSendMessageVisibility(
+                                        isVisible: false);
                                   }
                                 },
                                 child: SvgPicture.asset(

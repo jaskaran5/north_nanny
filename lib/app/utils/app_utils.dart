@@ -115,15 +115,14 @@ class Utils {
 
     Get.dialog(
       barrierDismissible: false,
-      Center(
-          child: Lottie.asset(Assets.animationNannyAni,
-              width: Get.width / 2, height: Get.width / 2, fit: BoxFit.cover)
+      const Center(
+          // name: 'loadingDialog',
+          child:
+              //  Lottie.asset(Assets.animationNannyAni,
+              //     width: Get.width / 2, height: Get.width / 2, fit: BoxFit.cover)
 
-          // SizedBox(height: 50, width: 50, child: CircularProgressIndicator()
-
-          // )
-          ),
-      name: 'loadingDialog',
+              SizedBox(
+                  height: 50, width: 50, child: CircularProgressIndicator())),
     );
   }
 

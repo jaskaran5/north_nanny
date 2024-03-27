@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/block_unblock_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
@@ -39,6 +39,7 @@ class ChatController extends GetxController {
 
   RxString loginType = ''.obs;
   RxInt myUserId = 0.obs;
+  RxBool isBlock = false.obs;
 
   RxString thumbnailPath = ''.obs;
 
@@ -228,24 +229,30 @@ class ChatController extends GetxController {
     final result = _socketHelper.hubConnection.on(
       'ReciveMessage',
       (arguments) {
+        log("receive message called-------------------");
         log("arguments :-->> $arguments");
 
         var data = arguments?[0] as Map<String, dynamic>;
 
         var res = SendMessageResponseModel.fromJson(data);
-        messageList.insert(
-            0,
-            MessageList(
-                date: res.data?.time ?? DateTime.now(),
-                fileLink: res.data?.fileLink ?? '',
-                fromUserId: myUserId.value,
-                id: res.data?.chatId,
-                isChatDeleted: '',
-                isFile: res.data?.isFile,
-                fileType: res.data?.fileType,
-                message: res.data?.messageDescription,
-                toUserId: res.data?.toUserId,
-                toUserImage: res.data?.toUserImage));
+
+        if ((res.data?.toUserId == myUserId.value) ||
+            (res.data?.toUserId == myUserId.value)) {
+          messageList.insert(
+              0,
+              MessageList(
+                  date: res.data?.time ?? DateTime.now(),
+                  fileLink: res.data?.fileLink ?? '',
+                  fromUserId: myUserId.value,
+                  id: res.data?.chatId,
+                  isChatDeleted: '',
+                  isFile: res.data?.isFile,
+                  fileType: res.data?.fileType,
+                  message: res.data?.messageDescription,
+                  toUserId: res.data?.toUserId,
+                  thumbImage: res.data?.thumbImage,
+                  toUserImage: res.data?.toUserImage));
+        }
 
         update();
 
@@ -364,6 +371,11 @@ class ChatController extends GetxController {
         var data = arguments?[0] as Map<String, dynamic>;
 
         var res = SingleChatDataResponseModel.fromJson(data);
+
+        log("single chat messgae listen");
+
+        // log("is bliocj-->> ${res.isBlock}");
+        // isBlock.value = res.isBlock;
 
         messageList.value = res.data?.messageList ?? [];
         messageList.sort((a, b) => b.date!.compareTo(a.date!));
@@ -501,9 +513,9 @@ class ChatController extends GetxController {
 
   //** block / unblock user */
 
-  blockUnblockUser({isBlock}) {
-    _socketHelper.hubConnection
-        .invoke("BlockUser", args: [int.parse(otherUserId.value), isBlock]);
+  blockUnblockUser() {
+    _socketHelper.hubConnection.invoke("BlockUser",
+        args: [int.parse(otherUserId.value), isBlock.value]);
 
     log("blockUnblockUser listen called");
   }
@@ -514,6 +526,16 @@ class ChatController extends GetxController {
       "BlockUserResponse",
       (arguments) {
         log("block unblock response data:$arguments");
+
+        log("arguments :-->> $arguments");
+
+        var data = arguments?[0] as Map<String, dynamic>;
+
+        var res = BlockUnBlockResponseModel.fromJson(data);
+        log("arguments :-->> ${res.data?.isBlock}");
+
+        isBlock.value = res.data?.isBlock ?? false;
+        update();
       },
     );
 

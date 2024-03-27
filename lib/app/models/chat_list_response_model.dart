@@ -68,6 +68,7 @@ class ChatList {
   int? unreadMessageCount;
   String? fullName;
   bool? isLastMessageImage;
+  dynamic fileType;
 
   ChatList({
     this.userId,
@@ -81,6 +82,7 @@ class ChatList {
     this.unreadMessageCount,
     this.fullName,
     this.isLastMessageImage,
+    this.fileType,
   });
 
   factory ChatList.fromJson(Map<String, dynamic> json) => ChatList(
@@ -95,6 +97,7 @@ class ChatList {
         isBlock: json["isBlock"],
         unreadMessageCount: json["unreadMessageCount"],
         fullName: json["fullName"],
+        fileType: json["fileType"],
         isLastMessageImage: json["isLastMessageImage"],
       );
 
@@ -110,5 +113,6 @@ class ChatList {
         "unreadMessageCount": unreadMessageCount,
         "fullName": fullName,
         "isLastMessageImage": isLastMessageImage,
+        "fileType": fileType
       };
 }

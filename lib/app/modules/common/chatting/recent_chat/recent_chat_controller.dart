@@ -9,8 +9,11 @@ class RecentChatController extends GetxController {
   final String _logTag = "Socket";
   RxBool isShimmerEnabled = true.obs;
 
-  // Assuming SignalRHelper is adjusted to manage hubConnection initialization.
   final SignalRHelper _socketHelper = SignalRHelper();
+  // late HubConnection _hubConnection;
+
+  // Assuming SignalRHelper is adjusted to manage hubConnection initialization.
+  // final SignalRHelper _socketHelper = SignalRHelper();
 
   List<ChatList> recentChatList = [];
 
@@ -20,8 +23,16 @@ class RecentChatController extends GetxController {
     _initializeSignalRConnection();
   }
 
-  void redirectToChatScreen({required String id}) {
-    Get.to(const ChatView(), arguments: id);
+  void redirectToChatScreen({required String id}) async {
+    dynamic result = await Get.to(const ChatView(), arguments: id);
+
+    log("back result:-->> $result");
+
+    if (result == 'true') {
+      _setupSignalRListeners();
+      invokeRecentChat();
+      update();
+    }
   }
 
   Future<void> _initializeSignalRConnection() async {

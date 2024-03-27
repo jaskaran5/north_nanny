@@ -23,6 +23,7 @@ class SignalRHelper {
   Future<void> init() async {
     var token = await Storage.getValue(StringConstants.token);
     log("access token :--->> $token");
+    print("access token :--->> $token");
 
     try {
       if (token != null && token.isNotEmpty) {

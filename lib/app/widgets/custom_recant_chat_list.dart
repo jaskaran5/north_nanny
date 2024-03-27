@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
@@ -70,21 +72,27 @@ class CustomRecentChatListTile extends StatelessWidget {
                       width: Get.width * .5,
                       child: Text(
                         chatData?.fullName ?? '',
-                        style: AppStyles.ubBlack14W700,
+                        style: chatData?.unreadMessageCount == 0
+                            ? AppStyles.ubBlack14W700
+                            : AppStyles.ubNavyBlue14W700,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Dimens.boxHeight8,
-                    SizedBox(
-                      width: Get.width * .5,
-                      child: Text(
-                        chatData?.lastMessage ?? '',
-                        style: AppStyles.ubGrey12W500,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
+                    chatData!.isLastMessageImage!
+                        ? _buildFileWidget(fileType: chatData?.fileType ?? '')
+                        : SizedBox(
+                            width: Get.width * .5,
+                            child: Text(
+                              chatData?.lastMessage ?? '',
+                              style: chatData?.unreadMessageCount == 0
+                                  ? AppStyles.ubGrey12W500
+                                  : AppStyles.ubBlack12W600,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                   ],
                 ),
                 const Spacer(),
@@ -108,5 +116,25 @@ class CustomRecentChatListTile extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Widget _buildFileWidget({fileType}) {
+    log("file type in recent chat is:--$fileType");
+    if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
+      return const Icon(Icons.image);
+    } else if ((fileType == "pdf") || (fileType == "docx")) {
+      return const Icon(
+        Icons.picture_as_pdf,
+      );
+    } else if (fileType == "mp4") {
+      // Show video player widget here
+      return const Icon(
+        Icons.slow_motion_video_outlined,
+        color: Colors.black,
+        size: 25,
+      ); // Replace this with your video player widget
+    } else {
+      return const SizedBox();
+    }
   }
 }
