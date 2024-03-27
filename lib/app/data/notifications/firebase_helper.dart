@@ -111,6 +111,7 @@ class FCMService {
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       log("notification click in foreground");
+      _showNotification(message);
     });
   }
 
