@@ -31,6 +31,7 @@ class NotificationView extends StatelessWidget {
             title: TranslationKeys.notifications.tr,
             titleAlignment: TextAlign.start,
           ),
+          //
           body: Padding(
             padding: Dimens.edgeInsets16,
             child: SingleChildScrollView(
