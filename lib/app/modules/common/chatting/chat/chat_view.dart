@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat_image_view.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/pdf_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/pdf/pdf_viwer.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/video_player/video_player.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';

@@ -53,4 +53,12 @@ class NotificationController extends GetxController {
       printError(info: "post read Notification API ISSUE $s");
     }
   }
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    getNotificationList();
+  }
+
 }
