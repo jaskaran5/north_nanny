@@ -44,6 +44,7 @@ class ApiUrls {
       "api/UserDashBoard/AddOrRemoveFavoriteNanny";
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";
   static const String bookingDetailsById = "api/UserDashBoard/BookingDetail";
+  static const String getNotificationCount = "api/User/NotificationCount";
   static const String myFavoriteNannyList =
       "api/UserDashBoard/MyFavoriteNannyList";
   static const String getAllNannyBookingDates =

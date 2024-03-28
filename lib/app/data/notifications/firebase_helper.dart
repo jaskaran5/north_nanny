@@ -14,7 +14,6 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_hom
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
 
 import '../../../firebase_options.dart';
-
 import '../../res/constants/string_contants.dart';
 
 class FCMService {
@@ -95,6 +94,8 @@ class FCMService {
   showForGroundMessage() {
     /// used to show background messages.
     FirebaseMessaging.onBackgroundMessage(showBackgroundNotification);
+
+    /// used to listen the notification.
     FirebaseMessaging.onMessage.listen((message) {
       log("----------------------->>>>>>>.message ------>>>>${message.notification!.body}");
       log('body: ${message.notification?.body.toString()}');
@@ -120,12 +121,9 @@ class FCMService {
       importance: Importance.max,
       priority: Priority.max,
     );
+
     DarwinNotificationDetails drawinNotificationDetail =
-        const DarwinNotificationDetails(
-      presentBanner: true,
-      presentAlert: true,
-      interruptionLevel: InterruptionLevel.timeSensitive,
-    );
+        const DarwinNotificationDetails();
 
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: drawinNotificationDetail);
@@ -133,8 +131,16 @@ class FCMService {
     /// this is used to convert notification
     var response = NotificationEntityModel.fromJson(message.data);
 
+    log('notification response data :$response');
+
     var logInType = Storage.getValue(StringConstants.loginType);
     log('Notification Login Type------------> $logInType');
+
+    if (!Get.isRegistered<DashboardBottomController>()) {
+      DashboardBottomBinding().dependencies();
+    }
+    Get.find<DashboardBottomController>().getNotificationCount();
+
     if (logInType == StringConstants.customer) {
       if (!Get.isRegistered<CustomerHomeController>()) {
         CustomerHomeBinding().dependencies();
@@ -151,12 +157,13 @@ class FCMService {
 
     /// this code os used to show the local notification in app.
     await flutterLocalNotificationsPlugin.show(
-      int.parse(response.notificationId.toString()),
+      int.parse(response.notificationId ?? '0'),
       message.notification?.title,
       message.notification?.body ?? '',
       notificationDetails,
       payload: message.data.toString(),
     );
+    log('notification showing');
   }
 
   /// used to on tap notification handle
@@ -256,11 +263,10 @@ class FCMService {
       bookingId: keyValueMap['bookingid'] ?? "",
     );
   }
+}
 
-  /// used to show background messages.
-  @pragma('vm:entity-point')
-  Future<void> showBackgroundNotification(RemoteMessage message) async {
-    log('Background notification :$message');
-    showNotification(message);
-  }
+/// used to show background messages.
+Future<void> showBackgroundNotification(RemoteMessage message) async {
+  log('Background notification :$message');
+  FCMService().showNotification(message);
 }

@@ -39,8 +39,10 @@ class DashboardBottomView extends StatelessWidget {
                           : controller.bottomTabList[index].bottomSvg,
                     ),
                     if (controller.bottomTabList[index].bottomTabName
-                            .toLowerCase() ==
-                        '')
+                                .toLowerCase() ==
+                            '' &&
+                        controller.notificationCountModel?.data != null &&
+                        controller.notificationCountModel?.data != 0)
                       Positioned(
                         top: Dimens.two,
                         right: Dimens.zero,
@@ -62,7 +64,7 @@ class DashboardBottomView extends StatelessWidget {
                             ],
                           ),
                           child: AppText(
-                            text: '2',
+                            text: controller.notificationCountModel?.data,
                             style: AppStyles.ubWhite10700,
                             maxLines: 1,
                           ),
