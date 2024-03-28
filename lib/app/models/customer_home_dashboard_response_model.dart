@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'nanny_profile_model.dart';
+
 CustomerHomeDashboardResponseModel customerHomeDashboardResponseModelFromJson(
         String str) =>
     CustomerHomeDashboardResponseModel.fromJson(json.decode(str));
@@ -58,7 +60,7 @@ class NannyDataList {
   dynamic longitude;
   dynamic reviewCount;
   dynamic rating;
-  List<dynamic>? ratingList;
+  List<RatingList>? ratingList;
 
   NannyDataList({
     this.id,
@@ -95,7 +97,8 @@ class NannyDataList {
         rating: json["rating"] ?? '',
         ratingList: json["ratingList"] == null
             ? []
-            : List<dynamic>.from(json["ratingList"]!.map((x) => x)),
+            : List<RatingList>.from(
+                json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,6 +118,6 @@ class NannyDataList {
         "rating": rating,
         "ratingList": ratingList == null
             ? []
-            : List<dynamic>.from(ratingList!.map((x) => x)),
+            : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
       };
 }

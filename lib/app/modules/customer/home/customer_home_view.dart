@@ -361,10 +361,10 @@ class CustomerHomeView extends StatelessWidget {
                                 },
                                 onTapRating: () {
                                   Utility.openBottomSheet(
-                                    const CustomReviewBottomSheet(
-                                      totalReviews: 21,
-                                      totalReviewsRating: 4.5,
-                                      reviewsList: [],
+                                     CustomReviewBottomSheet(
+                                      totalReviews:  controller.homeNannyList[index].reviewCount,
+                                      totalReviewsRating: controller.homeNannyList[index].rating,
+                                      reviewsList:controller.homeNannyList[index].ratingList ?? [],
                                       // [
                                       //   'Michael Johnson',
                                       //   'Giorgio Chiellini',
