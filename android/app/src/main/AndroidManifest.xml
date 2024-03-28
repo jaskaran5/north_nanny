@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="NorthShore Nanny"
-        android:name="${applicationName}"
+        android:name="com.northshorenanny.northshorenanny"
         android:icon="@mipmap/ic_launcher">
 
 
