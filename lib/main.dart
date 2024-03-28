@@ -19,11 +19,11 @@ void main() async {
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// used to initialize the  firebase messaging.
-  await FCMService().init();
-
   /// used to initialize the local storage.
   await GetStorage.init();
+
+  /// used to initialize the  firebase messaging.
+  await FCMService().init();
 }
 
 class MyApp extends StatefulWidget {

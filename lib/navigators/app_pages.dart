@@ -18,6 +18,8 @@ import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/das
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/favorite_view/favorite_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/favorite_view/favorite_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/rating_review/rating_review_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/change_password_view.dart/change_password.dart';
@@ -418,5 +420,13 @@ class AppPages {
       transition: Transition.leftToRight,
     ),
 
+    /** --- REDIRECT TO ------ Notification View  -------  */
+    GetPage<NotificationView>(
+      name: Routes.notificationView,
+      transitionDuration: transitionDuration,
+      page: NotificationView.new,
+      binding: NotificationBinding(),
+      transition: Transition.leftToRight,
+    ),
   ];
 }

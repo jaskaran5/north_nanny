@@ -17,6 +17,9 @@ class NotificationController extends GetxController {
   /// this instance used to store the list of notifications.
   NotificationListModel? notificationListModel;
 
+  /// used to hide the notification no data found variable.
+  bool? isNotificationLoading = true;
+
   /// used to get notification list
   getNotificationList() async {
     try {
@@ -34,13 +37,16 @@ class NotificationController extends GetxController {
         var response = NotificationListModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           notificationListModel = response;
+          isNotificationLoading = false;
           update();
         } else {
+          isNotificationLoading = false;
           toast(msg: response.message, isError: true);
         }
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isNotificationLoading = false;
       printError(info: "Get Notification List   API ISSUE $s");
     }
   }

@@ -325,4 +325,9 @@ abstract class RouteManagement {
   static void goToCustomerBookingDetailView() {
     Get.toNamed(Routes.bookingDetailsView);
   }
+
+  /// go to Notification  view.
+  static void goToNotificationView() {
+    Get.toNamed(Routes.notificationView);
+  }
 }

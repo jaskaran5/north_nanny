@@ -54,7 +54,7 @@ class CustomerCalenderController extends GetxController {
   void onInit() {
     super.onInit();
     getCustomerAllBookingDetailsApi(date: DateTime.now());
-    getSelectedDateBookingDetail(selectedDate: DateTime.now());
+    getSelectedDateBookingDetail(selectedDate: selectedDay ?? DateTime.now());
   }
 
   /// this  method used to check the which days have events
@@ -81,7 +81,7 @@ class CustomerCalenderController extends GetxController {
       };
       _apiHelper.postApi(ApiUrls.userBookingDataByDate, body).futureValue(
           (value) {
-        printInfo(info: "get  cUSTOMER booking single date   $value");
+        printInfo(info: "get  CUSTOMER booking single date   $value");
         var response = UserBookingDetailsByDateResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           singleDateBookingData = response.data;
@@ -89,6 +89,7 @@ class CustomerCalenderController extends GetxController {
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
+        update();
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);

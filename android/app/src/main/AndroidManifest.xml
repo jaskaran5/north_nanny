@@ -10,8 +10,10 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="NorthShore Nanny"
-        android:name="com.northshorenanny.northshorenanny"
+        android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+
 
 
         <meta-data android:name="com.google.android.geo.API_KEY"

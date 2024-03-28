@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -7,19 +6,15 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_binding.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
 
 import '../../../firebase_options.dart';
-import '../../../navigators/routes_management.dart';
-import '../../modules/common/booking_details/booking_detail_binding.dart';
-import '../../modules/common/booking_details/booking_detail_controller.dart';
-import '../../modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
-import '../../modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
+
 import '../../res/constants/string_contants.dart';
 
 class FCMService {
@@ -47,10 +42,7 @@ class FCMService {
     const initializationSettingsAndroid =
         AndroidInitializationSettings(iconNotification);
 
-    const darwinInitializationSettings = DarwinInitializationSettings(
-        requestSoundPermission: true,
-        requestAlertPermission: true,
-        requestBadgePermission: true);
+    const darwinInitializationSettings = DarwinInitializationSettings();
     const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
@@ -101,22 +93,24 @@ class FCMService {
 
   ///used to show the notification.
   showForGroundMessage() {
+    /// used to show background messages.
+    FirebaseMessaging.onBackgroundMessage(showBackgroundNotification);
     FirebaseMessaging.onMessage.listen((message) {
       log("----------------------->>>>>>>.message ------>>>>${message.notification!.body}");
       log('body: ${message.notification?.body.toString()}');
       log('title:${message.notification?.title.toString()}');
       final data = message.data;
       log('notification data -------->>>>>>>> $data');
-      _showNotification(message);
+      showNotification(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       log("notification click in foreground");
-      _showNotification(message);
+      showNotification(message);
     });
   }
 
   /// used to show the notifications.
-  Future<void> _showNotification(RemoteMessage message) async {
+  Future<void> showNotification(RemoteMessage message) async {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       message.senderId ?? '',
@@ -124,11 +118,17 @@ class FCMService {
       channelDescription: 'nanny channel description',
       icon: "@drawable/ic_notification",
       importance: Importance.max,
-      priority: Priority.high,
+      priority: Priority.max,
+    );
+    DarwinNotificationDetails drawinNotificationDetail =
+        const DarwinNotificationDetails(
+      presentBanner: true,
+      presentAlert: true,
+      interruptionLevel: InterruptionLevel.timeSensitive,
     );
 
-    NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: drawinNotificationDetail);
 
     /// this is used to convert notification
     var response = NotificationEntityModel.fromJson(message.data);
@@ -159,29 +159,32 @@ class FCMService {
     );
   }
 
-  /// used to on tap notification
-  selectNotification(NotificationResponse notificationResponse) async {
+  /// used to on tap notification handle
+  void selectNotification(NotificationResponse notificationResponse) async {
     log('Notification Tapped payload :${notificationResponse.payload}');
-    Map<String, dynamic> notificationJsonResponse =
-        jsonDecode(notificationResponse.payload ?? '');
-    log('payload to map json :$notificationJsonResponse');
+    String payload = "${notificationResponse.payload}";
 
-    /// this is used to convert notification
-    var response = NotificationEntityModel.fromJson(
-      notificationJsonResponse,
-    );
+    /// used to paras the response.
+    var response = parseNotificationModel(payload);
+
     log('Notification Tap response: $response');
-    var logInType = await Storage.getValue(StringConstants.loginType);
+    String logInType = Storage.getValue(StringConstants.loginType);
 
     log('Notification Tap LogIn Type :$logInType  and  response $response');
-
-    if (!Get.isRegistered<NotificationController>()) {
-      NotificationBinding().dependencies();
+    //
+    // if (logInType?.isNotEmpty == true ) {
+    if (!Get.isRegistered<DashboardBottomController>()) {
+      DashboardBottomBinding().dependencies();
     }
+    var controller = Get.find<DashboardBottomController>();
+    controller.selectedBottomTab = 2;
+
+    /// this code is used to redirect to the booking flow when we tap on that.
+    /*
 
     /// api used to read the notification
     Get.find<NotificationController>().postNotificationRead(
-        notificationId: int.parse(response.notificationId));
+        notificationId: int.parse(response.notificationId.toString()));
 
     if (logInType == StringConstants.nanny) {
       if (!Get.isRegistered<NannyBookingDetailController>()) {
@@ -192,11 +195,11 @@ class FCMService {
 
       /// used to  get the booking detail.
       nannyBookingDetailsController.getBookingDetailOfCustomer(
-          bookingId: int.parse(response.bookingId));
+          bookingId: int.parse(response.bookingId.toString()));
 
       /// used to  store  the booking Status.
       nannyBookingDetailsController.typeOfBooking(
-          bookingStatus: int.parse(response.bookingStatus));
+          bookingStatus: int.parse(response.bookingStatus.toString()));
 
       /// going to route.
       RouteManagement.goToNannyBookingView();
@@ -206,15 +209,58 @@ class FCMService {
       }
 
       /// used to  get the booking detail.
-      Get.find<BookingDetailController>()
-          .getBookingDataById(bookingId: int.parse(response.bookingId));
+      Get.find<BookingDetailController>().getBookingDataById(
+          bookingId: int.parse(response.bookingId.toString()));
 
       /// used to  store  the booking Status.
-      Get.find<BookingDetailController>()
-          .typeOfBooking(bookingStatus: int.parse(response.bookingStatus));
+      Get.find<BookingDetailController>().typeOfBooking(
+          bookingStatus: int.parse(response.bookingStatus.toString()));
 
       /// going to route.
       RouteManagement.goToCustomerBookingDetailView();
+    }*/
+  }
+
+  /// this is used to convert the response of model to this.
+  NotificationEntityModel parseNotificationModel(String data) {
+    // Remove curly braces and split by commas to get key-value pairs
+    List<String> keyValuePairs =
+        data.replaceAll('{', '').replaceAll('}', '').split(',');
+
+    // Create a map to store key-value pairs
+    Map<String, String> keyValueMap = {};
+    for (String pair in keyValuePairs) {
+      List<String> keyValue = pair.trim().split(':');
+      if (keyValue.length == 2) {
+        keyValueMap[keyValue[0].trim()] = keyValue[1].trim();
+      }
     }
+    DateTime datetime = DateTime.now();
+    if (keyValueMap.containsKey('datetime')) {
+      String datetimeStr = keyValueMap['datetime'] ?? "";
+      // Split date and time components
+      List<String> components = datetimeStr.split(' ');
+      // Parse date and time
+      String dateStr = components[0];
+      String timeStr = '${components[1]} ${components[2]}';
+      datetime = DateTime.parse('$dateStr $timeStr');
+    }
+    // Extract values from the map and create a NotificationModel instance
+    return NotificationEntityModel(
+      datetime: datetime.toString(),
+      bookingStatus: keyValueMap['bookingstatus'] ?? "",
+      notificationType: keyValueMap['notificationtype'] ?? "",
+      notificationId: keyValueMap['notificationid'] ?? "",
+      body: keyValueMap['body'] ?? "",
+      title: keyValueMap['title'] ?? "",
+      bookingId: keyValueMap['bookingid'] ?? "",
+    );
+  }
+
+  /// used to show background messages.
+  @pragma('vm:entity-point')
+  Future<void> showBackgroundNotification(RemoteMessage message) async {
+    log('Background notification :$message');
+    showNotification(message);
   }
 }

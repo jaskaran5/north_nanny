@@ -107,11 +107,11 @@ class CustomerCalenderView extends StatelessWidget {
                       },
                     ),
                     Dimens.boxHeight32,
-                    controller.isEvent(
-                                daysList:
-                                    controller.userBookingDetail?.data ?? [],
-                                day: controller.selectedDay?.day ?? 0,
-                                month: controller.selectedDay?.month ?? 0) &&
+                    // controller.isEvent(
+                    //             daysList:
+                    //                 controller.userBookingDetail?.data ?? [],
+                    //             day: controller.selectedDay?.day ?? 0,
+                    //             month: controller.selectedDay?.month ?? 0) &&
                             controller.singleDateBookingData != null
                         ? GestureDetector(
                             onTap: () {

@@ -35,7 +35,11 @@ class NotificationView extends StatelessWidget {
           body: Padding(
             padding: Dimens.edgeInsets16,
             child: SingleChildScrollView(
-              child: notificationController.notificationListModel?.data != null
+              child: notificationController.notificationListModel?.data !=
+                          null &&
+                      notificationController
+                              .notificationListModel?.data?.isNotEmpty ==
+                          true
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
@@ -136,11 +140,19 @@ class NotificationView extends StatelessWidget {
                       ),
                     )
                   : Center(
-                      child: AppText(
-                        text: TranslationKeys.noResultFound.tr,
-                        style: AppStyles.ubNavyBlue30W600,
-                        textAlign: TextAlign.center,
-                      ),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: Get.height / 3,
+                            ),
+                            AppText(
+                              text: TranslationKeys.noResultFound.tr,
+                              style: AppStyles.ubNavyBlue30W600,
+                              textAlign: TextAlign.center,
+                            ),
+                          ]),
                     ),
             ),
           ),
