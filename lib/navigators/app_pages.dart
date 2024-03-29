@@ -233,8 +233,8 @@ class AppPages {
     GetPage<DashboardBottomView>(
       name: Routes.dashboard,
       transitionDuration: transitionDuration,
-      page: DashboardBottomView.new,
-      binding: DashboardBottomBinding(),
+      page:DashboardBottomView.new,
+      bindings:[ DashboardBottomBinding()],
       transition: Transition.rightToLeft,
     ),
 

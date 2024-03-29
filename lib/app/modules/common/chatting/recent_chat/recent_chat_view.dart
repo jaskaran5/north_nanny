@@ -6,12 +6,10 @@ import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_recant_chat_list.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class RecentChatView extends StatelessWidget {
-  RecentChatView({super.key}) {
-    // print("RecentChatView");
-    // contrller.invokedRecentChat();
+class RecentChatView extends GetView<RecentChatController> {
+   RecentChatView({super.key}){
+    controller.initMessages();
   }
-  // final contrller = Get.put(RecentChatController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -60,7 +58,7 @@ class RecentChatView extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return GestureDetector(
+                            return InkWell(
                               onTap: () {
                                 controller.redirectToChatScreen(
                                     id: controller.recentChatList[index].userId!

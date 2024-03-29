@@ -10,6 +10,7 @@ import '../../../../res/constants/api_urls.dart';
 import '../../../../res/constants/app_constants.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/custom_toast.dart';
+import '../../../common/socket/singnal_r_socket.dart';
 
 class NannyHomeController extends GetxController {
   /// api wrapper object.
@@ -51,6 +52,7 @@ class NannyHomeController extends GetxController {
       printError(info: "Nanny Home get  API ISSUE $s");
     }
   }
+  final SignalRHelper _socketHelper = SignalRHelper();
 
   @override
   void onInit() {
@@ -58,6 +60,10 @@ class NannyHomeController extends GetxController {
     if (nannyHomeData.data == null) {
       getHomeData();
     }
+    if(!_socketHelper.isConnected){
+      _socketHelper.init();
+    }
+
   }
 
   /// set availability

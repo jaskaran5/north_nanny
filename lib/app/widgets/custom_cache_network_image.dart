@@ -19,7 +19,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("image value is:------>>>. $img");
+    // log("image value is:------>>>. $img");
     return ((img == '') || (img == '-') || (img.isEmpty))
         ? SizedBox(
             height: size,

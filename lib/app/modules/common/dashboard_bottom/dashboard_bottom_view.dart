@@ -10,7 +10,7 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 import '../../../res/constants/string_contants.dart';
 
-class DashboardBottomView extends StatelessWidget {
+class DashboardBottomView extends GetView<DashboardBottomController> {
   const DashboardBottomView({super.key});
   @override
   Widget build(BuildContext context) => GetBuilder<DashboardBottomController>(

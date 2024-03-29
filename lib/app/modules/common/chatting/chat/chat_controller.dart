@@ -44,6 +44,7 @@ class ChatController extends GetxController {
   RxString thumbnailPath = ''.obs;
 
   RxList<MessageList> messageList = <MessageList>[].obs;
+
   // SingleChatData? singleChatData;
 
   //
@@ -75,32 +76,32 @@ class ChatController extends GetxController {
           value.date?.month == providedDate.month &&
           value.date?.year == providedDate.year) {
         if (value.date?.day == today.day) {
-          log("both are equal");
-          log("both are equal:${value.date?.day}");
-          log("both are equal: ${today.day}");
+          // log("both are equal");
+          // log("both are equal:${value.date?.day}");
+          // log("both are equal: ${today.day}");
 
           return "Today";
         } else if (value.date?.day == yesterday.day) {
-          log("both are not equal");
-          log("both are equal:${value.date?.day}");
-          log("both are equal: ${today.day}");
-          log("both are equal: ${yesterday.day}");
+          // log("both are not equal");
+          // log("both are equal:${value.date?.day}");
+          // log("both are equal: ${today.day}");
+          // log("both are equal: ${yesterday.day}");
 
           //
 
           return "Yesterday";
         } else {
-          log("asdfads-->${value.date}");
-          log("asdfads-->$today");
+          // log("asdfads-->${value.date}");
+          // log("asdfads-->$today");
 
-          log("both are -----equal${value.date?.day}");
-          log("both are -----equal${providedDate.day}");
-
-          log("both are -----equal${value.date?.month}");
-          log("both are -----equal${providedDate.month}");
-
-          log("both are -----equal${value.date?.year}");
-          log("both are -----equal${providedDate.year}");
+          // log("both are -----equal${value.date?.day}");
+          // log("both are -----equal${providedDate.day}");
+          //
+          // log("both are -----equal${value.date?.month}");
+          // log("both are -----equal${providedDate.month}");
+          //
+          // log("both are -----equal${value.date?.year}");
+          // log("both are -----equal${providedDate.year}");
 
           return "${value.date?.day}-${value.date?.month}-${value.date?.year}";
         }
@@ -109,16 +110,16 @@ class ChatController extends GetxController {
     return "";
   }
 
-  sendChatMessage() {
-    log("on lcick on send chat message called");
-    sendMessage(
-        toUserId: int.parse(otherUserId.value),
-        message: chatTextController.text.trim(),
-        fileType: null,
-        isFile: false,
-        type: 1);
-    // final chatProvider = locator<ChatProvider>();
-  }
+  // sendChatMessage() {
+  //   log("on lcick on send chat message called");
+  //   sendMessage(
+  //       toUserId: int.parse(otherUserId.value),
+  //       message: chatTextController.text.trim(),
+  //       fileType: null,
+  //       isFile: false,
+  //       type: 1);
+  //   // final chatProvider = locator<ChatProvider>();
+  // }
 
   Future<void> getLoginType() async {
     loginType.value = await Storage.getValue(StringConstants.loginType);
@@ -143,6 +144,8 @@ class ChatController extends GetxController {
     super.onInit();
 
     log("user id -->> ${otherUserId.value}");
+
+    print("CALLED_INIT_STATE");
 
     listenSocket();
 
@@ -191,14 +194,14 @@ class ChatController extends GetxController {
   }
 
 //SEND SINGLE MESSAGE
-  sendMessage({
+ void sendMessage({
     int? toUserId,
     String? message,
     int? type,
     String? fileType,
     bool? isFile,
-  }) async {
-    // SendMessage(int ToUserId, string Message, int Type, string FileType,2 bool IsFile, string Date)
+  }){
+
     print('Send message data ======> ${[
       toUserId,
       message!,
@@ -207,13 +210,8 @@ class ChatController extends GetxController {
       isFile,
       DateTime.now().toUtc().toIso8601String()
     ].toString()}');
-    // String Date =
-    //     DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now().toUtc());
 
-    // int ToUserId, string Message, int Type, string FileType, bool IsFile, string Date
-
-    final result =
-        await _socketHelper.hubConnection.invoke('SendMessage', args: [
+    final result =  _socketHelper.hubConnection.invoke('SendMessage', args: [
       toUserId!,
       message,
       type,
@@ -223,12 +221,86 @@ class ChatController extends GetxController {
       thumbnailPath.value,
       'png'
     ]);
+    chatTextController.clear();
+    updateSendMessageVisibility(isVisible: false);
     print('Message sent Received Data ========> ${result.toString()}');
   }
 
 //listen send message
+//   listenMessage() {
+//     final result = _socketHelper.hubConnection.on(
+//       'ReciveMessage',
+//       (arguments) {
+//         log("receive message called-------------------");
+//         log("arguments :-->> $arguments");
+//
+//         var data = arguments?[0] as Map<String, dynamic>;
+//
+//         log("$data",name: "custom_logs");
+//
+//         var res = SendMessageResponseModel.fromJson(data);
+//
+//         log("${res.toJson().toString()}",name: "custom_logs_2");
+//
+//         // log("${data.toString()} ", name: "USER_IDS2");
+//         // log("${otherUserId.value} ${myUserId.value}", name: "USER_IDS2");
+//         // if ((res.data?.toUserId == myUserId.value) ||
+//         //     (res.data?.toUserId == myUserId.value)) {
+//
+//         var current = otherUserId.value == res.data?.userId ? res.data?.toUserId: res.data?.userId;
+//         // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
+//         log(" myUserId:${myUserId.value} otherUserId:${otherUserId.value} userId:${res.data?.userId}  toUserId:${res.data?.toUserId} current:$current");
+//         if(otherUserId.value== current.toString()){
+//           log("INSERTED ${data.toString()}",name: "CHAT_STATUS");
+//           messageList.insert(
+//               0,
+//               MessageList(
+//                   date: res.data?.time ?? DateTime.now(),
+//                   fileLink: res.data?.fileLink ?? '',
+//                   fromUserId: myUserId.value,
+//                   id: res.data?.chatId,
+//                   isChatDeleted: '',
+//                   isFile: res.data?.isFile,
+//                   fileType: res.data?.fileType,
+//                   message: res.data?.messageDescription,
+//                   toUserId: res.data?.toUserId,
+//                   thumbImage: res.data?.thumbImage,
+//                   toUserImage: res.data?.toUserImage));
+//         }
+//
+//         // if(otherUserId.value == res.data?.toUserId.toString() ){
+//         //   log("IN ${data.toString()}",name: "CHAT_STATUS");
+//         //   messageList.insert(
+//         //       0,
+//         //       MessageList(
+//         //           date: res.data?.time ?? DateTime.now(),
+//         //           fileLink: res.data?.fileLink ?? '',
+//         //           fromUserId: myUserId.value,
+//         //           id: res.data?.chatId,
+//         //           isChatDeleted: '',
+//         //           isFile: res.data?.isFile,
+//         //           fileType: res.data?.fileType,
+//         //           message: res.data?.messageDescription,
+//         //           toUserId: res.data?.toUserId,
+//         //           thumbImage: res.data?.thumbImage,
+//         //           toUserImage: res.data?.toUserImage));
+//         // }else {
+//         //   log("OUT ${data.toString()}",name: "CHAT_STATUS");
+//         // }
+//
+//         // }
+//
+//         update();
+//
+//         Get.find<RecentChatController>().invokeRecentChat();
+//       },
+//     );
+//   }
+
+  //listen send message
   listenMessage() {
-    final result = _socketHelper.hubConnection.on(
+    _socketHelper.hubConnection.off("ReciveMessage");
+    _socketHelper.hubConnection.on(
       'ReciveMessage',
       (arguments) {
         log("receive message called-------------------");
@@ -236,10 +308,26 @@ class ChatController extends GetxController {
 
         var data = arguments?[0] as Map<String, dynamic>;
 
+        log("$data", name: "custom_logs");
+
         var res = SendMessageResponseModel.fromJson(data);
 
-        if ((res.data?.toUserId == myUserId.value) ||
-            (res.data?.toUserId == myUserId.value)) {
+        log(res.toJson().toString(), name: "custom_logs_2");
+
+        // log("${data.toString()} ", name: "USER_IDS2");
+        // log("${otherUserId.value} ${myUserId.value}", name: "USER_IDS2");
+        // if ((res.data?.toUserId == myUserId.value) ||
+        //     (res.data?.toUserId == myUserId.value)) {
+
+        final isCurrentUser =
+            otherUserId.value == res.data?.toUserId.toString() ||
+                otherUserId.value == res.data?.userId.toString();
+        // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
+        log("=============> $isCurrentUser");
+        log("OtherUserId=============> ${otherUserId.value}");
+        log("Chat Response=============> ${res.data?.toJson()}");
+        if (isCurrentUser) {
+          log("INSERTED ${data.toString()}", name: "CHAT_STATUS");
           messageList.insert(
               0,
               MessageList(
@@ -255,10 +343,13 @@ class ChatController extends GetxController {
                   thumbImage: res.data?.thumbImage,
                   toUserImage: res.data?.toUserImage));
         }
-
+        messageList.refresh();
         update();
+        if(Get.isRegistered<RecentChatController>()){
+          1.delay((){
+            Get.find<RecentChatController>().invokeRecentChat();
+          }) ;      }
 
-        Get.find<RecentChatController>().invokeRecentChat();
       },
     );
   }
@@ -284,41 +375,30 @@ class ChatController extends GetxController {
 
         log("file is video -->> ${imageFile.path.split('.').last}");
         if (imageFile.path.split('.').last == "mp4") {
-          thumbnailPath.value =
-              await extractThumbnailAsBase64(imageFile.path) ?? '';
+          thumbnailPath.value = await extractThumbnailAsBase64(imageFile.path) ?? '';
 
           update();
 
           DateTime now = DateTime.now();
           int milliseconds = now.millisecondsSinceEpoch;
-
           sendMessage(
             toUserId: int.parse(otherUserId.value),
             message: base64Image,
             type: 1,
             fileType: imageFile.path.split(".").last,
             isFile: true,
-          ).then((_) {
-            log("success");
-          }).catchError((error) {
-            log("error");
-          });
+          );
         }
 
         DateTime now = DateTime.now();
         int milliseconds = now.millisecondsSinceEpoch;
-
         sendMessage(
           toUserId: int.parse(otherUserId.value),
           message: base64Image,
           type: 1,
           fileType: imageFile.path.split(".").last,
           isFile: true,
-        ).then((_) {
-          log("success");
-        }).catchError((error) {
-          log("error");
-        });
+        );
       }
     });
   }
@@ -491,7 +571,6 @@ class ChatController extends GetxController {
           toUserId: int.parse(otherUserId.value),
           message: base64Image,
           type: 1,
-
           fileType: imageFile.path.split(".").last,
           isFile: true,
           // imageFile: value.path,

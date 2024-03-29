@@ -17,6 +17,7 @@ import '../../../../data/api/api_helper.dart';
 import '../../../../models/login_response_model.dart';
 import '../../../../res/constants/app_constants.dart';
 import '../../../../utils/app_utils.dart';
+import '../../../common/socket/singnal_r_socket.dart';
 
 class LogInController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -195,6 +196,7 @@ class LogInController extends GetxController {
             toast(msg: res.message!, isError: true);
           }
         }
+        SignalRHelper().init();
       }, onError: (error) {
         toast(msg: error.toString(), isError: true);
       }, retryFunction: () {});

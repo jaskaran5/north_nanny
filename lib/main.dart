@@ -28,6 +28,7 @@ Future<void> _setup() async {
 
   /// used to initialize the  firebase messaging.
   await FCMService().init();
+  SignalRHelper().init();
 }
 
 class MyApp extends StatefulWidget {
@@ -39,16 +40,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    socketConnection();
-
-    super.initState();
-  }
-
-  socketConnection() async {
-    final signalRHelper = SignalRHelper();
-    await signalRHelper.init();
-  }
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(

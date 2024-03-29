@@ -300,7 +300,7 @@ class ChatView extends StatelessWidget {
                                         isError: true);
                                   } else {
                                     log("else part called");
-                                    await controller.sendMessage(
+                                     controller.sendMessage(
                                         toUserId: int.parse(controller
                                             .otherUserId.value
                                             .toString()),
@@ -310,10 +310,7 @@ class ChatView extends StatelessWidget {
                                         fileType: null,
                                         isFile: false,
                                         type: 1);
-                                    ();
-                                    controller.chatTextController.text = '';
-                                    controller.updateSendMessageVisibility(
-                                        isVisible: false);
+
                                   }
                                 },
                                 child: SvgPicture.asset(

@@ -1,13 +1,16 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_list_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 class RecentChatController extends GetxController {
   final String _logTag = "Socket";
   RxBool isShimmerEnabled = true.obs;
+
 
   final SignalRHelper _socketHelper = SignalRHelper();
   // late HubConnection _hubConnection;
@@ -20,18 +23,35 @@ class RecentChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    if(!_socketHelper.isConnected){
+      _socketHelper.init();
+    }
     _initializeSignalRConnection();
+
+  }
+
+  initMessages(){
+    if(Get.currentRoute == Routes.dashboard){
+      _socketHelper.hubConnection.off("ReciveMessage");
+      _socketHelper.hubConnection.on('ReciveMessage', (arguments) {
+        print("ReciveMessage=========>>");
+        1.delay((){
+          invokeRecentChat();
+        });
+        },
+      );
+    }
+
   }
 
   void redirectToChatScreen({required String id}) async {
-    dynamic result = await Get.to(const ChatView(), arguments: id);
+    dynamic result = await Get.to(()=>const ChatView(), arguments: id);
 
     log("back result:-->> $result");
 
     if (result == 'true') {
-      _setupSignalRListeners();
       invokeRecentChat();
-      update();
+      invokeRecentChat();
     }
   }
 
@@ -39,11 +59,12 @@ class RecentChatController extends GetxController {
     if (!_socketHelper.isConnected) {
       _socketHelper.reconnect();
     }
-    _setupSignalRListeners();
+    invokeRecentChat();
     invokeRecentChat();
   }
 
-  void _setupSignalRListeners() {
+  void invokeRecentChat() {
+    _socketHelper.hubConnection.off("MyChatList");
     _socketHelper.hubConnection.on("MyChatList", (arguments) {
       try {
         log("argument recent chat:-->>$arguments");
@@ -56,15 +77,8 @@ class RecentChatController extends GetxController {
         log('$_logTag: Error processing chat list: $e');
       }
     });
+    _socketHelper.hubConnection.invoke('ChatList', args: []);
   }
 
-  Future<void> invokeRecentChat() async {
-    try {
-      var response =
-          await _socketHelper.hubConnection.invoke('ChatList', args: []);
-      log('$_logTag ChatList Response: $response');
-    } catch (e) {
-      log('$_logTag: Error invoking ChatList: $e');
-    }
-  }
+
 }

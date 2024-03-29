@@ -152,7 +152,7 @@ class BookingDetailView extends StatelessWidget {
                             null
                         ? CustomTrackerTile(
                             onTapChat: () {
-                              Get.to(const ChatView(),
+                              Get.to(()=>const ChatView(),
                                   arguments: trackingController
                                       .bookingDataById?.userDetails?.userId
                                       .toString());

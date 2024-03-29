@@ -470,7 +470,7 @@ class Utility {
 
   /// used to convert date time to this format '[01/03/2024']
   static String convertStringToDateFormatDDMMYY(String date) {
-    print("date-- $date");
+    // print("date-- $date");
     return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
   }
 
