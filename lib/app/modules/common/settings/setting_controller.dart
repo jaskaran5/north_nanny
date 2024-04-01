@@ -252,24 +252,10 @@ class SettingController extends GetxController {
     }
   ].obs;
 
-  /// card list.
-  List cardList = [
-    {
-      'asset': Assets.iconsMasterCard,
-      'accountNumber': "9587 5498 8569 7569",
-      'cardType': 'Master Card',
-      'isSelected': true,
-    },
-    {
-      'asset': Assets.iconsVisa,
-      'accountNumber': "9587 5498 8569 7569",
-      'cardType': 'Visa',
-      'isSelected': false,
-    }
-  ];
-
   /// REDIRECT TO COMMON WEB VIEW
-  redirectToCommonWebView({required String appBarTitle}) {
+  redirectToCommonWebView({
+    required String appBarTitle,
+  }) {
     Get.to(() => CommonWebView(
           appBarTitle: appBarTitle,
         ));
@@ -489,4 +475,6 @@ class SettingController extends GetxController {
       printError(info: "Change Password  post API ISSUE $s");
     }
   }
+
+
 }

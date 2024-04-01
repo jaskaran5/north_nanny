@@ -10,10 +10,6 @@ import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
 import 'app/data/notifications/firebase_helper.dart';
 import 'app/modules/common/socket/singnal_r_socket.dart';
 
-// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   print("Handling a background message");
-// }
-
 void main() async {
   await _setup();
   runApp(const MyApp());
@@ -40,7 +36,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
         designSize: const Size(360, 690),

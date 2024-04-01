@@ -48,6 +48,7 @@ class GetNannyData {
   dynamic gender;
   bool? isFavorite;
   bool? isOnline;
+  bool? isCardAddedByCustomer;
   List<AvilabilityList>? avilabilityList;
 
   List<String>? services;
@@ -67,6 +68,7 @@ class GetNannyData {
     this.age,
     this.gender,
     this.isOnline,
+    this.isCardAddedByCustomer,
   });
 
   factory GetNannyData.fromJson(Map<String, dynamic> json) => GetNannyData(
@@ -80,6 +82,7 @@ class GetNannyData {
         distance: json["distance"]?.toDouble(),
         isFavorite: json["isFavorite"],
         isOnline: json["isOnline"],
+        isCardAddedByCustomer: json["isCardAddedByCustomer"] ?? false,
         avilabilityList: json["avilabilityList"] == null
             ? []
             : List<AvilabilityList>.from(json["avilabilityList"]!
@@ -101,6 +104,7 @@ class GetNannyData {
         "aboutMe": aboutMe,
         "distance": distance,
         "isOnline": isOnline,
+        "isCardAddedByCustomer": isCardAddedByCustomer,
         "services":
             services == null ? [] : List<dynamic>.from(services!.map((x) => x)),
       };

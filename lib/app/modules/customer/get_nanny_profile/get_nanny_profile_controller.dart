@@ -21,7 +21,10 @@ import 'package:northshore_nanny_flutter/app/widgets/multi_selct_dialog.dart';
 import 'package:northshore_nanny_flutter/app/widgets/multi_select_children.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
+import '../../../../navigators/routes_management.dart';
 import '../../../models/get_nanny_booking_detail_in_customer.dart';
+import '../../../res/constants/assets.dart';
+import '../../../res/theme/styles.dart';
 
 class GetNannyProfileController extends GetxController {
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -350,8 +353,23 @@ class GetNannyProfileController extends GetxController {
         log("res--${res.response}");
 
         if (res.response == AppConstants.apiResponseSuccess) {
-          toast(msg: res.message.toString(), isError: false);
-          Get.back();
+          // toast(msg: res.message.toString(), isError: false);
+          /// used to show the booking details.
+          RouteManagement.goToSuccessView(
+            buttonText: TranslationKeys.backToHome.tr,
+            successSvg: Assets.iconsSuccess,
+            header: TranslationKeys.nannyRequested.tr,
+            headerStyle: AppStyles.ubDarkBlackColor24W700,
+            subHeader: TranslationKeys.notificationNannyAccept.tr,
+            onTapButton: () {
+              RouteManagement.goToOffAllDashboard(isFromSetting: false);
+            },
+            subTitleStyle: AppStyles.ubGrey16W500,
+            subHeaderMaxLines: 2,
+            headerMaxLines: 2,
+            successImage: '',
+            sendTipText: false,
+          );
           update();
         } else {
           toast(msg: res.message.toString(), isError: true);
@@ -482,4 +500,7 @@ class GetNannyProfileController extends GetxController {
       log('Selected child list: $selectedOptions');
     }
   }
+
+
+
 }

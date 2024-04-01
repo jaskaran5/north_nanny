@@ -217,36 +217,17 @@ abstract class RouteManagement {
   }
 
   /// Go to the Success  Screen
-  static void goToCustomPaymentView({
-    required var paymentDetails,
-    required String appBarTitle,
-    required String addNewCardButtonTitle,
-    required Color addNewCardButtonBackgroundColor,
-    required Function()? onTapDeleteButton,
-    String? submitButtonTitle,
-    Color? submitButtonBackgroundColor,
-    required Function()? onTapAddNewCardButton,
-    Function()? onTapSubmitButton,
-    required bool showDeleteButton,
-    TextStyle? addNewCardButtonStyle,
-    TextStyle? submitButtonStyle,
-  }) {
-    Get.to(
+  static Future<bool> goToCustomPaymentView({
+    required bool isComeFromSendTip,
+    required bool isComeFromConfirmBooking,
+  }) async {
+    var value = await Get.to(
       () => CustomPaymentDetails(
-        paymentDetails: paymentDetails,
-        appBarTitle: appBarTitle,
-        addNewCardButtonTitle: addNewCardButtonTitle,
-        addNewCardButtonBackgroundColor: addNewCardButtonBackgroundColor,
-        onTapAddNewCardButton: onTapAddNewCardButton,
-        submitButtonTitle: submitButtonTitle ?? '',
-        submitButtonBackgroundColor: submitButtonBackgroundColor,
-        onTapSubmitButton: onTapSubmitButton,
-        onTapDeleteButton: onTapDeleteButton,
-        showDeleteButton: showDeleteButton,
-        addNewCardButtonStyle: addNewCardButtonStyle,
-        submitButtonStyle: submitButtonStyle,
+        isComeFromConfirmBooking: isComeFromConfirmBooking,
+        isComeFromSendTip: isComeFromSendTip,
       ),
     );
+    return value ?? false;
   }
 
   /// go To add Payment Method View.
