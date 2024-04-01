@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_calender_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/chatting/recent_chat/recent_chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_view.dart';
@@ -29,6 +30,10 @@ class DashboardBottomController extends GetxController {
 
   set selectedBottomTab(int value) {
     selectedTabIndex.value = value;
+
+    if (selectedTabIndex.value == 1) {
+      Get.find<RecentChatController>().initMessages();
+    }
     update();
   }
 

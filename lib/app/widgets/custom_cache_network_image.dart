@@ -52,8 +52,14 @@ class CustomCacheNetworkImage extends StatelessWidget {
               log("DOWNLOAD PROGRESS IS:-->> ${downloadProgress.progress}");
               // log("DOWNLOAD PROGRESS IS:-->> " + progress.toString());
 
-              return CircularProgressIndicator(
-                value: downloadProgress.progress,
+              return SizedBox(
+                height: size,
+                width: size,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                  ),
+                ),
               );
 
               // return CircularPercentIndicator(

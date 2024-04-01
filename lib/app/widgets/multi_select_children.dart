@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 
 class MultiSelectDialogChildren extends StatefulWidget {
   final List<dynamic> options;
@@ -151,6 +152,10 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      AppColors.navyBlue), // Change the color here
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(_selectedOptions);
                 },

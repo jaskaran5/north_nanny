@@ -40,7 +40,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
         designSize: const Size(360, 690),

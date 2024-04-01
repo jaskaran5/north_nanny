@@ -69,8 +69,8 @@ class _CommonWebViewState extends State<CommonWebView> {
         alignment: Alignment.center,
         children: [
           isLoading
-              ? Center(
-                  child: Lottie.asset(Assets.animationNannyAni),
+              ? const Center(
+                  child: CircularProgressIndicator(),
                 )
               : WebViewWidget(controller: controller),
         ],

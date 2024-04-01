@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -23,6 +24,7 @@ class CustomNotificationTile extends StatelessWidget {
         padding: Dimens.edgeInsets16,
         margin: Dimens.edgeInsetsB16,
         height: Dimens.hundredFortyFive,
+        width: Get.width,
         decoration: BoxDecoration(
           color: isNotificationRead == false
               ? AppColors.notificationBackgroundColor

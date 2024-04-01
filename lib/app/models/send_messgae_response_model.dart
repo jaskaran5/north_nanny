@@ -46,6 +46,7 @@ class Data {
   String? toUserImage;
   String? fileType;
   dynamic thumbImage;
+  bool? isBlockChat;
 
   int? toUserId;
 
@@ -61,6 +62,7 @@ class Data {
     this.toUserId,
     this.fileType,
     this.thumbImage,
+    this.isBlockChat,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -75,6 +77,7 @@ class Data {
         toUserId: json["toUserId"],
         fileType: json["fileType"],
         thumbImage: json["thumbImage"],
+        isBlockChat: json["isBlockChat"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -88,6 +91,7 @@ class Data {
         "toUserImage": toUserImage,
         "toUserId": toUserId,
         "fileType": fileType,
-        "thumbImage": thumbImage
+        "thumbImage": thumbImage,
+        "isBlockChat": isBlockChat
       };
 }

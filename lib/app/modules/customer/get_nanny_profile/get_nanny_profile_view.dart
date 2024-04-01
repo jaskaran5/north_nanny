@@ -56,13 +56,6 @@ class GetNannyProfileView extends StatelessWidget {
               ],
             ),
             backgroundColor: AppColors.profileBackgroundColor,
-
-            /**REDIRECT TO <<<<<<<<------->>>>>>>>      SCHEDULE NANNY */
-            // floatingActionButton: controller.isContained.value
-            //     ?
-            //     : const SizedBox(),
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.endDocked,
             body: SkeletonWidget(
               isLoading: controller.isDataLoading.value,
               child: SingleChildScrollView(
