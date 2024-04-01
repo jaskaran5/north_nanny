@@ -21,7 +21,6 @@ import '../../../res/constants/assets.dart';
 import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
-import '../../../utils/translations/translation_keys.dart';
 import '../../../utils/utility.dart';
 import '../rating_and_review/rating_and_review_binding.dart';
 import '../rating_and_review/rating_and_review_controller.dart';
@@ -167,7 +166,6 @@ class BookingDetailController extends GetxController {
           Get.back();
 
           /// used to show the alert dialog when the user mark as complete and reject the booking .
-
           Utility.showAlertDialog(
             title: 'Congratulations',
             firstButtonTitle: 'No',
@@ -185,43 +183,47 @@ class BookingDetailController extends GetxController {
                         amountTextEditingController: TextEditingController(),
                         onTapSubmitButton: () {
                           RouteManagement.goToCustomPaymentView(
-                              paymentDetails: cardList,
-                              appBarTitle: TranslationKeys.paymentDetails.tr,
-                              addNewCardButtonTitle: 'Add New Card',
-                              addNewCardButtonBackgroundColor:
-                                  AppColors.lightNavyBlue,
-                              onTapDeleteButton: () {},
-                              submitButtonTitle: TranslationKeys.submit.tr,
-                              submitButtonBackgroundColor: AppColors.navyBlue,
-                              addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
-                              onTapAddNewCardButton: () {
-                                RouteManagement.goToAddPaymentMethodScreen(
-                                  isComeFromNannyProfile: false,
-                                  buttonText: TranslationKeys.submit.tr,
-                                  onTapButton: () {
-                                    Get.back();
-                                  },
-                                );
-                              },
-                              onTapSubmitButton: () {
-                                RouteManagement.goToSuccessView(
-                                  buttonText: TranslationKeys.backToHome.tr,
-                                  successSvg: '',
-                                  header: TranslationKeys.thankYou.tr,
-                                  subHeader:
-                                      TranslationKeys.yourNannyTipReceived.tr,
-                                  onTapButton: () {
-                                    RouteManagement.goToOffAllDashboard(
-                                        isFromSetting: false);
-                                  },
-                                  subTitleStyle: AppStyles.ubGrey16W500,
-                                  subHeaderMaxLines: 2,
-                                  headerMaxLines: 2,
-                                  successImage: Assets.imagesPinkHeart,
-                                  sendTipText: true,
-                                );
-                              },
-                              showDeleteButton: false);
+                              isComeFromSendTip: true,
+                              isComeFromConfirmBooking: false);
+
+                          // RouteManagement.goToCustomPaymentView(
+                          //     paymentDetails: cardList,
+                          //     appBarTitle: ,
+                          //     addNewCardButtonTitle: 'Add New Card',
+                          //     addNewCardButtonBackgroundColor:
+                          //         AppColors.lightNavyBlue,
+                          //     onTapDeleteButton: () {},
+                          //     submitButtonTitle: TranslationKeys.submit.tr,
+                          //     submitButtonBackgroundColor: AppColors.navyBlue,
+                          //     addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
+                          //     onTapAddNewCardButton: () {
+                          //       RouteManagement.goToAddPaymentMethodScreen(
+                          //         isComeFromNannyProfile: false,
+                          //         buttonText: TranslationKeys.submit.tr,
+                          //         onTapButton: () {
+                          //           Get.back();
+                          //         },
+                          //       );
+                          //     },
+                          //     onTapSubmitButton: () {
+                          //       RouteManagement.goToSuccessView(
+                          //         buttonText: TranslationKeys.backToHome.tr,
+                          //         successSvg: '',
+                          //         header: TranslationKeys.thankYou.tr,
+                          //         subHeader:
+                          //             TranslationKeys.yourNannyTipReceived.tr,
+                          //         onTapButton: () {
+                          //           RouteManagement.goToOffAllDashboard(
+                          //               isFromSetting: false);
+                          //         },
+                          //         subTitleStyle: AppStyles.ubGrey16W500,
+                          //         subHeaderMaxLines: 2,
+                          //         headerMaxLines: 2,
+                          //         successImage: Assets.imagesPinkHeart,
+                          //         sendTipText: true,
+                          //       );
+                          //     },
+                          //     showDeleteButton: false);
                         }),
                   );
                 },

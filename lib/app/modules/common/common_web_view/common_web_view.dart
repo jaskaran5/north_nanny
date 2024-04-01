@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
@@ -25,7 +23,7 @@ class _CommonWebViewState extends State<CommonWebView> {
     super.initState();
     controller = WebViewController();
     controller.setBackgroundColor(Colors.white);
-
+    controller.setJavaScriptMode(JavaScriptMode.unrestricted);
     controller.setNavigationDelegate(
       NavigationDelegate(
         onPageStarted: (String url) {

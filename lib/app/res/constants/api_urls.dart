@@ -55,6 +55,8 @@ class ApiUrls {
   static const String addCard = "api/UserDashBoard/AddCard";
 
   static const String saveCard = "api/UserDashBoard/SaveCard";
+  static const String getCardList = "api/UserDashBoard/StripeSavedCardList";
+  static const String deleteCard = "api/UserDashBoard/StripeDeleteCard";
   static const String nannyBookingDataByDate =
       "api/UserDashBoard/NannyBookingDetailByDate";
   static const String userBookingDataByDate =

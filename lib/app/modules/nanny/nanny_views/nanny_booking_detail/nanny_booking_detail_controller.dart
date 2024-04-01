@@ -256,6 +256,7 @@ class NannyBookingDetailController extends GetxController {
           toast(msg: response.message.toString(), isError: true);
         }
       }, retryFunction: () {});
+      //
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
       printError(

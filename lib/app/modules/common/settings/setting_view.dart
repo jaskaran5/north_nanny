@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/nanny_update_bank_details_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
-import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
@@ -93,22 +92,29 @@ class SettingView extends StatelessWidget {
             } else if (index == 2) {
               log("click on index 2");
               RouteManagement.goToCustomPaymentView(
-                paymentDetails: controller.cardList,
-                appBarTitle: TranslationKeys.paymentMethod.tr,
-                addNewCardButtonTitle: TranslationKeys.addCard.tr,
-                addNewCardButtonBackgroundColor: AppColors.navyBlue,
-                onTapDeleteButton: () {},
-                onTapAddNewCardButton: () {
-                  RouteManagement.goToAddPaymentMethodScreen(
-                    isComeFromNannyProfile: true,
-                    buttonText: TranslationKeys.add.tr,
-                    onTapButton: () {
-                      Get.back();
-                    },
+                  isComeFromSendTip: false, isComeFromConfirmBooking: false
+
+                  // paymentDetails: controller.cardList ?? [],
+                  // appBarTitle: ,
+                  // addNewCardButtonTitle:,
+                  // addNewCardButtonBackgroundColor: ,
+                  // onTapDeleteButton: (index) {
+                  //   /// used to delete the card .
+                  //   controller.deleteCard(
+                  //       cardId: controller.cardList?[index].cardId ?? '');
+                  // },
+                  // onTapAddNewCardButton: () {
+                  //   controller.postAddCard();
+                  //   // RouteManagement.goToAddPaymentMethodScreen(
+                  //   //   isComeFromNannyProfile: true,
+                  //   //   buttonText: TranslationKeys.add.tr,
+                  //   //   onTapButton: () {
+                  //   //     Get.back();
+                  //   //   },
+                  //   // );
+                  // },
+                  // showDeleteButton: true,
                   );
-                },
-                showDeleteButton: true,
-              );
             } else if (index == 3) {
               RouteManagement.goToChangePasswordScreen();
             } else if (index == 4) {
