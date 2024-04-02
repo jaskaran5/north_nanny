@@ -73,6 +73,7 @@ class ApiUrls {
       'api/NannyDashBoard/AddOrEditServices';
   static const String addOrEditBankDetails =
       'api/NannyDashBoard/AddOrEditBankDetail';
+  static const String getBankDetail = 'api/NannyDashBoard/GetBankDetail';
   static const String getNannyProfile = 'api/NannyDashBoard/MyProfile';
   static const String getCustomerProfileById =
       'api/NannyDashBoard/CustomerDetail';

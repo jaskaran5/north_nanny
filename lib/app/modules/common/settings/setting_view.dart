@@ -162,7 +162,7 @@ class SettingView extends StatelessWidget {
           onTap: () {
             log("index: $index");
             if (index == 0) {
-              Get.to(const NannyUpdateSettingBankDetailsView());
+              RouteManagement.goToUpdateBankDetailView();
               /** BANK DETAILS */
             } else if (index == 1) {
               /** CHANGE PASSWORD */

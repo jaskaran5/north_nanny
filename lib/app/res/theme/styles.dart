@@ -390,6 +390,12 @@ class AppStyles {
     fontSize: Dimens.thirtyFour,
     color: AppColors.navyBlue,
   );
+  static TextStyle ubNavyBlue38W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.thirtyEight,
+    color: AppColors.navyBlue,
+  );
   static TextStyle ubDarkBlackColor26W700 = TextStyle(
     fontWeight: FontWeight.w700,
     fontFamily: AppConstants.fontFamilyUrbanist,

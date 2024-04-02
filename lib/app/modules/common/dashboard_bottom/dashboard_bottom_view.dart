@@ -42,7 +42,7 @@ class DashboardBottomView extends GetView<DashboardBottomController> {
                                 .toLowerCase() ==
                             '' &&
                         controller.notificationCountModel?.data != null &&
-                        controller.notificationCountModel?.data != 0)
+                        controller.notificationCountModel?.data != 0 )
                       Positioned(
                         top: Dimens.two,
                         right: Dimens.zero,

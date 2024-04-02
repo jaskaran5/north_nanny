@@ -105,7 +105,7 @@ class FCMService {
       log('title:${message.notification?.title.toString()}');
       final data = message.data;
       log('notification data -------->>>>>>>> $data');
-
+//
       if (message.data["Type"] != null) {
         showChatNotification(message);
       } else {
@@ -152,20 +152,24 @@ class FCMService {
       DashboardBottomBinding().dependencies();
     }
 
-    Get.find<DashboardBottomController>().getNotificationCount();
+    var dashBoardBottomController = Get.find<DashboardBottomController>();
+    dashBoardBottomController.getNotificationCount();
+    if (dashBoardBottomController.selectedTabIndex.value == 0) {
+      if (logInType == StringConstants.customer) {
+        if (!Get.isRegistered<CustomerHomeController>()) {
+          CustomerHomeBinding().dependencies();
+        }
+        var customerHomeController = Get.find<CustomerHomeController>();
 
-    if (logInType == StringConstants.customer) {
-      if (!Get.isRegistered<CustomerHomeController>()) {
-        CustomerHomeBinding().dependencies();
+        /// used to get customer list .
+        customerHomeController.getDashboardApi();
+      } else if (logInType == StringConstants.nanny) {
+        if (!Get.isRegistered<NannyHomeController>()) {
+          NannyHomeBinding().dependencies();
+        }
+        var nannyHomeController = Get.find<NannyHomeController>();
+        nannyHomeController.getHomeData();
       }
-      var customerHomeController = Get.find<CustomerHomeController>();
-      customerHomeController.getDashboardApi();
-    } else if (logInType == StringConstants.nanny) {
-      if (!Get.isRegistered<NannyHomeController>()) {
-        NannyHomeBinding().dependencies();
-      }
-      var nannyHomeController = Get.find<NannyHomeController>();
-      nannyHomeController.getHomeData();
     }
 
     /// this code os used to show the local notification in app.
