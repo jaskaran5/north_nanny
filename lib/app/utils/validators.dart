@@ -406,4 +406,18 @@ class Validator {
       return true;
     }
   }
+
+  /// used for Confirm booking validator.
+  confirmBookingValidator(
+      {required List<String> services, required List<int> childList}) {
+    if (services.isEmpty) {
+      error = 'Please select at least one Service';
+      return false;
+    } else if (childList.isEmpty) {
+      error = 'Please select at least one child';
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

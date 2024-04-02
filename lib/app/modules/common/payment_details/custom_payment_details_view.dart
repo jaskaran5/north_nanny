@@ -30,6 +30,11 @@ class CustomPaymentDetails extends StatelessWidget {
         initState: (_) {
           Get.lazyPut<PaymentDetailController>(() => PaymentDetailController());
           Get.find<PaymentDetailController>().getCardList();
+          if (isComeFromConfirmBooking || isComeFromSendTip) {
+            Get.find<PaymentDetailController>().postAddCard(
+                isComeFromBooking:
+                    isComeFromConfirmBooking || isComeFromSendTip);
+          }
         },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(

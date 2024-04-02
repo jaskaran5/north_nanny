@@ -74,11 +74,10 @@ class PaymentDetailController extends GetxController {
                 url: response.data),
           );
           debugPrint('session Id from page  :$sessionId');
-          if(sessionId!=null) {
+          if (sessionId != null) {
             postSaveCard(
                 sessionId: sessionId, isComeFromBooking: isComeFromBooking);
           }
-
         } else {
           toast(msg: response.message.toString(), isError: true);
         }

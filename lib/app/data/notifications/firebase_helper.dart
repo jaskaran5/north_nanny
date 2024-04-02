@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
@@ -139,6 +140,7 @@ class FCMService {
     if (!Get.isRegistered<DashboardBottomController>()) {
       DashboardBottomBinding().dependencies();
     }
+
     Get.find<DashboardBottomController>().getNotificationCount();
 
     if (logInType == StringConstants.customer) {
@@ -147,7 +149,7 @@ class FCMService {
       }
       var customerHomeController = Get.find<CustomerHomeController>();
       customerHomeController.getDashboardApi();
-    } else {
+    } else if (logInType == StringConstants.nanny) {
       if (!Get.isRegistered<NannyHomeController>()) {
         NannyHomeBinding().dependencies();
       }
@@ -163,28 +165,29 @@ class FCMService {
       notificationDetails,
       payload: message.data.toString(),
     );
-    log('notification showing');
+    debugPrint('notification showing');
   }
 
   /// used to on tap notification handle
   void selectNotification(NotificationResponse notificationResponse) async {
-    log('Notification Tapped payload :${notificationResponse.payload}');
+    debugPrint('Notification Tapped payload :${notificationResponse.payload}');
     String payload = "${notificationResponse.payload}";
 
     /// used to paras the response.
     var response = parseNotificationModel(payload);
 
-    log('Notification Tap response: $response');
-    String logInType = Storage.getValue(StringConstants.loginType);
+    debugPrint('Notification Tap response: $response');
+    String logInType = await Storage.getValue(StringConstants.loginType);
 
-    log('Notification Tap LogIn Type :$logInType  and  response $response');
-    //
-    // if (logInType?.isNotEmpty == true ) {
-    if (!Get.isRegistered<DashboardBottomController>()) {
-      DashboardBottomBinding().dependencies();
-    }
+    debugPrint(
+        'Notification Tap LogIn Type :$logInType  and  response $response');
+
     var controller = Get.find<DashboardBottomController>();
     controller.selectedBottomTab = 2;
+    Future.delayed(
+      const Duration(seconds: 1),
+      () => controller.update(),
+    );
 
     /// this code is used to redirect to the booking flow when we tap on that.
     /*

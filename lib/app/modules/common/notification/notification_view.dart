@@ -62,63 +62,63 @@ class NotificationView extends StatelessWidget {
                                 .then((value) {
                               Get.find<DashboardBottomController>()
                                   .getNotificationCount();
-                              if (loginType == StringConstants.customer) {
-                                if (!Get.isRegistered<
-                                    BookingDetailController>()) {
-                                  BookingDetailBinding().dependencies();
-                                }
-                                var customerBookingController =
-                                    Get.find<BookingDetailController>();
-
-                                /// api used to get data of booking.
-                                customerBookingController.getBookingDataById(
-                                  bookingId: notificationController
-                                      .notificationListModel
-                                      ?.data?[index]
-                                      .bookingId,
-                                );
-
-                                /// used to store booking status .
-                                customerBookingController.typeOfBooking(
-                                  bookingStatus: notificationController
-                                      .notificationListModel
-                                      ?.data?[index]
-                                      .bookingStatus,
-                                );
-
-                                /// going to route
-                                RouteManagement.goToCustomerBookingDetailView();
-                              } else if (loginType == StringConstants.nanny) {
-                                if (!Get.isRegistered<
-                                    NannyBookingDetailController>()) {
-                                  NannyBookingDetailBinding().dependencies();
-                                }
-                                var nannyBookingController =
-                                    Get.find<NannyBookingDetailController>();
-
-                                /// api used to get details of booking
-                                nannyBookingController
-                                    .getBookingDetailOfCustomer(
-                                  bookingId: notificationController
-                                          .notificationListModel
-                                          ?.data?[index]
-                                          .bookingId ??
-                                      0,
-                                );
-                                //===/
-
-                                /// used to store booking status .
-                                nannyBookingController.typeOfBooking(
-                                  bookingStatus: notificationController
-                                      .notificationListModel
-                                      ?.data?[index]
-                                      .bookingStatus,
-                                );
-
-                                /// going to route
-                                RouteManagement.goToNannyBookingView();
-                              }
                             });
+                            if (loginType == StringConstants.customer) {
+                              if (!Get.isRegistered<
+                                  BookingDetailController>()) {
+                                BookingDetailBinding().dependencies();
+                              }
+                              var customerBookingController =
+                                  Get.find<BookingDetailController>();
+
+                              /// api used to get data of booking.
+                              customerBookingController.getBookingDataById(
+                                bookingId: notificationController
+                                    .notificationListModel
+                                    ?.data?[index]
+                                    .bookingId,
+                              );
+
+                              /// used to store booking status .
+                              customerBookingController.typeOfBooking(
+                                bookingStatus: notificationController
+                                    .notificationListModel
+                                    ?.data?[index]
+                                    .bookingStatus,
+                              );
+
+                              /// going to route
+                              RouteManagement.goToCustomerBookingDetailView();
+                            } else if (loginType == StringConstants.nanny) {
+                              if (!Get.isRegistered<
+                                  NannyBookingDetailController>()) {
+                                NannyBookingDetailBinding().dependencies();
+                              }
+
+                              var nannyBookingController =
+                                  Get.find<NannyBookingDetailController>();
+
+                              /// api used to get details of booking
+                              nannyBookingController.getBookingDetailOfCustomer(
+                                bookingId: notificationController
+                                        .notificationListModel
+                                        ?.data?[index]
+                                        .bookingId ??
+                                    0,
+                              );
+
+                              /// used to store booking status .
+                              nannyBookingController.typeOfBooking(
+                                bookingStatus: notificationController
+                                    .notificationListModel
+                                    ?.data?[index]
+                                    .bookingStatus,
+                              );
+
+                              /// going to route
+                              RouteManagement.goToNannyBookingView();
+                            }
+                            notificationController.getNotificationList();
                           },
                           child: CustomNotificationTile(
                             notificationHeading: notificationController
