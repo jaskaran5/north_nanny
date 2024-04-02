@@ -32,9 +32,9 @@ class ChatView extends StatelessWidget {
         return KeyboardVisibilityBuilder(
           builder: (ctx, isKeyboardVisible) {
             if (isKeyboardVisible) {
-              // controller.typingInvoke();
+              controller.typingInvoke();
             } else if (!isKeyboardVisible) {
-              // controller.stopTypingInvoke();
+              controller.stopTypingInvoke();
             }
             log("is keyboard visible:---->>. $isKeyboardVisible");
             return Scaffold(

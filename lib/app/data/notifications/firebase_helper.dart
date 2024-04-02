@@ -16,8 +16,6 @@ import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
-import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../firebase_options.dart';
 import '../../res/constants/string_contants.dart';
@@ -98,6 +96,8 @@ class FCMService {
 
   ///used to show the notification.
   showForGroundMessage() {
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
     /// used to show background messages.
     FirebaseMessaging.onBackgroundMessage(showBackgroundNotification);
 
@@ -113,6 +113,8 @@ class FCMService {
       if (message.data["Type"] != null) {
         showChatNotification(message);
       } else {
+        // log("current route is -->." Get.currentRoute.);
+
         showNotification(message);
       }
     });
@@ -266,7 +268,7 @@ class FCMService {
     // Print the resulting map
     print("result map$resultMap");
 
-    String userId = await Storage.getValue(StringConstants.userId);
+    String userId = Storage.getValue(StringConstants.userId).toString();
 
     if (resultMap.containsKey("Type")) {
       String senderId = resultMap["SenderId"].toString();
@@ -416,6 +418,11 @@ class FCMService {
 
 /// used to show background messages.
 Future<void> showBackgroundNotification(RemoteMessage message) async {
-  log('Background notification :$message');
-  FCMService().showNotification(message);
+  log('Background notification :${message.data}');
+
+  if (message.data["Type"] != null) {
+    FCMService().showChatNotification(message);
+  } else {
+    FCMService().showNotification(message);
+  }
 }
