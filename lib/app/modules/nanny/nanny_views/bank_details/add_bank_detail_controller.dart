@@ -22,7 +22,7 @@ class AddBankDetailController extends GetxController {
   final routingNumberTextEditingController = TextEditingController();
 
   /// used to validate bank Detail Screen.
-  bankDetailValidator() {
+  bankDetailValidator({required bool isComeFromBooking}) {
     bool isValidate = Validator.instance.bankDetailValidator(
       bankName: bankNameTextEditingController.text.trim(),
       accountHolderName: holderNameTextEditingController.text.trim(),
@@ -30,14 +30,14 @@ class AddBankDetailController extends GetxController {
       routingNumber: routingNumberTextEditingController.text.trim(),
     );
     if (isValidate) {
-      postBankDetails();
+      postBankDetails(isComeFromBooking: isComeFromBooking);
     } else {
       toast(msg: Validator.instance.error, isError: true);
     }
   }
 
   /// post api for bank details.
-  Future<void> postBankDetails() async {
+  Future<void> postBankDetails({required bool isComeFromBooking}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
@@ -59,7 +59,12 @@ class AddBankDetailController extends GetxController {
             info: "Post bank details Nanny profile response value $value");
         var response = RegisterModelResponseJson.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          Get.back();
+          if (isComeFromBooking) {
+            Get.back();
+            Get.back();
+          } else {
+            Get.back();
+          }
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
