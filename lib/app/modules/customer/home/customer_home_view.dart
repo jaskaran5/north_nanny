@@ -168,7 +168,7 @@ class CustomerHomeView extends StatelessWidget {
             padding: Dimens.edgeInsets8_0,
             child: SizedBox(
               width: Get.width,
-              height: Get.height * .32,
+              height: Get.height * .33,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -222,15 +222,11 @@ class CustomerHomeView extends StatelessWidget {
                       onTap: () {
                         RouteManagement.goToGetNannyProfileView(
                             argument: controller.nannyUserId.value);
-                        // Get.to(
-                        //   () => NannyProfileView(
-                        //     isComeFromSetting: false,
-                        //     appBarTitle: TranslationKeys.nannyProfile.tr,
-                        //   ),
-                        // );
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(top: Dimens.ten),
+                        padding: EdgeInsets.only(
+                          top: Dimens.ten,
+                        ),
                         child: controller.homeNannyList.isNotEmpty
                             ? HomeCustomListView(
                                 canClose: true,
@@ -255,6 +251,8 @@ class CustomerHomeView extends StatelessWidget {
                                     ? Assets.iconsHeartOutline
                                     : Assets.iconsHeartFilled,
                                 onTapHeartIcon: () {
+                                  log("on click on is favourite");
+
                                   controller.toggleFavouriteAndUnFavouriteApi(
                                       userId: controller.nannyUserId.value,
                                       isFavourite:
@@ -361,17 +359,15 @@ class CustomerHomeView extends StatelessWidget {
                                 },
                                 onTapRating: () {
                                   Utility.openBottomSheet(
-                                     CustomReviewBottomSheet(
-                                      totalReviews:  controller.homeNannyList[index].reviewCount,
-                                      totalReviewsRating: controller.homeNannyList[index].rating,
-                                      reviewsList:controller.homeNannyList[index].ratingList ?? [],
-                                      // [
-                                      //   'Michael Johnson',
-                                      //   'Giorgio Chiellini',
-                                      //   'Michael Johnson',
-                                      //   'Alex Morgan',
-                                      //   'Giorgio Chiellini'
-                                      // ],
+                                    CustomReviewBottomSheet(
+                                      totalReviews: controller
+                                          .homeNannyList[index].reviewCount,
+                                      totalReviewsRating: controller
+                                          .homeNannyList[index].rating,
+                                      reviewsList: controller
+                                              .homeNannyList[index]
+                                              .ratingList ??
+                                          [],
                                     ),
                                   );
                                 },

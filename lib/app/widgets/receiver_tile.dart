@@ -73,7 +73,7 @@ class ReceiverTile extends StatelessWidget {
   }
 
   Widget _buildFileWidget() {
-    if ((fileType == "jpg") || (fileType == "jpeg")) {
+    if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
       return GestureDetector(
         onTap: onTapOnImage,
         child: CustomCacheNetworkImage(

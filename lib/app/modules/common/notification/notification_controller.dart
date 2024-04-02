@@ -52,7 +52,7 @@ class NotificationController extends GetxController {
   }
 
   /// used to read the  notification list.
-  postNotificationRead({required int notificationId}) async {
+  Future<void> postNotificationRead({required int notificationId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;

@@ -10,6 +10,7 @@ import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/block_unblock_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/clear_chat_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/send_messgae_response_model.dart';
@@ -82,27 +83,8 @@ class ChatController extends GetxController {
 
           return "Today";
         } else if (value.date?.day == yesterday.day) {
-          // log("both are not equal");
-          // log("both are equal:${value.date?.day}");
-          // log("both are equal: ${today.day}");
-          // log("both are equal: ${yesterday.day}");
-
-          //
-
           return "Yesterday";
         } else {
-          // log("asdfads-->${value.date}");
-          // log("asdfads-->$today");
-
-          // log("both are -----equal${value.date?.day}");
-          // log("both are -----equal${providedDate.day}");
-          //
-          // log("both are -----equal${value.date?.month}");
-          // log("both are -----equal${providedDate.month}");
-          //
-          // log("both are -----equal${value.date?.year}");
-          // log("both are -----equal${providedDate.year}");
-
           return "${value.date?.day}-${value.date?.month}-${value.date?.year}";
         }
       }
@@ -194,13 +176,17 @@ class ChatController extends GetxController {
   }
 
 //SEND SINGLE MESSAGE
- void sendMessage({
+  void sendMessage({
     int? toUserId,
     String? message,
     int? type,
     String? fileType,
     bool? isFile,
-  }){
+  }) {
+    log("fileType: -->> ${thumbnailPath.value}");
+    log("fileType: -->> $fileType");
+
+    log("isFile: -->> $isFile");
 
     print('Send message data ======> ${[
       toUserId,
@@ -211,7 +197,7 @@ class ChatController extends GetxController {
       DateTime.now().toUtc().toIso8601String()
     ].toString()}');
 
-    final result =  _socketHelper.hubConnection.invoke('SendMessage', args: [
+    final result = _socketHelper.hubConnection.invoke('SendMessage', args: [
       toUserId!,
       message,
       type,
@@ -219,11 +205,13 @@ class ChatController extends GetxController {
       isFile!,
       DateTime.now().toUtc().toIso8601String(),
       thumbnailPath.value,
-      'png'
+      thumbnailPath.value.isNotEmpty ? 'png' : ''
     ]);
     chatTextController.clear();
     updateSendMessageVisibility(isVisible: false);
+    thumbnailPath.value = '';
     print('Message sent Received Data ========> ${result.toString()}');
+    update();
   }
 
 //listen send message
@@ -314,42 +302,45 @@ class ChatController extends GetxController {
 
         log(res.toJson().toString(), name: "custom_logs_2");
 
-        // log("${data.toString()} ", name: "USER_IDS2");
-        // log("${otherUserId.value} ${myUserId.value}", name: "USER_IDS2");
-        // if ((res.data?.toUserId == myUserId.value) ||
-        //     (res.data?.toUserId == myUserId.value)) {
-
-        final isCurrentUser =
-            otherUserId.value == res.data?.toUserId.toString() ||
-                otherUserId.value == res.data?.userId.toString();
-        // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
-        log("=============> $isCurrentUser");
-        log("OtherUserId=============> ${otherUserId.value}");
-        log("Chat Response=============> ${res.data?.toJson()}");
-        if (isCurrentUser) {
-          log("INSERTED ${data.toString()}", name: "CHAT_STATUS");
-          messageList.insert(
+        if (!res.data!.isBlockChat!) {
+          final isCurrentUser =
+              otherUserId.value == res.data?.toUserId.toString() ||
+                  otherUserId.value == res.data?.userId.toString();
+          // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
+          log("=============> $isCurrentUser");
+          log("OtherUserId=============> ${otherUserId.value}");
+          log("Chat Response=============> ${res.data?.toJson()}");
+          if (isCurrentUser) {
+            log("INSERTED ${data.toString()}", name: "CHAT_STATUS");
+            messageList.insert(
               0,
               MessageList(
-                  date: res.data?.time ?? DateTime.now(),
-                  fileLink: res.data?.fileLink ?? '',
-                  fromUserId: myUserId.value,
-                  id: res.data?.chatId,
-                  isChatDeleted: '',
-                  isFile: res.data?.isFile,
-                  fileType: res.data?.fileType,
-                  message: res.data?.messageDescription,
-                  toUserId: res.data?.toUserId,
-                  thumbImage: res.data?.thumbImage,
-                  toUserImage: res.data?.toUserImage));
-        }
-        messageList.refresh();
-        update();
-        if(Get.isRegistered<RecentChatController>()){
-          1.delay((){
-            Get.find<RecentChatController>().invokeRecentChat();
-          }) ;      }
+                date: res.data?.time ?? DateTime.now(),
+                fileLink: res.data?.fileLink ?? '',
+                fromUserId: myUserId.value,
+                id: res.data?.chatId,
+                isChatDeleted: '',
+                isFile: res.data?.isFile,
+                fileType: res.data?.fileType,
+                message: res.data?.messageDescription,
+                toUserId: res.data?.toUserId,
+                thumbImage: res.data?.thumbImage,
+                toUserImage: res.data?.toUserImage,
+              ),
+            );
+          }
+          messageList.refresh();
+          update();
+          if (Get.isRegistered<RecentChatController>()) {
+            1.delay(() {
+              Get.find<RecentChatController>().invokeRecentChat();
+            });
+          }
+        } else {
+          log("is block -->> ${res.data!.isBlockChat}");
 
+          Utils.showDialog("You Are Blocked ");
+        }
       },
     );
   }
@@ -358,8 +349,10 @@ class ChatController extends GetxController {
     listenMessage();
     listenSingleChatDetails();
     listenTyping();
+    listenClearChat();
     stopTypingListen();
     listenBlockUnblockUser();
+    listenReadMessageResponse();
   }
 
   Future<void> pickDocumentFile() async {
@@ -375,7 +368,8 @@ class ChatController extends GetxController {
 
         log("file is video -->> ${imageFile.path.split('.').last}");
         if (imageFile.path.split('.').last == "mp4") {
-          thumbnailPath.value = await extractThumbnailAsBase64(imageFile.path) ?? '';
+          thumbnailPath.value =
+              await extractThumbnailAsBase64(imageFile.path) ?? '';
 
           update();
 
@@ -456,8 +450,10 @@ class ChatController extends GetxController {
 
         log("single chat messgae listen");
 
+        log("isbloack --->.. " "${res.data?.isBlock}");
+
         // log("is bliocj-->> ${res.isBlock}");
-        // isBlock.value = res.isBlock;
+        isBlock.value = res.data?.isBlock ?? false;
 
         messageList.value = res.data?.messageList ?? [];
         messageList.sort((a, b) => b.date!.compareTo(a.date!));
@@ -534,6 +530,22 @@ class ChatController extends GetxController {
     ]);
   }
 
+  //--------->>>>>>>>>>>>>>>>> LISTEN CLEAR CHAT RESPONSE
+  listenClearChat() {
+    _socketHelper.hubConnection.on("DeleteChatResponse", (arguments) {
+      log("DeleteChatResponse response argumnets-->. $arguments");
+
+      var data = arguments?[0] as Map<String, dynamic>;
+
+      var res = ClearChatResponseModel.fromJson(data);
+
+      if (res.response == 1) {
+        messageList.clear();
+        update();
+      }
+    });
+  }
+
   //-------->>>>>  STOP TYPING INVOKE
   stopTypingInvoke() {
     _socketHelper.hubConnection
@@ -596,9 +608,10 @@ class ChatController extends GetxController {
 
   blockUnblockUser() {
     _socketHelper.hubConnection.invoke("BlockUser",
-        args: [int.parse(otherUserId.value), isBlock.value]);
+        args: [int.parse(otherUserId.value), !isBlock.value]);
 
     log("blockUnblockUser listen called");
+    log("blockUnblockUser listen called -->>${isBlock.value}");
   }
 
   //** LISTEN block / unblock user */
@@ -617,9 +630,27 @@ class ChatController extends GetxController {
 
         isBlock.value = res.data?.isBlock ?? false;
         update();
+        log("blockUnblockUser listen called -->>${isBlock.value}");
       },
     );
 
     log("blockUnblockUser listen called");
+  }
+
+  //** ----->>>> INVOKE READ MESSAGE */
+
+  Future<void> listenReadMessageResponse() async {
+    _socketHelper.hubConnection.on("ReadResponseResponse", (arguments) {
+      log("ReadResponseResponse listen called");
+    });
+  }
+
+  //** ----->>>> LISTEN READ MESSAGE */
+
+  Future<void> invokeReadMessage() async {
+    _socketHelper.hubConnection
+        .invoke("ReadMessage", args: [int.parse(otherUserId.value)]);
+
+    log("invoke listen called");
   }
 }

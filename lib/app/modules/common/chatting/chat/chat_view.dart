@@ -55,7 +55,11 @@ class ChatView extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    Get.back(result: "true");
+                                    controller
+                                        .invokeReadMessage()
+                                        .then((value) {
+                                      Get.back(result: "true");
+                                    });
                                   },
                                   icon: SvgPicture.asset(
                                     Assets.iconsBackArrow,
@@ -153,10 +157,15 @@ class ChatView extends StatelessWidget {
                                     elements: controller.messageList,
                                     shrinkWrap: true,
                                     reverse: true,
+
+                                    //  separator: const Text("dfasdf"),
+
                                     groupHeaderBuilder: (element) {
                                       return Text(
-                                          controller.isMessageDateEqualToday(
-                                              element.date.toString()));
+                                        controller.isMessageDateEqualToday(
+                                            element.date.toString()),
+                                        textAlign: TextAlign.center,
+                                      );
                                     },
                                     groupBy: (message) =>
                                         Utility.convertStringToDateFormatDDMMYY(
@@ -300,7 +309,7 @@ class ChatView extends StatelessWidget {
                                         isError: true);
                                   } else {
                                     log("else part called");
-                                     controller.sendMessage(
+                                    controller.sendMessage(
                                         toUserId: int.parse(controller
                                             .otherUserId.value
                                             .toString()),
@@ -310,7 +319,6 @@ class ChatView extends StatelessWidget {
                                         fileType: null,
                                         isFile: false,
                                         type: 1);
-
                                   }
                                 },
                                 child: SvgPicture.asset(

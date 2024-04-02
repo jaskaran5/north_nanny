@@ -83,7 +83,7 @@ class GetNannyProfileController extends GetxController {
 
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
-          log("response success");
+          log("response success is favourite");
 
           getNannyDetails(time: DateTime.now());
 
@@ -208,6 +208,7 @@ class GetNannyProfileController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           isDataLoading.value = false;
           getNannyData = response.data!;
+          isFavorite.value = response.data?.isFavorite ?? false;
           update();
         } else {
           isDataLoading.value = false;

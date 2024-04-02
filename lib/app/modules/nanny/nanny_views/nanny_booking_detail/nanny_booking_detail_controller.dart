@@ -230,6 +230,8 @@ class NannyBookingDetailController extends GetxController {
         "currentUtcTime": DateTime.now().toUtc().toIso8601String(),
       };
       debugPrint('body of booking details:$body');
+      debugPrint('body of booking details:$body');
+
       _apiHelper
           .postApi(
         ApiUrls.customerBookedNannyDetail,
@@ -254,6 +256,7 @@ class NannyBookingDetailController extends GetxController {
           toast(msg: response.message.toString(), isError: true);
         }
       }, retryFunction: () {});
+      //
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
       printError(

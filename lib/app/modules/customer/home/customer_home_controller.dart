@@ -85,6 +85,8 @@ class CustomerHomeController extends GetxController {
     required int userId,
   }) async {
     log("exper::->> $experience");
+    log("exper is fav::->> $isFavourite");
+
     nannyName.value = name;
     nannyFavourite.value = isFavourite;
     nannyRatingCount.value = ratingCount;
@@ -309,6 +311,8 @@ class CustomerHomeController extends GetxController {
                         imageSize: const Size(200, 200)),
                     onTap: () async {
                       log("aaaaaaa:-->> $a");
+                      log("aaaaaaa:-->> ${homeNannyList[a].isFavorite}");
+
                       updateNannyTile(
                               name: homeNannyList[a].name,
                               isFavourite: homeNannyList[a].isFavorite ?? false,
@@ -392,6 +396,7 @@ class CustomerHomeController extends GetxController {
         if (res.response.toString() ==
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
+          nannyFavourite.value = !nannyFavourite.value;
 
           getDashboardApi();
 
