@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/add_bank_detail_controller.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -57,7 +56,7 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                   title: TranslationKeys.addBank.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    RouteManagement.goToAddBankView();
+                    RouteManagement.goToAddBankView(isComeFromBooking: true);
                   },
                 ),
               ],

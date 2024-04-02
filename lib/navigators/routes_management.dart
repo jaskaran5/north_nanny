@@ -318,7 +318,7 @@ abstract class RouteManagement {
   }
 
   /// go to Notification  view.
-  static void goToAddBankView() {
-    Get.toNamed(Routes.addBankView);
+  static void goToAddBankView({required bool isComeFromBooking}) {
+    Get.toNamed(Routes.addBankView, arguments: isComeFromBooking);
   }
 }

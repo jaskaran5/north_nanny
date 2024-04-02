@@ -13,7 +13,9 @@ import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_text_field.dart';
 
 class AddBankView extends StatelessWidget {
-  const AddBankView({super.key});
+  AddBankView({super.key});
+
+  final bool? isComeFromBooking = Get.arguments;
 
   @override
   Widget build(BuildContext context) => GetBuilder<AddBankDetailController>(
@@ -135,7 +137,8 @@ class AddBankView extends StatelessWidget {
                     title: TranslationKeys.addBank.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
-                      controller.bankDetailValidator();
+                      controller.bankDetailValidator(
+                          isComeFromBooking: isComeFromBooking ?? false);
                     },
                   ),
                 ),
