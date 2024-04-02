@@ -311,4 +311,14 @@ abstract class RouteManagement {
   static void goToNotificationView() {
     Get.toNamed(Routes.notificationView);
   }
+
+  /// go to Nanny Delete or Update   view from setting.
+  static void goToUpdateBankDetailView() {
+    Get.toNamed(Routes.nannyUpdateBankView);
+  }
+
+  /// go to Notification  view.
+  static void goToAddBankView() {
+    Get.toNamed(Routes.addBankView);
+  }
 }

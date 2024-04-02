@@ -42,6 +42,8 @@ import 'package:northshore_nanny_flutter/app/modules/filter_view/filter_view.dar
 
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/logIn/log_in_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/nanny/signUp/signup_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/add_bank_detail_bindings.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/add_bank_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/bank_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
@@ -64,6 +66,7 @@ import '../app/modules/forgot_password/email_verification_view.dart';
 import '../app/modules/forgot_password/forgot_password_binding.dart';
 import '../app/modules/forgot_password/forgot_password_view.dart';
 import '../app/modules/forgot_password/new_password_view.dart';
+import '../app/modules/nanny/nanny_views/bank_details/nanny_update_bank_details_view.dart';
 import '../app/modules/nanny/nanny_views/create_profile/create_nanny_profile_view.dart';
 import 'app_routes.dart';
 
@@ -233,8 +236,8 @@ class AppPages {
     GetPage<DashboardBottomView>(
       name: Routes.dashboard,
       transitionDuration: transitionDuration,
-      page:DashboardBottomView.new,
-      bindings:[ DashboardBottomBinding()],
+      page: DashboardBottomView.new,
+      bindings: [DashboardBottomBinding()],
       transition: Transition.rightToLeft,
     ),
 
@@ -426,6 +429,24 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: NotificationView.new,
       binding: NotificationBinding(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ Nanny Bank detail view from setting   -------  */
+    GetPage<NannyUpdateSettingBankDetailsView>(
+      name: Routes.nannyUpdateBankView,
+      transitionDuration: transitionDuration,
+      page: NannyUpdateSettingBankDetailsView.new,
+      binding: AddBankDetailBindings(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ NannyUpdateSettingBankDetails View to Add Bank  -------  */
+    GetPage<AddBankView>(
+      name: Routes.addBankView,
+      transitionDuration: transitionDuration,
+      page: AddBankView.new,
+      binding: AddBankDetailBindings(),
       transition: Transition.leftToRight,
     ),
   ];

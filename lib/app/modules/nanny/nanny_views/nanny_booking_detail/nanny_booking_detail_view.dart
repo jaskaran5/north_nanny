@@ -23,6 +23,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../res/constants/enums.dart';
 import '../../../../widgets/custom_booking_detail.dart';
@@ -568,16 +569,24 @@ class NannyBookingDetailView extends StatelessWidget {
                           backGroundColor: AppColors.navyBlue,
                           title: TranslationKeys.accept.tr,
                           onTap: () {
-                            /// accept booking
-                            controller.acceptOrRejectBookingDetail(
-                              bookingId: controller
-                                      .bookingDetailsModel?.data?.bookingId ??
-                                  0,
-                              bookingStatus: 2,
-                            );
-                            controller.nannyBookingDetailStatus =
-                                NannyBookingDetailStatus.onMyWay;
-                            controller.update();
+                            /// used this condition to add bank account. if not bank account added by nanny.
+                            if (controller.bookingDetailsModel?.data
+                                    ?.isBankAddedByNanny ==
+                                true) {
+                              /// accept booking
+                              controller.acceptOrRejectBookingDetail(
+                                bookingId: controller
+                                        .bookingDetailsModel?.data?.bookingId ??
+                                    0,
+                                bookingStatus: 2,
+                              );
+                              controller.nannyBookingDetailStatus =
+                                  NannyBookingDetailStatus.onMyWay;
+                              controller.update();
+                            } else {
+                              /// used to go add bank account .
+                              RouteManagement.goToAddBankView();
+                            }
                           },
                         ),
                       ],

@@ -104,7 +104,6 @@ class DashboardBottomController extends GetxController {
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
-        update();
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);

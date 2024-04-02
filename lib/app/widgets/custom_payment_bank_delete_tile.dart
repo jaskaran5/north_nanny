@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -50,7 +51,12 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
                   color: AppColors.colorEEF5FCLightNavyBlue,
                   borderRadius: BorderRadius.circular(Dimens.ten),
                 ),
-                child: SvgPicture.asset(asset),
+                child: AppText(
+                  text: cardType.characters.first.capitalize,
+                  style: AppStyles.ubNavyBlue38W700,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                ),
               ),
               Dimens.boxWidth10,
               Column(

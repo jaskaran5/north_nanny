@@ -48,6 +48,7 @@ class Data {
   int? totalChildren;
   DateTime? startTime;
   bool? isJobStarted;
+  bool? isBankAddedByNanny;
   int? totalHour;
   double? totalAmount;
   double? hourlyPrice;
@@ -72,6 +73,7 @@ class Data {
     this.hourlyPrice,
     this.isJobStarted,
     this.startTime,
+    this.isBankAddedByNanny,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -82,6 +84,7 @@ class Data {
         longitude: json["longitude"],
         hourlyPrice: json["hourlyprice"] ?? 0.0,
         isJobStarted: json["isJobStarted"] ?? false,
+        isBankAddedByNanny: json["isBankAddedByNanny"] ?? false,
         startTime: json["startTime"] == null
             ? null
             : DateTime.parse(json["startTime"]),
@@ -120,6 +123,7 @@ class Data {
         "longitude": longitude,
         "startTime": startTime?.toIso8601String(),
         "isJobStarted": isJobStarted,
+        "isBankAddedByNanny": isBankAddedByNanny,
         "hourlyprice": hourlyPrice,
         "bookingDate": bookingDate?.toIso8601String(),
         "openingDate": openingDate?.toIso8601String(),
