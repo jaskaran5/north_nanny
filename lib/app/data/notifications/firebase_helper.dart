@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -8,12 +9,15 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_notification_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
+import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../firebase_options.dart';
 import '../../res/constants/string_contants.dart';
@@ -236,6 +240,45 @@ class FCMService {
     // } else {
     String payload = "${notificationResponse.payload}";
 
+    debugPrint('Notification Tapped payload-->> :$payload');
+
+    // Remove curly braces and split the string by comma followed by space
+    List<String> keyValuePairs =
+        payload.substring(1, payload.length - 1).split(', ');
+
+    // Create an empty map to store key-value pairs
+    Map<String, String> resultMap = {};
+
+    // Iterate through the key-value pairs
+    for (String pair in keyValuePairs) {
+      // Split each pair by colon
+      List<String> parts = pair.split(': ');
+
+      // Extract key and value (removing leading and trailing spaces, and enclosing quotes if any)
+      String key = parts[0].trim();
+      String value = parts[1].trim().replaceAll(
+          RegExp(r'^"|"$'), ''); // Remove enclosing quotes if present
+
+      // Add key-value pair to the map
+      resultMap[key] = value;
+    }
+
+    // Print the resulting map
+    print("result map$resultMap");
+
+    String userId = await Storage.getValue(StringConstants.userId);
+
+    if (resultMap.containsKey("Type")) {
+      String senderId = resultMap["SenderId"].toString();
+      String receiverId = resultMap["ReciverId"].toString();
+
+      if (userId.toString() == senderId) {
+        Get.to(const ChatView(), arguments: receiverId);
+      } else if (userId.toString() == receiverId) {
+        Get.to(const ChatView(), arguments: senderId);
+      }
+    }
+
     /// used to paras the response.
     var response = parseNotificationModel(payload);
 
@@ -348,28 +391,25 @@ class FCMService {
 
   /// this is used to convert the response of model to this.
   ChatNotificationResponseModel parseChatNotificationModel(String data) {
-    // Remove curly braces and split by commas to get key-value pairs
-    List<String> keyValuePairs =
-        data.replaceAll('{', '').replaceAll('}', '').split(',');
+    // Convert the string to valid JSON format
+    data = data.replaceAllMapped(RegExp(r'(\b\w+\b)(?=:)', multiLine: true),
+        (Match match) => '"${match.group(0)}"');
+    data = data.replaceAll(':', '":');
 
-    // Create a map to store key-value pairs
-    Map<String, String> keyValueMap = {};
-    for (String pair in keyValuePairs) {
-      List<String> keyValue = pair.trim().split(':');
-      if (keyValue.length == 2) {
-        keyValueMap[keyValue[0].trim()] = keyValue[1].trim();
-      }
-    }
+    // Parse the JSON string into a map
+    Map<String, dynamic> map = jsonDecode('{$data}');
+
+    print(map);
 
     // Extract values from the map and create a NotificationModel instance
     return ChatNotificationResponseModel(
-      body: keyValueMap['body'] ?? '',
-      type: keyValueMap['Type'],
-      reciverId: keyValueMap['ReciverId'],
-      senderImage: keyValueMap['SenderImage'],
-      senderName: keyValueMap['SenderName'],
-      title: keyValueMap['title'],
-      senderId: keyValueMap['SenderId'],
+      body: map['body'] ?? '',
+      type: map['Type'],
+      reciverId: map['ReciverId'],
+      senderImage: map['SenderImage'],
+      senderName: map['SenderName'],
+      title: map['title'],
+      senderId: map['SenderId'],
     );
   }
 }

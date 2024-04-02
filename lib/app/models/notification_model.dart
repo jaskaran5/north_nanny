@@ -14,6 +14,12 @@ class NotificationEntityModel {
   String? body;
   String? title;
   String? bookingId;
+  dynamic type;
+  dynamic receiverId;
+  dynamic senderId;
+
+  dynamic senderImage;
+  dynamic senderName;
 
   NotificationEntityModel({
     this.datetime,
@@ -23,6 +29,11 @@ class NotificationEntityModel {
     this.body,
     this.title,
     this.bookingId,
+    this.type,
+    this.receiverId,
+    this.senderId,
+    this.senderImage,
+    this.senderName,
   });
 
   factory NotificationEntityModel.fromJson(Map<String, dynamic> json) =>
@@ -34,6 +45,11 @@ class NotificationEntityModel {
         body: json["body"],
         title: json["title"],
         bookingId: json["bookingid"],
+        type: json["Type"],
+        senderId: json["SenderId"],
+        senderImage: json["SenderImage"],
+        senderName: json["SenderName"],
+        receiverId: json["ReciverId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +60,9 @@ class NotificationEntityModel {
         "body": body,
         "title": title,
         "bookingid": bookingId,
+        "type": type,
+        "reciverId": receiverId,
+        "senderImage": senderImage,
+        "senderId": senderId,
       };
 }
