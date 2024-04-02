@@ -343,40 +343,40 @@ class GetNannyProfileController extends GetxController {
         "totalBillAmount": isUseReferral ? totalPrice - 5 : totalPrice,
       };
       log('confirm Api body:$body');
-      // _apiHelper
-      //     .postApi(
-      //   ApiUrls.bookAppointment,
-      //   jsonEncode(body),
-      // )
-      //     .futureValue((value) {
-      //   printInfo(info: "confirm booking $value");
-      //   var res = ChildListResponseModel.fromJson(value);
+      _apiHelper
+          .postApi(
+        ApiUrls.bookAppointment,
+        jsonEncode(body),
+      )
+          .futureValue((value) {
+        printInfo(info: "confirm booking $value");
+        var res = ChildListResponseModel.fromJson(value);
 
-      //   log("res--${res.response}");
+        log("res--${res.response}");
 
-      //   if (res.response == AppConstants.apiResponseSuccess) {
-      //     // toast(msg: res.message.toString(), isError: false);
-      //     /// used to show the booking details.
-      //     RouteManagement.goToSuccessView(
-      //       buttonText: TranslationKeys.backToHome.tr,
-      //       successSvg: Assets.iconsSuccess,
-      //       header: TranslationKeys.nannyRequested.tr,
-      //       headerStyle: AppStyles.ubDarkBlackColor24W700,
-      //       subHeader: TranslationKeys.notificationNannyAccept.tr,
-      //       onTapButton: () {
-      //         RouteManagement.goToOffAllDashboard(isFromSetting: false);
-      //       },
-      //       subTitleStyle: AppStyles.ubGrey16W500,
-      //       subHeaderMaxLines: 2,
-      //       headerMaxLines: 2,
-      //       successImage: '',
-      //       sendTipText: false,
-      //     );
-      //     update();
-      //   } else {
-      //     toast(msg: res.message.toString(), isError: true);
-      //   }
-      // }, retryFunction: () {});
+        if (res.response == AppConstants.apiResponseSuccess) {
+          // toast(msg: res.message.toString(), isError: false);
+          /// used to show the booking details.
+          RouteManagement.goToSuccessView(
+            buttonText: TranslationKeys.backToHome.tr,
+            successSvg: Assets.iconsSuccess,
+            header: TranslationKeys.nannyRequested.tr,
+            headerStyle: AppStyles.ubDarkBlackColor24W700,
+            subHeader: TranslationKeys.notificationNannyAccept.tr,
+            onTapButton: () {
+              RouteManagement.goToOffAllDashboard(isFromSetting: false);
+            },
+            subTitleStyle: AppStyles.ubGrey16W500,
+            subHeaderMaxLines: 2,
+            headerMaxLines: 2,
+            successImage: '',
+            sendTipText: false,
+          );
+          update();
+        } else {
+          toast(msg: res.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
       printError(info: "confirm Booking  API ISSUE $s");

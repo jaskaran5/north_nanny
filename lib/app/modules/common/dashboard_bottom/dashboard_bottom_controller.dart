@@ -59,7 +59,6 @@ class DashboardBottomController extends GetxController {
       selectedTabIndex.value = 4;
     }
     checkLoginType();
-    getNotificationCount();
   }
 
   /// CUSTOMER
@@ -84,7 +83,7 @@ class DashboardBottomController extends GetxController {
   NotificationCountModel? notificationCountModel;
 
   /// used to get notification Count
-  Future<void> getNotificationCount() async {
+  getNotificationCount() async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;

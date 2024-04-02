@@ -13,13 +13,13 @@ String chatNotificationResponseModelToJson(
     json.encode(data.toJson());
 
 class ChatNotificationResponseModel {
-  int? type;
-  int? reciverId;
+  dynamic type;
+  dynamic reciverId;
   String? senderImage;
   String? senderName;
   String? body;
   String? title;
-  int? senderId;
+  dynamic senderId;
 
   ChatNotificationResponseModel({
     this.type,

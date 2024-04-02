@@ -15,6 +15,9 @@ class DashboardBottomView extends GetView<DashboardBottomController> {
   @override
   Widget build(BuildContext context) => GetBuilder<DashboardBottomController>(
         init: DashboardBottomController(),
+        initState: (state) {
+          Get.find<DashboardBottomController>().getNotificationCount();
+        },
         builder: (controller) => Scaffold(
           bottomNavigationBar: BottomNavigationBar(
             showUnselectedLabels: true,
@@ -42,7 +45,7 @@ class DashboardBottomView extends GetView<DashboardBottomController> {
                                 .toLowerCase() ==
                             '' &&
                         controller.notificationCountModel?.data != null &&
-                        controller.notificationCountModel?.data != 0 )
+                        controller.notificationCountModel?.data != 0)
                       Positioned(
                         top: Dimens.two,
                         right: Dimens.zero,

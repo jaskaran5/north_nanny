@@ -153,7 +153,10 @@ class FCMService {
     }
 
     var dashBoardBottomController = Get.find<DashboardBottomController>();
-    dashBoardBottomController.getNotificationCount();
+    await dashBoardBottomController.getNotificationCount().then((value) {
+      log("get notification api called in firebase helper");
+    });
+
     if (dashBoardBottomController.selectedTabIndex.value == 0) {
       if (logInType == StringConstants.customer) {
         if (!Get.isRegistered<CustomerHomeController>()) {
@@ -214,19 +217,86 @@ class FCMService {
     var logInType = Storage.getValue(StringConstants.loginType);
     log('Notification Login Type------------> $logInType');
 
-    /// this code os used to show the local notification in app.
-    // await flutterLocalNotificationsPlugin.show(
-    //   int.parse(response.type ?? '0'),
-    //   message.notification?.body,
-    //   message.notification?.body ?? '',
-    //   notificationDetails,
-    //   payload: message.data.toString(),
-    // );
+    // this code os used to show the local notification in app.
+    await flutterLocalNotificationsPlugin.show(
+      int.parse(response.type.toString()),
+      response.title,
+      response.body ?? '',
+      notificationDetails,
+      payload: message.data.toString(),
+    );
     debugPrint('notification showing');
   }
 
   /// used to on tap notification handle
   void selectNotification(NotificationResponse notificationResponse) async {
+    debugPrint('Notification Tapped payload :${notificationResponse.payload}');
+
+    // if (notificationResponse.P = null) {
+    // } else {
+    String payload = "${notificationResponse.payload}";
+
+    /// used to paras the response.
+    var response = parseNotificationModel(payload);
+
+    debugPrint('Notification Tap response: $response');
+    String logInType = await Storage.getValue(StringConstants.loginType);
+
+    debugPrint(
+        'Notification Tap LogIn Type :$logInType  and  response $response');
+
+    var controller = Get.find<DashboardBottomController>();
+    controller.selectedBottomTab = 2;
+    Future.delayed(
+      const Duration(seconds: 1),
+      () => controller.update(),
+    );
+
+    /// this code is used to redirect to the booking flow when we tap on that.
+    /*
+
+    /// api used to read the notification
+    Get.find<NotificationController>().postNotificationRead(
+        notificationId: int.parse(response.notificationId.toString()));
+
+    if (logInType == StringConstants.nanny) {
+      if (!Get.isRegistered<NannyBookingDetailController>()) {
+        NannyBookingDetailBinding().dependencies();
+      }
+      var nannyBookingDetailsController =
+          Get.find<NannyBookingDetailController>();
+
+      /// used to  get the booking detail.
+      nannyBookingDetailsController.getBookingDetailOfCustomer(
+          bookingId: int.parse(response.bookingId.toString()));
+
+      /// used to  store  the booking Status.
+      nannyBookingDetailsController.typeOfBooking(
+          bookingStatus: int.parse(response.bookingStatus.toString()));
+
+      /// going to route.
+      RouteManagement.goToNannyBookingView();
+    } else if (logInType == StringConstants.customer) {
+      if (!Get.isRegistered<BookingDetailController>()) {
+        BookingDetailBinding().dependencies();
+      }
+
+      /// used to  get the booking detail.
+      Get.find<BookingDetailController>().getBookingDataById(
+          bookingId: int.parse(response.bookingId.toString()));
+
+      /// used to  store  the booking Status.
+      Get.find<BookingDetailController>().typeOfBooking(
+          bookingStatus: int.parse(response.bookingStatus.toString()));
+
+      /// going to route.
+      RouteManagement.goToCustomerBookingDetailView();
+    }*/
+    // }
+  }
+
+  /// used to on tap notification handle
+  void selecChattNotification(NotificationResponse notificationResponse) async {
     debugPrint('Notification Tapped payload :${notificationResponse.payload}');
     String payload = "${notificationResponse.payload}";
 
@@ -273,6 +343,33 @@ class FCMService {
       body: keyValueMap['body'] ?? "",
       title: keyValueMap['title'] ?? "",
       bookingId: keyValueMap['bookingid'] ?? "",
+    );
+  }
+
+  /// this is used to convert the response of model to this.
+  ChatNotificationResponseModel parseChatNotificationModel(String data) {
+    // Remove curly braces and split by commas to get key-value pairs
+    List<String> keyValuePairs =
+        data.replaceAll('{', '').replaceAll('}', '').split(',');
+
+    // Create a map to store key-value pairs
+    Map<String, String> keyValueMap = {};
+    for (String pair in keyValuePairs) {
+      List<String> keyValue = pair.trim().split(':');
+      if (keyValue.length == 2) {
+        keyValueMap[keyValue[0].trim()] = keyValue[1].trim();
+      }
+    }
+
+    // Extract values from the map and create a NotificationModel instance
+    return ChatNotificationResponseModel(
+      body: keyValueMap['body'] ?? '',
+      type: keyValueMap['Type'],
+      reciverId: keyValueMap['ReciverId'],
+      senderImage: keyValueMap['SenderImage'],
+      senderName: keyValueMap['SenderName'],
+      title: keyValueMap['title'],
+      senderId: keyValueMap['SenderId'],
     );
   }
 }

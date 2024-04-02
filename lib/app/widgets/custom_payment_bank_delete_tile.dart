@@ -9,7 +9,6 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class CustomPaymentBankDeleteTile extends StatelessWidget {
   final String accountNumber;
-  final String asset;
   final String cardType;
   final String userName;
   final Function() onTapButton;
@@ -17,7 +16,6 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
   const CustomPaymentBankDeleteTile({
     super.key,
     required this.accountNumber,
-    required this.asset,
     required this.cardType,
     required this.onTapButton,
     required this.userName,
@@ -51,12 +49,7 @@ class CustomPaymentBankDeleteTile extends StatelessWidget {
                   color: AppColors.colorEEF5FCLightNavyBlue,
                   borderRadius: BorderRadius.circular(Dimens.ten),
                 ),
-                child: AppText(
-                  text: cardType.characters.first.capitalize,
-                  style: AppStyles.ubNavyBlue38W700,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                ),
+                child: SvgPicture.asset(Assets.iconsBank),
               ),
               Dimens.boxWidth10,
               Column(

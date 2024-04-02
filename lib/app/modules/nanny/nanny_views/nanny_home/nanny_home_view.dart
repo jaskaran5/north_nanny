@@ -46,7 +46,7 @@ class NannyHomeView extends StatelessWidget {
                         Dimens.boxHeight2,
                         AppText(
                           text:
-                              '${Utility.getGreetingMessage()},${controller.nannyHomeData.data?.name.toString().capitalizeFirst} ',
+                              '${Utility.getGreetingMessage()}, ${controller.nannyHomeData.data?.name.toString().capitalizeFirst} ',
                           style: AppStyles.pdBlack18W600,
                           maxLines: 1,
                           textAlign: TextAlign.left,
@@ -173,7 +173,7 @@ class NannyHomeView extends StatelessWidget {
                                 }
                                 var nannyBookingDetailsController =
                                     Get.find<NannyBookingDetailController>();
-                                 nannyBookingDetailsController
+                                nannyBookingDetailsController
                                     .getBookingDetailOfCustomer(
                                         bookingId: controller
                                                 .nannyHomeData
@@ -253,7 +253,8 @@ class NannyHomeView extends StatelessWidget {
                                         .numberOfChildren ??
                                     0,
                                 distance: controller.nannyHomeData.data
-                                        ?.bookingRequest?[index].distance?.toInt() ??
+                                        ?.bookingRequest?[index].distance
+                                        ?.toInt() ??
                                     0,
                               ),
                             ),
