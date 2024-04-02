@@ -253,7 +253,7 @@ class NannyHomeView extends StatelessWidget {
                                         .numberOfChildren ??
                                     0,
                                 distance: controller.nannyHomeData.data
-                                        ?.bookingRequest?[index].distance ??
+                                        ?.bookingRequest?[index].distance?.toInt() ??
                                     0,
                               ),
                             ),

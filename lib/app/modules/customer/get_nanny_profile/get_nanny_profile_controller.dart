@@ -17,6 +17,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
+import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 import 'package:northshore_nanny_flutter/app/widgets/multi_selct_dialog.dart';
 import 'package:northshore_nanny_flutter/app/widgets/multi_select_children.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
@@ -382,6 +383,19 @@ class GetNannyProfileController extends GetxController {
     }
   }
 
+  /// confirm booking validator
+  Future<bool> confirmBookingValidator(
+      List<String> servicesList, List<int> childList) async {
+    bool value = await Validator.instance
+        .confirmBookingValidator(childList: childList, services: servicesList);
+    if (value == true) {
+      return true;
+    } else {
+      toast(msg: Validator.instance.error, isError: true);
+      return false;
+    }
+  }
+
   /// used to store total price;
   var totalPrice = 0.0.obs;
 
@@ -501,7 +515,4 @@ class GetNannyProfileController extends GetxController {
       log('Selected child list: $selectedOptions');
     }
   }
-
-
-
 }

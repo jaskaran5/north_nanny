@@ -60,7 +60,7 @@ class NotificationController extends GetxController {
       var body = {"notificationId": notificationId};
       _apiHelper
           .postApi(
-        ApiUrls.notificationList,
+        ApiUrls.readNotification,
         jsonEncode(body),
       )
           .futureValue((value) {

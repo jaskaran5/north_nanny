@@ -130,6 +130,7 @@ class ChatView extends StatelessWidget {
                                       onTap: () {
                                         controller.blockUnblockUser();
                                       },
+                                      //
                                       child: Text(
                                         controller.isBlock.value
                                             ? "UnBlock"

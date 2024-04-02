@@ -69,7 +69,7 @@ class DashboardBottomView extends GetView<DashboardBottomController> {
                             maxLines: 1,
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
                 label: controller.bottomTabList[index].bottomTabName.tr,

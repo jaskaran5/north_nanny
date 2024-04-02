@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/calender/customer_calender_view.dart';
@@ -34,6 +37,8 @@ class DashboardBottomController extends GetxController {
     if (selectedTabIndex.value == 1) {
       Get.find<RecentChatController>().initMessages();
     }
+    debugPrint(
+        'Selected Bottom Tab --->>>>>>>>>>>>>>> ${selectedTabIndex.value}');
     update();
   }
 
@@ -48,16 +53,13 @@ class DashboardBottomController extends GetxController {
   void onInit() {
     super.onInit();
 
-    isFromPassword.value = Get.arguments;
+    isFromPassword.value = Get.arguments ?? false;
 
-    if (isFromPassword.value) {
+    if (isFromPassword.value == true) {
       selectedTabIndex.value = 4;
-    } else {
-      selectedTabIndex.value = 0;
     }
     checkLoginType();
     getNotificationCount();
-    update();
   }
 
   /// CUSTOMER
@@ -82,12 +84,11 @@ class DashboardBottomController extends GetxController {
   NotificationCountModel? notificationCountModel;
 
   /// used to get notification Count
-  getNotificationCount() async {
+  Future<void> getNotificationCount() async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
-
       _apiHelper
           .postApi(
         ApiUrls.getNotificationCount,
@@ -99,9 +100,11 @@ class DashboardBottomController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           notificationCountModel = response;
           update();
+          log('notificationResponse:$notificationCountModel');
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
+        update();
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
