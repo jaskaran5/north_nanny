@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/chat_notification_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
@@ -98,16 +99,26 @@ class FCMService {
 
     /// used to listen the notification.
     FirebaseMessaging.onMessage.listen((message) {
+      log("notification messages is type-->> ${message.data["Type"]}");
       log("----------------------->>>>>>>.message ------>>>>${message.notification!.body}");
       log('body: ${message.notification?.body.toString()}');
       log('title:${message.notification?.title.toString()}');
       final data = message.data;
       log('notification data -------->>>>>>>> $data');
-      showNotification(message);
+
+      if (message.data["Type"] != null) {
+        showChatNotification(message);
+      } else {
+        showNotification(message);
+      }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       log("notification click in foreground");
-      showNotification(message);
+      if (message.data["Type"] != null) {
+        showChatNotification(message);
+      } else {
+        showNotification(message);
+      }
     });
   }
 
@@ -168,6 +179,48 @@ class FCMService {
     debugPrint('notification showing');
   }
 
+  /// used to show --->>>>> CHAT <<<<<<<-------    the notifications.
+  Future<void> showChatNotification(RemoteMessage message) async {
+    log("show chat notification -->> ${message.data}");
+    log("show chat notification -->> ${message.data}");
+    log("show chat notification -->> ${message.data}");
+    log("show chat notification -->> ${message.data}");
+
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      message.senderId ?? '',
+      'NorthShoreNanny',
+      channelDescription: 'nanny channel description',
+      icon: "@drawable/ic_notification",
+      importance: Importance.max,
+      priority: Priority.max,
+    );
+
+    DarwinNotificationDetails drawinNotificationDetail =
+        const DarwinNotificationDetails();
+
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: drawinNotificationDetail);
+
+    /// this is used to convert notification
+    var response = ChatNotificationResponseModel.fromJson(message.data);
+
+    log('notification response data :$response');
+
+    var logInType = Storage.getValue(StringConstants.loginType);
+    log('Notification Login Type------------> $logInType');
+
+    /// this code os used to show the local notification in app.
+    // await flutterLocalNotificationsPlugin.show(
+    //   int.parse(response.type ?? '0'),
+    //   message.notification?.body,
+    //   message.notification?.body ?? '',
+    //   notificationDetails,
+    //   payload: message.data.toString(),
+    // );
+    debugPrint('notification showing');
+  }
+
   /// used to on tap notification handle
   void selectNotification(NotificationResponse notificationResponse) async {
     debugPrint('Notification Tapped payload :${notificationResponse.payload}');
@@ -181,54 +234,6 @@ class FCMService {
 
     debugPrint(
         'Notification Tap LogIn Type :$logInType  and  response $response');
-
-    var controller = Get.find<DashboardBottomController>();
-    controller.selectedBottomTab = 2;
-    Future.delayed(
-      const Duration(seconds: 1),
-      () => controller.update(),
-    );
-
-    /// this code is used to redirect to the booking flow when we tap on that.
-    /*
-
-    /// api used to read the notification
-    Get.find<NotificationController>().postNotificationRead(
-        notificationId: int.parse(response.notificationId.toString()));
-
-    if (logInType == StringConstants.nanny) {
-      if (!Get.isRegistered<NannyBookingDetailController>()) {
-        NannyBookingDetailBinding().dependencies();
-      }
-      var nannyBookingDetailsController =
-          Get.find<NannyBookingDetailController>();
-
-      /// used to  get the booking detail.
-      nannyBookingDetailsController.getBookingDetailOfCustomer(
-          bookingId: int.parse(response.bookingId.toString()));
-
-      /// used to  store  the booking Status.
-      nannyBookingDetailsController.typeOfBooking(
-          bookingStatus: int.parse(response.bookingStatus.toString()));
-
-      /// going to route.
-      RouteManagement.goToNannyBookingView();
-    } else if (logInType == StringConstants.customer) {
-      if (!Get.isRegistered<BookingDetailController>()) {
-        BookingDetailBinding().dependencies();
-      }
-
-      /// used to  get the booking detail.
-      Get.find<BookingDetailController>().getBookingDataById(
-          bookingId: int.parse(response.bookingId.toString()));
-
-      /// used to  store  the booking Status.
-      Get.find<BookingDetailController>().typeOfBooking(
-          bookingStatus: int.parse(response.bookingStatus.toString()));
-
-      /// going to route.
-      RouteManagement.goToCustomerBookingDetailView();
-    }*/
   }
 
   /// this is used to convert the response of model to this.

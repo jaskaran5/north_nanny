@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
-import 'package:northshore_nanny_flutter/app/models/block_unblock_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/block_unblock_listen_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/clear_chat_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
@@ -37,10 +37,12 @@ class ChatController extends GetxController {
   final _socketHelper = SignalRHelper();
 
   RxBool isSkeletonizer = true.obs;
+  RxBool isLoading = false.obs;
 
   RxString loginType = ''.obs;
   RxInt myUserId = 0.obs;
-  RxBool isBlock = false.obs;
+  RxBool isBlockByMe = false.obs;
+  RxBool isBlockByOtherUser = false.obs;
 
   RxString thumbnailPath = ''.obs;
 
@@ -183,35 +185,42 @@ class ChatController extends GetxController {
     String? fileType,
     bool? isFile,
   }) {
-    log("fileType: -->> ${thumbnailPath.value}");
-    log("fileType: -->> $fileType");
+    if (isBlockByMe.value) {
+      Utils.showDialog(
+        "You have blocked this customer. Please unblock to chat again",
+        title: "Info",
+      );
+    } else {
+      log("fileType: -->> ${thumbnailPath.value}");
+      log("fileType: -->> $fileType");
 
-    log("isFile: -->> $isFile");
+      log("isFile: -->> $isFile");
 
-    print('Send message data ======> ${[
-      toUserId,
-      message!,
-      type!,
-      fileType,
-      isFile,
-      DateTime.now().toUtc().toIso8601String()
-    ].toString()}');
+      print('Send message data ======> ${[
+        toUserId,
+        message!,
+        type!,
+        fileType,
+        isFile,
+        DateTime.now().toUtc().toIso8601String()
+      ].toString()}');
 
-    final result = _socketHelper.hubConnection.invoke('SendMessage', args: [
-      toUserId!,
-      message,
-      type,
-      fileType ?? '',
-      isFile!,
-      DateTime.now().toUtc().toIso8601String(),
-      thumbnailPath.value,
-      thumbnailPath.value.isNotEmpty ? 'png' : ''
-    ]);
-    chatTextController.clear();
-    updateSendMessageVisibility(isVisible: false);
-    thumbnailPath.value = '';
-    print('Message sent Received Data ========> ${result.toString()}');
-    update();
+      final result = _socketHelper.hubConnection.invoke('SendMessage', args: [
+        toUserId!,
+        message,
+        type,
+        fileType ?? '',
+        isFile!,
+        DateTime.now().toUtc().toIso8601String(),
+        thumbnailPath.value,
+        thumbnailPath.value.isNotEmpty ? 'png' : ''
+      ]);
+      chatTextController.clear();
+      updateSendMessageVisibility(isVisible: false);
+      thumbnailPath.value = '';
+      print('Message sent Received Data ========> ${result.toString()}');
+      update();
+    }
   }
 
 //listen send message
@@ -310,6 +319,7 @@ class ChatController extends GetxController {
           log("=============> $isCurrentUser");
           log("OtherUserId=============> ${otherUserId.value}");
           log("Chat Response=============> ${res.data?.toJson()}");
+
           if (isCurrentUser) {
             log("INSERTED ${data.toString()}", name: "CHAT_STATUS");
             messageList.insert(
@@ -329,6 +339,7 @@ class ChatController extends GetxController {
               ),
             );
           }
+          isLoading.value = false;
           messageList.refresh();
           update();
           if (Get.isRegistered<RecentChatController>()) {
@@ -339,7 +350,7 @@ class ChatController extends GetxController {
         } else {
           log("is block -->> ${res.data!.isBlockChat}");
 
-          Utils.showDialog("You Are Blocked ");
+          // Utils.showDialog("You Are Blocked ");
         }
       },
     );
@@ -368,6 +379,8 @@ class ChatController extends GetxController {
 
         log("file is video -->> ${imageFile.path.split('.').last}");
         if (imageFile.path.split('.').last == "mp4") {
+          isLoading.value = true;
+          log("videro sent--->>>>>");
           thumbnailPath.value =
               await extractThumbnailAsBase64(imageFile.path) ?? '';
 
@@ -382,17 +395,20 @@ class ChatController extends GetxController {
             fileType: imageFile.path.split(".").last,
             isFile: true,
           );
-        }
+        } else {
+          isLoading.value = true;
 
-        DateTime now = DateTime.now();
-        int milliseconds = now.millisecondsSinceEpoch;
-        sendMessage(
-          toUserId: int.parse(otherUserId.value),
-          message: base64Image,
-          type: 1,
-          fileType: imageFile.path.split(".").last,
-          isFile: true,
-        );
+          log("videro not sent--->>>>>");
+          DateTime now = DateTime.now();
+          int milliseconds = now.millisecondsSinceEpoch;
+          sendMessage(
+            toUserId: int.parse(otherUserId.value),
+            message: base64Image,
+            type: 1,
+            fileType: imageFile.path.split(".").last,
+            isFile: true,
+          );
+        }
       }
     });
   }
@@ -453,7 +469,12 @@ class ChatController extends GetxController {
         log("isbloack --->.. " "${res.data?.isBlock}");
 
         // log("is bliocj-->> ${res.isBlock}");
-        isBlock.value = res.data?.isBlock ?? false;
+
+        if (res.data?.blockBy == myUserId.value) {
+          isBlockByMe.value = true;
+        } else if (res.data?.blockBy == otherUserId.value) {
+          isBlockByOtherUser.value = true;
+        }
 
         messageList.value = res.data?.messageList ?? [];
         messageList.sort((a, b) => b.date!.compareTo(a.date!));
@@ -608,10 +629,10 @@ class ChatController extends GetxController {
 
   blockUnblockUser() {
     _socketHelper.hubConnection.invoke("BlockUser",
-        args: [int.parse(otherUserId.value), !isBlock.value]);
+        args: [int.parse(otherUserId.value), !isBlockByMe.value]);
 
     log("blockUnblockUser listen called");
-    log("blockUnblockUser listen called -->>${isBlock.value}");
+    log("blockUnblockUser listen called -->>${isBlockByMe.value}");
   }
 
   //** LISTEN block / unblock user */
@@ -622,15 +643,40 @@ class ChatController extends GetxController {
         log("block unblock response data:$arguments");
 
         log("arguments :-->> $arguments");
+        print("arguments :-->> $arguments");
 
         var data = arguments?[0] as Map<String, dynamic>;
 
-        var res = BlockUnBlockResponseModel.fromJson(data);
+        var res = BlockUnblockListenResponseModel.fromJson(data);
         log("arguments :-->> ${res.data?.isBlock}");
 
-        isBlock.value = res.data?.isBlock ?? false;
+        if (res.data?.isBlock == true) {
+          if ((res.data?.blockedBy.toString() == myUserId.value.toString()) &&
+              (res.data?.blockedTo.toString() == otherUserId.value)) {
+            isBlockByMe.value = true;
+          } else if ((res.data?.blockedBy.toString() == otherUserId.value) &&
+              (res.data?.blockedTo.toString() == myUserId.value.toString())) {
+            isBlockByOtherUser.value = true;
+
+            log("block by other user--...");
+          }
+        } else if (res.data?.isBlock == false) {
+          if ((res.data?.unBlockedBy.toString() == myUserId.value.toString()) &&
+              (res.data?.unBlockedTo.toString() ==
+                  otherUserId.value.toString())) {
+            isBlockByMe.value = false;
+          } else if ((res.data?.unBlockedBy.toString() == otherUserId.value) &&
+              (res.data?.unBlockedTo.toString() == myUserId.value.toString())) {
+            log("unblock by other user--...");
+
+            isBlockByOtherUser.value = false;
+          }
+          update();
+        }
+
+        // isBlock.value = res.data?.isBlock ?? false;
         update();
-        log("blockUnblockUser listen called -->>${isBlock.value}");
+        // log("blockUnblockUser listen called -->>${isBlock.value}");
       },
     );
 

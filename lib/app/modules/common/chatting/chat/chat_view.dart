@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:lottie/lottie.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
@@ -132,7 +133,7 @@ class ChatView extends StatelessWidget {
                                       },
                                       //
                                       child: Text(
-                                        controller.isBlock.value
+                                        controller.isBlockByMe.value
                                             ? "UnBlock"
                                             : "Block",
                                         style:
@@ -153,7 +154,7 @@ class ChatView extends StatelessWidget {
                           child: Visibility(
                             visible: true,
                             replacement: const Center(),
-                            child: Column(
+                            child: Stack(
                               children: [
                                 Expanded(
                                   child: GroupedListView<MessageList, String>(
@@ -161,8 +162,6 @@ class ChatView extends StatelessWidget {
                                     elements: controller.messageList,
                                     shrinkWrap: true,
                                     reverse: true,
-
-                                    //  separator: const Text("dfasdf"),
 
                                     groupHeaderBuilder: (element) {
                                       return Text(
@@ -241,6 +240,10 @@ class ChatView extends StatelessWidget {
                                     // order: GroupedListOrder.DESC, // optional
                                   ),
                                 ),
+                                Visibility(
+                                    visible: controller.isLoading.value,
+                                    child: const Center(
+                                        child: CircularProgressIndicator()))
                               ],
                             ),
                           ),
@@ -258,83 +261,96 @@ class ChatView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: Dimens.edgeInsetsL16R16B16,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: controller.isSendMessageVisible.value
-                                  ? Get.width * .76
-                                  : Get.width * .9,
-                              padding: Dimens.edgeInsets4,
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                onChanged: (value) {
-                                  if (value.trim().isNotEmpty) {
-                                    controller.updateSendMessageVisibility(
-                                        isVisible: true);
-                                  } else {
-                                    controller.updateSendMessageVisibility(
-                                        isVisible: false);
-                                  }
-                                },
-                                controller: controller.chatTextController,
-                                decoration: InputDecoration(
-                                    hintText: 'Write a message',
-                                    border: InputBorder.none,
-                                    prefixIcon: IconButton(
-                                      icon: SvgPicture.asset(
-                                        Assets.iconsAttachments,
-                                        fit: BoxFit.cover,
-                                        height: Dimens.twentyFive,
-                                        width: Dimens.twentyFive,
-                                      ),
-                                      onPressed: () {
-                                        log("on click on pick document");
-                                        // controller.pickDocuments();
-                                        controller.pickDocumentFile();
+                      !controller.isBlockByOtherUser.value
+                          ? Padding(
+                              padding: Dimens.edgeInsetsL16R16B16,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: controller.isSendMessageVisible.value
+                                        ? Get.width * .76
+                                        : Get.width * .9,
+                                    padding: Dimens.edgeInsets4,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        if (value.trim().isNotEmpty) {
+                                          controller
+                                              .updateSendMessageVisibility(
+                                                  isVisible: true);
+                                        } else {
+                                          controller
+                                              .updateSendMessageVisibility(
+                                                  isVisible: false);
+                                        }
                                       },
-                                    )),
+                                      controller: controller.chatTextController,
+                                      decoration: InputDecoration(
+                                          hintText: 'Write a message',
+                                          border: InputBorder.none,
+                                          prefixIcon: IconButton(
+                                            icon: SvgPicture.asset(
+                                              Assets.iconsAttachments,
+                                              fit: BoxFit.cover,
+                                              height: Dimens.twentyFive,
+                                              width: Dimens.twentyFive,
+                                            ),
+                                            onPressed: () {
+                                              log("on click on pick document");
+                                              // controller.pickDocuments();
+                                              controller.pickDocumentFile();
+                                            },
+                                          )),
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible:
+                                        controller.isSendMessageVisible.value,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        if (controller.chatTextController.text
+                                                .trim() ==
+                                            '') {
+                                          toast(
+                                              msg:
+                                                  '"Please Enter your message"',
+                                              isError: true);
+                                        } else {
+                                          log("else part called");
+                                          controller.sendMessage(
+                                              toUserId: int.parse(controller
+                                                  .otherUserId.value
+                                                  .toString()),
+                                              message: controller
+                                                  .chatTextController.text
+                                                  .trim(),
+                                              fileType: null,
+                                              isFile: false,
+                                              type: 1);
+                                        }
+                                      },
+                                      child: SvgPicture.asset(
+                                        Assets.iconsChatSend,
+                                        height: Dimens.fifty,
+                                        width: Dimens.fifty,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Visibility(
-                              visible: controller.isSendMessageVisible.value,
-                              child: InkWell(
-                                onTap: () async {
-                                  if (controller.chatTextController.text
-                                          .trim() ==
-                                      '') {
-                                    toast(
-                                        msg: '"Please Enter your message"',
-                                        isError: true);
-                                  } else {
-                                    log("else part called");
-                                    controller.sendMessage(
-                                        toUserId: int.parse(controller
-                                            .otherUserId.value
-                                            .toString()),
-                                        message: controller
-                                            .chatTextController.text
-                                            .trim(),
-                                        fileType: null,
-                                        isFile: false,
-                                        type: 1);
-                                  }
-                                },
-                                child: SvgPicture.asset(
-                                  Assets.iconsChatSend,
-                                  height: Dimens.fifty,
-                                  width: Dimens.fifty,
-                                ),
+                            )
+                          : Container(
+                              margin: Dimens.edgeInsets10,
+                              child: Text(
+                                "You Can't send message",
+                                style: AppStyles.b0b0fairPlay15w600,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
                     ],
                   ),
                 ));
