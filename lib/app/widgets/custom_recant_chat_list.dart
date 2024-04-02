@@ -58,7 +58,7 @@ class CustomRecentChatListTile extends StatelessWidget {
                         Icons.circle,
                         color: chatData!.isOnline!
                             ? AppColors.onlineColor
-                            : AppColors.offlineColor,
+                            : Colors.red,
                         size: Dimens.ten,
                       ),
                     ),

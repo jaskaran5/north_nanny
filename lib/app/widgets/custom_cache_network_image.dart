@@ -61,40 +61,6 @@ class CustomCacheNetworkImage extends StatelessWidget {
                   ),
                 ),
               );
-
-              // return CircularPercentIndicator(
-              //   animation: true,
-              //   radius: size / 2,
-              //   lineWidth: 5.0,
-              //   percent: (downloadProgress.progress != null)
-              //       ? (downloadProgress.progress)!
-              //       : 1.0,
-              //   center: Text(
-              //     downloadProgress.progress != null
-              //         ? (((downloadProgress.progress!) * 100)
-              //                 .toInt()
-              //                 .toString() +
-              //             '%')
-              //         : '',
-              //     style: const TextStyle(color: blackColor),
-              //   ),
-              //   progressColor: Colors.green,
-              // );
-              // Stack(
-              //   children: [
-
-              //     CircularProgressIndicator(
-              //       strokeWidth: 8.0,
-              //       value: downloadProgress.progress,
-              //     ),
-              //     Text(downloadProgress.progress != null
-              //         ? (((downloadProgress.progress!) * 100)
-              //                 .toInt()
-              //                 .toString() +
-              //             '%')
-              //         : '')
-              //   ],
-              // );
             },
             errorWidget: (context, url, error) => const Icon(Icons.error),
           );

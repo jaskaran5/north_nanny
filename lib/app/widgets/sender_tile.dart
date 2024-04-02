@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
@@ -71,18 +72,40 @@ class SenderTile extends StatelessWidget {
     if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
       return GestureDetector(
         onTap: onTapOnImage,
-        child: CustomCacheNetworkImage(
-          img: fileLink!,
-          size: 100,
-          imageRadius: 10,
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: AppColors.navyBlue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.thirteen),
+              topRight: Radius.circular(Dimens.thirteen),
+              bottomLeft: Radius.circular(Dimens.thirteen),
+            ),
+          ),
+          child: CustomCacheNetworkImage(
+            img: fileLink!,
+            size: 100,
+            imageRadius: 10,
+          ),
         ),
       );
     } else if ((fileType == "pdf") || (fileType == "docx")) {
       return GestureDetector(
         onTap: onTapOnPdf,
-        child: const Icon(
-          Icons.picture_as_pdf,
-          size: 100,
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: AppColors.navyBlue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.thirteen),
+              topRight: Radius.circular(Dimens.thirteen),
+              bottomLeft: Radius.circular(Dimens.thirteen),
+            ),
+          ),
+          child: const Icon(
+            Icons.picture_as_pdf,
+            size: 100,
+          ),
         ),
       );
     } else if (fileType == "mp4") {
@@ -90,23 +113,34 @@ class SenderTile extends StatelessWidget {
       // Show video player widget here
       return GestureDetector(
         onTap: onTapOnVideo,
-        child: SizedBox(
-          height: 100,
-          width: 100,
-          child: Stack(
-            children: [
-              CustomCacheNetworkImage(
-                img: thumbImage!,
-                size: 100,
-                imageRadius: 10,
-              ),
-              const Center(
-                  child: Icon(
-                Icons.slow_motion_video_outlined,
-                color: Colors.white,
-                size: 40,
-              ))
-            ],
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: AppColors.navyBlue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.thirteen),
+              topRight: Radius.circular(Dimens.thirteen),
+              bottomLeft: Radius.circular(Dimens.thirteen),
+            ),
+          ),
+          child: SizedBox(
+            height: 100,
+            width: 100,
+            child: Stack(
+              children: [
+                CustomCacheNetworkImage(
+                  img: thumbImage!,
+                  size: 100,
+                  imageRadius: 10,
+                ),
+                const Center(
+                    child: Icon(
+                  Icons.slow_motion_video_outlined,
+                  color: Colors.white,
+                  size: 40,
+                ))
+              ],
+            ),
           ),
         ),
       ); // Replace this with your video player widget
@@ -123,15 +157,16 @@ class SenderTile extends StatelessWidget {
         vertical: 15,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.navyBlue,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(Dimens.fifteen),
           topRight: Radius.circular(Dimens.fifteen),
-          bottomRight: Radius.circular(Dimens.fifteen),
+          bottomLeft: Radius.circular(Dimens.fifteen),
         ),
       ),
       child: Text(
         title!,
+        style: const TextStyle(color: AppColors.primaryColor),
         textAlign: TextAlign.left,
       ),
     );

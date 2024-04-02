@@ -35,6 +35,9 @@ class GetNannyProfileView extends StatelessWidget {
           top: false,
           child: Scaffold(
             appBar: CustomAppbarWidget(
+              onBackPress: () {
+                Get.back(result: "true");
+              },
               title: "Nanny Profile",
               centerTitle: true,
               actions: [

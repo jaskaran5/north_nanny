@@ -91,7 +91,7 @@ class ChatView extends StatelessWidget {
                                           Icons.circle,
                                           color: controller.isOnline.value
                                               ? AppColors.onlineColor
-                                              : AppColors.offlineColor,
+                                              : Colors.red,
                                           size: 10,
                                         ),
                                         const SizedBox(
@@ -130,9 +130,12 @@ class ChatView extends StatelessWidget {
                                       onTap: () {
                                         controller.blockUnblockUser();
                                       },
-                                      child: const Text(
-                                        "Block",
-                                        style: TextStyle(color: Colors.red),
+                                      child: Text(
+                                        controller.isBlock.value
+                                            ? "UnBlock"
+                                            : "Block",
+                                        style:
+                                            const TextStyle(color: Colors.red),
                                       )),
                                 ];
                               },

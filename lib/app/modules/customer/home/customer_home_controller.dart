@@ -13,6 +13,7 @@ import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
@@ -516,5 +517,15 @@ class CustomerHomeController extends GetxController {
   socketConnection() async {
     // final signalRHelper = SignalRHelper();
     await _socketHelper.init();
+  }
+
+  redirectToGetNannyProfile() async {
+    dynamic check =
+        await Get.to(const GetNannyProfileView(), arguments: nannyUserId.value);
+
+    if (check != null) {
+      getDashboardApi();
+      print("check ---->>>>> $check");
+    }
   }
 }

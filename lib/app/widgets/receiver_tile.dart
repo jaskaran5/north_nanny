@@ -76,41 +76,74 @@ class ReceiverTile extends StatelessWidget {
     if ((fileType == "jpg") || (fileType == "jpeg") || (fileType == "png")) {
       return GestureDetector(
         onTap: onTapOnImage,
-        child: CustomCacheNetworkImage(
-          img: fileLink!,
-          size: 100,
-          imageRadius: 10,
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.fifteen),
+              topRight: Radius.circular(Dimens.fifteen),
+              bottomRight: Radius.circular(Dimens.fifteen),
+            ),
+          ),
+          child: CustomCacheNetworkImage(
+            img: fileLink!,
+            size: 100,
+            imageRadius: 10,
+          ),
         ),
       );
     } else if ((fileType == "pdf") || (fileType == "docx")) {
       return GestureDetector(
         onTap: onTapOnPdf,
-        child: const Icon(
-          Icons.picture_as_pdf,
-          size: 100,
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.fifteen),
+              topRight: Radius.circular(Dimens.fifteen),
+              bottomRight: Radius.circular(Dimens.fifteen),
+            ),
+          ),
+          child: const Icon(
+            Icons.picture_as_pdf,
+            size: 100,
+          ),
         ),
       );
     } else if (fileType == "mp4") {
       // Show video player widget here
       return GestureDetector(
         onTap: onTapOnVideo,
-        child: SizedBox(
-          height: 100,
-          width: 100,
-          child: Stack(
-            children: [
-              CustomCacheNetworkImage(
-                img: thumbImage!,
-                size: 100,
-                imageRadius: 10,
-              ),
-              const Center(
-                  child: Icon(
-                Icons.slow_motion_video_outlined,
-                color: Colors.white,
-                size: 40,
-              ))
-            ],
+        child: Container(
+          padding: Dimens.edgeInsets4,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimens.fifteen),
+              topRight: Radius.circular(Dimens.fifteen),
+              bottomRight: Radius.circular(Dimens.fifteen),
+            ),
+          ),
+          child: SizedBox(
+            height: 100,
+            width: 100,
+            child: Stack(
+              children: [
+                CustomCacheNetworkImage(
+                  img: thumbImage!,
+                  size: 100,
+                  imageRadius: 10,
+                ),
+                const Center(
+                    child: Icon(
+                  Icons.slow_motion_video_outlined,
+                  color: Colors.white,
+                  size: 40,
+                ))
+              ],
+            ),
           ),
         ),
       ); // Replace this with your video player widget

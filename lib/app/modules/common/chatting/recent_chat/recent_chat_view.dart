@@ -144,28 +144,42 @@ class RecentChatView extends GetView<RecentChatController> {
 
                       Dimens.boxHeight10,
                       //check
-                      Skeletonizer(
-                        enabled: controller.isShimmerEnabled.value,
-                        child: ListView.builder(
-                          itemCount: controller.recentChatList.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                controller.redirectToChatScreen(
-                                    id: controller.recentChatList[index].userId!
-                                        .toString());
-                              },
-                              child: CustomRecentChatListTile(
-                                image: controller.recentChatList[index].image ??
-                                    '',
-                                chatData: controller.recentChatList[index],
+
+                      controller.recentChatList.isEmpty
+                          ? SizedBox(
+                              height: Get.height / 1.4,
+                              child: Center(
+                                child: Text(
+                                  "No New Messages",
+                                  style: AppStyles.pdNavyBlue20W600,
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                      )
+                            )
+                          : Skeletonizer(
+                              enabled: controller.isShimmerEnabled.value,
+                              child: ListView.builder(
+                                itemCount: controller.recentChatList.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      controller.redirectToChatScreen(
+                                          id: controller
+                                              .recentChatList[index].userId!
+                                              .toString());
+                                    },
+                                    child: CustomRecentChatListTile(
+                                      image: controller
+                                              .recentChatList[index].image ??
+                                          '',
+                                      chatData:
+                                          controller.recentChatList[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
                     ],
                   ),
                 ),

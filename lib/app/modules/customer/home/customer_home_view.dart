@@ -220,8 +220,10 @@ class CustomerHomeView extends StatelessWidget {
                     visible: controller.isNannyMarkerVisible.value,
                     child: GestureDetector(
                       onTap: () {
-                        RouteManagement.goToGetNannyProfileView(
-                            argument: controller.nannyUserId.value);
+                        controller.redirectToGetNannyProfile();
+
+                        // RouteManagement.goToGetNannyProfileView(
+                        //     argument: controller.nannyUserId.value);
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
