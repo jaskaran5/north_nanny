@@ -71,6 +71,13 @@ class NotificationView extends StatelessWidget {
                               var customerBookingController =
                                   Get.find<BookingDetailController>();
 
+                              /// api used to Store  booking Status type.
+                              customerBookingController.typeOfBooking(
+                                  bookingStatus: notificationController
+                                      .notificationListModel
+                                      ?.data?[index]
+                                      .bookingStatus);
+
                               /// api used to get data of booking.
                               customerBookingController.getBookingDataById(
                                 bookingId: notificationController
@@ -78,7 +85,6 @@ class NotificationView extends StatelessWidget {
                                     ?.data?[index]
                                     .bookingId,
                               );
-
 
                               /// going to route
                               RouteManagement.goToCustomerBookingDetailView();
@@ -90,6 +96,14 @@ class NotificationView extends StatelessWidget {
 
                               var nannyBookingController =
                                   Get.find<NannyBookingDetailController>();
+
+                              /// used to store the type of booking
+                              nannyBookingController.typeOfBooking(
+                                  bookingStatus: notificationController
+                                          .notificationListModel
+                                          ?.data?[index]
+                                          .bookingStatus ??
+                                      0);
 
                               /// api used to get details of booking
                               nannyBookingController.getBookingDetailOfCustomer(

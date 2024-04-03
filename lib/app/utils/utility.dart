@@ -601,7 +601,11 @@ class Utility {
   /// this method is used to return seconds difference according to dateTime
   static int calculateDifferenceInSeconds(DateTime givenTime) {
     DateTime now = DateTime.now();
-    Duration difference = givenTime.difference(now);
+
+    // Convert given time to local time
+    DateTime localGivenTime = givenTime.toLocal();
+
+    Duration difference = localGivenTime.difference(now);
     int differenceInSeconds = difference.inSeconds;
     log('difference in seconds -: $differenceInSeconds');
     return differenceInSeconds;

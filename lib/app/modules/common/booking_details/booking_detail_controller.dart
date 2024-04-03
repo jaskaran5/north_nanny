@@ -81,6 +81,7 @@ class BookingDetailController extends GetxController {
   /// check status
   BookingDetailStatus? bookingDetailStatus;
 
+  /// api used to store the booking detail.
   getBookingDataById({required int bookingId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
@@ -110,6 +111,7 @@ class BookingDetailController extends GetxController {
           if (bookingDataById?.bookingStatus == 6) {
             timer.cancel();
             seconds = 0;
+            update(['customerTimerView']);
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'No',
@@ -243,8 +245,11 @@ class BookingDetailController extends GetxController {
     } else if (bookingStatus == 6) {
       timer.cancel();
       seconds = 0;
+      update(['customerTimerView']);
     } else if (bookingStatus == 8) {
       bookingDetailStatus = BookingDetailStatus.disputeRaised;
+    } else if (bookingStatus == 9) {
+      bookingDetailStatus = BookingDetailStatus.givenReviewByCustomer;
     }
     log('Booking Status Customer Side :$bookingStatus');
     update();

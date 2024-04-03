@@ -29,9 +29,9 @@ enum HourlyChildrenRateList {
 enum BookingDetailStatus {
   booked,
   arrived,
-  complete,
   rejected,
   disputeRaised,
+  givenReviewByCustomer,
 }
 
 enum NannyBookingDetailStatus {
@@ -41,8 +41,7 @@ enum NannyBookingDetailStatus {
   arrived,
   endJob,
   waitingForApproval,
-  reviewComplete,
-  past,
+  givenReviewByNanny,
   rejected,
   disputeRaised,
 }

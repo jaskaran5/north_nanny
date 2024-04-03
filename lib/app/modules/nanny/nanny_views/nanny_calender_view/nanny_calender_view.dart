@@ -111,11 +111,21 @@ class NannyCalenderView extends StatelessWidget {
                                   NannyBookingDetailController>()) {
                                 NannyBookingDetailBinding().dependencies();
                               }
-                              Get.find<NannyBookingDetailController>()
-                                  .getBookingDetailOfCustomer(
-                                      bookingId: controller.nannyBookingDetail
-                                              ?.data?.bookingId ??
-                                          0);
+                              var nannyBookingController =
+                                  Get.find<NannyBookingDetailController>();
+
+                              /// used to store the  tye of booking.
+                              nannyBookingController.typeOfBooking(
+                                  bookingStatus: controller.nannyBookingDetail
+                                          ?.data?.bookingStatus ??
+                                      0);
+
+                              /// used to get the booking data
+                              nannyBookingController.getBookingDetailOfCustomer(
+                                  bookingId: controller.nannyBookingDetail?.data
+                                          ?.bookingId ??
+                                      0);
+
                               RouteManagement.goToNannyBookingView();
                             },
                             child: Container(
