@@ -459,6 +459,7 @@ class ChatController extends GetxController {
       'ChatDetailResponse',
       (arguments) {
         log("arguments :-->> $arguments");
+        print("arguments :-->> $arguments");
 
         var data = arguments?[0] as Map<String, dynamic>;
 
@@ -467,13 +468,16 @@ class ChatController extends GetxController {
         log("single chat messgae listen");
 
         log("isbloack --->.. " "${res.data?.isBlock}");
+        print("isbloack --->.. " "${res.data?.isBlock}");
 
         // log("is bliocj-->> ${res.isBlock}");
 
-        if (res.data?.blockBy == myUserId.value) {
+        if (res.data?.blockBy.toString() == myUserId.value) {
           isBlockByMe.value = true;
-        } else if (res.data?.blockBy == otherUserId.value) {
+          print("isbloack --->.. by me");
+        } else if (res.data?.blockBy.toString() == otherUserId.value) {
           isBlockByOtherUser.value = true;
+          print("isbloack --->.. by other");
         }
 
         messageList.value = res.data?.messageList ?? [];

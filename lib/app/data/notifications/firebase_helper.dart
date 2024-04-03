@@ -16,6 +16,7 @@ import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_controller.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../firebase_options.dart';
 import '../../res/constants/string_contants.dart';
@@ -275,9 +276,9 @@ class FCMService {
       String receiverId = resultMap["ReciverId"].toString();
 
       if (userId.toString() == senderId) {
-        Get.to(const ChatView(), arguments: receiverId);
+        Get.toNamed(Routes.chat, arguments: receiverId);
       } else if (userId.toString() == receiverId) {
-        Get.to(const ChatView(), arguments: senderId);
+        Get.toNamed(Routes.chat, arguments: senderId);
       }
     }
 

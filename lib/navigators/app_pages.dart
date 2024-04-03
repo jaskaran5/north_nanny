@@ -224,7 +224,7 @@ class AppPages {
 
     /** CHAT */
     GetPage<ChatView>(
-      name: Routes.recentChat,
+      name: Routes.chat,
       transitionDuration: transitionDuration,
       page: ChatView.new,
       binding: ChatBinding(),

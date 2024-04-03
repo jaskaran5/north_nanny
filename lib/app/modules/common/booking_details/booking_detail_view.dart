@@ -20,6 +20,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_bookng_service_tile.
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../../navigators/routes_management.dart';
 import '../../../res/constants/enums.dart';
@@ -152,7 +153,7 @@ class BookingDetailView extends StatelessWidget {
                             null
                         ? CustomTrackerTile(
                             onTapChat: () {
-                              Get.to(()=>const ChatView(),
+                              Get.toNamed(Routes.chat,
                                   arguments: trackingController
                                       .bookingDataById?.userDetails?.userId
                                       .toString());

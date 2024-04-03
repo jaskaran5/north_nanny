@@ -64,7 +64,7 @@ class RecentChatController extends GetxController {
   }
 
   void redirectToChatScreen({required String id}) async {
-    dynamic result = await Get.to(() => const ChatView(), arguments: id);
+    dynamic result = await Get.toNamed(Routes.chat, arguments: id);
 
     log("back result:-->> $result");
 

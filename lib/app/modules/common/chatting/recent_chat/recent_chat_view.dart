@@ -23,6 +23,9 @@ class RecentChatView extends GetView<RecentChatController> {
   Widget build(BuildContext context) {
     return GetBuilder(
         init: RecentChatController(),
+        initState: (state) {
+          Get.find<RecentChatController>().invokeRecentChat();
+        },
         builder: (RecentChatController control) {
           return Scaffold(
             body: SafeArea(
