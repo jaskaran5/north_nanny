@@ -543,6 +543,13 @@ class AppStyles {
     color: AppColors.navyBlue,
   );
 
+  static TextStyle ubGrey10W400Typing = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.ten,
+    color: AppColors.greyTypingColor,
+  );
+
   static TextStyle b0b0Urban14w600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontFamily: AppConstants.fontFamilyUrbanist,

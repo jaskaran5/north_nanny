@@ -172,6 +172,11 @@ class ChatView extends StatelessWidget {
                                       return messageList.toUserId ==
                                               controller.myUserId.value
                                           ? ReceiverTile(
+                                              onTapOnImage: () {
+                                                Get.to(() => FullViewImage(
+                                                      url: messageList.fileLink,
+                                                    ));
+                                              },
                                               thumbImage:
                                                   messageList.thumbImage,
                                               onTapOnPdf: () {
@@ -256,15 +261,24 @@ class ChatView extends StatelessWidget {
                         visible: controller.isTypingVisible.value,
                         child: Padding(
                           padding: Dimens.edgeInsetsL16R16B16,
-                          child: Lottie.asset(
-                            Assets.animationTypingIndicatorAnimation,
-                            fit: BoxFit.cover,
+                          child: SizedBox(
+                            child: Column(
+                              children: [
+                                Lottie.asset(
+                                  Assets.animationTypingIndicatorAnimation,
+                                  fit: BoxFit.cover,
+                                ),
+                                Text(
+                                  "Typing",
+                                  style: AppStyles.ubGrey10W400Typing,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    ((!controller.isBlockByOtherUser.value) ||
-                            (!controller.isBlockByMe.value))
+                    (!controller.isBlockByOtherUser.value)
                         ? Padding(
                             padding: Dimens.edgeInsetsL16R16B16,
                             child: Row(
@@ -350,11 +364,7 @@ class ChatView extends StatelessWidget {
                         : Container(
                             margin: Dimens.edgeInsets10,
                             child: Text(
-                              controller.isBlockByOtherUser.value
-                                  ? "You Can't send message"
-                                  : controller.isBlockByMe.value
-                                      ? "You have blocked this customer. Please unblock to chat again"
-                                      : '',
+                              "You Can't send message",
                               style: AppStyles.b0b0fairPlay15w600,
                             ),
                           )

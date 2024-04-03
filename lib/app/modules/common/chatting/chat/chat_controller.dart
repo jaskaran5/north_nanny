@@ -472,12 +472,15 @@ class ChatController extends GetxController {
 
         // log("is bliocj-->> ${res.isBlock}");
 
-        if (res.data?.blockBy.toString() == myUserId.value) {
+        if (res.data?.blockBy.toString() == myUserId.value.toString()) {
           isBlockByMe.value = true;
           print("isbloack --->.. by me");
-        } else if (res.data?.blockBy.toString() == otherUserId.value) {
+          log("isbloack --->.. by me");
+        } else if (res.data?.blockBy.toString() ==
+            otherUserId.value.toString()) {
           isBlockByOtherUser.value = true;
           print("isbloack --->.. by other");
+          log("isbloack --->.. by other");
         }
 
         messageList.value = res.data?.messageList ?? [];

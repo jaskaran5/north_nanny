@@ -113,17 +113,22 @@ class FCMService {
       log('notification data -------->>>>>>>> $data');
 //
       if (message.data["Type"] != null) {
-        showChatNotification(message);
-      } else {
-        // log("current route is -->." Get.currentRoute.);
+        log("currenr route is -->> ${Get.currentRoute}");
+        print("currenr route is -->> ${Get.currentRoute}");
 
+        if (Get.currentRoute != Routes.chat) {
+          showChatNotification(message);
+        }
+      } else {
         showNotification(message);
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       log("notification click in foreground");
       if (message.data["Type"] != null) {
-        showChatNotification(message);
+        if (Get.currentRoute != Routes.chat) {
+          showChatNotification(message);
+        }
       } else {
         showNotification(message);
       }
