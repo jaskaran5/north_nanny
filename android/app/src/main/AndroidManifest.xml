@@ -12,7 +12,7 @@
         android:label="NorthShore Nanny"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
 
 
