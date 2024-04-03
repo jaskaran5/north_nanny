@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerView extends StatefulWidget {
@@ -60,35 +61,38 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
                 )
               : const CircularProgressIndicator(),
         ),
-        floatingActionButton: Row(
-          children: <Widget>[
-            FloatingActionButton(
-              onPressed: _rewind,
-              child: const Icon(Icons.fast_rewind),
-            ),
-            // Provide some space between the buttons
-            FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  if (_controller.value.isPlaying) {
-                    _controller.pause();
-                  } else {
-                    _controller.play();
-                  }
-                });
-              },
-              child: Icon(
-                _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(left: 40.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              FloatingActionButton(
+                onPressed: _rewind,
+                child: const Icon(Icons.fast_rewind),
               ),
-            ),
+              // Provide some space between the buttons
+              FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    if (_controller.value.isPlaying) {
+                      _controller.pause();
+                    } else {
+                      _controller.play();
+                    }
+                  });
+                },
+                child: Icon(
+                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                ),
+              ),
 
-            FloatingActionButton(
-              onPressed: _fastForward,
-              child: const Icon(Icons.fast_forward),
-            ),
-          ],
+              FloatingActionButton(
+                onPressed: _fastForward,
+                child: const Icon(Icons.fast_forward),
+              ),
+            ],
+          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       ),
     );
   }

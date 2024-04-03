@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_notification_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
@@ -110,17 +109,22 @@ class FCMService {
       log('notification data -------->>>>>>>> $data');
 //
       if (message.data["Type"] != null) {
-        showChatNotification(message);
-      } else {
-        // log("current route is -->." Get.currentRoute.);
+        log("currenr route is -->> ${Get.currentRoute}");
+        print("currenr route is -->> ${Get.currentRoute}");
 
+        if (Get.currentRoute != Routes.chat) {
+          showChatNotification(message);
+        }
+      } else {
         showNotification(message);
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       log("notification click in foreground");
       if (message.data["Type"] != null) {
-        showChatNotification(message);
+        if (Get.currentRoute != Routes.chat) {
+          showChatNotification(message);
+        }
       } else {
         showNotification(message);
       }

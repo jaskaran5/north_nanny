@@ -50,5 +50,19 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+                        <!-- Deep link -->
+            
+            <!-- <intent-filter> -->
+                <!-- android:autoVerify="true"> -->
+                <!-- <action android:name="android.intent.action.VIEW" /> -->
+                <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+                <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+                <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
+                <!-- <data -->
+                    <!-- android:host= "admin.phlare.app" -->
+                    <!-- android:scheme="phlare"/> -->
+            <!-- </intent-filter> -->
+
+
     </application>
 </manifest>

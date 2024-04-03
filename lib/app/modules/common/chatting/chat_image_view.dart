@@ -20,7 +20,7 @@ class FullViewImage extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.all(16),
                 child: Icon(
-                  Icons.clear,
+                  Icons.arrow_back,
                   color: Colors.white,
                   size: 32,
                 ),
@@ -34,7 +34,7 @@ class FullViewImage extends StatelessWidget {
                       url, // Assuming you want to use the image URL as the Hero tag
                   child: Image.network(
                     url,
-                    fit: BoxFit.fitWidth, // Fit the image to the screen
+                    fit: BoxFit.cover, // Fit the image to the screen
                   ),
                 ),
               ),
