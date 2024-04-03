@@ -52,6 +52,7 @@ class NannyHomeController extends GetxController {
       printError(info: "Nanny Home get  API ISSUE $s");
     }
   }
+
   final SignalRHelper _socketHelper = SignalRHelper();
 
   @override
@@ -60,10 +61,9 @@ class NannyHomeController extends GetxController {
     if (nannyHomeData.data == null) {
       getHomeData();
     }
-    if(!_socketHelper.isConnected){
+    if (!_socketHelper.isConnected) {
       _socketHelper.init();
     }
-
   }
 
   /// set availability

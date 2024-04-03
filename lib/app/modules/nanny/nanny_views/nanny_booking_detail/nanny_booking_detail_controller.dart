@@ -126,6 +126,7 @@ class NannyBookingDetailController extends GetxController {
       seconds = 0;
       update(['timer-view']);
     }
+    log('Booking Status Nanny Side :$bookingStatus');
     update();
   }
 
@@ -230,7 +231,6 @@ class NannyBookingDetailController extends GetxController {
         "currentUtcTime": DateTime.now().toUtc().toIso8601String(),
       };
       debugPrint('body of booking details:$body');
-      debugPrint('body of booking details:$body');
 
       _apiHelper
           .postApi(
@@ -242,14 +242,16 @@ class NannyBookingDetailController extends GetxController {
         var response = BookingDetailsModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDetailsModel = response;
-          showTimer(
-            startTime: DateTime.now().add(
-              Duration(
-                seconds: Utility.calculateDifferenceInSeconds(
-                    response.data?.startTime ?? DateTime.now()),
+          if (response.data?.bookingStatus == 5) {
+            showTimer(
+              startTime: DateTime.now().add(
+                Duration(
+                  seconds: Utility.calculateDifferenceInSeconds(
+                      response.data?.startTime ?? DateTime.now()),
+                ),
               ),
-            ),
-          );
+            );
+          }
           update();
           getCurrentLocation();
         } else {

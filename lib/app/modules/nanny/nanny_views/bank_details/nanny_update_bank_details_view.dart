@@ -29,34 +29,42 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
           padding: Dimens.edgeInsets16,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               controller.bankDetailResponse?.data != null
-                  ? CustomPaymentBankDeleteTile(
-                      accountNumber:
-                          "XXXXXXXXXX${controller.bankDetailResponse?.data?.accountNumber?.substring(5)}",
-                      cardType:
-                          controller.bankDetailResponse?.data?.bankName ?? '',
-                      onTapButton: () {},
-                      userName: controller
-                              .bankDetailResponse?.data?.accountHolderName
-                              .toString() ??
-                          '',
+                  ? Expanded(
+                      child: Column(
+                        children: [
+                          CustomPaymentBankDeleteTile(
+                            accountNumber:
+                                "XXXXXXXXXX${controller.bankDetailResponse?.data?.accountNumber?.substring(5)}",
+                            cardType:
+                                controller.bankDetailResponse?.data?.bankName ??
+                                    '',
+                            onTapButton: () {},
+                            userName: controller
+                                    .bankDetailResponse?.data?.accountHolderName
+                                    .toString() ??
+                                '',
+                          ),
+                        ],
+                      ),
                     )
                   : Expanded(
-                      child: Center(
+                      child: Align(
+                        alignment: Alignment.center,
                         child: AppText(
                           text: TranslationKeys.noResultFound.tr,
                           style: AppStyles.ubNavyBlue30W600,
                         ),
                       ),
                     ),
-              if (controller.bankDetailResponse == null) ...[
-                const Spacer(),
+              if (controller.bankDetailResponse?.data == null) ...[
                 CustomButton(
                   title: TranslationKeys.addBank.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    RouteManagement.goToAddBankView(isComeFromBooking: true);
+                    RouteManagement.goToAddBankView(isComeFromBooking: false);
                   },
                 ),
               ],

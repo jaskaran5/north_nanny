@@ -137,6 +137,7 @@ class BookingDetailController extends GetxController {
     } else if (bookingStatus == 7) {
       bookingDetailStatus = BookingDetailStatus.giveReview;
     }
+    log('Booking Status Customer Side :$bookingStatus');
     update();
   }
 

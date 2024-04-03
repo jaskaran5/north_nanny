@@ -83,7 +83,7 @@ class RatingAndReviewController extends GetxController {
     totalRating = userRating;
     totalReview = userReviews;
     userId = toUserId;
-    bookingId = bookingId;
+    bookingId = bookedId;
     update();
   }
 
@@ -97,6 +97,7 @@ class RatingAndReviewController extends GetxController {
         "reviewTo": userId,
         "rating": givingRating,
         "review1": writeAReviewController.text.trim(),
+        "bookingId": bookingId,
       };
       log('post rating body ->>>>>>>>>>>> $body');
 

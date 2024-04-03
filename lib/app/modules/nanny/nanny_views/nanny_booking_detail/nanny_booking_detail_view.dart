@@ -585,7 +585,8 @@ class NannyBookingDetailView extends StatelessWidget {
                               controller.update();
                             } else {
                               /// used to go add bank account .
-                              RouteManagement.goToAddBankView(isComeFromBooking: false);
+                              RouteManagement.goToAddBankView(
+                                  isComeFromBooking: true);
                             }
                           },
                         ),
