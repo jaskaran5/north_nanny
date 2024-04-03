@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Northshore Nanny</string>
+	<string>Swift</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,31 +22,32 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+    <string>0</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<string>0</string>
+	<key>NSCameraUsageDescription</key>
+    <string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Geolocation permission is required to determine user location for directions functionality and other map/GPS related parts</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
