@@ -41,48 +41,48 @@ class NannyBookingDetailController extends GetxController {
   /// used to check google map controller is Initialize or not
   bool isGoogleControllerInitialize = false;
 
-  initBooking() async {
-    if (nannyBookingDetailStatus ==
-        NannyBookingDetailStatus.waitingForApproval) {
-      Timer(
-        const Duration(seconds: 3),
-        () {
-          Utility.showDialog(
-            title: 'Congratulations! ',
-            assetName: Assets.imagesStar,
-            subTitle: 'Please rate your experience with this family!',
-            buttonTitleText: 'Rate Now',
-            assetWidth: Dimens.ninety,
-            assetHeight: Dimens.hundredTen,
-            titleMaxLine: 1,
-            subTitleMaxLine: 1,
-            onTapButton: () {
-              Utility.closeDialog();
-              if (!Get.isRegistered<RatingAndReviewController>()) {
-                RatingAndReviewBinding().dependencies();
-              }
-              Get.find<RatingAndReviewController>().storeUserData(
-                  name: bookingDetailsModel?.data?.userDetails?.name ?? '',
-                  image: bookingDetailsModel?.data?.userDetails?.image ?? '',
-                  userReviews:
-                      bookingDetailsModel?.data?.userDetails?.reviewCount ?? 0,
-                  toUserId: bookingDetailsModel?.data?.userDetails?.userId ?? 0,
-                  bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
-                  userRating:
-                      bookingDetailsModel?.data?.userDetails?.rating ?? 0.0);
-              RouteManagement.goToRatingReviewScreen();
-            },
-            isImage: true,
-            showCrossSvg: true,
-          );
-        },
-      );
-    }
-    // if (isGoogleControllerInitialize && bookingDetailsModel!=null) {
-    //   log('map initialize:$isGoogleControllerInitialize');
-    //   await getCurrentLocation();
-    // }
-  }
+  // initBooking() async {
+  //   if (nannyBookingDetailStatus ==
+  //       NannyBookingDetailStatus.waitingForApproval) {
+  //     Timer(
+  //       const Duration(seconds: 3),
+  //       () {
+  //         Utility.showDialog(
+  //           title: 'Congratulations! ',
+  //           assetName: Assets.imagesStar,
+  //           subTitle: 'Please rate your experience with this family!',
+  //           buttonTitleText: 'Rate Now',
+  //           assetWidth: Dimens.ninety,
+  //           assetHeight: Dimens.hundredTen,
+  //           titleMaxLine: 1,
+  //           subTitleMaxLine: 1,
+  //           onTapButton: () {
+  //             Utility.closeDialog();
+  //             if (!Get.isRegistered<RatingAndReviewController>()) {
+  //               RatingAndReviewBinding().dependencies();
+  //             }
+  //             Get.find<RatingAndReviewController>().storeUserData(
+  //                 name: bookingDetailsModel?.data?.userDetails?.name ?? '',
+  //                 image: bookingDetailsModel?.data?.userDetails?.image ?? '',
+  //                 userReviews:
+  //                 bookingDetailsModel?.data?.userDetails?.reviewCount ?? 0,
+  //                 toUserId: bookingDetailsModel?.data?.userDetails?.userId ?? 0,
+  //                 bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
+  //                 userRating:
+  //                 bookingDetailsModel?.data?.userDetails?.rating ?? 0.0);
+  //             RouteManagement.goToRatingReviewScreen();
+  //           },
+  //           isImage: true,
+  //           showCrossSvg: true,
+  //         );
+  //       },
+  //     );
+  //   }
+  //   // if (isGoogleControllerInitialize && bookingDetailsModel!=null) {
+  //   //   log('map initialize:$isGoogleControllerInitialize');
+  //   //   await getCurrentLocation();
+  //   // }
+  // }
 
   /// report list
   var reportList = [
@@ -125,6 +125,8 @@ class NannyBookingDetailController extends GetxController {
       timer.cancel();
       seconds = 0;
       update(['timer-view']);
+    } else if (bookingStatus == 8) {
+      nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
     }
     log('Booking Status Nanny Side :$bookingStatus');
     update();
@@ -252,6 +254,39 @@ class NannyBookingDetailController extends GetxController {
               ),
             );
           }
+          if (response.data?.bookingStatus == 7) {
+            Utility.showDialog(
+              title: 'Congratulations! ',
+              assetName: Assets.imagesStar,
+              subTitle: 'Please rate your experience with this family!',
+              buttonTitleText: 'Rate Now',
+              assetWidth: Dimens.ninety,
+              assetHeight: Dimens.hundredTen,
+              titleMaxLine: 1,
+              subTitleMaxLine: 1,
+              onTapButton: () {
+                Utility.closeDialog();
+                if (!Get.isRegistered<RatingAndReviewController>()) {
+                  RatingAndReviewBinding().dependencies();
+                }
+                Get.find<RatingAndReviewController>().storeUserData(
+                    name: bookingDetailsModel?.data?.userDetails?.name ?? '',
+                    image: bookingDetailsModel?.data?.userDetails?.image ?? '',
+                    userReviews:
+                        bookingDetailsModel?.data?.userDetails?.reviewCount ??
+                            0,
+                    toUserId:
+                        bookingDetailsModel?.data?.userDetails?.userId ?? 0,
+                    bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
+                    userRating:
+                        bookingDetailsModel?.data?.userDetails?.rating ?? 0.0);
+                RouteManagement.goToRatingReviewScreen();
+              },
+              isImage: true,
+              showCrossSvg: true,
+            );
+          }
+          typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
           update();
           getCurrentLocation();
         } else {

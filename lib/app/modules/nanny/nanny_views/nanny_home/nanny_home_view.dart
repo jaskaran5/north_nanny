@@ -182,13 +182,6 @@ class NannyHomeView extends StatelessWidget {
                                                 .bookingId ??
                                             0);
 
-                                nannyBookingDetailsController.typeOfBooking(
-                                    bookingStatus: controller
-                                            .nannyHomeData
-                                            .data
-                                            ?.bookingRequest?[index]
-                                            .bookingStatus ??
-                                        0);
                                 RouteManagement.goToNannyBookingView();
                               },
                               child: CustomNannyHomeTile(

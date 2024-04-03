@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/chat_notification_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
@@ -19,6 +18,10 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_hom
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../firebase_options.dart';
+import '../../modules/common/booking_details/booking_detail_binding.dart';
+import '../../modules/common/booking_details/booking_detail_controller.dart';
+import '../../modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
+import '../../modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import '../../res/constants/string_contants.dart';
 
 class FCMService {
@@ -162,8 +165,8 @@ class FCMService {
       log("get notification api called in firebase helper");
     });
 
-    if (dashBoardBottomController.selectedTabIndex.value == 0) {
-      if (logInType == StringConstants.customer) {
+    if (logInType == StringConstants.customer) {
+      if (dashBoardBottomController.selectedTabIndex.value == 0) {
         if (!Get.isRegistered<CustomerHomeController>()) {
           CustomerHomeBinding().dependencies();
         }
@@ -171,12 +174,28 @@ class FCMService {
 
         /// used to get customer list .
         customerHomeController.getDashboardApi();
-      } else if (logInType == StringConstants.nanny) {
+      } else {
+        if (!Get.isRegistered<BookingDetailController>()) {
+          BookingDetailBinding().dependencies();
+        }
+
+        /// used to  get the booking detail.
+        Get.find<BookingDetailController>().getBookingDataById(
+            bookingId: int.parse(response.bookingId.toString()));
+      }
+    } else if (logInType == StringConstants.nanny) {
+      if (dashBoardBottomController.selectedTabIndex.value == 0) {
         if (!Get.isRegistered<NannyHomeController>()) {
           NannyHomeBinding().dependencies();
         }
         var nannyHomeController = Get.find<NannyHomeController>();
         nannyHomeController.getHomeData();
+      } else {
+        if (!Get.isRegistered<NannyBookingDetailController>()) {
+          NannyBookingDetailBinding().dependencies();
+        }
+        Get.find<NannyBookingDetailController>().getBookingDetailOfCustomer(
+            bookingId: int.parse(response.bookingId.toString()));
       }
     }
 

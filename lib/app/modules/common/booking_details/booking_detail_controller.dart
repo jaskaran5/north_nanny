@@ -110,7 +110,117 @@ class BookingDetailController extends GetxController {
           if (bookingDataById?.bookingStatus == 6) {
             timer.cancel();
             seconds = 0;
+            Utility.showAlertDialog(
+              title: 'Congratulations',
+              firstButtonTitle: 'No',
+              secondButtonTitle: 'Yes',
+              onTapFirstButton: () {
+                /// Reject  the nanny booking complete request
+                updateStatus(
+                  bookingId: response.data?.bookingId ?? 0,
+                  bookingStatus: 8,
+                );
+              },
+              onTapSecondButton: () {
+                /// accept the nanny booking complete request
+                updateStatus(
+                  bookingId: response.data?.bookingId ?? 0,
+                  bookingStatus: 7,
+                );
+              },
+              firstButtonBackgroundColor: AppColors.lightNavyBlue,
+              message:
+                  'Your nanny has marked this job as complete, please confirm that the job was completed successfully.',
+              secondButtonSvg: Assets.iconsStar,
+              showButtonSvg: true,
+              firstButtonStyle: AppStyles.ubNavyBlue14W700,
+              secondButtonBackgroundColor: AppColors.navyBlue,
+              secondButtonStyle: AppStyles.ubWhite14700,
+            );
           }
+          if (bookingDataById?.bookingStatus == 7) {
+            Utility.showAlertDialog(
+              title: 'Congratulations',
+              firstButtonTitle: 'Send Tip',
+              onTapFirstButton: () {
+                Get.to(
+                  () => SendTipView(
+                      userName: bookingDataById?.userDetails?.name ?? '',
+                      image: bookingDataById?.userDetails?.image ?? '',
+                      amountTextEditingController: TextEditingController(),
+                      onTapSubmitButton: () {
+                        RouteManagement.goToCustomPaymentView(
+                            isComeFromSendTip: true,
+                            isComeFromConfirmBooking: false);
+
+                        // RouteManagement.goToCustomPaymentView(
+                        //     paymentDetails: cardList,
+                        //     appBarTitle: ,
+                        //     addNewCardButtonTitle: 'Add New Card',
+                        //     addNewCardButtonBackgroundColor:
+                        //         AppColors.lightNavyBlue,
+                        //     onTapDeleteButton: () {},
+                        //     submitButtonTitle: TranslationKeys.submit.tr,
+                        //     submitButtonBackgroundColor: AppColors.navyBlue,
+                        //     addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
+                        //     onTapAddNewCardButton: () {
+                        //       RouteManagement.goToAddPaymentMethodScreen(
+                        //         isComeFromNannyProfile: false,
+                        //         buttonText: TranslationKeys.submit.tr,
+                        //         onTapButton: () {
+                        //           Get.back();
+                        //         },
+                        //       );
+                        //     },
+                        //     onTapSubmitButton: () {
+                        //       RouteManagement.goToSuccessView(
+                        //         buttonText: TranslationKeys.backToHome.tr,
+                        //         successSvg: '',
+                        //         header: TranslationKeys.thankYou.tr,
+                        //         subHeader:
+                        //             TranslationKeys.yourNannyTipReceived.tr,
+                        //         onTapButton: () {
+                        //           RouteManagement.goToOffAllDashboard(
+                        //               isFromSetting: false);
+                        //         },
+                        //         subTitleStyle: AppStyles.ubGrey16W500,
+                        //         subHeaderMaxLines: 2,
+                        //         headerMaxLines: 2,
+                        //         successImage: Assets.imagesPinkHeart,
+                        //         sendTipText: true,
+                        //       );
+                        //     },
+                        //     showDeleteButton: false);
+                      }),
+                );
+              },
+              onTapSecondButton: () {
+                /// used to going on review rating api
+                Utility.closeDialog();
+                if (!Get.isRegistered<RatingAndReviewController>()) {
+                  RatingAndReviewBinding().dependencies();
+                }
+                Get.find<RatingAndReviewController>().storeUserData(
+                    name: bookingDataById?.userDetails?.name ?? '',
+                    image: bookingDataById?.userDetails?.image ?? '',
+                    userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
+                    toUserId: bookingDataById?.userDetails?.userId ?? 0,
+                    bookedId: bookingDataById?.bookingId ?? 0,
+                    userRating: bookingDataById?.userDetails?.rating ?? 0.0);
+                RouteManagement.goToRatingReviewScreen();
+              },
+              secondButtonTitle: 'Rate Now',
+              firstButtonBackgroundColor: AppColors.lightNavyBlue,
+              firstButtonStyle: AppStyles.ubNavyBlue14W700,
+              secondButtonBackgroundColor: AppColors.navyBlue,
+              secondButtonStyle: AppStyles.ubWhite14700,
+              imageName: Assets.imagesStar,
+              showContentSvg: true,
+              message:
+                  'Your job has been successfully completed.Please rate your experience with this sitter',
+            );
+          }
+          typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -133,9 +243,8 @@ class BookingDetailController extends GetxController {
     } else if (bookingStatus == 6) {
       timer.cancel();
       seconds = 0;
-      bookingDetailStatus = BookingDetailStatus.complete;
-    } else if (bookingStatus == 7) {
-      bookingDetailStatus = BookingDetailStatus.giveReview;
+    } else if (bookingStatus == 8) {
+      bookingDetailStatus = BookingDetailStatus.disputeRaised;
     }
     log('Booking Status Customer Side :$bookingStatus');
     update();
@@ -164,107 +273,187 @@ class BookingDetailController extends GetxController {
         printInfo(info: "Update booking status $value");
         var response = BookingStatusModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          Get.back();
-
-          /// used to show the alert dialog when the user mark as complete and reject the booking .
-          Utility.showAlertDialog(
-            title: 'Congratulations',
-            firstButtonTitle: 'No',
-            secondButtonTitle: 'Yes',
-            onTapFirstButton: () => Get.back(),
-            onTapSecondButton: () {
-              Utility.showAlertDialog(
-                title: 'Congratulations',
-                firstButtonTitle: 'Send Tip',
-                onTapFirstButton: () {
-                  Get.to(
-                    () => SendTipView(
-                        userName: bookingDataById?.userDetails?.name ?? '',
-                        image: bookingDataById?.userDetails?.image ?? '',
-                        amountTextEditingController: TextEditingController(),
-                        onTapSubmitButton: () {
-                          RouteManagement.goToCustomPaymentView(
-                              isComeFromSendTip: true,
-                              isComeFromConfirmBooking: false);
-
-                          // RouteManagement.goToCustomPaymentView(
-                          //     paymentDetails: cardList,
-                          //     appBarTitle: ,
-                          //     addNewCardButtonTitle: 'Add New Card',
-                          //     addNewCardButtonBackgroundColor:
-                          //         AppColors.lightNavyBlue,
-                          //     onTapDeleteButton: () {},
-                          //     submitButtonTitle: TranslationKeys.submit.tr,
-                          //     submitButtonBackgroundColor: AppColors.navyBlue,
-                          //     addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
-                          //     onTapAddNewCardButton: () {
-                          //       RouteManagement.goToAddPaymentMethodScreen(
-                          //         isComeFromNannyProfile: false,
-                          //         buttonText: TranslationKeys.submit.tr,
-                          //         onTapButton: () {
-                          //           Get.back();
-                          //         },
-                          //       );
-                          //     },
-                          //     onTapSubmitButton: () {
-                          //       RouteManagement.goToSuccessView(
-                          //         buttonText: TranslationKeys.backToHome.tr,
-                          //         successSvg: '',
-                          //         header: TranslationKeys.thankYou.tr,
-                          //         subHeader:
-                          //             TranslationKeys.yourNannyTipReceived.tr,
-                          //         onTapButton: () {
-                          //           RouteManagement.goToOffAllDashboard(
-                          //               isFromSetting: false);
-                          //         },
-                          //         subTitleStyle: AppStyles.ubGrey16W500,
-                          //         subHeaderMaxLines: 2,
-                          //         headerMaxLines: 2,
-                          //         successImage: Assets.imagesPinkHeart,
-                          //         sendTipText: true,
-                          //       );
-                          //     },
-                          //     showDeleteButton: false);
-                        }),
-                  );
-                },
-                onTapSecondButton: () {
-                  /// used to going on review rating api
-                  Utility.closeDialog();
-                  if (!Get.isRegistered<RatingAndReviewController>()) {
-                    RatingAndReviewBinding().dependencies();
-                  }
-                  Get.find<RatingAndReviewController>().storeUserData(
-                      name: bookingDataById?.userDetails?.name ?? '',
+          // /// used to show the alert dialog when the user mark as complete and reject the booking .
+          // Utility.showAlertDialog(
+          //   title: 'Congratulations',
+          //   firstButtonTitle: 'No',
+          //   secondButtonTitle: 'Yes',
+          //   onTapFirstButton: () => Get.back(),
+          //   onTapSecondButton: () {
+          //     Utility.showAlertDialog(
+          //       title: 'Congratulations',
+          //       firstButtonTitle: 'Send Tip',
+          //       onTapFirstButton: () {
+          //         Get.to(
+          //           () => SendTipView(
+          //               userName: bookingDataById?.userDetails?.name ?? '',
+          //               image: bookingDataById?.userDetails?.image ?? '',
+          //               amountTextEditingController: TextEditingController(),
+          //               onTapSubmitButton: () {
+          //                 RouteManagement.goToCustomPaymentView(
+          //                     isComeFromSendTip: true,
+          //                     isComeFromConfirmBooking: false);
+          //
+          //                 // RouteManagement.goToCustomPaymentView(
+          //                 //     paymentDetails: cardList,
+          //                 //     appBarTitle: ,
+          //                 //     addNewCardButtonTitle: 'Add New Card',
+          //                 //     addNewCardButtonBackgroundColor:
+          //                 //         AppColors.lightNavyBlue,
+          //                 //     onTapDeleteButton: () {},
+          //                 //     submitButtonTitle: TranslationKeys.submit.tr,
+          //                 //     submitButtonBackgroundColor: AppColors.navyBlue,
+          //                 //     addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
+          //                 //     onTapAddNewCardButton: () {
+          //                 //       RouteManagement.goToAddPaymentMethodScreen(
+          //                 //         isComeFromNannyProfile: false,
+          //                 //         buttonText: TranslationKeys.submit.tr,
+          //                 //         onTapButton: () {
+          //                 //           Get.back();
+          //                 //         },
+          //                 //       );
+          //                 //     },
+          //                 //     onTapSubmitButton: () {
+          //                 //       RouteManagement.goToSuccessView(
+          //                 //         buttonText: TranslationKeys.backToHome.tr,
+          //                 //         successSvg: '',
+          //                 //         header: TranslationKeys.thankYou.tr,
+          //                 //         subHeader:
+          //                 //             TranslationKeys.yourNannyTipReceived.tr,
+          //                 //         onTapButton: () {
+          //                 //           RouteManagement.goToOffAllDashboard(
+          //                 //               isFromSetting: false);
+          //                 //         },
+          //                 //         subTitleStyle: AppStyles.ubGrey16W500,
+          //                 //         subHeaderMaxLines: 2,
+          //                 //         headerMaxLines: 2,
+          //                 //         successImage: Assets.imagesPinkHeart,
+          //                 //         sendTipText: true,
+          //                 //       );
+          //                 //     },
+          //                 //     showDeleteButton: false);
+          //               }),
+          //         );
+          //       },
+          //       onTapSecondButton: () {
+          //         /// used to going on review rating api
+          //         Utility.closeDialog();
+          //         if (!Get.isRegistered<RatingAndReviewController>()) {
+          //           RatingAndReviewBinding().dependencies();
+          //         }
+          //         Get.find<RatingAndReviewController>().storeUserData(
+          //             name: bookingDataById?.userDetails?.name ?? '',
+          //             image: bookingDataById?.userDetails?.image ?? '',
+          //             userReviews:
+          //                 bookingDataById?.userDetails?.reviewCount ?? 0,
+          //             toUserId: bookingDataById?.userDetails?.userId ?? 0,
+          //             bookedId: bookingDataById?.bookingId ?? 0,
+          //             userRating: bookingDataById?.userDetails?.rating ?? 0.0);
+          //         RouteManagement.goToRatingReviewScreen();
+          //       },
+          //       secondButtonTitle: 'Rate Now',
+          //       firstButtonBackgroundColor: AppColors.lightNavyBlue,
+          //       firstButtonStyle: AppStyles.ubNavyBlue14W700,
+          //       secondButtonBackgroundColor: AppColors.navyBlue,
+          //       secondButtonStyle: AppStyles.ubWhite14700,
+          //       imageName: Assets.imagesStar,
+          //       showContentSvg: true,
+          //       message:
+          //           'Your job has been successfully completed.Please rate your experience with this sitter',
+          //     );
+          //   },
+          //   firstButtonBackgroundColor: AppColors.lightNavyBlue,
+          //   message:
+          //       'Your nanny has marked this job as complete, please confirm that the job was completed successfully.',
+          //   secondButtonSvg: Assets.iconsStar,
+          //   showButtonSvg: true,
+          //   firstButtonStyle: AppStyles.ubNavyBlue14W700,
+          //   secondButtonBackgroundColor: AppColors.navyBlue,
+          //   secondButtonStyle: AppStyles.ubWhite14700,
+          // );
+          if (response.data?.bookingStatus == 7) {
+            Utility.showAlertDialog(
+              title: 'Congratulations',
+              firstButtonTitle: 'Send Tip',
+              onTapFirstButton: () {
+                Get.to(
+                  () => SendTipView(
+                      userName: bookingDataById?.userDetails?.name ?? '',
                       image: bookingDataById?.userDetails?.image ?? '',
-                      userReviews:
-                          bookingDataById?.userDetails?.reviewCount ?? 0,
-                      toUserId: bookingDataById?.userDetails?.userId ?? 0,
-                      bookedId: bookingDataById?.bookingId ?? 0,
-                      userRating: bookingDataById?.userDetails?.rating ?? 0.0);
-                  RouteManagement.goToRatingReviewScreen();
-                },
-                secondButtonTitle: 'Rate Now',
-                firstButtonBackgroundColor: AppColors.lightNavyBlue,
-                firstButtonStyle: AppStyles.ubNavyBlue14W700,
-                secondButtonBackgroundColor: AppColors.navyBlue,
-                secondButtonStyle: AppStyles.ubWhite14700,
-                imageName: Assets.imagesStar,
-                showContentSvg: true,
-                message:
-                    'Your job has been successfully completed.Please rate your experience with this sitter',
-              );
-            },
-            firstButtonBackgroundColor: AppColors.lightNavyBlue,
-            message:
-                'Your nanny has marked this job as complete, please confirm that the job was completed successfully.',
-            secondButtonSvg: Assets.iconsStar,
-            showButtonSvg: true,
-            firstButtonStyle: AppStyles.ubNavyBlue14W700,
-            secondButtonBackgroundColor: AppColors.navyBlue,
-            secondButtonStyle: AppStyles.ubWhite14700,
-          );
+                      amountTextEditingController: TextEditingController(),
+                      onTapSubmitButton: () {
+                        RouteManagement.goToCustomPaymentView(
+                            isComeFromSendTip: true,
+                            isComeFromConfirmBooking: false);
 
+                        // RouteManagement.goToCustomPaymentView(
+                        //     paymentDetails: cardList,
+                        //     appBarTitle: ,
+                        //     addNewCardButtonTitle: 'Add New Card',
+                        //     addNewCardButtonBackgroundColor:
+                        //         AppColors.lightNavyBlue,
+                        //     onTapDeleteButton: () {},
+                        //     submitButtonTitle: TranslationKeys.submit.tr,
+                        //     submitButtonBackgroundColor: AppColors.navyBlue,
+                        //     addNewCardButtonStyle: AppStyles.ubNavyBlue15W600,
+                        //     onTapAddNewCardButton: () {
+                        //       RouteManagement.goToAddPaymentMethodScreen(
+                        //         isComeFromNannyProfile: false,
+                        //         buttonText: TranslationKeys.submit.tr,
+                        //         onTapButton: () {
+                        //           Get.back();
+                        //         },
+                        //       );
+                        //     },
+                        //     onTapSubmitButton: () {
+                        //       RouteManagement.goToSuccessView(
+                        //         buttonText: TranslationKeys.backToHome.tr,
+                        //         successSvg: '',
+                        //         header: TranslationKeys.thankYou.tr,
+                        //         subHeader:
+                        //             TranslationKeys.yourNannyTipReceived.tr,
+                        //         onTapButton: () {
+                        //           RouteManagement.goToOffAllDashboard(
+                        //               isFromSetting: false);
+                        //         },
+                        //         subTitleStyle: AppStyles.ubGrey16W500,
+                        //         subHeaderMaxLines: 2,
+                        //         headerMaxLines: 2,
+                        //         successImage: Assets.imagesPinkHeart,
+                        //         sendTipText: true,
+                        //       );
+                        //     },
+                        //     showDeleteButton: false);
+                      }),
+                );
+              },
+              onTapSecondButton: () {
+                /// used to going on review rating api
+                Utility.closeDialog();
+                if (!Get.isRegistered<RatingAndReviewController>()) {
+                  RatingAndReviewBinding().dependencies();
+                }
+                Get.find<RatingAndReviewController>().storeUserData(
+                    name: bookingDataById?.userDetails?.name ?? '',
+                    image: bookingDataById?.userDetails?.image ?? '',
+                    userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
+                    toUserId: bookingDataById?.userDetails?.userId ?? 0,
+                    bookedId: bookingDataById?.bookingId ?? 0,
+                    userRating: bookingDataById?.userDetails?.rating ?? 0.0);
+                RouteManagement.goToRatingReviewScreen();
+              },
+              secondButtonTitle: 'Rate Now',
+              firstButtonBackgroundColor: AppColors.lightNavyBlue,
+              firstButtonStyle: AppStyles.ubNavyBlue14W700,
+              secondButtonBackgroundColor: AppColors.navyBlue,
+              secondButtonStyle: AppStyles.ubWhite14700,
+              imageName: Assets.imagesStar,
+              showContentSvg: true,
+              message:
+                  'Your job has been successfully completed.Please rate your experience with this sitter',
+            );
+          }
+          typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);

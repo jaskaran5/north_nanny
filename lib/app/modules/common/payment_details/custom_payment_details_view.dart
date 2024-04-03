@@ -81,6 +81,8 @@ class CustomPaymentDetails extends StatelessWidget {
                     title: TranslationKeys.submit.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: () {
+                      /// here to write the code send tip .
+
                       /// used to show tip received by nanny.
                       RouteManagement.goToSuccessView(
                         buttonText: TranslationKeys.backToHome.tr,

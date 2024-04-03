@@ -112,13 +112,6 @@ class NannyCalenderView extends StatelessWidget {
                                 NannyBookingDetailBinding().dependencies();
                               }
                               Get.find<NannyBookingDetailController>()
-                                  .typeOfBooking(
-                                      bookingStatus: controller
-                                              .nannyBookingDetail
-                                              ?.data
-                                              ?.bookingStatus ??
-                                          0);
-                              Get.find<NannyBookingDetailController>()
                                   .getBookingDetailOfCustomer(
                                       bookingId: controller.nannyBookingDetail
                                               ?.data?.bookingId ??

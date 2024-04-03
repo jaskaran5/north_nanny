@@ -30,9 +30,8 @@ enum BookingDetailStatus {
   booked,
   arrived,
   complete,
-  giveReview,
-  reviewComplete,
   rejected,
+  disputeRaised,
 }
 
 enum NannyBookingDetailStatus {
@@ -45,6 +44,7 @@ enum NannyBookingDetailStatus {
   reviewComplete,
   past,
   rejected,
+  disputeRaised,
 }
 
 enum BottomTabs {

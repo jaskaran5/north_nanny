@@ -79,13 +79,6 @@ class NotificationView extends StatelessWidget {
                                     .bookingId,
                               );
 
-                              /// used to store booking status .
-                              customerBookingController.typeOfBooking(
-                                bookingStatus: notificationController
-                                    .notificationListModel
-                                    ?.data?[index]
-                                    .bookingStatus,
-                              );
 
                               /// going to route
                               RouteManagement.goToCustomerBookingDetailView();
@@ -105,14 +98,6 @@ class NotificationView extends StatelessWidget {
                                         ?.data?[index]
                                         .bookingId ??
                                     0,
-                              );
-
-                              /// used to store booking status .
-                              nannyBookingController.typeOfBooking(
-                                bookingStatus: notificationController
-                                    .notificationListModel
-                                    ?.data?[index]
-                                    .bookingStatus,
                               );
 
                               /// going to route

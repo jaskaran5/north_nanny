@@ -35,9 +35,6 @@ class NannyBookingDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       GetBuilder<NannyBookingDetailController>(
-        initState: (_) {
-          Get.find<NannyBookingDetailController>().initBooking();
-        },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.bookingDetails.tr,
@@ -645,7 +642,6 @@ class NannyBookingDetailView extends StatelessWidget {
                           );
                         } else if (controller.nannyBookingDetailStatus ==
                             NannyBookingDetailStatus.endJob) {
-                          controller.initBooking();
                           controller.updateStatus(
                               bookingId: controller
                                       .bookingDetailsModel?.data?.bookingId ??
@@ -706,10 +702,15 @@ class NannyBookingDetailView extends StatelessWidget {
                       (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
                           controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.arrived)) ...[
+                              NannyBookingDetailStatus.arrived ||
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.disputeRaised)) ...[
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
-                      title: 'Declined',
+                      title: controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.disputeRaised
+                          ? 'Dispute Raised'
+                          : 'Declined',
                       onTap: () {
                         Get.back();
                       },

@@ -123,9 +123,6 @@ class CustomerCalenderView extends StatelessWidget {
                                   .getBookingDataById(
                                       bookingId: controller
                                           .singleDateBookingData?.bookingId);
-                              Get.find<BookingDetailController>().typeOfBooking(
-                                  bookingStatus: controller
-                                      .singleDateBookingData?.bookingStatus);
                               RouteManagement.goToCustomerBookingDetailView();
                             },
                             child: Container(

@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/booking_details/booking_detail_controller.dart';
-import 'package:northshore_nanny_flutter/app/modules/common/chatting/chat/chat_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -22,7 +21,6 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
-import '../../../../navigators/routes_management.dart';
 import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 
@@ -337,20 +335,21 @@ class BookingDetailView extends StatelessWidget {
                         controller.bookingDataById?.isUseReferrals ?? false,
                   ),
                   Dimens.boxHeight16,
-                  if (controller.bookingDetailStatus ==
-                      BookingDetailStatus.reviewComplete) ...[
-                    CustomButton(
-                      title: 'Rate your Experience',
-                      backGroundColor: AppColors.navyBlue,
-                      onTap: () {
-                        controller.bookingDetailStatus =
-                            BookingDetailStatus.reviewComplete;
-                        controller.update();
-                        RouteManagement.goToRatingReviewScreen();
-                      },
-                    ),
-                  ],
-                  if (controller.bookingDetailStatus ==
+                  // if (controller.bookingDetailStatus ==
+                  //     BookingDetailStatus.reviewComplete) ...[
+                  //   CustomButton(
+                  //     title: 'Rate your Experience',
+                  //     backGroundColor: AppColors.navyBlue,
+                  //     onTap: () {
+                  //       controller.bookingDetailStatus =
+                  //           BookingDetailStatus.reviewComplete;
+                  //       controller.update();
+                  //       RouteManagement.goToRatingReviewScreen();
+                  //     },
+                  //   ),
+                  // ],
+
+                  /* comment due to complete the job.               if (controller.bookingDetailStatus ==
                       BookingDetailStatus.complete) ...[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -381,6 +380,18 @@ class BookingDetailView extends StatelessWidget {
                           textColor: AppColors.navyBlue,
                         ),
                       ],
+                    ),
+                  ],
+                  */
+
+                  if (controller.bookingDetailStatus ==
+                      BookingDetailStatus.disputeRaised) ...[
+                    CustomButton(
+                      backGroundColor: AppColors.fC3030RedColor,
+                      title: 'Dispute Raised',
+                      onTap: () {
+                        Get.back();
+                      },
                     ),
                   ],
                 ],
