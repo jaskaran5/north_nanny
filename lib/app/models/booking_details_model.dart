@@ -36,6 +36,7 @@ class BookingDetailsModel {
 class Data {
   int? userId;
   int? bookingId;
+  int? bookingStatus;
   String? location;
   String? latitude;
   String? longitude;
@@ -74,11 +75,13 @@ class Data {
     this.isJobStarted,
     this.startTime,
     this.isBankAddedByNanny,
+    this.bookingStatus,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         userId: json["userId"],
         bookingId: json["bookingId"],
+        bookingStatus: json["bookingStatus"],
         location: json["location"],
         latitude: json["latitude"],
         longitude: json["longitude"],
@@ -118,6 +121,7 @@ class Data {
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "bookingId": bookingId,
+        "bookingStatus": bookingStatus,
         "location": location,
         "latitude": latitude,
         "longitude": longitude,

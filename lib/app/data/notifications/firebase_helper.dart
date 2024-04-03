@@ -97,8 +97,6 @@ class FCMService {
 
   ///used to show the notification.
   showForGroundMessage() {
-    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
     /// used to show background messages.
     FirebaseMessaging.onBackgroundMessage(showBackgroundNotification);
 
@@ -267,7 +265,7 @@ class FCMService {
     }
 //
     // Print the resulting map
-    print("result map$resultMap");
+    debugPrint("result map$resultMap");
 
     String userId = Storage.getValue(StringConstants.userId).toString();
 
@@ -402,7 +400,7 @@ class FCMService {
     // Parse the JSON string into a map
     Map<String, dynamic> map = jsonDecode('{$data}');
 
-    print(map);
+    debugPrint(map.toString());
 
     // Extract values from the map and create a NotificationModel instance
     return ChatNotificationResponseModel(

@@ -206,6 +206,7 @@ class ChatView extends StatelessWidget {
                                                 Get.to(PDFScreen(
                                                   path: messageList.fileLink,
                                                 ));
+                                                //
                                               },
                                               onTapOnVideo: () {
                                                 Get.to(VideoPlayerView(
