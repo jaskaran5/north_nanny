@@ -94,8 +94,8 @@ class NannyBookingDetailController extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
     seconds = 0;
+    timer.cancel();
     googleMapController?.dispose();
   }
 
@@ -124,7 +124,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
       timer.cancel();
       seconds = 0;
-      update(['timer-view']);
+      update(['timerView']);
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
     } else if (bookingStatus == 10) {
@@ -204,6 +204,7 @@ class NannyBookingDetailController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           log('booking Type-:${response.data?.bookingStatus}');
           if (response.data?.bookingStatus == 6) {
+            seconds = 0;
             showTimer(
               startTime: DateTime.now().add(
                 Duration(
@@ -246,7 +247,9 @@ class NannyBookingDetailController extends GetxController {
         var response = BookingDetailsModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDetailsModel = response;
+          update();
           if (response.data?.bookingStatus == 5) {
+            seconds = 0;
             showTimer(
               startTime: DateTime.now().add(
                 Duration(
@@ -255,8 +258,11 @@ class NannyBookingDetailController extends GetxController {
                 ),
               ),
             );
+            update();
           }
           if (response.data?.bookingStatus == 7) {
+            seconds == 0;
+            timer.cancel();
             Utility.showDialog(
               title: 'Congratulations! ',
               assetName: Assets.imagesStar,
@@ -287,9 +293,10 @@ class NannyBookingDetailController extends GetxController {
               isImage: true,
               showCrossSvg: true,
             );
+            update(['timerView']);
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
-          update();
+
           getCurrentLocation();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -307,7 +314,7 @@ class NannyBookingDetailController extends GetxController {
   showTimer({required DateTime startTime}) {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       seconds = DateTime.now().difference(startTime).inSeconds;
-      update(['timer_view']);
+      update(['timerView']);
     });
   }
 

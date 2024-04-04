@@ -56,7 +56,11 @@ class CustomBookingServiceTile extends StatelessWidget {
                     ),
                     Dimens.boxWidth8,
                     AppText(
-                      text: serviceDetailsList[index].toString(),
+                      text: Services.values
+                          .firstWhere((element) =>
+                      element.serviceName ==
+                          serviceDetailsList[index].toString())
+                          .serviceName.tr,
                       style: AppStyles.ubGrey15W500,
                       maxLines: 1,
                       textAlign: TextAlign.start,

@@ -45,7 +45,9 @@ class BookingDetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (controller.bookingDetailStatus ==
-                      BookingDetailStatus.arrived) ...[
+                          BookingDetailStatus.arrived &&
+                      controller.bookingDataById?.isJobStarted == true &&
+                      controller.bookingDataById?.reviewGivenByMe == null) ...[
                     GetBuilder<BookingDetailController>(
                       id: 'customerTimerView',
                       builder: (controller) => Container(
@@ -70,8 +72,12 @@ class BookingDetailView extends StatelessWidget {
                             ),
                             Dimens.boxHeight10,
                             AppText(
-                              text:
-                                  Utility.returnHMS(second: controller.seconds),
+                              text: controller.bookingDataById?.endTime != null
+                                  ? Utility.calculateTotalTimeDifference(
+                                      controller.bookingDataById?.startTime,
+                                      controller.bookingDataById?.endTime)
+                                  : Utility.returnHMS(
+                                      second: controller.seconds),
                               style: AppStyles.ubNavyBlue34W700,
                               maxLines: 1,
                               textAlign: TextAlign.start,
@@ -340,9 +346,16 @@ class BookingDetailView extends StatelessWidget {
                   ),
                   Dimens.boxHeight16,
                   if (controller.bookingDetailStatus ==
-                      BookingDetailStatus.givenReviewByCustomer) ...[
-                    const CustomBookingReview(
-                      reviewsList: ['Christon Wang.F', 'Michal Johnson'],
+                          BookingDetailStatus.givenReviewByCustomer &&
+                      controller.bookingDataById?.reviewGivenByMe != null) ...[
+                    CustomBookingReview(
+                      reviewsList: [
+                        if (controller.bookingDataById?.reviewGivenByMe != null)
+                          controller.bookingDataById?.reviewGivenByMe,
+                        if (controller.bookingDataById?.reviewGivenByOther !=
+                            null)
+                          controller.bookingDataById?.reviewGivenByOther,
+                      ],
                     ),
                     Dimens.boxHeight16,
                   ],
@@ -355,7 +368,11 @@ class BookingDetailView extends StatelessWidget {
                       controller.bookingDetailStatus !=
                           BookingDetailStatus.disputeRaised &&
                       controller.bookingDetailStatus !=
-                          BookingDetailStatus.rejected) ...[
+                          BookingDetailStatus.rejected &&
+                      controller.bookingDetailStatus != null &&
+                      controller.bookingDataById?.reviewGivenByMe == null &&
+                      controller.bookingDetailStatus ==
+                          BookingDetailStatus.reviewByOtherUser) ...[
                     CustomButton(
                       title: 'Rate your Experience',
                       backGroundColor: AppColors.navyBlue,

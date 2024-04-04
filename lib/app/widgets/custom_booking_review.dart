@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
-
-import '../res/constants/assets.dart';
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import 'custom_rating_tile.dart';
 
 class CustomBookingReview extends StatelessWidget {
   const CustomBookingReview({super.key, required this.reviewsList});
-  final List<String> reviewsList;
+  final List<RatingList?> reviewsList;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -40,12 +39,11 @@ class CustomBookingReview extends StatelessWidget {
                 (index) => Padding(
                   padding: Dimens.edgeInsetsB16,
                   child: CustomRatingTile(
-                    reviewDate: '01/03/204',
-                    userImage: Assets.iconsImage,
-                    userName: reviewsList[index].toString(),
-                    ratingDescription:
-                        'It has been an absolute joy caring for [Child\'s Name] during my time with your family. I want to express my gratitude for the trust you placed in me.',
-                    totalRating: 4.5,
+                    reviewDate: reviewsList[index]?.datetime.toString(),
+                    userImage: reviewsList[index]?.image,
+                    userName: reviewsList[index]?.name,
+                    ratingDescription: reviewsList[index]?.review,
+                    totalRating: reviewsList[index]?.rating,
                   ),
                 ),
               ),

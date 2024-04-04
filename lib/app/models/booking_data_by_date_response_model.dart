@@ -48,6 +48,7 @@ class BookingDataById {
   DateTime? openingDate;
   DateTime? closingDate;
   DateTime? startTime;
+  DateTime? endTime;
   List<String>? servicesType;
   List<Child>? children;
   UserDetails? userDetails;
@@ -58,6 +59,9 @@ class BookingDataById {
   bool? isJobStarted;
   bool? isUseReferrals;
   bool? isCardAddedByCustomer;
+  RatingList? reviewGivenByMe;
+  RatingList? reviewGivenByOther;
+  bool? isSendTip;
 
   BookingDataById({
     this.bookingStatus,
@@ -81,6 +85,10 @@ class BookingDataById {
     this.isJobStarted,
     this.isUseReferrals,
     this.isCardAddedByCustomer,
+    this.reviewGivenByMe,
+    this.reviewGivenByOther,
+    this.isSendTip,
+    this.endTime,
   });
 
   factory BookingDataById.fromJson(Map<String, dynamic> json) =>
@@ -103,7 +111,9 @@ class BookingDataById {
             : DateTime.parse(json["closingDate"]),
         startTime: json["startTime"] == null
             ? null
-            : DateTime.parse(json["closingDate"]),
+            : DateTime.parse(json["startTime"]),
+        endTime:
+            json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
         servicesType: json["servicesType"] == null
             ? []
             : List<String>.from(json["servicesType"]!.map((x) => x)),
@@ -120,6 +130,13 @@ class BookingDataById {
         isJobStarted: json["isJobStarted"],
         isUseReferrals: json["isUseReferals"],
         isCardAddedByCustomer: json["isCardAddedByCustomer"],
+        reviewGivenByMe: json["reviewGivenByMe"] == null
+            ? null
+            : RatingList.fromJson(json["reviewGivenByMe"]),
+        reviewGivenByOther: json["reviewGivenByOther"] == null
+            ? null
+            : RatingList.fromJson(json["reviewGivenByOther"]),
+        isSendTip: json["isSendTip"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -134,6 +151,7 @@ class BookingDataById {
         "openingDate": openingDate?.toIso8601String(),
         "closingDate": closingDate?.toIso8601String(),
         "startTime": startTime?.toIso8601String(),
+        "endTime": endTime?.toIso8601String(),
         "servicesType": servicesType == null
             ? []
             : List<dynamic>.from(servicesType!.map((x) => x)),
@@ -147,6 +165,9 @@ class BookingDataById {
         "isJobStarted": isJobStarted,
         "isUseReferals": isUseReferrals,
         "isCardAddedByCustomer": isCardAddedByCustomer,
+        "reviewGivenByMe": reviewGivenByMe?.toJson(),
+        "reviewGivenByOther": reviewGivenByOther?.toJson(),
+        "isSendTip": isSendTip,
       };
 }
 

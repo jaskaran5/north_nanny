@@ -46,7 +46,8 @@ class NotificationView extends StatelessWidget {
                         notificationController
                                 .notificationListModel?.data?.length ??
                             0,
-                        (index) => GestureDetector(
+                        (index) => InkWell(
+                          splashColor: Colors.transparent,
                           onTap: () {
                             var loginType =
                                 Storage.getValue(StringConstants.loginType);

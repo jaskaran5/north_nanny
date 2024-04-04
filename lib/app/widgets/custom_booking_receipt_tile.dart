@@ -153,7 +153,8 @@ class CustomBookingReceiptTile extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
                 AppText(
-                  text: '\$ ${totalPriceReceived.toString()}',
+                  text:
+                      '\$ ${totalPriceReceived.toString()}',
                   style: AppStyles.ubBlack15W600,
                   maxLines: 1,
                   textAlign: TextAlign.start,

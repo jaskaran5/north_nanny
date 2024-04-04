@@ -59,8 +59,8 @@ class BookingDetailController extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
     seconds = 0;
+    timer.cancel();
   }
 
   List cardList = [
@@ -99,8 +99,10 @@ class BookingDetailController extends GetxController {
         var response = BookingDataByIdResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDataById = response.data;
+          update();
           if (bookingDataById?.startTime != null &&
               bookingDataById?.bookingStatus == 5) {
+            seconds = 0;
             showTimer(
                 startTime: bookingDataById?.startTime != null
                     ? DateTime.now().add(Duration(
@@ -140,7 +142,9 @@ class BookingDetailController extends GetxController {
               secondButtonStyle: AppStyles.ubWhite14700,
             );
           }
-          if (bookingDataById?.bookingStatus == 7) {
+          if (bookingDataById?.bookingStatus == 7 ||
+              response.data?.isSendTip == false &&
+                  response.data?.reviewGivenByMe == null) {
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'Send Tip',
@@ -223,7 +227,6 @@ class BookingDetailController extends GetxController {
             );
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
-          update();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
@@ -243,13 +246,15 @@ class BookingDetailController extends GetxController {
     } else if (bookingStatus == 5) {
       bookingDetailStatus = BookingDetailStatus.arrived;
     } else if (bookingStatus == 6) {
-      timer.cancel();
       seconds = 0;
+      timer.cancel();
       update(['customerTimerView']);
     } else if (bookingStatus == 8) {
       bookingDetailStatus = BookingDetailStatus.disputeRaised;
     } else if (bookingStatus == 9) {
       bookingDetailStatus = BookingDetailStatus.givenReviewByCustomer;
+    } else if (bookingStatus == 10) {
+      bookingDetailStatus = BookingDetailStatus.reviewByOtherUser;
     }
     log('Booking Status Customer Side :$bookingStatus');
     update();

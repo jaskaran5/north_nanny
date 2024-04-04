@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -23,7 +24,7 @@ class SignalRHelper {
   Future<void> init() async {
     var token = await Storage.getValue(StringConstants.token);
     log("access token :--->> $token");
-    print("access token :--->> $token");
+    debugPrint("access token :--->> $token");
 
     try {
       if (token != null && token.isNotEmpty) {
@@ -68,7 +69,7 @@ class SignalRHelper {
       // Utils.printLog("Connected: ${hubConnection.connectionId}");
     } catch (e) {
       log("hubconnectionn state else:--->>${hubConnection.state}");
-      Utils.printLog("Connection error: $e");
+      debugPrint("Connection error: $e");
       isConnected = false;
       isUserConnected = false;
     }
