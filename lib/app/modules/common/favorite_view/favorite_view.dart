@@ -4,8 +4,10 @@ import 'package:northshore_nanny_flutter/app/modules/common/favorite_view/favori
 import 'package:northshore_nanny_flutter/app/modules/customer/home/widgets/custom_home_list.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
@@ -20,62 +22,76 @@ class FavoriteView extends StatelessWidget {
           appBar: CustomAppbarWidget(
             title: TranslationKeys.favorites.tr,
           ),
-          body: Padding(
-            padding: Dimens.edgeInsets16,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: controller.favouriteListNanny.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    RouteManagement.goToGetNannyProfileView(
-                        argument: controller.favouriteListNanny[index].nannyId);
-                  },
-                  child: HomeCustomListView(
-                    // servicesListData: controller,
-                    distance: ((controller.favouriteListNanny[index].distance)!
-                            .toInt())
-                        .toString(),
+          body: controller.favouriteListNanny.isEmpty
+              ? Center(
+                  child: AppText(
+                    text: TranslationKeys.noResultFound.tr,
+                    style: AppStyles.ubNavyBlue30W600,
+                  ),
+                )
+              : Padding(
+                  padding: Dimens.edgeInsets16,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.favouriteListNanny.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          RouteManagement.goToGetNannyProfileView(
+                              argument:
+                                  controller.favouriteListNanny[index].nannyId);
+                        },
+                        child: HomeCustomListView(
+                          // servicesListData: controller,
+                          distance:
+                              ((controller.favouriteListNanny[index].distance)!
+                                      .toInt())
+                                  .toString(),
 
-                    age: controller.favouriteListNanny[index].age.toString(),
-                    experience: (controller.favouriteListNanny[index].experience
-                            .toString())
-                        .split(' ')
-                        .first,
+                          age: controller.favouriteListNanny[index].age
+                              .toString(),
+                          experience: (controller
+                                  .favouriteListNanny[index].experience
+                                  .toString())
+                              .split(' ')
+                              .first,
 
-                    description:
-                        controller.favouriteListNanny[index].aboutMe ?? '',
-                    image: controller.favouriteListNanny[index].image ?? '',
-                    name: controller.favouriteListNanny[index].name ?? '',
-                    rating:
-                        controller.favouriteListNanny[index].rating.toString(),
-                    reviews:
-                        '(${controller.favouriteListNanny[index].reviewCount} reviews)',
-                    // servicesList: controller.homeCustomList,
-                    isHeartTapped: true,
-                    heartSvg: Assets.iconsHeartOutline,
-                    onTapHeartIcon: () {
-                      controller.toggleFavouriteAndUnFavouriteApi(
-                          userId: controller.favouriteListNanny[index].nannyId!,
-                          isFavourite:
-                              !controller.favouriteListNanny[index].isFavorite);
-                    },
-                    onTapRating: () {
-                      Utility.openBottomSheet(
-                        CustomReviewBottomSheet(
-                          totalReviews:
-                              controller.favouriteListNanny[index].reviewCount,
-                          totalReviewsRating:
-                              controller.favouriteListNanny[index].rating,
-                          reviewsList: const [],
+                          description:
+                              controller.favouriteListNanny[index].aboutMe ??
+                                  '',
+                          image:
+                              controller.favouriteListNanny[index].image ?? '',
+                          name: controller.favouriteListNanny[index].name ?? '',
+                          rating: controller.favouriteListNanny[index].rating
+                              .toString(),
+                          reviews:
+                              '(${controller.favouriteListNanny[index].reviewCount} reviews)',
+                          // servicesList: controller.homeCustomList,
+                          isHeartTapped: true,
+                          heartSvg: Assets.iconsHeartOutline,
+                          onTapHeartIcon: () {
+                            controller.toggleFavouriteAndUnFavouriteApi(
+                                userId: controller
+                                    .favouriteListNanny[index].nannyId!,
+                                isFavourite: !controller
+                                    .favouriteListNanny[index].isFavorite);
+                          },
+                          onTapRating: () {
+                            Utility.openBottomSheet(
+                              CustomReviewBottomSheet(
+                                totalReviews: controller
+                                    .favouriteListNanny[index].reviewCount,
+                                totalReviewsRating:
+                                    controller.favouriteListNanny[index].rating,
+                                reviewsList: const [],
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
                   ),
-                );
-              },
-            ),
-          ),
+                ),
 
           // Padding(
           //   padding: Dimens.edgeInsets16,

@@ -268,8 +268,8 @@ class CustomerHomeView extends StatelessWidget {
                                 onTapRating: () {
                                   Utility.openBottomSheet(
                                     const CustomReviewBottomSheet(
-                                      totalReviews: 21,
-                                      totalReviewsRating: 4.5,
+                                      totalReviews: 0,
+                                      totalReviewsRating: 0.0,
                                       reviewsList: [],
                                     ),
                                   );

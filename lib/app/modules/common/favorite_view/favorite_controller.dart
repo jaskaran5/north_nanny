@@ -59,8 +59,9 @@ class FavoriteController extends GetxController {
     try {
       var body = {
         "toUserId": userId,
-        "isFavorite": isFavourite,
+        "isFavorite": false,
       }; //
+      log("fav:-->> $body");
 
       _apiHelper.postApi(ApiUrls.addOrRemoveFavoriteNanny, body).futureValue(
           (value) {

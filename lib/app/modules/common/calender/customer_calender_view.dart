@@ -283,17 +283,20 @@ class CustomerCalenderView extends StatelessWidget {
                                             GestureDetector(
                                               onTap: () {
                                                 Utility.openBottomSheet(
-                                                  const CustomReviewBottomSheet(
-                                                    totalReviews: 21,
-                                                    totalReviewsRating: 4.5,
-                                                    reviewsList: [],
-                                                    // [
-                                                    //   'Michael Johnson',
-                                                    //   'Giorgio Chiellini',
-                                                    //   'Michael Johnson',
-                                                    //   'Alex Morgan',
-                                                    //   'Giorgio Chiellini'
-                                                    // ],
+                                                  CustomReviewBottomSheet(
+                                                    totalReviews: controller
+                                                            .singleDateBookingData
+                                                            ?.reviewCount ??
+                                                        0,
+                                                    totalReviewsRating: controller
+                                                            .singleDateBookingData
+                                                            ?.rating ??
+                                                        0,
+                                                    reviewsList:
+                                                        // controller
+                                                        //         .singleDateBookingData
+                                                        //         ?.ratingList ??
+                                                        const [],
                                                   ),
                                                 );
                                               },

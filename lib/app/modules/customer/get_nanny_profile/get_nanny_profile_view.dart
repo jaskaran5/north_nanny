@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -37,6 +38,7 @@ class GetNannyProfileView extends StatelessWidget {
             appBar: CustomAppbarWidget(
               onBackPress: () {
                 Get.back(result: "true");
+                Get.find<CustomerHomeController>().getDashboardApi();
               },
               title: "Nanny Profile",
               centerTitle: true,
