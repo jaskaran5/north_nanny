@@ -156,8 +156,7 @@ class CustomerHomeController extends GetxController {
     log("lat-home-long-$longitude");
 
     try {
-      List<Placemark> placeMarks =
-          await placemarkFromCoordinates(latitude, longitude);
+      List<Placemark> placeMarks = await placemarkFromCoordinates(latitude, longitude);
       Placemark place = placeMarks[0];
       String formattedAddress =
           "${place.street}, ${place.locality}, ${place.country}";
@@ -292,71 +291,9 @@ class CustomerHomeController extends GetxController {
           homeNannyList.value = res.data ?? [];
           isNannyDataLoading.value = false;
           update();
-
-          if (res.data != []) {
-            log("nanny list-->> ${homeNannyList.length}");
-            for (int a = 0; a < homeNannyList.length - 1; a++) {
-              markers.add(
-                Marker(
-                    markerId: MarkerId("$a"),
-                    position: LatLng(
-                        double.tryParse(homeNannyList[a].latitude.toString()) ??
-                            0.0,
-                        double.tryParse(
-                                homeNannyList[a].longitude.toString()) ??
-                            0.0),
-                    icon: await TextOnImage(
-                      image: homeNannyList[a].image,
-                    ).toBitmapDescriptor(
-                        logicalSize: const Size(200, 200),
-                        imageSize: const Size(200, 200)),
-                    onTap: () async {
-                      log("aaaaaaa:-->> $a");
-                      log("aaaaaaa:-->> ${homeNannyList[a].isFavorite}");
-
-                      updateNannyTile(
-                              name: homeNannyList[a].name,
-                              isFavourite: homeNannyList[a].isFavorite ?? false,
-                              ratingCount: homeNannyList[a].rating.toString(),
-                              description: homeNannyList[a].aboutMe,
-                              totalReviews:
-                                  homeNannyList[a].reviewCount.toString(),
-                              distance: homeNannyList[a]
-                                      .distance
-                                      ?.toInt()
-                                      .toString() ??
-                                  '0',
-                              age: homeNannyList[a].age.toString(),
-                              experience:
-                                  homeNannyList[a].experience.toString(),
-                              image: homeNannyList[a].image.toString(),
-                              userId: homeNannyList[a].id ?? 0)
-                          .then((value) async {
-                        toggleIsNannyMarkerVisible();
-
-                        // markers = markers.difference({markers.elementAt(a)});
-                        // markers.add(Marker(
-                        //     markerId: MarkerId("$a"),
-                        //     position: LatLng(
-                        //       double.tryParse(
-                        //           homeNannyList[a].latitude.toString())!,
-                        //       double.tryParse(
-                        //           homeNannyList[a].longitude.toString())!,
-                        //     ),
-                        //     icon: await TextOnImage(
-                        //       image: homeNannyList[a].image,
-                        //       color: AppColors.navyBlue,
-                        //     ).toBitmapDescriptor(
-                        //       logicalSize: const Size(200, 200),
-                        //       imageSize: const Size(200, 200),
-                        //     )));
-                        log("on tap on marker");
-                      });
-                    }),
-              );
-              update();
-              Utils.closeDialog();
-            }
+          Utils.closeDialog();
+          if (res.data != null && res.data!.isNotEmpty) {
+            updateNannyMarkers();
           } else {
             Utils.closeDialog();
           }
@@ -366,6 +303,67 @@ class CustomerHomeController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "Get dashboard data post  API ISSUE $s");
     }
+  }
+
+ Future<void> updateNannyMarkers()async{
+    log("nanny list-->> ${homeNannyList.length}");
+    for (int a = 0; a < homeNannyList.length - 1; a++) {
+      markers.add(
+          Marker(
+            markerId: MarkerId("$a"),
+            position: LatLng(double.tryParse(homeNannyList[a].latitude.toString()) ?? 0.0, double.tryParse(homeNannyList[a].longitude.toString()) ?? 0.0),
+            icon: await TextOnImage(
+            image: homeNannyList[a].image,
+
+          ).toBitmapDescriptor(
+              logicalSize: const Size(200, 200),
+              imageSize: const Size(200, 200)),
+          onTap: () async {
+            log("aaaaaaa:-->> $a");
+            log("aaaaaaa:-->> ${homeNannyList[a].isFavorite}");
+            updateNannyTile(
+                name: homeNannyList[a].name,
+                isFavourite: homeNannyList[a].isFavorite ?? false,
+                ratingCount: homeNannyList[a].rating.toString(),
+                description: homeNannyList[a].aboutMe,
+                totalReviews:
+                homeNannyList[a].reviewCount.toString(),
+                distance: homeNannyList[a]
+                    .distance
+                    ?.toInt()
+                    .toString() ??
+                    '0',
+                age: homeNannyList[a].age.toString(),
+                experience:
+                homeNannyList[a].experience.toString(),
+                image: homeNannyList[a].image.toString(),
+                userId: homeNannyList[a].id ?? 0)
+                .then((value) async {
+              toggleIsNannyMarkerVisible();
+
+              // markers = markers.difference({markers.elementAt(a)});
+              // markers.add(Marker(
+              //     markerId: MarkerId("$a"),
+              //     position: LatLng(
+              //       double.tryParse(
+              //           homeNannyList[a].latitude.toString())!,
+              //       double.tryParse(
+              //           homeNannyList[a].longitude.toString())!,
+              //     ),
+              //     icon: await TextOnImage(
+              //       image: homeNannyList[a].image,
+              //       color: AppColors.navyBlue,
+              //     ).toBitmapDescriptor(
+              //       logicalSize: const Size(200, 200),
+              //       imageSize: const Size(200, 200),
+              //     )));
+              log("on tap on marker");
+            });
+          }),
+
+    );
+  }
+    update();
   }
 
   @override

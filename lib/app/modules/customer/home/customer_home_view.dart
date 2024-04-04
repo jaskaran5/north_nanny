@@ -294,6 +294,7 @@ class CustomerHomeView extends StatelessWidget {
                   onMapCreated: (control) {
                     controller.googleMapController = control;
                     controller.update();
+                    controller.updateNannyMarkers();
                   },
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,

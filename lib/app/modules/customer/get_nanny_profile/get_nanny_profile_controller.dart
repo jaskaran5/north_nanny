@@ -191,6 +191,7 @@ class GetNannyProfileController extends GetxController {
 
   /// GET NANNY DETAILS
   getNannyDetails({required DateTime time}) async {
+    nannyId.value = Get.arguments ?? 0;
     try {
       if (!(await Utils.hasNetwork())) {
         return;
