@@ -9,6 +9,7 @@ class LocalNotificationService {
   //Todo: implements controller to singleTon
   static final LocalNotificationService _localNotificationService =
       LocalNotificationService._internal();
+  //
 
   factory LocalNotificationService() {
     return _localNotificationService;

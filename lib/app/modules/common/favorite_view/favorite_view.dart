@@ -28,13 +28,7 @@ class FavoriteView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    RouteManagement.goToGetNannyProfileView();
-                    // Get.to(
-                    //   () => NannyProfileView(
-                    //     isComeFromSetting: false,
-                    //     appBarTitle: TranslationKeys.nannyProfile.tr,
-                    //   ),
-                    // );
+                    RouteManagement.goToGetNannyProfileView(argument: controller.favouriteListNanny[index].nannyId);
                   },
                   child: HomeCustomListView(
                     // servicesListData: controller,
