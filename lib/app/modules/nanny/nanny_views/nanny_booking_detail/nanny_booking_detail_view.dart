@@ -55,14 +55,14 @@ class NannyBookingDetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.endJob &&
+                          NannyBookingDetailStatus.endJob ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.waitingForApproval &&
-                      controller.bookingDetailsModel?.data?.isJobStarted ==
-                          true) ...[
+                              NannyBookingDetailStatus.waitingForApproval &&
+                          controller.bookingDetailsModel?.data?.isJobStarted ==
+                              true) ...[
                     GetBuilder<NannyBookingDetailController>(
-                      id: 'timer_view',
-                      builder: (context) => Container(
+                      id: 'timerView',
+                      builder: (timerController) => Container(
                         padding: Dimens.edgeInsets16,
                         width: Get.width,
                         decoration: BoxDecoration(
@@ -84,8 +84,16 @@ class NannyBookingDetailView extends StatelessWidget {
                             ),
                             Dimens.boxHeight10,
                             AppText(
-                              text:
-                                  Utility.returnHMS(second: controller.seconds),
+                              text: timerController
+                                          .bookingDetailsModel?.data?.endTime !=
+                                      null
+                                  ? Utility.calculateTotalTimeDifference(
+                                      timerController
+                                          .bookingDetailsModel?.data?.startTime,
+                                      timerController
+                                          .bookingDetailsModel?.data?.endTime)
+                                  : Utility.returnHMS(
+                                      second: timerController.seconds),
                               style: AppStyles.ubNavyBlue34W700,
                               maxLines: 1,
                               textAlign: TextAlign.start,
@@ -343,9 +351,21 @@ class NannyBookingDetailView extends StatelessWidget {
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
-                      NannyBookingDetailStatus.givenReviewByNanny) ...[
-                    const CustomBookingReview(
-                      reviewsList: ['Christon Wang.F', 'Michal Johnson'],
+                          NannyBookingDetailStatus.givenReviewByNanny &&
+                      controller.bookingDetailsModel?.data?.reviewGivenByMe !=
+                          null) ...[
+                    CustomBookingReview(
+                      reviewsList: [
+                        if (controller
+                                .bookingDetailsModel?.data?.reviewGivenByMe !=
+                            null)
+                          controller.bookingDetailsModel?.data?.reviewGivenByMe,
+                        if (controller.bookingDetailsModel?.data
+                                ?.reviewGivenByOther !=
+                            null)
+                          controller
+                              .bookingDetailsModel?.data?.reviewGivenByOther,
+                      ],
                     ),
                   ],
                   if (controller.nannyBookingDetailStatus ==
@@ -704,15 +724,23 @@ class NannyBookingDetailView extends StatelessWidget {
                       (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
                           controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.arrived ||
-                          controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.disputeRaised)) ...[
+                              NannyBookingDetailStatus.arrived)) ...[
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
                       title: controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.disputeRaised
                           ? 'Dispute Raised'
                           : 'Declined',
+                      onTap: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
+                  if (controller.nannyBookingDetailStatus ==
+                      NannyBookingDetailStatus.disputeRaised) ...[
+                    CustomButton(
+                      backGroundColor: AppColors.fC3030RedColor,
+                      title: 'Dispute Raised',
                       onTap: () {
                         Get.back();
                       },
@@ -731,7 +759,9 @@ class NannyBookingDetailView extends StatelessWidget {
                       controller.nannyBookingDetailStatus !=
                           NannyBookingDetailStatus.endJob &&
                       controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.waitingForApproval) ...[
+                          NannyBookingDetailStatus.waitingForApproval &&
+                      controller.bookingDetailsModel?.data?.reviewGivenByMe ==
+                          null) ...[
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: 'Rate Your Experience',

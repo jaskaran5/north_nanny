@@ -32,6 +32,7 @@ enum BookingDetailStatus {
   rejected,
   disputeRaised,
   givenReviewByCustomer,
+  reviewByOtherUser,
 }
 
 enum NannyBookingDetailStatus {

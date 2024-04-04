@@ -600,14 +600,34 @@ class Utility {
 
   /// this method is used to return seconds difference according to dateTime
   static int calculateDifferenceInSeconds(DateTime givenTime) {
-    DateTime now = DateTime.now();
+    DateTime now = DateTime.now().toLocal();
 
     // Convert given time to local time
-    DateTime localGivenTime = givenTime.toLocal();
+    var test =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(givenTime.toString(), true);
 
+    var localGivenTime = test.toLocal();
+    debugPrint('local difference :$localGivenTime');
     Duration difference = localGivenTime.difference(now);
     int differenceInSeconds = difference.inSeconds;
     log('difference in seconds -: $differenceInSeconds');
     return differenceInSeconds;
+  }
+
+  /// used to return the actual time.
+  static String calculateTotalTimeDifference(
+      DateTime? startTime, DateTime? endTime) {
+    DateTime localStartTime = DateFormat("yyyy-MM-dd HH:mm:ss")
+        .parse(startTime.toString(), true)
+        .toLocal();
+
+    DateTime localEndTime = DateFormat("yyyy-MM-dd HH:mm:ss")
+        .parse(endTime.toString(), true)
+        .toLocal();
+
+    // Calculate the difference
+    Duration difference = localEndTime.difference(localStartTime);
+
+    return '${difference.inHours}:${difference.inMinutes}:${difference.inSeconds}';
   }
 }

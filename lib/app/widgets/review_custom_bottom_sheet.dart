@@ -125,7 +125,7 @@ class CustomReviewBottomSheet extends StatelessWidget {
                     (index) => Padding(
                       padding: Dimens.edgeInsets16,
                       child: CustomRatingTile(
-                        reviewDate: reviewsList[index].datetime.toString(),
+                        reviewDate: reviewsList[index].datetime?.toLocal().toString(),
                         userImage: reviewsList[index].image,
                         userName: reviewsList[index].name,
                         ratingDescription: reviewsList[index].review,

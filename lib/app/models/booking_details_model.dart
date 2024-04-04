@@ -48,12 +48,15 @@ class Data {
   UserDetails? userDetails;
   int? totalChildren;
   DateTime? startTime;
+  DateTime? endTime;
   bool? isJobStarted;
   bool? isBankAddedByNanny;
   int? totalHour;
   double? totalAmount;
   double? hourlyPrice;
   List<RatingList>? userReviewList;
+  RatingList? reviewGivenByMe;
+  RatingList? reviewGivenByOther;
 
   Data({
     this.userId,
@@ -76,6 +79,9 @@ class Data {
     this.startTime,
     this.isBankAddedByNanny,
     this.bookingStatus,
+    this.reviewGivenByMe,
+    this.reviewGivenByOther,
+    this.endTime,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -91,6 +97,8 @@ class Data {
         startTime: json["startTime"] == null
             ? null
             : DateTime.parse(json["startTime"]),
+        endTime:
+            json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
         bookingDate: json["bookingDate"] == null
             ? null
             : DateTime.parse(json["bookingDate"]),
@@ -116,6 +124,12 @@ class Data {
             ? []
             : List<RatingList>.from(
                 json["userReviewList"]!.map((x) => RatingList.fromJson(x))),
+        reviewGivenByMe: json["reviewGivenByMe"] == null
+            ? null
+            : RatingList.fromJson(json["reviewGivenByMe"]),
+        reviewGivenByOther: json["reviewGivenByOther"] == null
+            ? null
+            : RatingList.fromJson(json["reviewGivenByOther"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -126,6 +140,7 @@ class Data {
         "latitude": latitude,
         "longitude": longitude,
         "startTime": startTime?.toIso8601String(),
+        "endTime": endTime?.toIso8601String(),
         "isJobStarted": isJobStarted,
         "isBankAddedByNanny": isBankAddedByNanny,
         "hourlyprice": hourlyPrice,
@@ -145,6 +160,8 @@ class Data {
         "userReviewList": userReviewList == null
             ? []
             : List<dynamic>.from(userReviewList!.map((x) => x.toJson())),
+        "reviewGivenByMe": reviewGivenByMe?.toJson(),
+        "reviewGivenByOther": reviewGivenByOther?.toJson(),
       };
 }
 
