@@ -293,32 +293,36 @@ class ChatView extends StatelessWidget {
                                     color: AppColors.primaryColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: TextFormField(
-                                    onChanged: (value) {
-                                      if (value.trim().isNotEmpty) {
-                                        controller.updateSendMessageVisibility(
-                                            isVisible: true);
-                                      } else {
-                                        controller.updateSendMessageVisibility(
-                                            isVisible: false);
-                                      }
-                                    },
-                                    controller: controller.chatTextController,
-                                    decoration: InputDecoration(
-                                      hintText: 'Write a message',
-                                      border: InputBorder.none,
-                                      prefixIcon: IconButton(
-                                        icon: SvgPicture.asset(
-                                          Assets.iconsAttachments,
-                                          fit: BoxFit.cover,
-                                          height: Dimens.twentyFive,
-                                          width: Dimens.twentyFive,
+                                  child: FocusScope(
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        if (value.trim().isNotEmpty) {
+                                          controller
+                                              .updateSendMessageVisibility(
+                                                  isVisible: true);
+                                        } else {
+                                          controller
+                                              .updateSendMessageVisibility(
+                                                  isVisible: false);
+                                        }
+                                      },
+                                      controller: controller.chatTextController,
+                                      decoration: InputDecoration(
+                                        hintText: 'Write a message',
+                                        border: InputBorder.none,
+                                        prefixIcon: IconButton(
+                                          icon: SvgPicture.asset(
+                                            Assets.iconsAttachments,
+                                            fit: BoxFit.cover,
+                                            height: Dimens.twentyFive,
+                                            width: Dimens.twentyFive,
+                                          ),
+                                          onPressed: () {
+                                            log("on click on pick document");
+                                            // controller.pickDocuments();
+                                            controller.pickDocumentFile();
+                                          },
                                         ),
-                                        onPressed: () {
-                                          log("on click on pick document");
-                                          // controller.pickDocuments();
-                                          controller.pickDocumentFile();
-                                        },
                                       ),
                                     ),
                                   ),

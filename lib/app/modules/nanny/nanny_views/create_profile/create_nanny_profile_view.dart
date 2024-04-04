@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -163,7 +164,20 @@ class CreateNannyProfileView extends StatelessWidget {
                       keyboardType: TextInputType.text,
                     ),
                     Dimens.boxHeight20,
+
+                    // ------->>>>.Age
                     TextField(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(), //get today's date
+                            firstDate: DateTime(
+                                2000), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(2101));
+
+                        log("picked date:-->> $pickedDate");
+                      },
+                      readOnly: true,
                       controller: controller.ageTextEditingController,
                       maxLines: 1,
                       minLines: 1,
