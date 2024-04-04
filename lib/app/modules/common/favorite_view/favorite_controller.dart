@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/models/favourite_nanny_list_reponse_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
@@ -49,5 +52,32 @@ class FavoriteController extends GetxController {
     getFavouriteNannyListApi();
 
     super.onReady();
+  }
+
+  toggleFavouriteAndUnFavouriteApi(
+      {required int userId, required bool isFavourite}) {
+    try {
+      var body = {
+        "toUserId": userId,
+        "isFavorite": isFavourite,
+      };
+
+      _apiHelper.postApi(ApiUrls.addOrRemoveFavoriteNanny, body).futureValue(
+          (value) {
+        var res = NannyFavouriteResponseModel.fromJson(value);
+
+        if (res.response.toString() ==
+            AppConstants.apiResponseSuccess.toString()) {
+          log("response success");
+
+          getFavouriteNannyListApi();
+
+          update();
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Get dashboard data post  API ISSUE $s");
+    }
   }
 }

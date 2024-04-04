@@ -230,6 +230,8 @@ class FilterView extends StatelessWidget {
                       onChanged: (value) {
                         controller.selectedGender = value.toString();
                         controller.update();
+
+                        log("selected gender:-->> ${controller.selectedGender}");
                       },
                       baseTextStyle: controller.selectedGender?.isEmpty == true
                           ? AppStyles.ubHintColor15W500

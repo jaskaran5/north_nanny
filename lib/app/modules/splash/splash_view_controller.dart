@@ -5,6 +5,7 @@ import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
+import 'package:app_links/app_links.dart';
 
 class SplashController extends GetxController {
   RxBool isLogin = false.obs;
@@ -13,6 +14,8 @@ class SplashController extends GetxController {
   bool _serviceEnabled = false;
   PermissionStatus _permissionGranted = PermissionStatus.denied;
   LocationData? _locationData;
+
+  late AppLinks _appLinks;
   @override
   void onInit() {
     super.onInit();
@@ -82,6 +85,17 @@ class SplashController extends GetxController {
       const Duration(seconds: 5),
     );
 
+    _appLinks = AppLinks();
+    // _getTokenAndSaveData();
+    _appLinks.uriLinkStream.listen((uri) {
+      print('onApp stream Link: $uri');
+      // if(isLogin){
+      //   navigateToScreen(uri);
+      // }
+    });
+    print("init called in SplashView _handleDeepLinking");
+    _handleDeepLinking();
+
     checkSession();
 
     // RouteManagement.goToOffAllHome(ChooseInterface.customer);
@@ -97,5 +111,32 @@ class SplashController extends GetxController {
     saveDeviceTypeAndToken();
     getCurrentLocation();
     super.onReady();
+  }
+
+  void _handleDeepLinking() {
+    const delayDuration = Duration(seconds: 3);
+    Future.delayed(delayDuration, () async {
+      final appLink = await _appLinks.getInitialAppLink();
+      final recentLink = await _appLinks.getLatestAppLink();
+      // final isLoggedIn = isLogin;
+      if (appLink != null) {
+        RouteManagement.goToOffAllLogIn();
+      }
+      // if (appLink != null || recentLink != null) {
+      //   final link = appLink ?? recentLink;
+      //   print('$tag ===>: $link');
+      //   if (!isLoggedIn || link ==null) {
+      //     Get.offAll(() => const OnBoardingView());
+      //   } else {
+      //     navigateToScreen(link);
+      //   }
+      // } else {
+      //   if (!isLoggedIn) {
+      //     Get.offAll(() => const LoginView());
+      //   } else {
+      //     Get.offAll(() => const HomeView());
+      //   }
+      // }
+    });
   }
 }

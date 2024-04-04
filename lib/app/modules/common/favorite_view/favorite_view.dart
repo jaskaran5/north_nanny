@@ -28,7 +28,8 @@ class FavoriteView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    RouteManagement.goToGetNannyProfileView(argument: controller.favouriteListNanny[index].nannyId);
+                    RouteManagement.goToGetNannyProfileView(
+                        argument: controller.favouriteListNanny[index].nannyId);
                   },
                   child: HomeCustomListView(
                     // servicesListData: controller,
@@ -53,20 +54,20 @@ class FavoriteView extends StatelessWidget {
                     // servicesList: controller.homeCustomList,
                     isHeartTapped: true,
                     heartSvg: Assets.iconsHeartOutline,
-                    onTapHeartIcon: () {},
+                    onTapHeartIcon: () {
+                      controller.toggleFavouriteAndUnFavouriteApi(
+                          userId: controller.favouriteListNanny[index].nannyId!,
+                          isFavourite:
+                              !controller.favouriteListNanny[index].isFavorite);
+                    },
                     onTapRating: () {
                       Utility.openBottomSheet(
-                        const CustomReviewBottomSheet(
-                          totalReviews: 21,
-                          totalReviewsRating: 4.5,
-                          reviewsList:[],
-                          // [
-                          //   'Michael Johnson',
-                          //   'Giorgio Chiellini',
-                          //   'Michael Johnson',
-                          //   'Alex Morgan',
-                          //   'Giorgio Chiellini'
-                          // ],
+                        CustomReviewBottomSheet(
+                          totalReviews:
+                              controller.favouriteListNanny[index].reviewCount,
+                          totalReviewsRating:
+                              controller.favouriteListNanny[index].rating,
+                          reviewsList: const [],
                         ),
                       );
                     },
