@@ -33,6 +33,7 @@ class BookingDetailController extends GetxController {
   /// used to initialize socket.
   SignalRHelper socket = SignalRHelper();
 
+  /// used to store the booking detail data.
   BookingDataById? bookingDataById;
 
   /// used to show timer
