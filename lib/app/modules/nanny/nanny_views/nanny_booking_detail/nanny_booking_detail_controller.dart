@@ -33,7 +33,7 @@ class NannyBookingDetailController extends GetxController {
   /// used to initiate socket
   final SignalRHelper socketHelper = SignalRHelper();
 
-  late NannyBookingDetailStatus nannyBookingDetailStatus;
+  NannyBookingDetailStatus? nannyBookingDetailStatus;
   late Timer timer;
   int seconds = 0;
   BookingDetailsModel? bookingDetailsModel;
@@ -127,6 +127,8 @@ class NannyBookingDetailController extends GetxController {
       update(['timer-view']);
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
+    } else if (bookingStatus == 10) {
+      nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
     }
     log('Booking Status Nanny Side :$bookingStatus');
     update();

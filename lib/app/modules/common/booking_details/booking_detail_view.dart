@@ -21,8 +21,12 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_tracker_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/review_custom_bottom_sheet.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
+import '../../../../navigators/routes_management.dart';
 import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
+import '../../../widgets/custom_booking_review.dart';
+import '../rating_and_review/rating_and_review_binding.dart';
+import '../rating_and_review/rating_and_review_controller.dart';
 
 class BookingDetailView extends StatelessWidget {
   const BookingDetailView({super.key});
@@ -335,19 +339,53 @@ class BookingDetailView extends StatelessWidget {
                         controller.bookingDataById?.isUseReferrals ?? false,
                   ),
                   Dimens.boxHeight16,
-                  // if (controller.bookingDetailStatus ==
-                  //     BookingDetailStatus.reviewComplete) ...[
-                  //   CustomButton(
-                  //     title: 'Rate your Experience',
-                  //     backGroundColor: AppColors.navyBlue,
-                  //     onTap: () {
-                  //       controller.bookingDetailStatus =
-                  //           BookingDetailStatus.reviewComplete;
-                  //       controller.update();
-                  //       RouteManagement.goToRatingReviewScreen();
-                  //     },
-                  //   ),
-                  // ],
+                  if (controller.bookingDetailStatus ==
+                      BookingDetailStatus.givenReviewByCustomer) ...[
+                    const CustomBookingReview(
+                      reviewsList: ['Christon Wang.F', 'Michal Johnson'],
+                    ),
+                    Dimens.boxHeight16,
+                  ],
+                  if (controller.bookingDetailStatus !=
+                          BookingDetailStatus.givenReviewByCustomer &&
+                      controller.bookingDetailStatus !=
+                          BookingDetailStatus.booked &&
+                      controller.bookingDetailStatus !=
+                          BookingDetailStatus.arrived &&
+                      controller.bookingDetailStatus !=
+                          BookingDetailStatus.disputeRaised &&
+                      controller.bookingDetailStatus !=
+                          BookingDetailStatus.rejected) ...[
+                    CustomButton(
+                      title: 'Rate your Experience',
+                      backGroundColor: AppColors.navyBlue,
+                      onTap: () {
+                        if (!Get.isRegistered<RatingAndReviewController>()) {
+                          RatingAndReviewBinding().dependencies();
+                        }
+                        Get.find<RatingAndReviewController>().storeUserData(
+                            name:
+                                controller.bookingDataById?.userDetails?.name ??
+                                    '',
+                            image: controller
+                                    .bookingDataById?.userDetails?.image ??
+                                '',
+                            userReviews: controller.bookingDataById?.userDetails
+                                    ?.reviewCount ??
+                                0,
+                            toUserId: controller
+                                    .bookingDataById?.userDetails?.userId ??
+                                0,
+                            bookedId:
+                                controller.bookingDataById?.bookingId ?? 0,
+                            userRating: controller
+                                    .bookingDataById?.userDetails?.rating ??
+                                0.0);
+
+                        RouteManagement.goToRatingReviewScreen();
+                      },
+                    ),
+                  ],
 
                   /* comment due to complete the job.               if (controller.bookingDetailStatus ==
                       BookingDetailStatus.complete) ...[

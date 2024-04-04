@@ -45,7 +45,8 @@ class CustomerCalenderView extends StatelessWidget {
                         defaultTextStyle: AppStyles.ubBlack15W600,
                         weekendTextStyle: AppStyles.ubBlack15W600,
                         outsideTextStyle: AppStyles.ubHintColor15W500,
-                        isTodayHighlighted: controller.selectedDay != null ? false : true,
+                        isTodayHighlighted:
+                            controller.selectedDay != null ? false : true,
                         todayDecoration: const BoxDecoration(
                           color: AppColors.navyBlue,
                           shape: BoxShape.circle,
@@ -112,17 +113,26 @@ class CustomerCalenderView extends StatelessWidget {
                     //                 controller.userBookingDetail?.data ?? [],
                     //             day: controller.selectedDay?.day ?? 0,
                     //             month: controller.selectedDay?.month ?? 0) &&
-                            controller.singleDateBookingData != null
+                    controller.singleDateBookingData != null
                         ? GestureDetector(
                             onTap: () {
                               if (!Get.isRegistered<
                                   BookingDetailController>()) {
                                 BookingDetailBinding().dependencies();
                               }
-                              Get.find<BookingDetailController>()
-                                  .getBookingDataById(
-                                      bookingId: controller
-                                          .singleDateBookingData?.bookingId);
+                              var customerBookingController =
+                                  Get.find<BookingDetailController>();
+
+                              /// used to store the  booking status
+                              customerBookingController.typeOfBooking(
+                                  bookingStatus: controller
+                                      .singleDateBookingData?.bookingStatus);
+
+                              /// used to store the detail of booking
+                              customerBookingController.getBookingDataById(
+                                  bookingId: controller
+                                      .singleDateBookingData?.bookingId);
+
                               RouteManagement.goToCustomerBookingDetailView();
                             },
                             child: Container(

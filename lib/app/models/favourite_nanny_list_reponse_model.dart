@@ -42,6 +42,7 @@ class FavouriteListResponseModel {
 
 class FavouriteNanny {
   dynamic id;
+  int? nannyId;
   dynamic gender;
   dynamic name;
   dynamic image;
@@ -73,10 +74,12 @@ class FavouriteNanny {
     this.reviewCount,
     this.rating,
     this.ratingList,
+    this.nannyId
   });
 
   factory FavouriteNanny.fromJson(Map<String, dynamic> json) => FavouriteNanny(
         id: json["id"],
+         nannyId: json["nannyId"],
         gender: json["gender"] ?? 0,
         name: json["name"] ?? '',
         image: json["image"] ?? '',
@@ -100,6 +103,7 @@ class FavouriteNanny {
         "gender": gender,
         "name": name,
         "image": image,
+        "nannyId": nannyId,
         "isFavorite": isFavorite,
         "aboutMe": aboutMe,
         "distance": distance,

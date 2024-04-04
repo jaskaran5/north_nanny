@@ -57,6 +57,7 @@ class BookingDataById {
   dynamic userReviewList;
   bool? isJobStarted;
   bool? isUseReferrals;
+  bool? isCardAddedByCustomer;
 
   BookingDataById({
     this.bookingStatus,
@@ -79,6 +80,7 @@ class BookingDataById {
     this.userReviewList,
     this.isJobStarted,
     this.isUseReferrals,
+    this.isCardAddedByCustomer,
   });
 
   factory BookingDataById.fromJson(Map<String, dynamic> json) =>
@@ -117,6 +119,7 @@ class BookingDataById {
         userReviewList: json["userReviewList"],
         isJobStarted: json["isJobStarted"],
         isUseReferrals: json["isUseReferals"],
+        isCardAddedByCustomer: json["isCardAddedByCustomer"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -143,6 +146,7 @@ class BookingDataById {
         "userReviewList": userReviewList,
         "isJobStarted": isJobStarted,
         "isUseReferals": isUseReferrals,
+        "isCardAddedByCustomer": isCardAddedByCustomer,
       };
 }
 

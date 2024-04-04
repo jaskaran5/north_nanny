@@ -28,6 +28,8 @@ import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 import '../../../../res/constants/enums.dart';
 import '../../../../widgets/custom_booking_detail.dart';
 import '../../../../widgets/custom_text_field.dart';
+import '../../../common/rating_and_review/rating_and_review_binding.dart';
+import '../../../common/rating_and_review/rating_and_review_controller.dart';
 
 class NannyBookingDetailView extends StatelessWidget {
   const NannyBookingDetailView({super.key});
@@ -54,6 +56,8 @@ class NannyBookingDetailView extends StatelessWidget {
                 children: [
                   if (controller.nannyBookingDetailStatus ==
                           NannyBookingDetailStatus.endJob &&
+                      controller.nannyBookingDetailStatus ==
+                          NannyBookingDetailStatus.waitingForApproval &&
                       controller.bookingDetailsModel?.data?.isJobStarted ==
                           true) ...[
                     GetBuilder<NannyBookingDetailController>(
@@ -258,7 +262,7 @@ class NannyBookingDetailView extends StatelessWidget {
                       ),
                       showTrackLocation:
                           trackController.nannyBookingDetailStatus ==
-                                  NannyBookingDetailStatus.reviewComplete
+                                  NannyBookingDetailStatus.givenReviewByNanny
                               ? false
                               : trackController.bookingDetailsModel != null
                                   ? true
@@ -339,9 +343,7 @@ class NannyBookingDetailView extends StatelessWidget {
                   ),
                   Dimens.boxHeight14,
                   if (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.reviewComplete ||
-                      controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.past) ...[
+                      NannyBookingDetailStatus.givenReviewByNanny) ...[
                     const CustomBookingReview(
                       reviewsList: ['Christon Wang.F', 'Michal Johnson'],
                     ),
@@ -713,6 +715,50 @@ class NannyBookingDetailView extends StatelessWidget {
                           : 'Declined',
                       onTap: () {
                         Get.back();
+                      },
+                    ),
+                  ],
+                  if (controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.givenReviewByNanny &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.onMyWay &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.arrived &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.disputeRaised &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.present &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.endJob &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.waitingForApproval) ...[
+                    CustomButton(
+                      backGroundColor: AppColors.navyBlue,
+                      title: 'Rate Your Experience',
+                      onTap: () {
+                        if (!Get.isRegistered<RatingAndReviewController>()) {
+                          RatingAndReviewBinding().dependencies();
+                        }
+                        Get.find<RatingAndReviewController>().storeUserData(
+                            name: controller.bookingDetailsModel?.data
+                                    ?.userDetails?.name ??
+                                '',
+                            image: controller.bookingDetailsModel?.data
+                                    ?.userDetails?.image ??
+                                '',
+                            userReviews: controller.bookingDetailsModel?.data
+                                    ?.userDetails?.reviewCount ??
+                                0,
+                            toUserId: controller.bookingDetailsModel?.data
+                                    ?.userDetails?.userId ??
+                                0,
+                            bookedId: controller
+                                    .bookingDetailsModel?.data?.bookingId ??
+                                0,
+                            userRating: controller.bookingDetailsModel?.data
+                                    ?.userDetails?.rating ??
+                                0.0);
+                        RouteManagement.goToRatingReviewScreen();
                       },
                     ),
                   ],

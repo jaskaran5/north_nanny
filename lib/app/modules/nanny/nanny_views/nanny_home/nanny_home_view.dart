@@ -173,6 +173,16 @@ class NannyHomeView extends StatelessWidget {
                                 }
                                 var nannyBookingDetailsController =
                                     Get.find<NannyBookingDetailController>();
+
+                                /// used to store the type of booking
+                                nannyBookingDetailsController.typeOfBooking(
+                                    bookingStatus: controller
+                                            .nannyHomeData
+                                            .data
+                                            ?.bookingRequest?[index]
+                                            .bookingStatus ??
+                                        0);
+
                                 nannyBookingDetailsController
                                     .getBookingDetailOfCustomer(
                                         bookingId: controller
