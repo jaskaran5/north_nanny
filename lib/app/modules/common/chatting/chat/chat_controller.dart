@@ -118,21 +118,15 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     getLoginType().then((value) => null);
-
     if (_socketHelper.isConnected == false) {
-      _socketHelper.reconnect();
+      _socketHelper.init();
     }
-    _socketHelper.hubConnection = _socketHelper.getHubConnection();
     otherUserId.value = Get.arguments;
     update();
     super.onInit();
-
     log("user id -->> ${otherUserId.value}");
-
     print("CALLED_INIT_STATE");
-
     listenSocket();
-
     getSingleChatDetails();
   }
 
@@ -448,8 +442,7 @@ class ChatController extends GetxController {
   // INVOKE SINGLE CHAT DETAILS
 
   getSingleChatDetails() async {
-    final result = await _socketHelper.hubConnection
-        .invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
+    final result = await _socketHelper.hubConnection.invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
   }
 
   //========--------->>>>>>>>>>>>>>> LISTER SINGLE CHAT DATA

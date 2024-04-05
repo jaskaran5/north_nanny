@@ -13,12 +13,17 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class RecentChatView extends GetView<RecentChatController> {
   RecentChatView({super.key}) {
-    controller.initMessages();
-  }
+    if(!controller.socketHelper.isConnected){
+      controller.socketHelper.init();
+      Future.delayed(const Duration(seconds: 2),(){
+        controller.initMessages();
+      });
+    }else{
+      controller.initMessages();
+    }
 
-  @override
-  RecentChatController controller =
-      Get.put(RecentChatController(), permanent: true);
+  }
+  final controller = Get.put(RecentChatController(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
