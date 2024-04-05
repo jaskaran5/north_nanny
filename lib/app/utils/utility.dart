@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -630,4 +631,12 @@ class Utility {
 
     return '${difference.inHours}:${difference.inMinutes}:${difference.inSeconds}';
   }
+
+  /// used to get the time zone
+  static Future<String> getTimeZone() async {
+    var timeZone = await FlutterTimezone.getLocalTimezone();
+    debugPrint('timeZone:$timeZone');
+    return timeZone;
+  }
+
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
@@ -170,19 +171,31 @@ class CreateNannyProfileView extends StatelessWidget {
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(), //get today's date
+                            initialDate: DateTime(
+                                DateTime.now().year - 18), //get today's date
                             firstDate: DateTime(
-                                2000), //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime(2101));
+                                1940), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(DateTime.now().year - 18));
 
                         log("picked date:-->> $pickedDate");
+                        if (pickedDate != null) {
+                          controller.selectedDateOfBirth = pickedDate;
+                        }
+
+                        controller.update();
                       },
                       readOnly: true,
-                      controller: controller.ageTextEditingController,
                       maxLines: 1,
                       minLines: 1,
                       decoration: customFieldDeco(
-                        hintText: TranslationKeys.age.tr,
+                        hintText: controller.selectedDateOfBirth != null
+                            ? DateFormat('MM-dd-yyyy').format(
+                                controller.selectedDateOfBirth ??
+                                    DateTime.now())
+                            : TranslationKeys.dob.tr,
+                        hintStyle: controller.selectedDateOfBirth != null
+                            ? AppStyles.ubBlack15W600
+                            : null,
                         prefixWidget: Padding(
                           padding: Dimens.edgeInsets12,
                           child: SvgPicture.asset(

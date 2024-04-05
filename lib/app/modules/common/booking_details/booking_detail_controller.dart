@@ -101,8 +101,8 @@ class BookingDetailController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDataById = response.data;
           update();
-          if (bookingDataById?.startTime != null &&
-              bookingDataById?.bookingStatus == 5) {
+          if (response.data?.startTime != null &&
+              response.data?.bookingStatus == 5) {
             seconds = 0;
             showTimer(
                 startTime: bookingDataById?.startTime != null
@@ -111,7 +111,7 @@ class BookingDetailController extends GetxController {
                             response.data?.startTime ?? DateTime.now())))
                     : DateTime.now());
           }
-          if (bookingDataById?.bookingStatus == 6) {
+          if (response.data?.bookingStatus == 6) {
             timer.cancel();
             seconds = 0;
             update(['customerTimerView']);
@@ -143,9 +143,9 @@ class BookingDetailController extends GetxController {
               secondButtonStyle: AppStyles.ubWhite14700,
             );
           }
-          if (bookingDataById?.bookingStatus == 7 ||
+          if (response.data?.bookingStatus == 7 &&
               response.data?.isSendTip == false &&
-                  response.data?.reviewGivenByMe == null) {
+              response.data?.reviewGivenByMe == null) {
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'Send Tip',

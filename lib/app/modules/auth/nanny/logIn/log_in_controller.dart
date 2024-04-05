@@ -17,6 +17,7 @@ import '../../../../data/api/api_helper.dart';
 import '../../../../models/login_response_model.dart';
 import '../../../../res/constants/app_constants.dart';
 import '../../../../utils/app_utils.dart';
+import '../../../../utils/utility.dart';
 import '../../../common/socket/singnal_r_socket.dart';
 
 class LogInController extends GetxController {
@@ -122,6 +123,7 @@ class LogInController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
+      var timeZone = await  Utility.getTimeZone();
 
       var body = {
         "email": emailTextEditingController.text.trim(),
@@ -129,6 +131,7 @@ class LogInController extends GetxController {
         "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": userType,
+        'timeZone': timeZone,
         "latitude":
             Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
         "longitude":

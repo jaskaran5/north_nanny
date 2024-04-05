@@ -8,10 +8,10 @@ class VideoPlayerView extends StatefulWidget {
   const VideoPlayerView({super.key, required this.url});
 
   @override
-  _VideoPlayerViewState createState() => _VideoPlayerViewState();
+  VideoPlayerViewState createState() => VideoPlayerViewState();
 }
 
-class _VideoPlayerViewState extends State<VideoPlayerView> {
+class VideoPlayerViewState extends State<VideoPlayerView> {
   late VideoPlayerController _controller;
   final Duration _skipDuration = const Duration(seconds: 10);
 

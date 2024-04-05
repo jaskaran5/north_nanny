@@ -62,6 +62,7 @@ class TranslationKeys {
   static const String lastName = 'lastName';
   static const String selectLocation = 'selectLocation';
   static const String age = 'age';
+  static const String dob = 'dob';
   static const String gender = 'gender';
   static const String male = 'male';
   static const String female = 'female';

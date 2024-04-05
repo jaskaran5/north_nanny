@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
@@ -176,11 +177,35 @@ class NannyEditProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     TextField(
                       maxLength: 2,
-                      controller: controller.ageTextEditingController,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: controller.selectedDateOfBirth ??
+                                DateTime(DateTime.now().year -
+                                    18), //get today's date
+                            firstDate: DateTime(
+                                1940), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(DateTime.now().year - 18));
+
+                        log("picked date:-->> $pickedDate");
+                        if (pickedDate != null) {
+                          controller.selectedDateOfBirth = pickedDate;
+                        }
+
+                        controller.update();
+                      },
+                      readOnly: true,
                       maxLines: 1,
                       minLines: 1,
                       decoration: customFieldDeco(
-                        hintText: TranslationKeys.age.tr,
+                        hintText: controller.selectedDateOfBirth != null
+                            ? DateFormat('MM-dd-yyyy').format(
+                                controller.selectedDateOfBirth ??
+                                    DateTime.now())
+                            : TranslationKeys.dob.tr,
+                        hintStyle: controller.selectedDateOfBirth != null
+                            ? AppStyles.ubBlack15W600
+                            : null,
                         prefixWidget: Padding(
                           padding: Dimens.edgeInsets12,
                           child: SvgPicture.asset(

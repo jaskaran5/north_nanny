@@ -26,7 +26,7 @@ class NannyEditProfileController extends GetxController {
 
   final firstNameTextEditingController = TextEditingController();
   final lastNameTextEditingController = TextEditingController();
-  final ageTextEditingController = TextEditingController();
+  DateTime? selectedDateOfBirth;
   final phoneNumberTextEditingController = TextEditingController();
   final locationTextEditingController = TextEditingController();
   final highSchoolTextEditingController = TextEditingController();
@@ -103,7 +103,7 @@ class NannyEditProfileController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           firstNameTextEditingController.text = response.data?.firstName ?? '';
           lastNameTextEditingController.text = response.data?.lastName ?? '';
-          ageTextEditingController.text = response.data?.age.toString() ?? '';
+          selectedDateOfBirth = response.data?.dob;
           phoneNumberTextEditingController.text = response.data?.mobileNo ?? '';
           locationTextEditingController.text = response.data?.location ?? '';
           highSchoolTextEditingController.text =
@@ -150,7 +150,7 @@ class NannyEditProfileController extends GetxController {
             : imageUrl,
         "FirstName": firstNameTextEditingController.text.trim(),
         "LastName": lastNameTextEditingController.text.trim(),
-        'Age': ageTextEditingController.text.trim(),
+        'Dob': selectedDateOfBirth,
         "MobileNumber": phoneNumberTextEditingController.text.trim(),
         if (selectedGender?.isNotEmpty == true)
           "Gender": selectedGender?.toLowerCase() == 'male'
@@ -212,7 +212,7 @@ class NannyEditProfileController extends GetxController {
       highSchoolName: highSchoolTextEditingController.text.trim(),
       phoneNumber: phoneNumberTextEditingController.text.trim(),
       collegeName: collegeTextEditingController.text.trim(),
-      age: ageTextEditingController.text.trim(),
+      age: selectedDateOfBirth == null ? '' : selectedDateOfBirth.toString(),
       location: locationTextEditingController.text.trim(),
       aboutYourSelf: tellUsTextEditingController.text.trim(),
     );

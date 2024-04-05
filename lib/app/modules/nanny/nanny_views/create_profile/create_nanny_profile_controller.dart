@@ -25,7 +25,7 @@ class CreateNannyProfileController extends GetxController {
   /// create nanny profile controllers.
   final firstNameTextEditingController = TextEditingController();
   final lastNameTextEditingController = TextEditingController();
-  final ageTextEditingController = TextEditingController();
+  DateTime? selectedDateOfBirth;
   final phoneNumberTextEditingController = TextEditingController();
   final locationTextEditingController = TextEditingController();
   final highSchoolTextEditingController = TextEditingController();
@@ -85,6 +85,7 @@ class CreateNannyProfileController extends GetxController {
 
   /// create Profile Validator
   profileValidator() {
+    log('selectedDob:${selectedDateOfBirth.toString()}');
     bool isValidate = Validator.instance.createNannyProfileValidator(
       image: pickedImage?.path ?? '',
       firstname: firstNameTextEditingController.text.trim(),
@@ -93,7 +94,7 @@ class CreateNannyProfileController extends GetxController {
       highSchoolName: highSchoolTextEditingController.text.trim(),
       phoneNumber: phoneNumberTextEditingController.text.trim(),
       collegeName: collegeTextEditingController.text.trim(),
-      age: ageTextEditingController.text.trim(),
+      age: selectedDateOfBirth == null ? '' : selectedDateOfBirth.toString(),
       location: locationTextEditingController.text.trim(),
       aboutYourSelf: tellUsTextEditingController.text.trim(),
     );
@@ -116,7 +117,7 @@ class CreateNannyProfileController extends GetxController {
               filename: pickedImage!.path.split('/').last),
         "FirstName": firstNameTextEditingController.text.trim(),
         "LastName": lastNameTextEditingController.text.trim(),
-        'Age': ageTextEditingController.text.trim(),
+        'Dob': selectedDateOfBirth,
         "MobileNumber": phoneNumberTextEditingController.text.trim(),
         if (selectedGender?.isNotEmpty == true)
           "Gender": selectedGender?.toLowerCase() == 'male'
@@ -134,13 +135,13 @@ class CreateNannyProfileController extends GetxController {
         'NameOfCollage': collegeTextEditingController.text.trim(),
         if (licenseHaveOrNot?.isNotEmpty == true)
           'IsDrivingLicense':
-              licenseHaveOrNot?.toLowerCase() == 'true' ? true : false,
+              licenseHaveOrNot?.toLowerCase() == 'yes' ? true : false,
         'AboutMe': tellUsTextEditingController.text.trim(),
         if (referralTextEditingController.text.isNotEmpty)
           "ReferralCode": referralTextEditingController.text.trim()
       });
 
-      log(body.fields.toString());
+      log('body of  create nanny profile :${body.fields.toString()}');
       log("auth token:-->> ${Storage.getValue(StringConstants.token)}");
 
       _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(

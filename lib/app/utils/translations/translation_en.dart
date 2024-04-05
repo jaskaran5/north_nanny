@@ -53,6 +53,7 @@ var en = <String, String>{
   TranslationKeys.lastName: 'Last name',
   TranslationKeys.selectLocation: 'Select location',
   TranslationKeys.age: 'Age',
+  TranslationKeys.dob: 'Dob',
   TranslationKeys.gender: 'Gender',
   TranslationKeys.continueWord: 'Continue',
   TranslationKeys.childProfile: 'Child Profile',

@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 MyProfileModel myProfileModelFromJson(String str) =>
@@ -50,6 +48,7 @@ class Data {
   dynamic bonusReferrals;
   List<String>? services;
   int? age;
+  DateTime? dob;
   dynamic isDrivingLicence;
   List<RatingList>? ratingList;
 
@@ -74,6 +73,7 @@ class Data {
     this.age,
     this.isDrivingLicence,
     this.ratingList,
+    this.dob,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -97,6 +97,7 @@ class Data {
             ? []
             : List<String>.from(json["services"]!.map((x) => x)),
         age: json["age"],
+        dob: json["dob"] == null ? null : DateTime.parse(json["dob"]),
         isDrivingLicence: json["isDrivingLicence"],
         ratingList: json["ratingList"] == null
             ? []
@@ -128,6 +129,7 @@ class Data {
         "ratingList": ratingList == null
             ? []
             : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
+        "dob": dob?.toIso8601String(),
       };
 }
 

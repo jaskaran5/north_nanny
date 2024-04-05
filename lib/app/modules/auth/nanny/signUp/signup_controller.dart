@@ -131,13 +131,14 @@ class SignupViewController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
-
+      var timeZone = await Utility.getTimeZone();
       var body = {
         "email": emailTextEditingController.text.trim(),
         "password": passwordTextEditingController.text.trim(),
         "deviceToken": deviceToken,
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": type,
+        'timeZone': timeZone,
         // "latitude": Storage.getValue(StringConstants.latitude) ?? 30.7046 ??
         //     currentLatLng.value!.latitude.toString(),
         // "longitude": Storage.getValue(StringConstants.longitude) ?? 76.7179 ??

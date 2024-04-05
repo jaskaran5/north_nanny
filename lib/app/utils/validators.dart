@@ -247,9 +247,10 @@ class Validator {
       error = "Please enter your last name";
       return false;
     } else if (age.isEmpty) {
-      error = "Please enter your age";
+      error = "Please enter your dob";
       return false;
-    } else if (phoneNumber.isEmpty) {
+    }
+    if (phoneNumber.isEmpty) {
       error = "Please enter your phone number";
       return false;
     } else if (location.isEmpty) {
