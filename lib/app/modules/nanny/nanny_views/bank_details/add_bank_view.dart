@@ -108,7 +108,7 @@ class AddBankView extends StatelessWidget {
                           TextField(
                             maxLines: 1,
                             minLines: 1,
-                            maxLength: 8,
+                            maxLength: 12,
                             controller:
                                 controller.routingNumberTextEditingController,
                             decoration: customFieldDeco(
@@ -243,7 +243,7 @@ class AddBankView extends StatelessWidget {
                             controller.postalCodeTextEditingController,
                             maxLines: 1,
                             minLines: 1,
-                            maxLength: 5,
+                            maxLength: 9,
                             decoration: customFieldDeco(
                               hintText: TranslationKeys.postalCode.tr,
                               prefixWidget: Padding(
@@ -258,7 +258,7 @@ class AddBankView extends StatelessWidget {
                             cursorColor: AppColors.blackColor,
                             cursorWidth: Dimens.one,
                             style: AppStyles.ubBlack15W600,
-                            keyboardType: TextInputType.phone,
+                            keyboardType: TextInputType.text,
                           ),
                           Dimens.boxHeight20,
                         ],
