@@ -114,7 +114,7 @@ class FCMService {
 //
       if (message.data["Type"] != null) {
         log("currenr route is -->> ${Get.currentRoute}");
-        print("currenr route is -->> ${Get.currentRoute}");
+        debugPrint("currenr route is -->> ${Get.currentRoute}");
 
         if (Get.currentRoute != Routes.chat) {
           showChatNotification(message);

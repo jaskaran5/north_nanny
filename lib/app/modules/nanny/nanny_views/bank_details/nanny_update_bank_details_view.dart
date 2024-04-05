@@ -41,7 +41,10 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                             cardType:
                                 controller.bankDetailResponse?.data?.bankName ??
                                     '',
-                            onTapButton: () {},
+                            onTapButton: () {
+                              /// used to delete the bank details.
+                              controller.deleteBankDetails();
+                            },
                             userName: controller
                                     .bankDetailResponse?.data?.accountHolderName
                                     .toString() ??

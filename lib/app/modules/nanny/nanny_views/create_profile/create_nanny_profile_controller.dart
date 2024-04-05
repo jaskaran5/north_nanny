@@ -214,6 +214,12 @@ class CreateNannyProfileController extends GetxController {
   final holderNameTextEditingController = TextEditingController();
   final accountNumberTextEditingController = TextEditingController();
   final routingNumberTextEditingController = TextEditingController();
+  final addressOne = TextEditingController();
+  final addressTwo = TextEditingController();
+  final cityTextEditingController = TextEditingController();
+  final stateTextEditingController = TextEditingController();
+  final postalCodeTextEditingController = TextEditingController();
+  final countryTextEditingController = TextEditingController();
 
   /// used to validate bank Detail Screen.
   bankDetailValidator() {
@@ -222,6 +228,12 @@ class CreateNannyProfileController extends GetxController {
       accountHolderName: holderNameTextEditingController.text.trim(),
       accountNumber: accountNumberTextEditingController.text.tr,
       routingNumber: routingNumberTextEditingController.text.trim(),
+      addressOne: addressOne.text.trim(),
+      otherAddress: addressTwo.text.trim(),
+      city: cityTextEditingController.text.trim(),
+      state: stateTextEditingController.text.trim(),
+      country: countryTextEditingController.text.trim(),
+      postalCode: postalCodeTextEditingController.text.trim(),
     );
     if (isValidate) {
       postBankDetails(isComeFromSkip: false);
@@ -248,6 +260,12 @@ class CreateNannyProfileController extends GetxController {
           'accountHolderName': holderNameTextEditingController.text.trim(),
           'accountNumber': accountNumberTextEditingController.text.trim(),
           'routingNumber': routingNumberTextEditingController.text.trim(),
+          "address1": addressOne.text.trim(),
+          "address2": addressTwo.text.trim(),
+          "city": cityTextEditingController.text.trim(),
+          "postalCode": postalCodeTextEditingController.text.trim(),
+          "state": stateTextEditingController.text.trim(),
+          "country": countryTextEditingController.text.trim(),
         };
       }
 

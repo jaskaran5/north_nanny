@@ -127,7 +127,7 @@ class NannyBookingDetailController extends GetxController {
       update(['timerView']);
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
-    } else if (bookingStatus == 10) {
+    } else if (bookingStatus == 10 || bookingStatus==9) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
     }
     log('Booking Status Nanny Side :$bookingStatus');

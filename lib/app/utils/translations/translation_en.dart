@@ -25,7 +25,7 @@ var en = <String, String>{
   TranslationKeys.forgotPassword: 'Forgot Password? ',
   TranslationKeys.orLoginWith: 'Or login with ',
   TranslationKeys.doNotHaveAnAccount: 'Don’t have an account? ',
-  TranslationKeys.registerNow: 'Register Now ',
+  TranslationKeys.registerNow: 'Register Now',
   TranslationKeys.doNotWorryEnterEmail:
       'Don\'t worry! Please enter the email address linked with your account. ',
   TranslationKeys.sendCode: 'Send Code',
@@ -200,4 +200,8 @@ var en = <String, String>{
   TranslationKeys.endTime: 'End time',
   TranslationKeys.saveChanges: 'Save Changes',
   TranslationKeys.numberOfKids: 'Number of kids',
+  TranslationKeys.city: 'City',
+  TranslationKeys.state: 'State',
+  TranslationKeys.country: 'Country',
+  TranslationKeys.postalCode: 'Postal Code',
 };

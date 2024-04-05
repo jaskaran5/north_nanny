@@ -214,4 +214,8 @@ class TranslationKeys {
   static const String endTime = 'endTime';
   static const String saveChanges = 'saveChanges';
   static const String numberOfKids = 'numberOfKids';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String country = 'country';
+  static const String postalCode = 'postalCode';
 }

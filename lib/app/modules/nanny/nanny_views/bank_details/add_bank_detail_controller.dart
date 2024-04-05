@@ -20,6 +20,12 @@ class AddBankDetailController extends GetxController {
   final holderNameTextEditingController = TextEditingController();
   final accountNumberTextEditingController = TextEditingController();
   final routingNumberTextEditingController = TextEditingController();
+  final addressOne = TextEditingController();
+  final addressTwo = TextEditingController();
+  final cityTextEditingController = TextEditingController();
+  final stateTextEditingController = TextEditingController();
+  final postalCodeTextEditingController = TextEditingController();
+  final countryTextEditingController = TextEditingController();
 
   /// used to validate bank Detail Screen.
   bankDetailValidator({required bool isComeFromBooking}) {
@@ -28,6 +34,12 @@ class AddBankDetailController extends GetxController {
       accountHolderName: holderNameTextEditingController.text.trim(),
       accountNumber: accountNumberTextEditingController.text.tr,
       routingNumber: routingNumberTextEditingController.text.trim(),
+      addressOne: addressOne.text.trim(),
+      otherAddress: addressTwo.text.trim(),
+      city: cityTextEditingController.text.trim(),
+      state: stateTextEditingController.text.trim(),
+      country: countryTextEditingController.text.trim(),
+      postalCode: postalCodeTextEditingController.text.trim(),
     );
     if (isValidate) {
       postBankDetails(isComeFromBooking: isComeFromBooking);
@@ -49,6 +61,12 @@ class AddBankDetailController extends GetxController {
         'accountHolderName': holderNameTextEditingController.text.trim(),
         'accountNumber': accountNumberTextEditingController.text.trim(),
         'routingNumber': routingNumberTextEditingController.text.trim(),
+        "address1": addressOne.text.trim(),
+        "address2": addressTwo.text.trim(),
+        "city": cityTextEditingController.text.trim(),
+        "postalCode": postalCodeTextEditingController.text.trim(),
+        "state": stateTextEditingController.text.trim(),
+        "country": countryTextEditingController.text.trim(),
       };
 
       log("body of bank details :$body");
@@ -72,6 +90,29 @@ class AddBankDetailController extends GetxController {
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
       printError(info: "post Bank details  Nanny  API ISSUE $s");
+    }
+  }
+
+  /// post api for delete  bank details.
+  Future<void> deleteBankDetails() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      apiHelper.postApi(ApiUrls.deleteBankDetails, null).futureValue((value) {
+        printInfo(
+            info: "Delete  bank details Nanny profile response value $value");
+        var response = RegisterModelResponseJson.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          getBankDetails();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Delete Bank details  Nanny  API ISSUE $s");
     }
   }
 
