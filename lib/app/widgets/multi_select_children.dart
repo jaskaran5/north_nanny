@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 
 class MultiSelectDialogChildren extends StatefulWidget {
   final List<dynamic> options;
@@ -37,22 +41,19 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child: Text(
-              widget.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: AppText(
+                text: widget.title,
+                style: AppStyles.ubBlack16W600,
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          SingleChildScrollView(
-            child: SizedBox(
+            Dimens.boxHeight10,
+            SizedBox(
               width: double.maxFinite,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -74,7 +75,11 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Select All"),
+                          AppText(
+                            text: "Select All",
+                            style: AppStyles.ubNavyBlue16W700,
+                            maxLines: 1,
+                          ),
                           if (allSelected)
                             SvgPicture.asset(
                               Assets.iconsCircleTick,
@@ -99,6 +104,7 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
                   ),
                   ListView.separated(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: widget.options.length,
                     separatorBuilder: (context, index) => const Divider(),
@@ -108,7 +114,13 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(widget.options[index]),
+                            AppText(
+                              text: widget.options[index]
+                                  .toString()
+                                  .capitalizeFirst,
+                              style: AppStyles.ubNavyBlue16W700,
+                              maxLines: 1,
+                            ),
                             if (_selectedOptions
                                     .contains(widget.options[index]) ||
                                 allSelected)
@@ -138,32 +150,31 @@ class MultiSelectDialogChildrenState extends State<MultiSelectDialogChildren> {
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          GestureDetector(
-            onTap: widget.onTapOnAddChild,
-            child: const Text(
-              "+ Add Child",
-              style: TextStyle(fontSize: 16.0),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      AppColors.navyBlue), // Change the color here
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(_selectedOptions);
-                },
-                child: const Text('OK'),
+            Dimens.boxHeight10,
+            GestureDetector(
+              onTap: widget.onTapOnAddChild,
+              child: AppText(
+                text: "+ Add Child",
+                style: AppStyles.ubBlack16W600,
               ),
-            ],
-          ),
-        ],
+            ),
+            Dimens.boxHeight10,
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    AppColors.navyBlue), // Change the color here
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(_selectedOptions);
+              },
+              child: AppText(
+                text: 'OK',
+                style: AppStyles.ubWhite15700,
+              ),
+            ),
+            Dimens.boxHeight10,
+          ],
+        ),
       ),
     );
   }

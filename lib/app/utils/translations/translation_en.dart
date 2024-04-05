@@ -140,7 +140,7 @@ var en = <String, String>{
   TranslationKeys.noBookings: 'No bookings',
   TranslationKeys.bookingDetails: 'Booking details',
   TranslationKeys.trackLocation: 'Track location ',
-  TranslationKeys.totalTimeLeft: 'Total Time Left ',
+  TranslationKeys.totalTimeLeft: 'Total Time Taken ',
   TranslationKeys.favorites: 'Favorites ',
   TranslationKeys.address: 'Address ',
   TranslationKeys.phoneNumber: 'Phone number ',

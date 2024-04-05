@@ -127,7 +127,7 @@ class NannyBookingDetailController extends GetxController {
       update(['timerView']);
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
-    } else if (bookingStatus == 10 || bookingStatus==9) {
+    } else if (bookingStatus == 10 || bookingStatus == 9) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
     }
     log('Booking Status Nanny Side :$bookingStatus');
@@ -206,12 +206,7 @@ class NannyBookingDetailController extends GetxController {
           if (response.data?.bookingStatus == 6) {
             seconds = 0;
             showTimer(
-              startTime: DateTime.now().add(
-                Duration(
-                  seconds: Utility.calculateDifferenceInSeconds(
-                      bookingDetailsModel?.data?.startTime ?? DateTime.now()),
-                ),
-              ),
+              startTime: DateTime.now(),
             );
           }
           typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
