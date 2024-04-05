@@ -87,6 +87,7 @@ class ChooseChildProfileView extends StatelessWidget {
                     TextField(
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(2),
                       ],
                       controller: controller.noOfChildrenTextEditingController,
                       maxLines: 1,

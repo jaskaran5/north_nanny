@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class RecentChatController extends GetxController {
   RxBool isShimmerEnabled = true.obs;
   final debounce = Debouncer(delay: const Duration(seconds: 1));
 
-  final SignalRHelper _socketHelper = SignalRHelper();
+  final SignalRHelper socketHelper = SignalRHelper();
 
   TextEditingController recentChatTextEditingController =
       TextEditingController();
@@ -36,10 +37,6 @@ class RecentChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (!_socketHelper.isConnected) {
-      _socketHelper.init();
-    }
-    _initializeSignalRConnection();
   }
 
   toggleSearch() {
@@ -48,9 +45,10 @@ class RecentChatController extends GetxController {
   }
 
   initMessages() {
+    invokeRecentChat();
     if (Get.currentRoute == Routes.dashboard) {
-      _socketHelper.hubConnection.off("ReciveMessage");
-      _socketHelper.hubConnection.on(
+      socketHelper.hubConnection.off("ReciveMessage");
+      socketHelper.hubConnection.on(
         'ReciveMessage',
         (arguments) {
           print("ReciveMessage=========>>");
@@ -73,17 +71,11 @@ class RecentChatController extends GetxController {
     }
   }
 
-  Future<void> _initializeSignalRConnection() async {
-    if (!_socketHelper.isConnected) {
-      _socketHelper.reconnect();
-    }
-    invokeRecentChat();
-    invokeRecentChat();
-  }
+
 
   void invokeRecentChat() {
-    _socketHelper.hubConnection.off("MyChatList");
-    _socketHelper.hubConnection.on("MyChatList", (arguments) {
+    socketHelper.hubConnection.off("MyChatList");
+    socketHelper.hubConnection.on("MyChatList", (arguments) {
       try {
         log("argument recent chat:-->>$arguments");
         var data = arguments?[0] as Map<String, dynamic>;
@@ -95,7 +87,7 @@ class RecentChatController extends GetxController {
         log('$_logTag: Error processing chat list: $e');
       }
     });
-    _socketHelper.hubConnection.invoke('ChatList', args: [""]);
+    socketHelper.hubConnection.invoke('ChatList', args: [""]);
   }
 
   searchChat(String name) {
