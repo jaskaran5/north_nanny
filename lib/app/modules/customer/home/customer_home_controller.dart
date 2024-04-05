@@ -64,7 +64,6 @@ class CustomerHomeController extends GetxController {
   RxString filterGender = "0".obs;
   RxString filterMinAge = "0".obs;
   RxString filterMaxAge = "0".obs;
-  RxString filterDateTime = "".obs;
   RxString filterName = "".obs;
 
   /// use to select Date
@@ -268,13 +267,16 @@ class CustomerHomeController extends GetxController {
       // if (!(await Utils.hasNetwork())) {
       //   return;
       // }
+      final dateTime = returnFinalTimeAccordingToDate(
+          selectedTime: selectedTime, day: selectedDate);
 
+      debugPrint('final Date Time :$dateTime');
       var body = {
         "minMiles": filterMinMiles.value,
         "maxMiles": filterMaxMiles.value,
         "minAge": filterMinAge.value,
         "maxAge": filterMaxAge.value,
-        "dateTime": filterDateTime.value,
+        "dateTime": dateTime.toUtc().toIso8601String(),
         "gender": filterGender.value,
         "name": filterName.value,
       };
@@ -424,13 +426,16 @@ class CustomerHomeController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
+      final dateTime = returnFinalTimeAccordingToDate(
+          selectedTime: selectedTime, day: selectedDate);
 
+      debugPrint('final Date Time :$dateTime');
       var body = {
         "minMiles": distanceLowerValue.toInt(),
         "maxMiles": distanceHigherValue.toInt(),
         "minAge": ageLowerValue.toInt(),
         "maxAge": ageHigherValue.toInt(),
-        "dateTime": filterDateTime.value,
+        "dateTime": dateTime.toUtc().toIso8601String(),
         "gender": selectedGender == "Female"
             ? 2
             : selectedGender == "Male"
@@ -468,13 +473,16 @@ class CustomerHomeController extends GetxController {
       // if (!(await Utils.hasNetwork())) {
       //   return;
       // }
+      final dateTime = returnFinalTimeAccordingToDate(
+          selectedTime: selectedTime, day: selectedDate);
 
+      debugPrint('final Date Time :$dateTime');
       var body = {
         "minMiles": filterMinMiles.value,
         "maxMiles": filterMaxMiles.value,
         "minAge": filterMinAge.value,
         "maxAge": filterMaxAge.value,
-        "dateTime": filterDateTime.value,
+        "dateTime": dateTime.toUtc().toIso8601String(),
         "gender": filterGender.value,
         "name": name,
       };
@@ -525,6 +533,22 @@ class CustomerHomeController extends GetxController {
     if (check != null) {
       getDashboardApi();
       print("check ---->>>>> $check");
+    }
+  }
+
+  ///used to get final date with time
+  DateTime returnFinalTimeAccordingToDate(
+      {required DateTime? selectedTime, required DateTime day}) {
+    if (selectedTime != null) {
+      return DateTime(
+        day.year,
+        day.month,
+        day.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+    } else {
+      return DateTime.now();
     }
   }
 }
