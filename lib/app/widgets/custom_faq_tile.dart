@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
@@ -46,10 +47,13 @@ class CustomFAQTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppText(
-                text: title,
-                style: AppStyles.ubBlack16W600,
-                textAlign: TextAlign.center,
+              SizedBox(
+                width: Get.width / 1.3,
+                child: AppText(
+                  text: title,
+                  style: AppStyles.ubBlack16W600,
+                  textAlign: TextAlign.left,
+                ),
               ),
               GestureDetector(
                 onTap: onTap,

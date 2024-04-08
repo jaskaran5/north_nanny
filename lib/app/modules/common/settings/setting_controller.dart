@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/faq_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
@@ -71,17 +72,6 @@ class SettingController extends GetxController {
     Get.toNamed(
       Routes.passwordChangedView,
     );
-  }
-
-  updateIsExpand({index}) {
-    // if (index != expandIndex) {
-    //   isExpand.value = !isExpand.value;
-    //   print(expandIndex!.value);
-    // }
-    faqlist.elementAt(index)["isExpand"] =
-        !faqlist.elementAt(index)["isExpand"];
-
-    update();
   }
 
   /// CUSTOMER SETTING LIST------------------------------------- 12  CUSTOMER
@@ -223,34 +213,6 @@ class SettingController extends GetxController {
       "trallingIcon": Assets.iconsNext
     },
   ];
-
-  RxList faqlist = [
-    {
-      "title": "How are you? click on me",
-      "subtitle": "This is m,y expanded suybttile",
-      "isExpand": false,
-    },
-    {
-      "title": "How are you? click on me",
-      "subtitle": "This is m,y expanded suybttile",
-      "isExpand": false,
-    },
-    {
-      "title": "How are you? click on me",
-      "subtitle": "This is m,y expanded suybttile",
-      "isExpand": true,
-    },
-    {
-      "title": "How are you? click on me",
-      "subtitle": "This is m,y expanded suybttile",
-      "isExpand": false,
-    },
-    {
-      "title": "How are you? click on me",
-      "subtitle": "This is m,y expanded suybttile",
-      "isExpand": false,
-    }
-  ].obs;
 
   /// REDIRECT TO COMMON WEB VIEW
   redirectToCommonWebView({
@@ -476,5 +438,29 @@ class SettingController extends GetxController {
     }
   }
 
+  /// used to store faq list data .
+  FaqResponseModel? faqResponseModel;
 
+  /// used to get faq list.
+  getFaqList() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+
+      _apiHelper.postApi(ApiUrls.faqList, null).futureValue((value) {
+        printInfo(info: "Faq list response  $value");
+        var response = FaqResponseModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          faqResponseModel = response;
+          update(['faqView']);
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Faq get list   API ISSUE $s");
+    }
+  }
 }

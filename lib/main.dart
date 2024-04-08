@@ -24,6 +24,8 @@ Future<void> _setup() async {
 
   /// used to initialize the  firebase messaging.
   await FCMService().init();
+
+  /// used to initialize socket .
   SignalRHelper().init();
 }
 

@@ -24,6 +24,7 @@ class ApiUrls {
   static const String postRatingAndReview = "api/UserDashBoard/RatingAndReview";
   static const String readNotification = "api/User/ReadNotification";
   static const String notificationList = "api/User/NotificationList";
+  static const String faqList = "api/User/FaqList";
 
   ///
   ///
@@ -45,6 +46,7 @@ class ApiUrls {
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";
   static const String bookingDetailsById = "api/UserDashBoard/BookingDetail";
   static const String getNotificationCount = "api/User/NotificationCount";
+  static const String socialLogIn = "api/User/SocialLogin";
   static const String myFavoriteNannyList =
       "api/UserDashBoard/MyFavoriteNannyList";
   static const String getAllNannyBookingDates =

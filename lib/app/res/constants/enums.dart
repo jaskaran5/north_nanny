@@ -75,3 +75,9 @@ enum BookingDetails {
   date,
   time,
 }
+
+enum SocialLoginType {
+  facebook,
+  instagram,
+  apple,
+}

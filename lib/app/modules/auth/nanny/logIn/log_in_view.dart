@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -219,11 +220,17 @@ class LogInView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(
-                              Assets.iconsFacebook,
-                              alignment: Alignment.center,
-                              height: Dimens.fiftyThree,
-                              width: Dimens.fiftyThree,
+                            GestureDetector(
+                              onTap: () {
+                                /// used to log in with facebook.
+                                controller.facebookLogin();
+                              },
+                              child: SvgPicture.asset(
+                                Assets.iconsFacebook,
+                                alignment: Alignment.center,
+                                height: Dimens.fiftyThree,
+                                width: Dimens.fiftyThree,
+                              ),
                             ),
                             Dimens.boxWidth16,
                             SvgPicture.asset(
@@ -233,11 +240,18 @@ class LogInView extends StatelessWidget {
                               width: Dimens.fiftyThree,
                             ),
                             Dimens.boxWidth16,
-                            SvgPicture.asset(
-                              Assets.iconsApple,
-                              alignment: Alignment.center,
-                              height: Dimens.fiftyThree,
-                              width: Dimens.fiftyThree,
+                            if(Platform.isIOS)
+                            GestureDetector(
+                              onTap: () {
+                                /// signup with apple.
+                                controller.signInWithApple();
+                              },
+                              child: SvgPicture.asset(
+                                Assets.iconsApple,
+                                alignment: Alignment.center,
+                                height: Dimens.fiftyThree,
+                                width: Dimens.fiftyThree,
+                              ),
                             ),
                           ],
                         ),
