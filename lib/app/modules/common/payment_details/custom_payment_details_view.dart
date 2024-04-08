@@ -45,7 +45,7 @@ class CustomPaymentDetails extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height: !isComeFromSendTip || !isComeFromConfirmBooking
+            height: !isComeFromSendTip && !isComeFromConfirmBooking
                 ? Dimens.eightySix
                 : Dimens.oneHundredSeventy,
             padding: Dimens.edgeInsets16,

@@ -37,7 +37,7 @@ class BookingDetailController extends GetxController {
   BookingDataById? bookingDataById;
 
   /// used to show timer
-  late Timer timer;
+  Timer? timer;
   int seconds = 0;
 
   /// used to show the start time.
@@ -61,7 +61,7 @@ class BookingDetailController extends GetxController {
   void dispose() {
     super.dispose();
     seconds = 0;
-    timer.cancel();
+    timer?.cancel();
   }
 
   List cardList = [
@@ -112,7 +112,7 @@ class BookingDetailController extends GetxController {
                     : DateTime.now());
           }
           if (response.data?.bookingStatus == 6) {
-            timer.cancel();
+            timer?.cancel();
             seconds = 0;
             update(['customerTimerView']);
             Utility.showAlertDialog(
@@ -248,7 +248,7 @@ class BookingDetailController extends GetxController {
       bookingDetailStatus = BookingDetailStatus.arrived;
     } else if (bookingStatus == 6) {
       seconds = 0;
-      timer.cancel();
+      timer?.cancel();
       update(['customerTimerView']);
     } else if (bookingStatus == 8) {
       bookingDetailStatus = BookingDetailStatus.disputeRaised;

@@ -156,8 +156,12 @@ class NannyBookingDetailView extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.circular(Dimens.ten),
                                 ),
-                                child: trackController.bookingDetailsModel?.data
-                                            ?.userDetails?.image?.isEmpty ==
+                                child: trackController
+                                            .bookingDetailsModel
+                                            ?.data
+                                            ?.userDetails
+                                            ?.image
+                                            ?.isEmpty ==
                                         true
                                     ? Image.asset(
                                         Assets.imagesUserAvatar,
@@ -166,8 +170,11 @@ class NannyBookingDetailView extends StatelessWidget {
                                         width: Dimens.seventy,
                                       )
                                     : CustomCacheNetworkImage(
-                                        img: trackController.bookingDetailsModel
-                                                ?.data?.userDetails?.image ??
+                                        img: trackController
+                                                .bookingDetailsModel
+                                                ?.data
+                                                ?.userDetails
+                                                ?.image ??
                                             '',
                                         size: Dimens.seventy,
                                         imageRadius: Dimens.ten),
@@ -180,8 +187,11 @@ class NannyBookingDetailView extends StatelessWidget {
                                   SizedBox(
                                     width: Dimens.oneHundredFifty,
                                     child: AppText(
-                                      text: trackController.bookingDetailsModel
-                                          ?.data?.userDetails?.name
+                                      text: trackController
+                                          .bookingDetailsModel
+                                          ?.data
+                                          ?.userDetails
+                                          ?.name
                                           .toString(),
                                       style: AppStyles.ubWhite14700,
                                       maxLines: 2,
@@ -264,7 +274,8 @@ class NannyBookingDetailView extends StatelessWidget {
                                           ?.userId
                                           .toString());
                                 },
-                                child: SvgPicture.asset(Assets.iconsChatWhite)),
+                                child:
+                                    SvgPicture.asset(Assets.iconsChatWhite)),
                         ],
                         //
                       ),
@@ -302,19 +313,28 @@ class NannyBookingDetailView extends StatelessWidget {
                                             ?.longitude ??
                                         '0.0')),
                             LatLng(
-                                double.parse(trackController.bookingDetailsModel
-                                        ?.data?.userDetails?.latitude ??
+                                double.parse(trackController
+                                        .bookingDetailsModel
+                                        ?.data
+                                        ?.userDetails
+                                        ?.latitude ??
                                     '0.0'),
-                                double.parse(trackController.bookingDetailsModel
-                                        ?.data?.userDetails?.longitude ??
+                                double.parse(trackController
+                                        .bookingDetailsModel
+                                        ?.data
+                                        ?.userDetails
+                                        ?.longitude ??
                                     '0.0')),
                           ],
                         ),
                       },
                       markers: {
                         Marker(
-                          markerId: MarkerId(trackController.bookingDetailsModel
-                                  ?.data?.userDetails?.latitude
+                          markerId: MarkerId(trackController
+                                  .bookingDetailsModel
+                                  ?.data
+                                  ?.userDetails
+                                  ?.latitude
                                   .toString() ??
                               ''),
                           flat: true,

@@ -24,7 +24,7 @@ class _PdfViewerState extends State<PDFScreen> {
             "https://docs.google.com/gview?embedded=true&url=${widget.path}"),
       );
     disableLoading();
-    print(
+    debugPrint(
         "Url:{https://docs.google.com/gview?embedded=true&url=${widget.path}");
   }
 

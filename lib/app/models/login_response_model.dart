@@ -81,6 +81,7 @@ class User {
   dynamic timeZone;
   int? userType;
   String? encryptedKey;
+  String? couponCode;
   dynamic age;
   dynamic experience;
   dynamic isDrivingLicense;
@@ -122,11 +123,13 @@ class User {
     this.isServicesCreated,
     this.isBankDetailAdded,
     this.isSkipBankDetail,
+    this.couponCode,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         firstName: json["firstName"],
+        couponCode: json["couponCode"] ?? '',
         lastName: json["lastName"],
         email: json["email"],
         mobileNumber: json["mobileNumber"],
@@ -163,6 +166,7 @@ class User {
         "id": id,
         "firstName": firstName,
         "lastName": lastName,
+        "couponCode": couponCode,
         "email": email,
         "mobileNumber": mobileNumber,
         "dob": dob,

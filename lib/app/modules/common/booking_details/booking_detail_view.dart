@@ -214,118 +214,136 @@ class BookingDetailView extends StatelessWidget {
                                           ?.ratingList ??
                                       []));
                             },
-                            secondWidget: Container(
-                              height: Dimens.hundredFourteen,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(Dimens.ten),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(Dimens.ten),
-                                child: GoogleMap(
-                                  initialCameraPosition: CameraPosition(
-                                      target: LatLng(
-                                          double.parse(trackingController
-                                                  .bookingDataById?.latitude ??
-                                              '0.0'),
-                                          double.parse(trackingController
-                                                  .bookingDataById?.longitude ??
-                                              '0.0')),
-                                      zoom: Dimens.fifteen),
-                                  myLocationEnabled: false,
-                                  indoorViewEnabled: true,
-                                  myLocationButtonEnabled: true,
-                                  onMapCreated: (googleController) {
-                                    trackingController.googleMapController =
-                                        googleController;
-
-                                    log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  ');
-
-                                    trackingController
-                                        .update(['customer_tracking']);
-                                  },
-                                  markers: {
-                                    Marker(
-                                      markerId: MarkerId(trackingController
-                                              .bookingDataById?.latitude ??
-                                          ''),
-                                      position: LatLng(
-                                        trackingController
-                                                    .trackerLocationModel !=
-                                                null
-                                            ? double.parse(trackingController
-                                                    .trackerLocationModel
-                                                    ?.data
-                                                    ?.latitude
-                                                    .toString() ??
-                                                '0.0')
-                                            : double.parse(trackingController
-                                                    .bookingDataById
-                                                    ?.userDetails
-                                                    ?.latitude ??
-                                                '0.0'),
-                                        trackingController
-                                                    .trackerLocationModel !=
-                                                null
-                                            ? double.parse(trackingController
-                                                    .trackerLocationModel
-                                                    ?.data
-                                                    ?.longitude ??
-                                                '0.0')
-                                            : double.parse(trackingController
-                                                    .bookingDataById
-                                                    ?.userDetails
-                                                    ?.longitude ??
-                                                '0.0'),
-                                      ),
-                                      flat: true,
-                                    ),
-                                  },
-                                  polylines: {
-                                    Polyline(
-                                      polylineId: const PolylineId('nannyLine'),
-                                      color: AppColors.navyBlue3288DE,
-                                      points: [
-                                        LatLng(
-                                          double.parse(trackingController
-                                                  .bookingDataById?.latitude ??
-                                              '0.0'),
-                                          double.parse(trackingController
-                                                  .bookingDataById?.longitude ??
-                                              '0.0'),
-                                        ),
-                                        LatLng(
-                                          trackingController
-                                                      .trackerLocationModel !=
-                                                  null
-                                              ? double.parse(trackingController
-                                                      .trackerLocationModel
-                                                      ?.data
-                                                      ?.latitude
-                                                      .toString() ??
-                                                  '0.0')
-                                              : double.parse(trackingController
+                            secondWidget: GestureDetector(
+                              onTap: () {
+                                debugPrint('Going to Customer Tracking view');
+                                RouteManagement.goToCustomerTrackingView();
+                              },
+                              child: Container(
+                                height: Dimens.hundredFourteen,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.ten),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.ten),
+                                  child: IgnorePointer(
+                                    child: GoogleMap(
+                                      initialCameraPosition: CameraPosition(
+                                          target: LatLng(
+                                              double.parse(trackingController
                                                       .bookingDataById
-                                                      ?.userDetails
                                                       ?.latitude ??
                                                   '0.0'),
-                                          trackingController
-                                                      .trackerLocationModel !=
-                                                  null
-                                              ? double.parse(trackingController
-                                                      .trackerLocationModel
-                                                      ?.data
-                                                      ?.longitude ??
-                                                  '0.0')
-                                              : double.parse(trackingController
+                                              double.parse(trackingController
                                                       .bookingDataById
-                                                      ?.userDetails
+                                                      ?.longitude ??
+                                                  '0.0')),
+                                          zoom: Dimens.fifteen),
+                                      myLocationEnabled: false,
+                                      indoorViewEnabled: true,
+                                      myLocationButtonEnabled: false,
+                                      zoomControlsEnabled: false,
+                                      onMapCreated: (googleController) {
+                                        trackingController.googleMapController =
+                                            googleController;
+                                    
+                                        log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  ');
+                                    
+                                        trackingController
+                                            .update(['customer_tracking']);
+                                      },
+                                      markers: {
+                                        Marker(
+                                          markerId: MarkerId(trackingController
+                                                  .bookingDataById?.latitude ??
+                                              ''),
+                                          position: LatLng(
+                                            trackingController
+                                                        .trackerLocationModel !=
+                                                    null
+                                                ? double.parse(trackingController
+                                                        .trackerLocationModel
+                                                        ?.data
+                                                        ?.latitude
+                                                        .toString() ??
+                                                    '0.0')
+                                                : double.parse(trackingController
+                                                        .bookingDataById
+                                                        ?.userDetails
+                                                        ?.latitude ??
+                                                    '0.0'),
+                                            trackingController
+                                                        .trackerLocationModel !=
+                                                    null
+                                                ? double.parse(trackingController
+                                                        .trackerLocationModel
+                                                        ?.data
+                                                        ?.longitude ??
+                                                    '0.0')
+                                                : double.parse(trackingController
+                                                        .bookingDataById
+                                                        ?.userDetails
+                                                        ?.longitude ??
+                                                    '0.0'),
+                                          ),
+                                          flat: true,
+                                        ),
+                                      },
+                                      polylines: {
+                                        Polyline(
+                                          polylineId:
+                                              const PolylineId('nannyLine'),
+                                          color: AppColors.navyBlue3288DE,
+                                          points: [
+                                            LatLng(
+                                              double.parse(trackingController
+                                                      .bookingDataById
+                                                      ?.latitude ??
+                                                  '0.0'),
+                                              double.parse(trackingController
+                                                      .bookingDataById
                                                       ?.longitude ??
                                                   '0.0'),
+                                            ),
+                                            LatLng(
+                                              trackingController
+                                                          .trackerLocationModel !=
+                                                      null
+                                                  ? double.parse(trackingController
+                                                          .trackerLocationModel
+                                                          ?.data
+                                                          ?.latitude
+                                                          .toString() ??
+                                                      '0.0')
+                                                  : double.parse(
+                                                      trackingController
+                                                              .bookingDataById
+                                                              ?.userDetails
+                                                              ?.latitude ??
+                                                          '0.0'),
+                                              trackingController
+                                                          .trackerLocationModel !=
+                                                      null
+                                                  ? double.parse(trackingController
+                                                          .trackerLocationModel
+                                                          ?.data
+                                                          ?.longitude ??
+                                                      '0.0')
+                                                  : double.parse(
+                                                      trackingController
+                                                              .bookingDataById
+                                                              ?.userDetails
+                                                              ?.longitude ??
+                                                          '0.0'),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      },
+                                      mapType: MapType.normal,
                                     ),
-                                  },
-                                  mapType: MapType.normal,
+                                  ),
                                 ),
                               ),
                             ),

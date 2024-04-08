@@ -43,6 +43,8 @@ class Routes {
   static const String notificationView = Paths.notificationView;
   static const String nannyUpdateBankView = Paths.nannyUpdateBankView;
   static const String addBankView = Paths.addBankView;
+  static const String nannyTrackingView = Paths.nannyTrackingView;
+  static const String customerTrackingView = Paths.customerTrackingView;
 
   static const String createCustomerProfileView =
       Paths.createCustomerProfileView;
@@ -92,6 +94,8 @@ class Paths {
   static const String notificationView = '/Notification-view';
   static const String nannyUpdateBankView = '/nanny-Update-Bank-detail-view';
   static const String addBankView = '/Add-Bank-view';
+  static const String nannyTrackingView = '/Nanny-tracking-view';
+  static const String customerTrackingView = '/Customer-tracking-view';
 
   static const String createCustomerProfileView =
       '/create-customer-profile-view-';

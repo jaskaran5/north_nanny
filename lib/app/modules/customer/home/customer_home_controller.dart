@@ -532,7 +532,7 @@ class CustomerHomeController extends GetxController {
 
     if (check != null) {
       getDashboardApi();
-      print("check ---->>>>> $check");
+      debugPrint("check ---->>>>> $check");
     }
   }
 

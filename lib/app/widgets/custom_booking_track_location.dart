@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../navigators/routes_management.dart';
 import '../res/theme/colors.dart';
 import '../res/theme/dimens.dart';
 import '../res/theme/styles.dart';
@@ -46,20 +49,35 @@ class CustomBookingTrackLocation extends StatelessWidget {
                 textAlign: TextAlign.start,
               ),
               Dimens.boxHeight14,
-              Container(
-                height: Dimens.hundredFourteen,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.ten),
-                ),
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude, longitude), zoom: Dimens.twelve),
-                  myLocationEnabled: false,
-                  indoorViewEnabled: true,
-                  onMapCreated: onMapCreated,
-                  markers: markers,
-                  polylines: polyline,
-                  mapType: MapType.normal,
+              GestureDetector(
+                onTap: () {
+                  debugPrint('Going to Nanny Tracking view');
+
+                  /// used to going tracking view.
+                  RouteManagement.goToNannyTrackingView();
+                },
+                child: Container(
+                  height: Dimens.hundredFourteen,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimens.ten),
+                  ),
+                  child: IgnorePointer(
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(latitude, longitude),
+                        zoom: Dimens.fourteen,
+                      ),
+                      myLocationEnabled: false,
+                      indoorViewEnabled: false,
+                      zoomControlsEnabled: false,
+                      zoomGesturesEnabled: true,
+                      myLocationButtonEnabled: false,
+                      onMapCreated: onMapCreated,
+                      markers: markers,
+                      polylines: polyline,
+                      mapType: MapType.normal,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -34,7 +34,7 @@ class NannyBookingDetailController extends GetxController {
   final SignalRHelper socketHelper = SignalRHelper();
 
   NannyBookingDetailStatus? nannyBookingDetailStatus;
-  late Timer timer;
+   Timer? timer;
   int seconds = 0;
   BookingDetailsModel? bookingDetailsModel;
 
@@ -95,7 +95,7 @@ class NannyBookingDetailController extends GetxController {
   void dispose() {
     super.dispose();
     seconds = 0;
-    timer.cancel();
+    timer?.cancel();
     googleMapController?.dispose();
   }
 
@@ -122,8 +122,8 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.endJob;
     } else if (bookingStatus == 6) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.waitingForApproval;
-      timer.cancel();
       seconds = 0;
+      timer?.cancel();
       update(['timerView']);
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
@@ -257,7 +257,7 @@ class NannyBookingDetailController extends GetxController {
           }
           if (response.data?.bookingStatus == 7) {
             seconds == 0;
-            timer.cancel();
+            timer?.cancel();
             Utility.showDialog(
               title: 'Congratulations! ',
               assetName: Assets.imagesStar,

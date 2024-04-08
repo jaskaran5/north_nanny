@@ -125,7 +125,7 @@ class ChatController extends GetxController {
     update();
     super.onInit();
     log("user id -->> ${otherUserId.value}");
-    print("CALLED_INIT_STATE");
+    debugPrint("CALLED_INIT_STATE");
     listenSocket();
     getSingleChatDetails();
   }
@@ -158,7 +158,7 @@ class ChatController extends GetxController {
 
           update();
 
-          print("get user data -->> $getUserData");
+          debugPrint("get user data -->> $getUserData");
         } else {
           // toast(msg: response.message.toString(), isError: true);
         }
@@ -190,7 +190,7 @@ class ChatController extends GetxController {
 
       log("isFile: -->> $isFile");
 
-      print('Send message data ======> ${[
+      debugPrint('Send message data ======> ${[
         toUserId,
         message!,
         type!,
@@ -212,7 +212,7 @@ class ChatController extends GetxController {
       chatTextController.clear();
       updateSendMessageVisibility(isVisible: false);
       thumbnailPath.value = '';
-      print('Message sent Received Data ========> ${result.toString()}');
+      debugPrint('Message sent Received Data ========> ${result.toString()}');
       update();
     }
   }
@@ -367,7 +367,7 @@ class ChatController extends GetxController {
     ).then((value) async {
       if (value != null) {
         File imageFile = File(value.files.single.path ?? '');
-        print("filePath-->${imageFile.path.split(".").last}");
+        debugPrint("filePath-->${imageFile.path.split(".").last}");
         List<int> imageBytes = imageFile.readAsBytesSync();
         String base64Image = base64Encode(imageBytes);
 
@@ -380,8 +380,8 @@ class ChatController extends GetxController {
 
           update();
 
-          DateTime now = DateTime.now();
-          int milliseconds = now.millisecondsSinceEpoch;
+          // DateTime now = DateTime.now();
+          // int milliseconds = now.millisecondsSinceEpoch;
           sendMessage(
             toUserId: int.parse(otherUserId.value),
             message: base64Image,
@@ -393,8 +393,8 @@ class ChatController extends GetxController {
           isLoading.value = true;
 
           log("videro not sent--->>>>>");
-          DateTime now = DateTime.now();
-          int milliseconds = now.millisecondsSinceEpoch;
+          // DateTime now = DateTime.now();
+          // int milliseconds = now.millisecondsSinceEpoch;
           sendMessage(
             toUserId: int.parse(otherUserId.value),
             message: base64Image,
@@ -419,7 +419,7 @@ class ChatController extends GetxController {
       );
 
       if (thumbnailFile != null) {
-        print('Thumbnail saved at: $thumbnailFile');
+        debugPrint('Thumbnail saved at: $thumbnailFile');
 
         // Read the thumbnail file as bytes
         final bytes = await File(thumbnailFile).readAsBytes();
@@ -430,11 +430,11 @@ class ChatController extends GetxController {
         // Return the Base64-encoded thumbnail data
         return base64Data;
       } else {
-        print('Failed to generate thumbnail.');
+        debugPrint('Failed to generate thumbnail.');
         return null;
       }
     } catch (e) {
-      print('Error extracting thumbnail: $e');
+      debugPrint('Error extracting thumbnail: $e');
       return null;
     }
   }
@@ -442,17 +442,17 @@ class ChatController extends GetxController {
   // INVOKE SINGLE CHAT DETAILS
 
   getSingleChatDetails() async {
-    final result = await _socketHelper.hubConnection.invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
+     await _socketHelper.hubConnection.invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
   }
 
   //========--------->>>>>>>>>>>>>>> LISTER SINGLE CHAT DATA
 
   listenSingleChatDetails() {
-    final result = _socketHelper.hubConnection.on(
+     _socketHelper.hubConnection.on(
       'ChatDetailResponse',
       (arguments) {
         log("arguments :-->> $arguments");
-        print("arguments :-->> $arguments");
+        debugPrint("arguments :-->> $arguments");
 
         var data = arguments?[0] as Map<String, dynamic>;
 
@@ -461,18 +461,18 @@ class ChatController extends GetxController {
         log("single chat messgae listen");
 
         log("isbloack --->.. " "${res.data?.isBlock}");
-        print("isbloack --->.. " "${res.data?.isBlock}");
+        debugPrint("isbloack --->.. " "${res.data?.isBlock}");
 
         // log("is bliocj-->> ${res.isBlock}");
 
         if (res.data?.blockBy.toString() == myUserId.value.toString()) {
           isBlockByMe.value = true;
-          print("isbloack --->.. by me");
+          debugPrint("isbloack --->.. by me");
           log("isbloack --->.. by me");
         } else if (res.data?.blockBy.toString() ==
             otherUserId.value.toString()) {
           isBlockByOtherUser.value = true;
-          print("isbloack --->.. by other");
+          debugPrint("isbloack --->.. by other");
           log("isbloack --->.. by other");
         }
 
@@ -516,7 +516,7 @@ class ChatController extends GetxController {
 
           update();
 
-          print("get user data -->> $getUserData");
+          debugPrint("get user data -->> $getUserData");
         } else {}
       }, retryFunction: () {});
     } catch (e, s) {
@@ -594,11 +594,11 @@ class ChatController extends GetxController {
         .then((value) async {
       if (value != null) {
         File imageFile = File(value.path);
-        print("filePath-->${imageFile.path.split(".").last}");
+        debugPrint("filePath-->${imageFile.path.split(".").last}");
         List<int> imageBytes = imageFile.readAsBytesSync();
         String base64Image = base64Encode(imageBytes);
-        DateTime now = DateTime.now();
-        int milliseconds = now.millisecondsSinceEpoch;
+        // DateTime now = DateTime.now();
+        // int milliseconds = now.millisecondsSinceEpoch;
 
         sendMessage(
           toUserId: int.parse(otherUserId.value),
@@ -643,7 +643,7 @@ class ChatController extends GetxController {
         log("block unblock response data:$arguments");
 
         log("arguments :-->> $arguments");
-        print("arguments :-->> $arguments");
+        debugPrint("arguments :-->> $arguments");
 
         var data = arguments?[0] as Map<String, dynamic>;
 

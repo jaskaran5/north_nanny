@@ -33,10 +33,7 @@ class RecentChatController extends GetxController {
 
   RxBool isSearchable = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+
 
   toggleSearch() {
     isSearchable.value = !isSearchable.value;
@@ -50,7 +47,7 @@ class RecentChatController extends GetxController {
       socketHelper.hubConnection.on(
         'ReciveMessage',
         (arguments) {
-          print("ReciveMessage=========>>");
+          debugPrint("ReciveMessage=========>>");
           1.delay(() {
             invokeRecentChat();
           });

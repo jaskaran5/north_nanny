@@ -47,6 +47,7 @@ import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_deta
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/bank_details/bank_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_tracker_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_view.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_view.dart';
@@ -60,6 +61,7 @@ import 'package:northshore_nanny_flutter/app/modules/splash/splash_view_binding.
 
 import '../app/modules/auth/customer/customer_views/create_profile/create_customer_profile_view.dart';
 import '../app/modules/auth/nanny/signUp/sign_up_binding.dart';
+import '../app/modules/common/booking_details/customer_tracking_view.dart';
 import '../app/modules/customer/customer_profile/customer_profile_view.dart';
 import '../app/modules/customer/customer_profile/widgets/edit_customer_profile.dart';
 import '../app/modules/forgot_password/email_verification_view.dart';
@@ -447,6 +449,23 @@ class AppPages {
       transitionDuration: transitionDuration,
       page: AddBankView.new,
       binding: AddBankDetailBindings(),
+      transition: Transition.leftToRight,
+    ),
+
+    /** --- REDIRECT TO ------ Nanny Tracking View to Booking  -------  */
+    GetPage<NannyBookingDetailTrackerView>(
+      name: Routes.nannyTrackingView,
+      transitionDuration: transitionDuration,
+      page: NannyBookingDetailTrackerView.new,
+      binding: NannyBookingDetailBinding(),
+      transition: Transition.leftToRight,
+    ),
+    /** --- REDIRECT TO ------ Customer Tracking View to Booking  -------  */
+    GetPage<CustomerTrackingView>(
+      name: Routes.customerTrackingView,
+      transitionDuration: transitionDuration,
+      page: CustomerTrackingView.new,
+      binding: BookingDetailBinding(),
       transition: Transition.leftToRight,
     ),
   ];

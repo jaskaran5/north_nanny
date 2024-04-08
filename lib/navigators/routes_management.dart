@@ -321,4 +321,17 @@ abstract class RouteManagement {
   static void goToAddBankView({required bool isComeFromBooking}) {
     Get.toNamed(Routes.addBankView, arguments: isComeFromBooking);
   }
+
+  /// go to Nanny Tracking   view.
+  static void goToNannyTrackingView() {
+    Get.toNamed(
+      Routes.nannyTrackingView,
+    );
+  }  /// go to Customer Tracking   view.
+  static void goToCustomerTrackingView() {
+    Get.toNamed(
+      Routes.customerTrackingView,
+    );
+  }
+
 }

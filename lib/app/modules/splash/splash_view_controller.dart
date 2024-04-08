@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
@@ -88,12 +89,12 @@ class SplashController extends GetxController {
     _appLinks = AppLinks();
     // _getTokenAndSaveData();
     _appLinks.uriLinkStream.listen((uri) {
-      print('onApp stream Link: $uri');
+      debugPrint('onApp stream Link: $uri');
       // if(isLogin){
       //   navigateToScreen(uri);
       // }
     });
-    print("init called in SplashView _handleDeepLinking");
+    debugPrint("init called in SplashView _handleDeepLinking");
     _handleDeepLinking();
 
     checkSession();
@@ -117,14 +118,14 @@ class SplashController extends GetxController {
     const delayDuration = Duration(seconds: 3);
     Future.delayed(delayDuration, () async {
       final appLink = await _appLinks.getInitialAppLink();
-      final recentLink = await _appLinks.getLatestAppLink();
+      // final recentLink = await _appLinks.getLatestAppLink();
       // final isLoggedIn = isLogin;
       if (appLink != null) {
         RouteManagement.goToOffAllLogIn();
       }
       // if (appLink != null || recentLink != null) {
       //   final link = appLink ?? recentLink;
-      //   print('$tag ===>: $link');
+      //   debugPrint('$tag ===>: $link');
       //   if (!isLoggedIn || link ==null) {
       //     Get.offAll(() => const OnBoardingView());
       //   } else {
