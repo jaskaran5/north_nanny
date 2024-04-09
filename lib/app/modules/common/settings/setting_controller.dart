@@ -44,7 +44,7 @@ class SettingController extends GetxController {
 
   RxString customerEmail = ''.obs;
   RxString customerImg = ''.obs;
-
+  String inviteAFriendCode = '';
   @override
   void onInit() {
     super.onInit();
@@ -61,7 +61,9 @@ class SettingController extends GetxController {
     } else if (loginType.value == StringConstants.customer) {
       getCustomerProfileApi();
     }
-
+    inviteAFriendCode =
+        await Storage.getValue(StringConstants.inviteAFriendCode);
+    debugPrint('Invite Friend Code: $inviteAFriendCode');
     update();
   }
 

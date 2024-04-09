@@ -91,43 +91,46 @@ class User {
   dynamic isSkipBankDetail;
   bool? isChildAdded;
   bool? isSkipChildDetails;
+  String? couponCode;
 
-  User(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.mobileNumber,
-      this.dob,
-      this.gender,
-      this.image,
-      this.aboutMe,
-      this.authorizationId,
-      this.mode,
-      this.deviceToken,
-      this.deviceType,
-      this.userName,
-      this.location,
-      this.latitude,
-      this.longitude,
-      this.isOnline,
-      this.connectionId,
-      this.isProfileCreated,
-      this.address,
-      this.isAccountDeleted,
-      this.timeZone,
-      this.userType,
-      this.encryptedKey,
-      this.age,
-      this.experience,
-      this.isDrivingLicense,
-      this.isAproved,
-      this.isServicesCreated,
-      this.isBankDetailAdded,
-      this.isAvailable,
-      this.isSkipBankDetail,
-      this.isChildAdded,
-      this.isSkipChildDetails});
+  User({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.mobileNumber,
+    this.dob,
+    this.gender,
+    this.image,
+    this.aboutMe,
+    this.authorizationId,
+    this.mode,
+    this.deviceToken,
+    this.deviceType,
+    this.userName,
+    this.location,
+    this.latitude,
+    this.longitude,
+    this.isOnline,
+    this.connectionId,
+    this.isProfileCreated,
+    this.address,
+    this.isAccountDeleted,
+    this.timeZone,
+    this.userType,
+    this.encryptedKey,
+    this.age,
+    this.experience,
+    this.isDrivingLicense,
+    this.isAproved,
+    this.isServicesCreated,
+    this.isBankDetailAdded,
+    this.isAvailable,
+    this.isSkipBankDetail,
+    this.isChildAdded,
+    this.isSkipChildDetails,
+    this.couponCode,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -165,6 +168,7 @@ class User {
         isSkipBankDetail: json["isSkipBankDetail"],
         isChildAdded: json["isChildAdded"],
         isSkipChildDetails: json["isSkipChildDetail"],
+        couponCode: json["couponCode"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -203,5 +207,6 @@ class User {
         "isSkipBankDetail": isSkipBankDetail,
         "isChildAdded": isChildAdded,
         "isSkipChildDetails": isSkipChildDetails,
+        "couponCode": couponCode,
       };
 }

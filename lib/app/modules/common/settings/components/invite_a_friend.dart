@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
@@ -11,6 +13,9 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../../../utils/custom_toast.dart';
 
 class InviteAFriendView extends StatelessWidget {
   const InviteAFriendView({super.key});
@@ -46,21 +51,33 @@ class InviteAFriendView extends StatelessWidget {
                       Padding(
                         padding: Dimens.edgeInsetsL6,
                         child: AppText(
-                          text: 'https://northshore-nanny-app.com',
+                          text: controller.inviteAFriendCode,
                           style: AppStyles.ubNavyBlue15W600,
                           maxLines: 1,
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Container(
-                        height: Dimens.thirtyEight,
-                        width: Dimens.thirtyEight,
-                        padding: Dimens.edgeInsets8,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightNavyBlue,
-                          borderRadius: BorderRadius.circular(Dimens.seven),
+                      GestureDetector(
+                        onTap: () async {
+                          await Clipboard.setData(ClipboardData(
+                                  text:
+                                      "https://api.northshore.harishparas.com/shareLink.html?Refcode=${controller.inviteAFriendCode}"))
+                              .then(
+                            (value) => toast(
+                                msg: 'Referral code copied successfully',
+                                isError: false),
+                          );
+                        },
+                        child: Container(
+                          height: Dimens.thirtyEight,
+                          width: Dimens.thirtyEight,
+                          padding: Dimens.edgeInsets8,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightNavyBlue,
+                            borderRadius: BorderRadius.circular(Dimens.seven),
+                          ),
+                          child: SvgPicture.asset(Assets.iconsCopy),
                         ),
-                        child: SvgPicture.asset(Assets.iconsCopy),
                       ),
                     ],
                   ),
@@ -70,7 +87,13 @@ class InviteAFriendView extends StatelessWidget {
                   title: TranslationKeys.sendReferralLink.tr,
                   backGroundColor: AppColors.navyBlue,
                   onTap: () {
-                    // Share.share('Hello Welcome to Nanny', subject: 'https://northshore-nanny-app.com');
+                    Share.shareWithResult(
+                      'https://api.northshore.harishparas.com/shareLink.html?Refcode=${controller.inviteAFriendCode}',
+                    ).then<void>((value) {
+                      if (value.status == ShareResultStatus.success) {
+                        toast(msg: 'Thank You for Sharing our App');
+                      }
+                    });
                   },
                 ),
                 Dimens.boxHeight10,

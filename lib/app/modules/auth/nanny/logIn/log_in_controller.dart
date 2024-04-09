@@ -145,7 +145,8 @@ class LogInController extends GetxController {
 
       printInfo(info: "login up controller form data: $body");
 
-      _apiHelper.postApi(ApiUrls.customerLogin, body).futureValue((value) {
+      _apiHelper.postApi(ApiUrls.customerLogin, body).futureValue(
+          (value) async {
         saveRememberMeValue();
         if (userType == 2) {
           /******* NANNY ----------->>>>>>>> */
@@ -154,6 +155,10 @@ class LogInController extends GetxController {
             Storage.saveValue(StringConstants.userId, res.data?.user!.id);
 
             Storage.saveValue(StringConstants.token, res.data?.token);
+
+            await Storage.removeValue(StringConstants.inviteAFriendCode);
+            Storage.saveValue(
+                StringConstants.inviteAFriendCode, res.data?.user?.couponCode);
             if (res.data?.user?.isProfileCreated == false) {
               RouteManagement.goToCreateNannyProfile();
             } else if (res.data?.user?.isServicesCreated == false) {
@@ -185,6 +190,9 @@ class LogInController extends GetxController {
             Storage.saveValue(StringConstants.userId, res.data!.user!.id);
 
             Storage.saveValue(StringConstants.token, res.data?.token);
+            await Storage.removeValue(StringConstants.inviteAFriendCode);
+            Storage.saveValue(
+                StringConstants.inviteAFriendCode, res.data?.user?.couponCode);
             if (res.data?.user?.isProfileCreated == false) {
               /** PROFILE is not created */
 
