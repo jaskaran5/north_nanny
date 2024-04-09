@@ -167,4 +167,27 @@ class PaymentDetailController extends GetxController {
       printError(info: "Delete card   post API ISSUE $s");
     }
   }
+
+  /// used to set the card default
+  Future<void> setCardDefault({required String cardId}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {"cardId": cardId};
+      _apiHelper.postApi(ApiUrls.setDefaultCard, jsonEncode(body)).futureValue(
+          (value) {
+        printInfo(info: "Set default card  $value");
+        var response = GetCardListModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          getCardList();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Set Default card  post API ISSUE $s");
+    }
+  }
 }

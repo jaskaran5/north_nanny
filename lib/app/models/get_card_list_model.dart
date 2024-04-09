@@ -46,7 +46,7 @@ class CardData {
   int? expiryMonth;
   int? expiryYear;
   String? cardImage;
-  bool isDefaultCard;
+  bool? isDefaultCard;
 
   CardData({
     this.cardId,
@@ -54,7 +54,7 @@ class CardData {
     this.expiryMonth,
     this.expiryYear,
     this.cardImage,
-    this.isDefaultCard=false,
+    this.isDefaultCard,
   });
 
   factory CardData.fromJson(Map<String, dynamic> json) => CardData(
@@ -63,7 +63,7 @@ class CardData {
         expiryMonth: json["expiryMonth"],
         expiryYear: json["expiryYear"],
         cardImage: json["cardImage"],
-    isDefaultCard: json['isDefaultCard'] ?? false,
+        isDefaultCard: json['isDefaultCard'] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +72,6 @@ class CardData {
         "expiryMonth": expiryMonth,
         "expiryYear": expiryYear,
         "cardImage": cardImage,
-        "isSelected": isDefaultCard,
+        "isDefaultCard": isDefaultCard,
       };
 }

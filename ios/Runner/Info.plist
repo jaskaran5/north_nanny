@@ -63,5 +63,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- invite a friend code -->
+	<key>com.apple.developer.associated-domains</key>
+    	<array>
+    		<string>applinks:api.northshore.harishparas.com</string>
+    	</array>
 </dict>
 </plist>

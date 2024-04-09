@@ -49,12 +49,7 @@ class BookingDetailController extends GetxController {
     });
   }
 
-  List<int> receiptPriceList = [
-    10,
-    10,
-    23,
-    92,
-  ];
+
   int totalPrice = 0;
 
   @override
@@ -64,20 +59,6 @@ class BookingDetailController extends GetxController {
     timer?.cancel();
   }
 
-  List cardList = [
-    {
-      'asset': Assets.iconsMasterCard,
-      'accountNumber': "9587 5498 8569 7569",
-      'cardType': 'Master Card',
-      'isSelected': true,
-    },
-    {
-      'asset': Assets.iconsVisa,
-      'accountNumber': "9587 5498 8569 7569",
-      'cardType': 'Visa',
-      'isSelected': false,
-    }
-  ];
 
   /// check status
   BookingDetailStatus? bookingDetailStatus;
