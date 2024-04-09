@@ -204,4 +204,5 @@ var en = <String, String>{
   TranslationKeys.state: 'State',
   TranslationKeys.country: 'Country',
   TranslationKeys.postalCode: 'Postal Code',
+  TranslationKeys.deleteAccount: 'Delete Account',
 };

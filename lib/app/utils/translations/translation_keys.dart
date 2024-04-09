@@ -218,4 +218,5 @@ class TranslationKeys {
   static const String state = 'state';
   static const String country = 'country';
   static const String postalCode = 'postalCode';
+  static const String deleteAccount = 'deleteAccount';
 }
