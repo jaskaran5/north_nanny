@@ -40,15 +40,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
+           <!-- <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                &lt;!&ndash; Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST used for invite a friend&ndash;&gt;
+                <data
+                    android:host= "api.northshore.harishparas.com"
+                    android:scheme="northshorenanny"/>
+            </intent-filter>-->
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST used for invite a friend-->
                 <data
-                    android:host= "api.northshore.harishparas.com"
-                    android:scheme="northshorenanny"/>
-                </intent-filter>
+                    android:scheme="https"
+                    android:host="northshore.harishparas.com"
+                    android:pathPrefix="/sharelinking.html"/>
+
+                <data
+                    android:scheme="northshorenanny"
+                    android:host="northshore.harishparas.com"
+                    android:pathPrefix="/sharelinking.html"/>
+
+            </intent-filter>
         </activity>
 
         <activity
