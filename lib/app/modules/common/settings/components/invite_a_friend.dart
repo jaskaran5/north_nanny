@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -86,12 +85,12 @@ class InviteAFriendView extends StatelessWidget {
                 CustomButton(
                   title: TranslationKeys.sendReferralLink.tr,
                   backGroundColor: AppColors.navyBlue,
-                  onTap: () {
-                    Share.shareWithResult(
+                  onTap: () async {
+                    await Share.shareWithResult(
                       'https://api.northshore.harishparas.com/shareLink.html?Refcode=${controller.inviteAFriendCode}',
                     ).then<void>((value) {
                       if (value.status == ShareResultStatus.success) {
-                        toast(msg: 'Thank You for Sharing our App');
+                        toast(msg: 'Thank You for Sharing Referral link');
                       }
                     });
                   },
