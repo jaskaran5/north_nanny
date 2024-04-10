@@ -248,9 +248,9 @@ class BookingDetailView extends StatelessWidget {
                                       onMapCreated: (googleController) {
                                         trackingController.googleMapController =
                                             googleController;
-                                    
+
                                         log('---------------- >>>>>>>>>> map created <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  ');
-                                    
+
                                         trackingController
                                             .update(['customer_tracking']);
                                       },
@@ -269,11 +269,12 @@ class BookingDetailView extends StatelessWidget {
                                                         ?.latitude
                                                         .toString() ??
                                                     '0.0')
-                                                : double.parse(trackingController
-                                                        .bookingDataById
-                                                        ?.userDetails
-                                                        ?.latitude ??
-                                                    '0.0'),
+                                                : double.parse(
+                                                    trackingController
+                                                            .bookingDataById
+                                                            ?.userDetails
+                                                            ?.latitude ??
+                                                        '0.0'),
                                             trackingController
                                                         .trackerLocationModel !=
                                                     null
@@ -282,11 +283,12 @@ class BookingDetailView extends StatelessWidget {
                                                         ?.data
                                                         ?.longitude ??
                                                     '0.0')
-                                                : double.parse(trackingController
-                                                        .bookingDataById
-                                                        ?.userDetails
-                                                        ?.longitude ??
-                                                    '0.0'),
+                                                : double.parse(
+                                                    trackingController
+                                                            .bookingDataById
+                                                            ?.userDetails
+                                                            ?.longitude ??
+                                                        '0.0'),
                                           ),
                                           flat: true,
                                         ),
@@ -347,6 +349,12 @@ class BookingDetailView extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            showChat: (trackingController
+                                            .bookingDataById?.bookingStatus ??
+                                        0) >=
+                                    6
+                                ? false
+                                : true,
                           )
                         : const CircularProgressIndicator(),
                   ),
