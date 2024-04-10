@@ -34,7 +34,7 @@ class NannyBookingDetailController extends GetxController {
   final SignalRHelper socketHelper = SignalRHelper();
 
   NannyBookingDetailStatus? nannyBookingDetailStatus;
-   Timer? timer;
+  Timer? timer;
   int seconds = 0;
   BookingDetailsModel? bookingDetailsModel;
 
@@ -162,7 +162,7 @@ class NannyBookingDetailController extends GetxController {
                 "  Nanny accept or reject  booking dates in nanny booking details $value");
         var response = NannyBookingDetails.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          typeOfBooking(bookingStatus: 2);
+          typeOfBooking(bookingStatus: bookingStatus);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
