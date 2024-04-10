@@ -57,13 +57,13 @@
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST used for invite a friend-->
                 <data
                     android:scheme="https"
-                    android:host="northshore.harishparas.com"
-                    android:pathPrefix="/sharelinking.html"/>
+                    android:host="api.northshore.harishparas.com"
+                   />
 
-                <data
-                    android:scheme="northshorenanny"
-                    android:host="northshore.harishparas.com"
-                    android:pathPrefix="/sharelinking.html"/>
+<!--                <data-->
+<!--                    android:scheme="https"-->
+<!--                    android:host="northshore.harishparas.com"-->
+<!--                    android:pathPrefix="/sharelinking.html"/>-->
 
             </intent-filter>
         </activity>
