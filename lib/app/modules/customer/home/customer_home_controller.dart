@@ -408,7 +408,7 @@ class CustomerHomeController extends GetxController {
     }
   }
 
-  onClickOnFilterApply() async {
+  onClickOnFilterApply({required bool isResetFilters}) async {
     var selectedTimeDate = Utility.addTimeToList(
         dates: [selectedDate], addTime: TimeOfDay.fromDateTime(selectedTime));
 
@@ -426,24 +426,38 @@ class CustomerHomeController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
-      final dateTime = returnFinalTimeAccordingToDate(
-          selectedTime: selectedTime, day: selectedDate);
+      Map<String, dynamic>? body;
+      if (isResetFilters) {
+        debugPrint('>>>>>>>>>>>>reset filter Apply');
+        body = {
+          "minMiles": null,
+          "maxMiles": null,
+          "minAge": null,
+          "maxAge": null,
+          "dateTime": null,
+          "gender": null,
+          "name": '',
+        };
+      } else {
+        final dateTime = returnFinalTimeAccordingToDate(
+            selectedTime: selectedTime, day: selectedDate);
 
-      debugPrint('final Date Time :$dateTime');
-      var body = {
-        "minMiles": distanceLowerValue.toInt(),
-        "maxMiles": distanceHigherValue.toInt(),
-        "minAge": ageLowerValue.toInt(),
-        "maxAge": ageHigherValue.toInt(),
-        "dateTime": dateTime.toUtc().toIso8601String(),
-        "gender": selectedGender == "Female"
-            ? 2
-            : selectedGender == "Male"
-                ? 1
-                : 0,
-        "name": filterName.value,
-      };
-
+        debugPrint('final Date Time :$dateTime');
+        debugPrint('>>>>>>>>>>>>Apply filter ');
+        body = {
+          "minMiles": distanceLowerValue.toInt(),
+          "maxMiles": distanceHigherValue.toInt(),
+          "minAge": ageLowerValue.toInt(),
+          "maxAge": ageHigherValue.toInt(),
+          "dateTime": dateTime.toUtc().toIso8601String(),
+          "gender": selectedGender == "Female"
+              ? 2
+              : selectedGender == "Male"
+                  ? 1
+                  : 0,
+          "name": filterName.value,
+        };
+      }
       log("body:-->. $body");
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
@@ -550,5 +564,17 @@ class CustomerHomeController extends GetxController {
     } else {
       return DateTime.now();
     }
+  }
+
+  /// used for reset filters
+  resetFilters() {
+    distanceLowerValue = Dimens.zero;
+    distanceHigherValue = 11;
+    ageLowerValue = 13;
+    ageHigherValue = 50;
+    selectedGender = '';
+    selectedDate = DateTime.now();
+    selectedTime = DateTime.now();
+    update();
   }
 }

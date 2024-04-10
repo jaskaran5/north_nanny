@@ -39,6 +39,8 @@ class FilterView extends StatelessWidget {
                   /**-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>------>>>>>> RESET BUTTON */
                   CustomButton(
                     onTap: () {
+                      controller.onClickOnFilterApply(isResetFilters: true);
+                      controller.resetFilters();
                       Get.back();
                     },
                     height: Dimens.fiftyThree,
@@ -52,8 +54,7 @@ class FilterView extends StatelessWidget {
 
                   CustomButton(
                     onTap: () {
-                      controller.onClickOnFilterApply();
-                      ();
+                      controller.onClickOnFilterApply(isResetFilters: false);
                     },
                     height: Dimens.fiftyThree,
                     width: Dimens.oneHundredFifty,
