@@ -220,11 +220,13 @@ abstract class RouteManagement {
   static Future<bool> goToCustomPaymentView({
     required bool isComeFromSendTip,
     required bool isComeFromConfirmBooking,
+    required bool isCardAdded,
   }) async {
     var value = await Get.to(
       () => CustomPaymentDetails(
         isComeFromConfirmBooking: isComeFromConfirmBooking,
         isComeFromSendTip: isComeFromSendTip,
+        isCardAdded: isCardAdded,
       ),
     );
     return value ?? false;
@@ -327,11 +329,12 @@ abstract class RouteManagement {
     Get.toNamed(
       Routes.nannyTrackingView,
     );
-  }  /// go to Customer Tracking   view.
+  }
+
+  /// go to Customer Tracking   view.
   static void goToCustomerTrackingView() {
     Get.toNamed(
       Routes.customerTrackingView,
     );
   }
-
 }

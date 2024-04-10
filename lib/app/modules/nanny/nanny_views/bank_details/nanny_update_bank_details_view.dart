@@ -37,7 +37,7 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                         children: [
                           CustomPaymentBankDeleteTile(
                             accountNumber:
-                                "XXXXXXXXXX${controller.bankDetailResponse?.data?.accountNumber?.substring(5)}",
+                                "XXXXXXXX${controller.bankDetailResponse?.data?.accountNumber?.substring(5)}",
                             cardType:
                                 controller.bankDetailResponse?.data?.bankName ??
                                     '',

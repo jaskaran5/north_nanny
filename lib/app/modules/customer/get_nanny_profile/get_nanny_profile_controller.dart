@@ -205,7 +205,7 @@ class GetNannyProfileController extends GetxController {
       log("get nanny profile body:------ $body");
 
       _apiHelper.postApi(ApiUrls.nannyDetails, body).futureValue((value) {
-        printInfo(info: "post availability nanny  response value $value");
+        printInfo(info: "get nanny profile  response value $value");
         var response = GetNannyDetailsResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           isDataLoading.value = false;
@@ -222,7 +222,7 @@ class GetNannyProfileController extends GetxController {
       toast(msg: e.toString(), isError: true);
       isDataLoading.value = false;
 
-      printError(info: "post availability  Nanny  API ISSUE $s");
+      printError(info: "get nanny profile API ISSUE $s");
     }
   }
 

@@ -794,7 +794,10 @@ class ScheduleNannyView extends StatelessWidget {
                           bool value =
                               await RouteManagement.goToCustomPaymentView(
                                   isComeFromConfirmBooking: true,
-                                  isComeFromSendTip: false);
+                                  isComeFromSendTip: false,
+                                  isCardAdded: controller.getNannyData
+                                          ?.isCardAddedByCustomer ??
+                                      false);
                           if (value == true) {
                             controller.confirmBookingApi(
                               hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(

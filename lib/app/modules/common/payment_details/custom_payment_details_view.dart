@@ -19,9 +19,11 @@ class CustomPaymentDetails extends StatelessWidget {
     super.key,
     required this.isComeFromSendTip,
     required this.isComeFromConfirmBooking,
+    required this.isCardAdded,
   });
   final bool isComeFromSendTip;
   final bool isComeFromConfirmBooking;
+  final bool isCardAdded;
 
   @override
   Widget build(BuildContext context) => GetBuilder<PaymentDetailController>(
@@ -30,7 +32,9 @@ class CustomPaymentDetails extends StatelessWidget {
         initState: (_) {
           Get.lazyPut<PaymentDetailController>(() => PaymentDetailController());
           Get.find<PaymentDetailController>().getCardList();
-          if (isComeFromConfirmBooking || isComeFromSendTip) {
+          debugPrint('card Added Or Not :$isCardAdded');
+          if ((isComeFromConfirmBooking || isComeFromSendTip) &&
+              isCardAdded == false) {
             Get.find<PaymentDetailController>().postAddCard(
                 isComeFromBooking:
                     isComeFromConfirmBooking || isComeFromSendTip);
@@ -45,9 +49,8 @@ class CustomPaymentDetails extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height: !isComeFromSendTip && !isComeFromConfirmBooking
-                ? Dimens.eightySix
-                : Dimens.oneHundredSeventy,
+            height:
+                isComeFromSendTip ? Dimens.oneHundredSeventy : Dimens.eightySix,
             padding: Dimens.edgeInsets16,
             color: Colors.transparent,
             child: Column(

@@ -72,7 +72,7 @@ class AddBankDetailController extends GetxController {
       log("body of bank details :$body");
 
       apiHelper.postApi(ApiUrls.addOrEditBankDetails, body).futureValue(
-          (value) {
+          (value) async {
         printInfo(
             info: "Post bank details Nanny profile response value $value");
         var response = RegisterModelResponseJson.fromJson(value);
@@ -83,6 +83,7 @@ class AddBankDetailController extends GetxController {
           } else {
             Get.back();
           }
+          getBankDetails();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }

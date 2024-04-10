@@ -91,7 +91,7 @@ class SettingView extends StatelessWidget {
             } else if (index == 2) {
               log("click on index 2");
               RouteManagement.goToCustomPaymentView(
-                  isComeFromSendTip: false, isComeFromConfirmBooking: false
+                  isComeFromSendTip: false, isComeFromConfirmBooking: false, isCardAdded: true,
 
                   // paymentDetails: controller.cardList ?? [],
                   // appBarTitle: ,

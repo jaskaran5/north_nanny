@@ -49,7 +49,6 @@ class BookingDetailController extends GetxController {
     });
   }
 
-
   int totalPrice = 0;
 
   @override
@@ -58,7 +57,6 @@ class BookingDetailController extends GetxController {
     seconds = 0;
     timer?.cancel();
   }
-
 
   /// check status
   BookingDetailStatus? bookingDetailStatus;
@@ -139,7 +137,10 @@ class BookingDetailController extends GetxController {
                       onTapSubmitButton: () {
                         RouteManagement.goToCustomPaymentView(
                             isComeFromSendTip: true,
-                            isComeFromConfirmBooking: false);
+                            isComeFromConfirmBooking: false,
+                            isCardAdded:
+                                bookingDataById?.isCardAddedByCustomer ??
+                                    false);
 
                         // RouteManagement.goToCustomPaymentView(
                         //     paymentDetails: cardList,
@@ -376,7 +377,10 @@ class BookingDetailController extends GetxController {
                       onTapSubmitButton: () {
                         RouteManagement.goToCustomPaymentView(
                             isComeFromSendTip: true,
-                            isComeFromConfirmBooking: false);
+                            isComeFromConfirmBooking: false,
+                            isCardAdded:
+                                bookingDataById?.isCardAddedByCustomer ??
+                                    false);
 
                         // RouteManagement.goToCustomPaymentView(
                         //     paymentDetails: cardList,
