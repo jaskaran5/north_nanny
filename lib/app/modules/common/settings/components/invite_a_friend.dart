@@ -59,11 +59,11 @@ class InviteAFriendView extends StatelessWidget {
                       GestureDetector(
                         onTap: () async {
                           await Clipboard.setData(ClipboardData(
-                                  text:
-                                      "https://api.northshore.harishparas.com/shareLink.html?Refcode=${controller.inviteAFriendCode}"))
+                                  text: controller.inviteAFriendCode))
                               .then(
                             (value) => toast(
-                                msg: 'Referral code copied successfully',
+                                msg:
+                                    '${controller.inviteAFriendCode} code copied successfully',
                                 isError: false),
                           );
                         },

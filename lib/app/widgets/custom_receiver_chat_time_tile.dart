@@ -12,7 +12,7 @@ class CustomReceiverChatTimeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppStyles.ubGrey10w400,
+      style: AppStyles.ub8F94AE10W400,
     );
   }
 }

@@ -442,13 +442,16 @@ class ChatController extends GetxController {
   // INVOKE SINGLE CHAT DETAILS
 
   getSingleChatDetails() async {
-     await _socketHelper.hubConnection.invoke("ChatDetail", args: [int.parse(otherUserId.value)]);
+    await _socketHelper.hubConnection.invoke("ChatDetail", args: [
+      int.parse(otherUserId.value),
+      DateTime.now().toUtc().toIso8601String()
+    ]);
   }
 
   //========--------->>>>>>>>>>>>>>> LISTER SINGLE CHAT DATA
 
   listenSingleChatDetails() {
-     _socketHelper.hubConnection.on(
+    _socketHelper.hubConnection.on(
       'ChatDetailResponse',
       (arguments) {
         log("arguments :-->> $arguments");

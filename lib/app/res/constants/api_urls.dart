@@ -46,6 +46,7 @@ class ApiUrls {
       "api/UserDashBoard/AddOrRemoveFavoriteNanny";
   static const String nannyDetails = "api/UserDashBoard/NannyDetail";
   static const String bookingDetailsById = "api/UserDashBoard/BookingDetail";
+  static const String sendTip = "api/UserDashBoard/SendTip";
   static const String getNotificationCount = "api/User/NotificationCount";
   static const String socialLogIn = "api/User/SocialLogin";
   static const String myFavoriteNannyList =

@@ -335,8 +335,8 @@ class NannyBookingDetailView extends StatelessWidget {
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
                     totalPriceReceived:
-                        controller.bookingDetailsModel?.data?.totalAmount ??
-                            0.0,
+                        controller.bookingDetailsModel?.data?.totalAmount?.toString()??
+                            '0.0',
                     childCount:
                         controller.bookingDetailsModel?.data?.totalChildren ??
                             0,

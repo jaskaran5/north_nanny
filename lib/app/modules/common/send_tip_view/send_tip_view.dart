@@ -71,14 +71,14 @@ class SendTipView extends StatelessWidget {
                   child: TextField(
                     style: AppStyles.ubNavyBlue40W800,
                     maxLines: 1,
-                    maxLength: 10,
+                    maxLength: 8,
                     cursorHeight: Dimens.forty,
                     controller: amountTextEditingController,
                     cursorColor: AppColors.navyBlue,
                     textAlign: TextAlign.start,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '100.00',
+                      hintText: '00',
                       hintStyle: AppStyles.ubNavyBlue40W800,
                       counterText: '',
                       focusedBorder: InputBorder.none,

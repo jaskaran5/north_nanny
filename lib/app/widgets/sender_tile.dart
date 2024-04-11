@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
 import '../res/theme/dimens.dart';
@@ -19,11 +21,15 @@ class SenderTile extends StatelessWidget {
     this.onTapOnVideo,
     this.onTapOnImage,
     this.thumbImage,
+    this.readTime,
+    required this.isRead,
   });
   final String? title;
   final String? time;
+  final String? readTime;
   final String? fileLink;
   final bool isFile;
+  final bool isRead;
   final String? fileType;
   final String? thumbImage;
 
@@ -60,7 +66,8 @@ class SenderTile extends StatelessWidget {
                 constraints: BoxConstraints(maxWidth: Get.width / 1.6),
                 child: isFile ? _buildFileWidget() : _buildTextWidget()),
             CustomSenderChatTimeTile(
-              text: Utility.formatTimeTo12Hour(time),
+              text: Utility.formatTimeTo12Hour(readTime),
+              isRead: isRead,
             ),
           ],
         ),
@@ -164,9 +171,9 @@ class SenderTile extends StatelessWidget {
           bottomLeft: Radius.circular(Dimens.fifteen),
         ),
       ),
-      child: Text(
-        title!,
-        style: const TextStyle(color: AppColors.primaryColor),
+      child: AppText(
+        text: title!,
+        style: AppStyles.ubWhite14W400,
         textAlign: TextAlign.left,
       ),
     );

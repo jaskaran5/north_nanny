@@ -11,7 +11,6 @@ import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
-import '../../../../navigators/routes_management.dart';
 import '../../../utils/translations/translation_keys.dart';
 
 class CustomPaymentDetails extends StatelessWidget {
@@ -19,11 +18,12 @@ class CustomPaymentDetails extends StatelessWidget {
     super.key,
     required this.isComeFromSendTip,
     required this.isComeFromConfirmBooking,
-    required this.isCardAdded,
+    required this.isCardAdded, this.onTapSubmit,
   });
   final bool isComeFromSendTip;
   final bool isComeFromConfirmBooking;
   final bool isCardAdded;
+  final Function()? onTapSubmit;
 
   @override
   Widget build(BuildContext context) => GetBuilder<PaymentDetailController>(
@@ -83,26 +83,7 @@ class CustomPaymentDetails extends StatelessWidget {
                   CustomButton(
                     title: TranslationKeys.submit.tr,
                     backGroundColor: AppColors.navyBlue,
-                    onTap: () {
-                      /// here to write the code send tip .
-
-                      /// used to show tip received by nanny.
-                      RouteManagement.goToSuccessView(
-                        buttonText: TranslationKeys.backToHome.tr,
-                        successSvg: '',
-                        header: TranslationKeys.thankYou.tr,
-                        subHeader: TranslationKeys.yourNannyTipReceived.tr,
-                        onTapButton: () {
-                          RouteManagement.goToOffAllDashboard(
-                              isFromSetting: false);
-                        },
-                        subTitleStyle: AppStyles.ubGrey16W500,
-                        subHeaderMaxLines: 2,
-                        headerMaxLines: 2,
-                        successImage: Assets.imagesPinkHeart,
-                        sendTipText: true,
-                      );
-                    },
+                    onTap: onTapSubmit,
                     // titleStyle: submitButtonStyle,
                   ),
                 ],

@@ -3,19 +3,22 @@ import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 
 class CustomSenderChatTimeTile extends StatelessWidget {
   final String text;
+  final bool isRead;
   const CustomSenderChatTimeTile({
     super.key,
     required this.text,
+    required this.isRead,
   });
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: 'Read ',
-        style: AppStyles.ubGrey3b3c42f10w600,
+        text: isRead ? 'Read ' : 'Delivered',
+        style:isRead? AppStyles.ubGrey3b3c42f10w600:AppStyles.ub8F94AE10W400,
         children: <TextSpan>[
-          TextSpan(text: text, style: AppStyles.ubGrey3b3c42f10w400),
+          if (isRead)
+            TextSpan(text: text, style: AppStyles.ubGrey3b3c42f10w400),
         ],
       ),
     );

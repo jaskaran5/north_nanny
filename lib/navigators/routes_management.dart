@@ -221,12 +221,14 @@ abstract class RouteManagement {
     required bool isComeFromSendTip,
     required bool isComeFromConfirmBooking,
     required bool isCardAdded,
+    Function()? onTapSubmit,
   }) async {
     var value = await Get.to(
       () => CustomPaymentDetails(
         isComeFromConfirmBooking: isComeFromConfirmBooking,
         isComeFromSendTip: isComeFromSendTip,
         isCardAdded: isCardAdded,
+        onTapSubmit: onTapSubmit,
       ),
     );
     return value ?? false;

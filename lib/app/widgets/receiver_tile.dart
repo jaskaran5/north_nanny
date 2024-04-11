@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 
+import 'app_text.dart';
 import 'custom_receiver_chat_time_tile.dart';
 
 class ReceiverTile extends StatelessWidget {
@@ -167,9 +169,10 @@ class ReceiverTile extends StatelessWidget {
           bottomRight: Radius.circular(Dimens.fifteen),
         ),
       ),
-      child: Text(
-        title!,
+      child: AppText(
+        text: title!,
         textAlign: TextAlign.left,
+        style: AppStyles.ub5E5F60Grey14W400,
       ),
     );
   }

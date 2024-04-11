@@ -26,7 +26,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
 
   final String receiptHeader;
   final dynamic totalPriceReceived;
-  final dynamic netPayBalAmount;
+  final double netPayBalAmount;
   final int childCount;
   final dynamic totalTimeHour;
   final dynamic totalTimeHourPrice;
@@ -154,7 +154,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
                 AppText(
                   text:
-                      '\$ ${totalPriceReceived.toString()}',
+                      '\$ ${double.parse(totalPriceReceived.toString()).toStringAsFixed(2)}',
                   style: AppStyles.ubBlack15W600,
                   maxLines: 1,
                   textAlign: TextAlign.start,
@@ -196,7 +196,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   AppText(
-                    text: '\$$netPayBalAmount ',
+                    text: '\$${netPayBalAmount.toStringAsFixed(2)} ',
                     style: AppStyles.ubBlack15W600,
                     maxLines: 1,
                     textAlign: TextAlign.start,

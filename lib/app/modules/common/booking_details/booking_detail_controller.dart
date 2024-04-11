@@ -21,6 +21,7 @@ import '../../../res/constants/assets.dart';
 import '../../../res/constants/enums.dart';
 import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
+import '../../../utils/translations/translation_keys.dart';
 import '../../../utils/utility.dart';
 import '../rating_and_review/rating_and_review_binding.dart';
 import '../rating_and_review/rating_and_review_controller.dart';
@@ -51,6 +52,8 @@ class BookingDetailController extends GetxController {
 
   int totalPrice = 0;
 
+  /// used to show  send tip text Editing Controller.
+  final sendTipAmountTextEditingController = TextEditingController();
   @override
   void dispose() {
     super.dispose();
@@ -133,14 +136,21 @@ class BookingDetailController extends GetxController {
                   () => SendTipView(
                       userName: bookingDataById?.userDetails?.name ?? '',
                       image: bookingDataById?.userDetails?.image ?? '',
-                      amountTextEditingController: TextEditingController(),
+                      amountTextEditingController:
+                          sendTipAmountTextEditingController,
                       onTapSubmitButton: () {
                         RouteManagement.goToCustomPaymentView(
                             isComeFromSendTip: true,
                             isComeFromConfirmBooking: false,
                             isCardAdded:
-                                bookingDataById?.isCardAddedByCustomer ??
-                                    false);
+                                bookingDataById?.isCardAddedByCustomer ?? false,
+                            onTapSubmit: () {
+                              /// here to write the code send tip .
+                              sendTip(
+                                  amount:
+                                      sendTipAmountTextEditingController.text,
+                                  bookingId: bookingDataById?.bookingId ?? 0);
+                            });
 
                         // RouteManagement.goToCustomPaymentView(
                         //     paymentDetails: cardList,
@@ -373,14 +383,20 @@ class BookingDetailController extends GetxController {
                   () => SendTipView(
                       userName: bookingDataById?.userDetails?.name ?? '',
                       image: bookingDataById?.userDetails?.image ?? '',
-                      amountTextEditingController: TextEditingController(),
+                      amountTextEditingController:
+                          sendTipAmountTextEditingController,
                       onTapSubmitButton: () {
                         RouteManagement.goToCustomPaymentView(
                             isComeFromSendTip: true,
                             isComeFromConfirmBooking: false,
                             isCardAdded:
-                                bookingDataById?.isCardAddedByCustomer ??
-                                    false);
+                                bookingDataById?.isCardAddedByCustomer ?? false,
+                            onTapSubmit: () {
+                              sendTip(
+                                  amount:
+                                      sendTipAmountTextEditingController.text,
+                                  bookingId: bookingDataById?.bookingId ?? 0);
+                            });
 
                         // RouteManagement.goToCustomPaymentView(
                         //     paymentDetails: cardList,
@@ -486,5 +502,47 @@ class BookingDetailController extends GetxController {
   void onInit() {
     super.onInit();
     updateNannyLatLong();
+  }
+
+  /// used to send tip
+  Future<void> sendTip({required String amount, required int bookingId}) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
+      var body = {
+        "bookingId": bookingId,
+        "amount": amount,
+        "dateTime": DateTime.now().toUtc().toIso8601String(),
+      };
+      log('body of Send tip :$body');
+      _apiHelper.postApi(ApiUrls.sendTip, jsonEncode(body)).futureValue(
+          (value) {
+        printInfo(info: "Send Tip response  $value");
+        var response = BookingDataByIdResponseModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          /// used to show tip received by nanny.
+          RouteManagement.goToSuccessView(
+            buttonText: TranslationKeys.backToHome.tr,
+            successSvg: '',
+            header: TranslationKeys.thankYou.tr,
+            subHeader: TranslationKeys.yourNannyTipReceived.tr,
+            onTapButton: () {
+              RouteManagement.goToOffAllDashboard(isFromSetting: false);
+            },
+            subTitleStyle: AppStyles.ubGrey16W500,
+            subHeaderMaxLines: 2,
+            headerMaxLines: 2,
+            successImage: Assets.imagesPinkHeart,
+            sendTipText: true,
+          );
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Send tip API ISSUE $s");
+    }
   }
 }

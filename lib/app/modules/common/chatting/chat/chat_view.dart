@@ -17,6 +17,7 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/utils/utility.dart';
+import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/app/widgets/receiver_tile.dart';
 import 'package:northshore_nanny_flutter/app/widgets/sender_tile.dart';
@@ -78,8 +79,8 @@ class ChatView extends StatelessWidget {
                                 children: [
                                   SizedBox(
                                     width: Get.width * .55,
-                                    child: Text(
-                                      controller.getUserData?.name ?? '',
+                                    child: AppText(
+                                      text: controller.getUserData?.name ?? '',
                                       textAlign: TextAlign.start,
                                       style: AppStyles.ubBlack16W700,
                                       overflow: TextOverflow.ellipsis,
@@ -91,14 +92,12 @@ class ChatView extends StatelessWidget {
                                         Icons.circle,
                                         color: controller.isOnline.value
                                             ? AppColors.onlineColor
-                                            : Colors.red,
+                                            : AppColors.fC3030RedColor,
                                         size: 10,
                                       ),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        controller.isOnline.value
+                                      Dimens.boxWidth4,
+                                      AppText(
+                                        text: controller.isOnline.value
                                             ? 'Online'
                                             : 'offline',
                                         textAlign: TextAlign.center,
@@ -124,17 +123,20 @@ class ChatView extends StatelessWidget {
                                   onTap: () {
                                     controller.clearChat();
                                   },
-                                  child: const Text("Clear Chat"),
+                                  child: AppText(
+                                    text: "Clear Chat",
+                                    style: AppStyles.ubBlack12W500,
+                                  ),
                                 ),
                                 PopupMenuItem(
                                   onTap: () {
                                     controller.blockUnblockUser();
                                   },
-                                  child: Text(
-                                    controller.isBlockByMe.value
+                                  child: AppText(
+                                    text: controller.isBlockByMe.value
                                         ? "UnBlock"
                                         : "Block",
-                                    style: const TextStyle(color: Colors.red),
+                                    style: AppStyles.ubFc3030RedColor12W500,
                                   ),
                                 ),
                               ];
@@ -155,9 +157,11 @@ class ChatView extends StatelessWidget {
                                     shrinkWrap: true,
                                     reverse: true,
                                     groupHeaderBuilder: (element) {
-                                      return Text(
-                                        controller.isMessageDateEqualToday(
-                                            element.date.toString()),
+                                      return AppText(
+                                        text:
+                                            controller.isMessageDateEqualToday(
+                                                element.date.toString()),
+                                        style: AppStyles.ub8F94AE12W400,
                                         textAlign: TextAlign.center,
                                       );
                                     },
@@ -224,6 +228,9 @@ class ChatView extends StatelessWidget {
                                               fileLink: messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? "",
+                                              isRead: false,
+                                              readTime:
+                                                  messageList.date.toString(),
                                             );
                                     },
                                     itemComparator: (item1, item2) =>
@@ -250,8 +257,8 @@ class ChatView extends StatelessWidget {
                           )
                         : Expanded(
                             child: Center(
-                                child: Text(
-                              'Please Send Message to Start Conversation',
+                                child: AppText(
+                              text: 'Please Send Message to Start Conversation',
                               style: AppStyles.b0b0fairPlay15w600,
                             )),
                           ),
@@ -268,8 +275,8 @@ class ChatView extends StatelessWidget {
                                   Assets.animationTypingIndicatorAnimation,
                                   fit: BoxFit.cover,
                                 ),
-                                Text(
-                                  "Typing",
+                                AppText(
+                                  text: "Typing",
                                   style: AppStyles.ubGrey10W400Typing,
                                 )
                               ],
@@ -367,8 +374,8 @@ class ChatView extends StatelessWidget {
                           )
                         : Container(
                             margin: Dimens.edgeInsets10,
-                            child: Text(
-                              "You Can't send message",
+                            child: AppText(
+                              text: "You Can't send message",
                               style: AppStyles.b0b0fairPlay15w600,
                             ),
                           )
@@ -382,8 +389,6 @@ class ChatView extends StatelessWidget {
     );
   }
 }
-
-
 
 // class ChatView extends StatelessWidget {
 //   const ChatView({super.key});
@@ -727,5 +732,3 @@ class ChatView extends StatelessWidget {
 //     return Container();
 //   }
 // }
-
-
