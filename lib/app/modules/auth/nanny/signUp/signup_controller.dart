@@ -149,6 +149,7 @@ class SignupViewController extends GetxController {
         if (res.response == AppConstants.apiResponseSuccess) {
           Storage.saveValue(StringConstants.token, res.data!.token);
           Storage.saveValue(StringConstants.userId, res.data?.user!.id);
+          Storage.removeValue(StringConstants.inviteAFriendCode);
           Storage.saveValue(StringConstants.inviteAFriendCode,
               res.data?.user?.couponCode ?? '');
           toast(msg: res.message!, isError: false);
