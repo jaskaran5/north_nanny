@@ -18,7 +18,8 @@ class CustomPaymentDetails extends StatelessWidget {
     super.key,
     required this.isComeFromSendTip,
     required this.isComeFromConfirmBooking,
-    required this.isCardAdded, this.onTapSubmit,
+    required this.isCardAdded,
+    this.onTapSubmit,
   });
   final bool isComeFromSendTip;
   final bool isComeFromConfirmBooking;
@@ -49,8 +50,9 @@ class CustomPaymentDetails extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height:
-                isComeFromSendTip ? Dimens.oneHundredSeventy : Dimens.eightySix,
+            height: isComeFromSendTip || isComeFromConfirmBooking
+                ? Dimens.oneHundredSeventy
+                : Dimens.eightySix,
             padding: Dimens.edgeInsets16,
             color: Colors.transparent,
             child: Column(
@@ -78,10 +80,12 @@ class CustomPaymentDetails extends StatelessWidget {
                   titleStyle:
                       isComeFromSendTip ? AppStyles.ubNavyBlue15W600 : null,
                 ),
-                if (isComeFromSendTip) ...[
+                if (isComeFromSendTip || isComeFromConfirmBooking) ...[
                   Dimens.boxHeight16,
                   CustomButton(
-                    title: TranslationKeys.submit.tr,
+                    title: isComeFromConfirmBooking
+                        ? TranslationKeys.confirmBooking.tr
+                        : TranslationKeys.submit.tr,
                     backGroundColor: AppColors.navyBlue,
                     onTap: onTapSubmit,
                     // titleStyle: submitButtonStyle,

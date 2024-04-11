@@ -149,6 +149,8 @@ class SignupViewController extends GetxController {
         if (res.response == AppConstants.apiResponseSuccess) {
           Storage.saveValue(StringConstants.token, res.data!.token);
           Storage.saveValue(StringConstants.userId, res.data?.user!.id);
+          Storage.saveValue(StringConstants.inviteAFriendCode,
+              res.data?.user?.couponCode ?? '');
           toast(msg: res.message!, isError: false);
           if (type == 1) {
             RouteManagement.goToCreateCustomerProfile();
@@ -166,6 +168,4 @@ class SignupViewController extends GetxController {
       log("SignUp Api have some issue please check $s ");
     }
   }
-
-
 }

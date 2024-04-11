@@ -88,7 +88,7 @@ class User {
   dynamic age;
   dynamic experience;
   dynamic isDrivingLicense;
-
+  String? couponCode;
   User({
     this.id,
     this.firstName,
@@ -118,6 +118,7 @@ class User {
     this.age,
     this.experience,
     this.isDrivingLicense,
+    this.couponCode,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -149,6 +150,7 @@ class User {
         age: json["age"],
         experience: json["experience"],
         isDrivingLicense: json["isDrivingLicense"],
+        couponCode: json['couponCode'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -180,5 +182,6 @@ class User {
         "age": age,
         "experience": experience,
         "isDrivingLicense": isDrivingLicense,
+        "couponCode": couponCode,
       };
 }
