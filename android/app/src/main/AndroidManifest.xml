@@ -56,6 +56,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST used for invite a friend-->
                 <data
+                    android:host="api.northshore.harishparas.com"
+                    android:scheme="http" />
+                <data
                     android:scheme="https"
                     android:host="api.northshore.harishparas.com"
                    />
