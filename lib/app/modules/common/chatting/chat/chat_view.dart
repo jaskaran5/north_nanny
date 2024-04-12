@@ -215,7 +215,7 @@ class ChatView extends StatelessWidget {
                                               fileLink: messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? "",
-                                              isRead: messageList.isRead,
+                                              isRead: messageList.isDeliver??false,
                                               readTime: messageList.messageDeliverDate.toString(),
                                             );
                                     },
