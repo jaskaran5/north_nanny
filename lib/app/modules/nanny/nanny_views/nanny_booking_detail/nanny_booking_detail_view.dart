@@ -613,14 +613,14 @@ class NannyBookingDetailView extends StatelessWidget {
                       ],
                     )
                   ],
-                  if (controller.nannyBookingDetailStatus ==
+                  if ((controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
-                      (controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.arrived &&
-                          controller.bookingDetailsModel?.data?.isJobStarted ==
-                              true) ||
-                      (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.endJob)) ...[
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.arrived ||
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.endJob) &&
+                      controller.nannyBookingDetailStatus !=
+                          NannyBookingDetailStatus.approvedByAdmin) ...[
                     Opacity(
                       opacity:
                           controller.bookingDetailsModel?.data?.isJobStarted ==
@@ -738,24 +738,13 @@ class NannyBookingDetailView extends StatelessWidget {
                       },
                     ),
                   ],
-                  if (controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.givenReviewByNanny &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.onMyWay &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.arrived &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.disputeRaised &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.present &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.endJob &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.waitingForApproval &&
-                      controller.bookingDetailsModel?.data?.reviewGivenByMe ==
+                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe ==
                           null &&
                       controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.rejected) ...[
+                          NannyBookingDetailStatus.rejected &&
+                      controller
+                              .bookingDetailsModel?.data?.reviewGivenByOther !=
+                          null) ...[
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: 'Rate Your Experience',

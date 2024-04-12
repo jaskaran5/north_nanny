@@ -375,6 +375,7 @@ class BookingDetailController extends GetxController {
           //   secondButtonStyle: AppStyles.ubWhite14700,
           // );
           if (response.data?.bookingStatus == 7) {
+            Future.delayed(const Duration(seconds: 2));
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'Send Tip',

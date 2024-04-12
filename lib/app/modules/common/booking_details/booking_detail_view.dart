@@ -361,7 +361,9 @@ class BookingDetailView extends StatelessWidget {
                   Dimens.boxHeight16,
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    totalPriceReceived: controller.bookingDataById?.totalAmount?.toString() ?? '0.0',
+                    totalPriceReceived:
+                        controller.bookingDataById?.totalAmount?.toString() ??
+                            '0.0',
                     childCount: controller.bookingDataById?.totalChildren ?? 0,
                     servicesList:
                         controller.bookingDataById?.servicesType ?? [],
@@ -371,8 +373,10 @@ class BookingDetailView extends StatelessWidget {
                         controller.bookingDataById?.isUseReferrals ?? false,
                   ),
                   Dimens.boxHeight16,
-                  if (controller.bookingDetailStatus ==
-                          BookingDetailStatus.givenReviewByCustomer &&
+                  if ((controller.bookingDetailStatus ==
+                              BookingDetailStatus.givenReviewByCustomer ||
+                          controller.bookingDetailStatus ==
+                              BookingDetailStatus.reviewByOtherUser) &&
                       controller.bookingDataById?.reviewGivenByMe != null) ...[
                     CustomBookingReview(
                       reviewsList: [
@@ -386,7 +390,8 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   if (controller.bookingDataById?.reviewGivenByMe == null &&
-                      controller.bookingDataById?.isSendTip == true) ...[
+                      controller.bookingDataById?.reviewGivenByOther !=
+                          null) ...[
                     CustomButton(
                       title: 'Rate your Experience',
                       backGroundColor: AppColors.navyBlue,

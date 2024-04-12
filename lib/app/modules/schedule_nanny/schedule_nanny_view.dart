@@ -253,7 +253,7 @@ class ScheduleNannyView extends StatelessWidget {
                                         ?.bookingDetail
                                         ?.openingTime
                                         .toString())
-                                    : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name.capitalize}',
+                                    : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name.toUpperCase()}',
                                 style: AppStyles.ubBlack15W600,
                                 maxLines: 1,
                               ),
@@ -303,7 +303,7 @@ class ScheduleNannyView extends StatelessWidget {
                                         ?.bookingDetail
                                         ?.closingTime
                                         .toString())
-                                    : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name.capitalize}',
+                                    : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name.toUpperCase()}',
                                 style: AppStyles.ubBlack15W600,
                                 maxLines: 1,
                               ),

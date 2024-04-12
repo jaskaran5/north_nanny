@@ -693,7 +693,7 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                                       ?.data
                                                                       ?.openingTime
                                                                       .toString())
-                                                              : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
+                                                              : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name.toUpperCase()}',
                                                         ),
                                                         cursorColor: AppColors
                                                             .blackColor,
@@ -737,7 +737,7 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                                       ?.data
                                                                       ?.closingTime
                                                                       .toString())
-                                                              : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+                                                              : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name.toUpperCase()}',
                                                         ),
                                                         cursorColor: AppColors
                                                             .blackColor,
@@ -924,7 +924,7 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                           .startTime ==
                                                       null
                                                   ? TranslationKeys.startTime.tr
-                                                  : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name}',
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.startTime?.hour}:${nannyController.startTime?.minute}')} ${nannyController.startTime?.period.name.toUpperCase()}',
                                             ),
                                             cursorColor: AppColors.blackColor,
                                             cursorWidth: Dimens.one,
@@ -958,7 +958,7 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                           .endTime ==
                                                       null
                                                   ? TranslationKeys.endTime.tr
-                                                  : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name}',
+                                                  : '${Utility.convertTo12HourFormat('${nannyController.endTime?.hour}:${nannyController.endTime?.minute}')} ${nannyController.endTime?.period.name.toUpperCase()}',
                                             ),
                                             cursorColor: AppColors.blackColor,
                                             cursorWidth: Dimens.one,

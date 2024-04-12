@@ -45,6 +45,7 @@ enum NannyBookingDetailStatus {
   givenReviewByNanny,
   rejected,
   disputeRaised,
+  approvedByAdmin,
 }
 
 enum BottomTabs {

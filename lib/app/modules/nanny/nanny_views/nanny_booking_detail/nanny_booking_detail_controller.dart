@@ -125,7 +125,9 @@ class NannyBookingDetailController extends GetxController {
       seconds = 0;
       timer?.cancel();
       update(['timerView']);
-    } else if (bookingStatus == 8) {
+    } else if (bookingStatus == 7) {
+      nannyBookingDetailStatus = NannyBookingDetailStatus.approvedByAdmin;
+    }  else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
     } else if (bookingStatus == 10 || bookingStatus == 9) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
@@ -259,6 +261,8 @@ class NannyBookingDetailController extends GetxController {
           if (response.data?.bookingStatus == 7) {
             seconds == 0;
             timer?.cancel();
+            update(['timerView']);
+            Future.delayed(const Duration(seconds: 2));
             Utility.showDialog(
               title: 'Congratulations! ',
               assetName: Assets.imagesStar,
@@ -289,7 +293,7 @@ class NannyBookingDetailController extends GetxController {
               isImage: true,
               showCrossSvg: true,
             );
-            update(['timerView']);
+
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
 

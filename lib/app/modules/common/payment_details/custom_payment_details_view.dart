@@ -91,7 +91,7 @@ class CustomPaymentDetails extends StatelessWidget {
                     backGroundColor: isComeFromConfirmBooking
                         ? AppColors.lightNavyBlue
                         : AppColors.navyBlue,
-                    titleStyle: AppStyles.ubNavyBlue15W700,
+                    titleStyle:isComeFromConfirmBooking? AppStyles.ubNavyBlue15W700:null,
                     onTap: onTapSubmit,
                     // titleStyle: submitButtonStyle,
                   ),
