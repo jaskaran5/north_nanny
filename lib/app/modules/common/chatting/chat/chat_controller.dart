@@ -24,6 +24,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
+import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -307,9 +308,7 @@ class ChatController extends GetxController {
         log(res.toJson().toString(), name: "custom_logs_2");
 
         if (!res.data!.isBlockChat!) {
-          final isCurrentUser =
-              otherUserId.value == res.data?.toUserId.toString() ||
-                  otherUserId.value == res.data?.userId.toString();
+          final isCurrentUser = otherUserId.value == res.data?.toUserId.toString() || otherUserId.value == res.data?.userId.toString();
           // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
           log("=============> $isCurrentUser");
           log("OtherUserId=============> ${otherUserId.value}");
@@ -333,6 +332,12 @@ class ChatController extends GetxController {
                 toUserImage: res.data?.toUserImage,
               ),
             );
+            if(Get.currentRoute==Paths.chat && otherUserId.value == res.data?.userId.toString()){
+              deliverMessage(
+                chatId: int.parse(otherUserId.value),
+                date: DateTime.now().toUtc().toIso8601String(),
+              );
+            }
           }
           isLoading.value = false;
           messageList.refresh();
@@ -600,9 +605,7 @@ class ChatController extends GetxController {
   }
 
   pickDocuments() {
-    ImagePicker()
-        .pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000)
-        .then((value) async {
+    ImagePicker().pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000).then((value) async {
       if (value != null) {
         File imageFile = File(value.path);
         debugPrint("filePath-->${imageFile.path.split(".").last}");
@@ -710,8 +713,7 @@ class ChatController extends GetxController {
   }
 
   /// used to get invoke the socket
-  Future<void> deliverMessage(
-      {required int chatId, required String date}) async {
+  Future<void> deliverMessage({required int chatId, required String date}) async {
     debugPrint('>>>>>>>>>>>>hit the deliver message invoke socket');
     _socketHelper.hubConnection.invoke('DeliverMessage', args: [chatId, date]);
   }
@@ -722,7 +724,6 @@ class ChatController extends GetxController {
     _socketHelper.hubConnection.on('DeliverResponseResponse', (arguments) {
       var response = arguments?[0] as Map<String, dynamic>;
       debugPrint('Deliver Message Response >>>>>>>>> $response');
-
       var data = DeliverMessageResponse.fromJson(response);
       debugPrint('data-----------------:${data.toJson()}');
       if (data.response == AppConstants.apiResponseSuccess) {
@@ -734,11 +735,6 @@ class ChatController extends GetxController {
         }
         messageList.refresh();
 
-        // if (messageList[0].id == data.data?.chatId) {
-        //   debugPrint('Contain the Chat Id');
-        //   messageList.insert(
-        //       0, MessageList(messageDeliverDate: data.data?.date));
-        // }
       }
       update();
     });

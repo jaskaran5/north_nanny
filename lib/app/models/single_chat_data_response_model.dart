@@ -74,6 +74,7 @@ class MessageList {
   int? toUserId;
   int? fromUserId;
   String? message;
+  bool isRead;
   DateTime? date;
   DateTime? messageDeliverDate;
   dynamic toUserImage;
@@ -95,7 +96,7 @@ class MessageList {
       this.isChatDeleted,
       this.thumbImage,
       this.fileType,
-      this.messageDeliverDate});
+      this.messageDeliverDate,this.isRead=false});
 
   factory MessageList.fromJson(Map<String, dynamic> json) => MessageList(
       id: json["id"],

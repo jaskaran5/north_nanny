@@ -158,23 +158,15 @@ class ChatView extends StatelessWidget {
                                     reverse: true,
                                     groupHeaderBuilder: (element) {
                                       return AppText(
-                                        text:
-                                            controller.isMessageDateEqualToday(
-                                                element.date.toString()),
+                                        text: controller.isMessageDateEqualToday(element.date.toString()),
                                         style: AppStyles.ub8F94AE12W400,
                                         textAlign: TextAlign.center,
                                       );
                                     },
-                                    groupBy: (message) =>
-                                        Utility.convertStringToDateFormatDDMMYY(
-                                            message.date.toString()),
-                                    groupSeparatorBuilder:
-                                        (String groupByValue) => Text(Utility
-                                            .convertStringToDateFormatDDMMYY(
-                                                groupByValue)),
+                                    groupBy: (message) => Utility.convertStringToDateFormatDDMMYY(message.date.toString()),
+                                    groupSeparatorBuilder: (String groupByValue) => Text(Utility.convertStringToDateFormatDDMMYY(groupByValue)),
                                     itemBuilder: (context, messageList) {
-                                      return messageList.toUserId ==
-                                              controller.myUserId.value
+                                      return messageList.toUserId == controller.myUserId.value
                                           ? ReceiverTile(
                                               onTapOnImage: () {
                                                 Get.to(() => FullViewImage(
@@ -194,12 +186,8 @@ class ChatView extends StatelessWidget {
                                                 ));
                                               },
                                               fileType: messageList.fileType,
-                                              isFile:
-                                                  messageList.isFile ?? false,
-                                              fileLink:
-                                                  messageList.fileLink!.isEmpty
-                                                      ? null
-                                                      : messageList.fileLink,
+                                              isFile: messageList.isFile ?? false,
+                                              fileLink: messageList.fileLink!.isEmpty ? null : messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? '',
                                             )
@@ -223,24 +211,17 @@ class ChatView extends StatelessWidget {
                                                 ));
                                               },
                                               fileType: messageList.fileType,
-                                              isFile:
-                                                  messageList.isFile ?? false,
+                                              isFile: messageList.isFile ?? false,
                                               fileLink: messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? "",
-                                              isRead: false,
-                                              readTime: messageList
-                                                  .messageDeliverDate
-                                                  .toString(),
+                                              isRead: messageList.isRead,
+                                              readTime: messageList.messageDeliverDate.toString(),
                                             );
                                     },
                                     itemComparator: (item1, item2) =>
-                                        Utility.convertStringToDateFormatDDMMYY(
-                                                item1.date.toString())
-                                            .compareTo(
-                                      Utility.convertStringToDateFormatDDMMYY(
-                                        item2.date.toString(),
-                                      ),
+                                        Utility.convertStringToDateFormatDDMMYY(item1.date.toString()).compareTo(
+                                        Utility.convertStringToDateFormatDDMMYY(item2.date.toString(),),
                                     ), // optional
                                     useStickyGroupSeparators: true,
                                     floatingHeader: true,
