@@ -151,6 +151,7 @@ class NannyBookingDetailController extends GetxController {
         "utcDatetTime": DateTime.now().toUtc().toIso8601String(),
         "rejectReason": rejectionReason,
       };
+      debugPrint('Accept or reject body:${body.toString()}');
       _apiHelper
           .postApi(
         ApiUrls.acceptOrRejectBooking,

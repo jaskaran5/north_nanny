@@ -334,9 +334,10 @@ class NannyBookingDetailView extends StatelessWidget {
                   Dimens.boxHeight14,
                   CustomBookingReceiptTile(
                     receiptHeader: 'Receipt',
-                    totalPriceReceived:
-                        controller.bookingDetailsModel?.data?.totalAmount?.toString()??
-                            '0.0',
+                    totalPriceReceived: controller
+                            .bookingDetailsModel?.data?.totalAmount
+                            ?.toString() ??
+                        '0.0',
                     childCount:
                         controller.bookingDetailsModel?.data?.totalChildren ??
                             0,
@@ -612,9 +613,7 @@ class NannyBookingDetailView extends StatelessWidget {
                       ],
                     )
                   ],
-                  if (controller.bookingDetailsModel?.data?.isJobStarted ==
-                              true &&
-                          controller.nannyBookingDetailStatus ==
+                  if (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.onMyWay ||
                       (controller.nannyBookingDetailStatus ==
                               NannyBookingDetailStatus.arrived &&
@@ -622,59 +621,69 @@ class NannyBookingDetailView extends StatelessWidget {
                               true) ||
                       (controller.nannyBookingDetailStatus ==
                           NannyBookingDetailStatus.endJob)) ...[
-                    CustomButton(
-                      title: controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.onMyWay
-                          ? 'On my way'
-                          : controller.nannyBookingDetailStatus ==
-                                  NannyBookingDetailStatus.arrived
-                              ? 'Arrived'
-                              : 'End Job ',
-                      backGroundColor: controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.onMyWay
-                          ? AppColors.f7D901YellowColor
-                          : controller.nannyBookingDetailStatus ==
-                                  NannyBookingDetailStatus.arrived
-                              ? AppColors.greenColor05B016
-                              : AppColors.fC3030RedColor,
-                      titleStyle: controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.onMyWay
-                          ? AppStyles.ubBlack15W600
-                          : null,
-                      onTap: () {
-                        if (controller.nannyBookingDetailStatus ==
-                            NannyBookingDetailStatus.onMyWay) {
-                          // controller.nannyBookingDetailStatus =
-                          //     NannyBookingDetailStatus.arrived;
-                          controller.updateStatus(
+                    Opacity(
+                      opacity:
+                          controller.bookingDetailsModel?.data?.isJobStarted ==
+                                  true
+                              ? 1.0
+                              : 0.5,
+                      child: CustomButton(
+                        title: controller.nannyBookingDetailStatus ==
+                                NannyBookingDetailStatus.onMyWay
+                            ? 'On my way'
+                            : controller.nannyBookingDetailStatus ==
+                                    NannyBookingDetailStatus.arrived
+                                ? 'Arrived'
+                                : 'End Job ',
+                        backGroundColor: controller.nannyBookingDetailStatus ==
+                                NannyBookingDetailStatus.onMyWay
+                            ? AppColors.f7D901YellowColor
+                            : controller.nannyBookingDetailStatus ==
+                                    NannyBookingDetailStatus.arrived
+                                ? AppColors.greenColor05B016
+                                : AppColors.fC3030RedColor,
+                        titleStyle: controller.nannyBookingDetailStatus ==
+                                NannyBookingDetailStatus.onMyWay
+                            ? AppStyles.ubBlack15W600
+                            : null,
+                        onTap: () {
+                          if (controller.nannyBookingDetailStatus ==
+                                  NannyBookingDetailStatus.onMyWay &&
+                              controller.bookingDetailsModel?.data
+                                      ?.isJobStarted ==
+                                  true) {
+                            // controller.nannyBookingDetailStatus =
+                            //     NannyBookingDetailStatus.arrived;
+                            controller.updateStatus(
+                                bookingId: controller
+                                        .bookingDetailsModel?.data?.bookingId ??
+                                    0,
+                                bookingStatus: 4);
+                          } else if (controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.arrived) {
+                            // controller.nannyBookingDetailStatus =
+                            //     NannyBookingDetailStatus.endJob;
+                            controller.updateStatus(
                               bookingId: controller
                                       .bookingDetailsModel?.data?.bookingId ??
                                   0,
-                              bookingStatus: 4);
-                        } else if (controller.nannyBookingDetailStatus ==
-                            NannyBookingDetailStatus.arrived) {
-                          // controller.nannyBookingDetailStatus =
-                          //     NannyBookingDetailStatus.endJob;
-                          controller.updateStatus(
-                            bookingId: controller
-                                    .bookingDetailsModel?.data?.bookingId ??
-                                0,
-                            bookingStatus: 5,
-                            startTime: DateTime.now(),
-                          );
-                        } else if (controller.nannyBookingDetailStatus ==
-                            NannyBookingDetailStatus.endJob) {
-                          controller.updateStatus(
-                              bookingId: controller
-                                      .bookingDetailsModel?.data?.bookingId ??
-                                  0,
-                              bookingStatus: 6,
-                              endTime: DateTime.now());
-                          // controller.nannyBookingDetailStatus =
-                          //     NannyBookingDetailStatus.waitingForApproval;
-                        }
-                        controller.update();
-                      },
+                              bookingStatus: 5,
+                              startTime: DateTime.now(),
+                            );
+                          } else if (controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.endJob) {
+                            controller.updateStatus(
+                                bookingId: controller
+                                        .bookingDetailsModel?.data?.bookingId ??
+                                    0,
+                                bookingStatus: 6,
+                                endTime: DateTime.now());
+                            // controller.nannyBookingDetailStatus =
+                            //     NannyBookingDetailStatus.waitingForApproval;
+                          }
+                          controller.update();
+                        },
+                      ),
                     ),
                   ],
                   if (controller.nannyBookingDetailStatus ==
@@ -719,23 +728,6 @@ class NannyBookingDetailView extends StatelessWidget {
                     ),
                   ],
                   Dimens.boxHeight16,
-                  if (controller.bookingDetailsModel?.data?.isJobStarted ==
-                          false &&
-                      (controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.onMyWay ||
-                          controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.arrived)) ...[
-                    CustomButton(
-                      backGroundColor: AppColors.fC3030RedColor,
-                      title: controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.disputeRaised
-                          ? 'Dispute Raised'
-                          : 'Declined',
-                      onTap: () {
-                        Get.back();
-                      },
-                    ),
-                  ],
                   if (controller.nannyBookingDetailStatus ==
                       NannyBookingDetailStatus.disputeRaised) ...[
                     CustomButton(

@@ -253,7 +253,7 @@ class ScheduleNannyView extends StatelessWidget {
                                         ?.bookingDetail
                                         ?.openingTime
                                         .toString())
-                                    : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name}',
+                                    : '${Utility.convertTo12HourFormat('${controller.startTime?.hour}:${controller.startTime?.minute}')} ${controller.startTime?.period.name.capitalize}',
                                 style: AppStyles.ubBlack15W600,
                                 maxLines: 1,
                               ),
@@ -303,7 +303,7 @@ class ScheduleNannyView extends StatelessWidget {
                                         ?.bookingDetail
                                         ?.closingTime
                                         .toString())
-                                    : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name}',
+                                    : '${Utility.convertTo12HourFormat('${controller.endTime?.hour}:${controller.endTime?.minute}')} ${controller.endTime?.period.name.capitalize}',
                                 style: AppStyles.ubBlack15W600,
                                 maxLines: 1,
                               ),
@@ -741,146 +741,151 @@ class ScheduleNannyView extends StatelessWidget {
                         // } else {
                         //   debugPrint('card is not added by the customer');
                         //   bool value =
-                              await RouteManagement.goToCustomPaymentView(
-                                  isComeFromConfirmBooking: true,
-                                  isComeFromSendTip: false,
-                                  isCardAdded: controller.getNannyData
-                                          ?.isCardAddedByCustomer ??
-                                      false,
-                              onTapSubmit: (){
-                                /// confirm booking api.
-                                controller.confirmBookingApi(
-                                  hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
-                                      childCount: controller.selectedChildList.length,
-                                      minuets: Utility.calculateTotalMinutesDifference(
-                                          controller.startTime != null
-                                              ? controller.startTime ??
-                                              TimeOfDay.now()
-                                              : Utility.convertDateTimeToTimeOfDay(
-                                              controller
-                                                  .singleDay
-                                                  ?.data
-                                                  ?.bookingDetail
-                                                  ?.openingTime ??
-                                                  DateTime.now()),
-                                          controller.endTime != null
-                                              ? controller.endTime ?? TimeOfDay.now()
-                                              : Utility.convertDateTimeToTimeOfDay(
-                                              controller
-                                                  .singleDay
-                                                  ?.data
-                                                  ?.bookingDetail
-                                                  ?.closingTime ??
-                                                  DateTime.now()))),
-                                  isUseReferral: controller.isReferral ?? false,
-                                  nannyUserId: controller.nannyId.value,
-                                  totalMinutes:
-                                  Utility.calculateTotalMinutesDifference(
-                                      controller.startTime != null
-                                          ? controller.startTime ??
-                                          TimeOfDay.now()
-                                          : Utility.convertDateTimeToTimeOfDay(
-                                          controller
-                                              .singleDay
-                                              ?.data
-                                              ?.bookingDetail
-                                              ?.openingTime ??
-                                              DateTime.now()),
-                                      controller.endTime != null
-                                          ? controller.endTime ?? TimeOfDay.now()
-                                          : Utility.convertDateTimeToTimeOfDay(
-                                          controller
-                                              .singleDay
-                                              ?.data
-                                              ?.bookingDetail
-                                              ?.closingTime ??
-                                              DateTime.now())),
-                                  totalPrice: controller.totalPrice.value,
-                                  childIds: controller.selectedChildIds,
-                                  openingTime: startDate,
-                                  closingTime: endDate,
-                                );
-                              });
-                          // if (value == true) {
-                          //   controller.confirmBookingApi(
-                          //     hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
-                          //         childCount:
-                          //             controller.selectedChildList.length,
-                          //         minuets: Utility.calculateTotalMinutesDifference(
-                          //             controller.startTime != null
-                          //                 ? controller.startTime ??
-                          //                     TimeOfDay.now()
-                          //                 : Utility.convertDateTimeToTimeOfDay(
-                          //                     controller
-                          //                             .singleDay
-                          //                             ?.data
-                          //                             ?.bookingDetail
-                          //                             ?.openingTime ??
-                          //                         DateTime.now()),
-                          //             controller.endTime != null
-                          //                 ? controller.endTime ??
-                          //                     TimeOfDay.now()
-                          //                 : Utility.convertDateTimeToTimeOfDay(
-                          //                     controller
-                          //                             .singleDay
-                          //                             ?.data
-                          //                             ?.bookingDetail
-                          //                             ?.closingTime ??
-                          //                         DateTime.now()))),
-                          //     isUseReferral: controller.isReferral ?? false,
-                          //     nannyUserId: controller.nannyId.value,
-                          //     totalMinutes: Utility
-                          //         .calculateTotalMinutesDifference(
-                          //             controller.startTime != null
-                          //                 ? controller.startTime ??
-                          //                     TimeOfDay.now()
-                          //                 : Utility
-                          //                     .convertDateTimeToTimeOfDay(
-                          //                         controller
-                          //                                 .singleDay
-                          //                                 ?.data
-                          //                                 ?.bookingDetail
-                          //                                 ?.openingTime ??
-                          //                             DateTime.now()),
-                          //             controller.endTime != null
-                          //                 ? controller.endTime ??
-                          //                     TimeOfDay.now()
-                          //                 : Utility.convertDateTimeToTimeOfDay(
-                          //                     controller
-                          //                             .singleDay
-                          //                             ?.data
-                          //                             ?.bookingDetail
-                          //                             ?.closingTime ??
-                          //                         DateTime.now())),
-                          //     totalPrice: controller.totalPrice.value,
-                          //     childIds: controller.selectedChildIds,
-                          //     openingTime: startDate,
-                          //     closingTime: endDate,
-                          //   );
-                          // }
-                          // RouteManagement.goToAddPaymentMethodScreen(
-                          //   isComeFromNannyProfile: true,
-                          //   buttonText: TranslationKeys.submit.tr,
-                          //   onTapButton: () {
-                          //     RouteManagement.goToSuccessView(
-                          //       buttonText: TranslationKeys.backToHome.tr,
-                          //       successSvg: Assets.iconsSuccess,
-                          //       header: TranslationKeys.nannyRequested.tr,
-                          //       headerStyle: AppStyles.ubDarkBlackColor24W700,
-                          //       subHeader:
-                          //           TranslationKeys.notificationNannyAccept.tr,
-                          //       onTapButton: () {
-                          //         RouteManagement.goToOffAllDashboard(
-                          //             isFromSetting: false);
-                          //       },
-                          //       subTitleStyle: AppStyles.ubGrey16W500,
-                          //       subHeaderMaxLines: 2,
-                          //       headerMaxLines: 2,
-                          //       successImage: '',
-                          //       sendTipText: false,
-                          //     );
-                          //   },
-                          // );
+                        await RouteManagement.goToCustomPaymentView(
+                            isComeFromConfirmBooking: true,
+                            isComeFromSendTip: false,
+                            isCardAdded: controller
+                                    .getNannyData?.isCardAddedByCustomer ??
+                                false,
+                            onTapSubmit: () {
+                              /// confirm booking api.
+                              controller.confirmBookingApi(
+                                hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
+                                    childCount:
+                                        controller.selectedChildList.length,
+                                    minuets: Utility.calculateTotalMinutesDifference(
+                                        controller.startTime != null
+                                            ? controller.startTime ??
+                                                TimeOfDay.now()
+                                            : Utility.convertDateTimeToTimeOfDay(
+                                                controller
+                                                        .singleDay
+                                                        ?.data
+                                                        ?.bookingDetail
+                                                        ?.openingTime ??
+                                                    DateTime.now()),
+                                        controller.endTime != null
+                                            ? controller.endTime ??
+                                                TimeOfDay.now()
+                                            : Utility.convertDateTimeToTimeOfDay(
+                                                controller
+                                                        .singleDay
+                                                        ?.data
+                                                        ?.bookingDetail
+                                                        ?.closingTime ??
+                                                    DateTime.now()))),
+                                isUseReferral: controller.isReferral ?? false,
+                                nannyUserId: controller.nannyId.value,
+                                totalMinutes:
+                                    Utility.calculateTotalMinutesDifference(
+                                        controller.startTime != null
+                                            ? controller.startTime ??
+                                                TimeOfDay.now()
+                                            : Utility
+                                                .convertDateTimeToTimeOfDay(
+                                                    controller
+                                                            .singleDay
+                                                            ?.data
+                                                            ?.bookingDetail
+                                                            ?.openingTime ??
+                                                        DateTime.now()),
+                                        controller.endTime != null
+                                            ? controller.endTime ??
+                                                TimeOfDay.now()
+                                            : Utility
+                                                .convertDateTimeToTimeOfDay(
+                                                    controller
+                                                            .singleDay
+                                                            ?.data
+                                                            ?.bookingDetail
+                                                            ?.closingTime ??
+                                                        DateTime.now())),
+                                totalPrice: controller.totalPrice.value,
+                                childIds: controller.selectedChildIds,
+                                openingTime: startDate,
+                                closingTime: endDate,
+                              );
+                            });
+                        // if (value == true) {
+                        //   controller.confirmBookingApi(
+                        //     hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
+                        //         childCount:
+                        //             controller.selectedChildList.length,
+                        //         minuets: Utility.calculateTotalMinutesDifference(
+                        //             controller.startTime != null
+                        //                 ? controller.startTime ??
+                        //                     TimeOfDay.now()
+                        //                 : Utility.convertDateTimeToTimeOfDay(
+                        //                     controller
+                        //                             .singleDay
+                        //                             ?.data
+                        //                             ?.bookingDetail
+                        //                             ?.openingTime ??
+                        //                         DateTime.now()),
+                        //             controller.endTime != null
+                        //                 ? controller.endTime ??
+                        //                     TimeOfDay.now()
+                        //                 : Utility.convertDateTimeToTimeOfDay(
+                        //                     controller
+                        //                             .singleDay
+                        //                             ?.data
+                        //                             ?.bookingDetail
+                        //                             ?.closingTime ??
+                        //                         DateTime.now()))),
+                        //     isUseReferral: controller.isReferral ?? false,
+                        //     nannyUserId: controller.nannyId.value,
+                        //     totalMinutes: Utility
+                        //         .calculateTotalMinutesDifference(
+                        //             controller.startTime != null
+                        //                 ? controller.startTime ??
+                        //                     TimeOfDay.now()
+                        //                 : Utility
+                        //                     .convertDateTimeToTimeOfDay(
+                        //                         controller
+                        //                                 .singleDay
+                        //                                 ?.data
+                        //                                 ?.bookingDetail
+                        //                                 ?.openingTime ??
+                        //                             DateTime.now()),
+                        //             controller.endTime != null
+                        //                 ? controller.endTime ??
+                        //                     TimeOfDay.now()
+                        //                 : Utility.convertDateTimeToTimeOfDay(
+                        //                     controller
+                        //                             .singleDay
+                        //                             ?.data
+                        //                             ?.bookingDetail
+                        //                             ?.closingTime ??
+                        //                         DateTime.now())),
+                        //     totalPrice: controller.totalPrice.value,
+                        //     childIds: controller.selectedChildIds,
+                        //     openingTime: startDate,
+                        //     closingTime: endDate,
+                        //   );
+                        // }
+                        // RouteManagement.goToAddPaymentMethodScreen(
+                        //   isComeFromNannyProfile: true,
+                        //   buttonText: TranslationKeys.submit.tr,
+                        //   onTapButton: () {
+                        //     RouteManagement.goToSuccessView(
+                        //       buttonText: TranslationKeys.backToHome.tr,
+                        //       successSvg: Assets.iconsSuccess,
+                        //       header: TranslationKeys.nannyRequested.tr,
+                        //       headerStyle: AppStyles.ubDarkBlackColor24W700,
+                        //       subHeader:
+                        //           TranslationKeys.notificationNannyAccept.tr,
+                        //       onTapButton: () {
+                        //         RouteManagement.goToOffAllDashboard(
+                        //             isFromSetting: false);
+                        //       },
+                        //       subTitleStyle: AppStyles.ubGrey16W500,
+                        //       subHeaderMaxLines: 2,
+                        //       headerMaxLines: 2,
+                        //       successImage: '',
+                        //       sendTipText: false,
+                        //     );
+                        //   },
+                        // );
                       }
                     },
                   ),

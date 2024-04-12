@@ -68,8 +68,7 @@ class MultiSelectDialogState extends State<MultiSelectDialog> {
                           children: [
                             AppText(
                               text: widget.options[index]
-                                  .toString()
-                                  .capitalizeFirst,
+                                  .toString(),
                               style: AppStyles.ubNavyBlue16W700,
                               maxLines: 1,
                             ),

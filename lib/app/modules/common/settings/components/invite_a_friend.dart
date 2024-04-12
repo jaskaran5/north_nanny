@@ -133,7 +133,9 @@ class InviteAFriendView extends StatelessWidget {
                     padding: Dimens.edgeInsetsB16,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: index == 0
+                          ? CrossAxisAlignment.start
+                          : CrossAxisAlignment.center,
                       children: [
                         Container(
                           height: Dimens.twentyEight,
