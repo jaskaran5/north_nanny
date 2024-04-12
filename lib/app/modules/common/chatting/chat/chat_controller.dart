@@ -12,6 +12,7 @@ import 'package:northshore_nanny_flutter/app/models/block_unblock_listen_respons
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/clear_chat_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/deliver_message_response.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/send_messgae_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
@@ -319,7 +320,7 @@ class ChatController extends GetxController {
             messageList.insert(
               0,
               MessageList(
-                date: res.data?.time ?? DateTime.now(),
+                date: res.data?.time,
                 fileLink: res.data?.fileLink ?? '',
                 fromUserId: myUserId.value,
                 id: res.data?.chatId,
@@ -358,6 +359,7 @@ class ChatController extends GetxController {
     stopTypingListen();
     listenBlockUnblockUser();
     listenReadMessageResponse();
+    getDeliverMessageResponse();
   }
 
   Future<void> pickDocumentFile() async {
@@ -446,6 +448,12 @@ class ChatController extends GetxController {
       int.parse(otherUserId.value),
       DateTime.now().toUtc().toIso8601String()
     ]);
+
+    /// used to hit the deliver Message socket.
+    deliverMessage(
+      chatId: int.parse(otherUserId.value),
+      date: DateTime.now().toUtc().toIso8601String(),
+    );
   }
 
   //========--------->>>>>>>>>>>>>>> LISTER SINGLE CHAT DATA
@@ -686,20 +694,53 @@ class ChatController extends GetxController {
     log("blockUnblockUser listen called");
   }
 
-  //** ----->>>> INVOKE READ MESSAGE */
-
+  //** ----->>>> LISTEN READ MESSAGE */
   Future<void> listenReadMessageResponse() async {
     _socketHelper.hubConnection.on("ReadResponseResponse", (arguments) {
       log("ReadResponseResponse listen called");
     });
   }
 
-  //** ----->>>> LISTEN READ MESSAGE */
-
+  //** ----->>>> INVOKE READ MESSAGE */
   Future<void> invokeReadMessage() async {
     _socketHelper.hubConnection
         .invoke("ReadMessage", args: [int.parse(otherUserId.value)]);
 
     log("invoke listen called");
+  }
+
+  /// used to get invoke the socket
+  Future<void> deliverMessage(
+      {required int chatId, required String date}) async {
+    debugPrint('>>>>>>>>>>>>hit the deliver message invoke socket');
+    _socketHelper.hubConnection.invoke('DeliverMessage', args: [chatId, date]);
+  }
+
+  /// used to get the deliver message response
+  Future<void> getDeliverMessageResponse() async {
+    debugPrint('>>>>>>>>>>>>hit the deliver message response socket');
+    _socketHelper.hubConnection.on('DeliverResponseResponse', (arguments) {
+      var response = arguments?[0] as Map<String, dynamic>;
+      debugPrint('Deliver Message Response >>>>>>>>> $response');
+
+      var data = DeliverMessageResponse.fromJson(response);
+      debugPrint('data-----------------:${data.toJson()}');
+      if (data.response == AppConstants.apiResponseSuccess) {
+        for (var element in messageList) {
+          if (element.id == data.data?.chatId) {
+            debugPrint('Condition true');
+            element.messageDeliverDate = data.data?.date;
+          }
+        }
+        messageList.refresh();
+
+        // if (messageList[0].id == data.data?.chatId) {
+        //   debugPrint('Contain the Chat Id');
+        //   messageList.insert(
+        //       0, MessageList(messageDeliverDate: data.data?.date));
+        // }
+      }
+      update();
+    });
   }
 }

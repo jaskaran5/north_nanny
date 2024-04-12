@@ -45,6 +45,7 @@ class SettingController extends GetxController {
   RxString customerEmail = ''.obs;
   RxString customerImg = ''.obs;
   String inviteAFriendCode = '';
+
   @override
   void onInit() {
     super.onInit();
@@ -134,6 +135,12 @@ class SettingController extends GetxController {
       "icon": Assets.iconsShieldSecurity,
       "trallingIcon": Assets.iconsNext
     },
+    /** Delete Account*/
+    {
+      "name": TranslationKeys.deleteAccount.tr,
+      "icon": Assets.iconsBlackDelete,
+      "trallingIcon": Assets.iconsNext
+    },
     {
       "name": TranslationKeys.logOut.tr,
       "icon": Assets.iconsLogout,
@@ -208,17 +215,18 @@ class SettingController extends GetxController {
       "icon": Assets.iconsShieldSecurity,
       "trallingIcon": Assets.iconsNext
     },
+    /** Delete Account*/
+    {
+      "name": TranslationKeys.deleteAccount.tr,
+      "icon": Assets.iconsBlackDelete,
+      "trallingIcon": Assets.iconsNext
+    },
     /** LOG OUT */
     {
       "name": TranslationKeys.logOut.tr,
       "icon": Assets.iconsLogout,
       "trallingIcon": Assets.iconsNext
     },
-    // {
-    //   "name": TranslationKeys.deleteAccount.tr,
-    //   "icon": Assets.iconsDelete,
-    //   "trallingIcon": Assets.iconsNext
-    // },
   ];
 
   /// REDIRECT TO COMMON WEB VIEW
@@ -469,32 +477,46 @@ class SettingController extends GetxController {
       toast(msg: e.toString(), isError: true);
       printError(info: "Faq get list   API ISSUE $s");
     }
+  }
 
-    /*comment due to not given this api from backend side
-    /// used to delete account
-    Future<void> deleteAccount()async {
-      try {
-        if (!(await Utils.hasNetwork())) {
-          return;
-        }
-
-        _apiHelper.postApi(ApiUrls.deleteAccount, null).futureValue((value) {
-          printInfo(info: "Faq list response  $value");
-          var response = FaqResponseModel.fromJson(value);
-          if (response.response == AppConstants.apiResponseSuccess) {
-            faqResponseModel = response;
-            update(['faqView']);
-          } else {
-            toast(msg: response.message.toString(), isError: true);
-          }
-        }, retryFunction: () {});
-      } catch (e, s) {
-        toast(msg: e.toString(), isError: true);
-        printError(info: "Faq get list   API ISSUE $s");
+  /// used to delete account
+  Future<void> deleteAccount() async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return;
       }
 
-     */
+      _apiHelper.postApi(ApiUrls.deleteAccount, null).futureValue((value) {
+        printInfo(info: "Delete api response $value");
+        var response = FaqResponseModel.fromJson(value);
+        if (response.response == AppConstants.apiResponseSuccess) {
+          toast(msg: response.message.toString(), isError: false);
+          Storage.removeValue(
+            StringConstants.token,
+          );
+          Storage.removeValue(
+            StringConstants.userId,
+          );
+          Storage.removeValue(
+            StringConstants.inviteAFriendCode,
+          );
+          Storage.removeValue(
+            StringConstants.loginType,
+          );
+          Storage.removeValue(
+            StringConstants.email,
+          );
+          Storage.removeValue(
+            StringConstants.pswd,
+          );
+          RouteManagement.goChooseBabySitter();
+        } else {
+          toast(msg: response.message.toString(), isError: true);
+        }
+      }, retryFunction: () {});
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "Account Delete  API ISSUE $s");
     }
-
-
+  }
 }

@@ -486,7 +486,7 @@ class Utility {
 
   /// this is used to show format in date time.
   static String formatTimeTo12Hour(String? dateTimeString) {
-    if (dateTimeString == null) {
+    if ((dateTimeString == null) || (dateTimeString.isEmpty)) {
       return "";
     }
     var dateTime =

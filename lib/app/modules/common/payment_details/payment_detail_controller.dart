@@ -105,10 +105,10 @@ class PaymentDetailController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           getCardList();
           toast(msg: response.message.toString(), isError: false);
-          if (isComeFromBooking) {
-            debugPrint('come from booking ');
-            Get.back(result: true);
-          }
+          // if (isComeFromBooking) {
+          //   debugPrint('come from booking ');
+          //   Get.back(result: true);
+          // }
         } else {
           toast(msg: response.message.toString(), isError: true);
         }

@@ -735,126 +735,129 @@ class ScheduleNannyView extends StatelessWidget {
                           controller.selectedChildIds);
 
                       if (validator == true) {
-                        if (controller.getNannyData?.isCardAddedByCustomer ==
-                            true) {
-                          /// confirm booking api.
-                          controller.confirmBookingApi(
-                            hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
-                                childCount: controller.selectedChildList.length,
-                                minuets: Utility.calculateTotalMinutesDifference(
-                                    controller.startTime != null
-                                        ? controller.startTime ??
-                                            TimeOfDay.now()
-                                        : Utility.convertDateTimeToTimeOfDay(
-                                            controller
-                                                    .singleDay
-                                                    ?.data
-                                                    ?.bookingDetail
-                                                    ?.openingTime ??
-                                                DateTime.now()),
-                                    controller.endTime != null
-                                        ? controller.endTime ?? TimeOfDay.now()
-                                        : Utility.convertDateTimeToTimeOfDay(
-                                            controller
-                                                    .singleDay
-                                                    ?.data
-                                                    ?.bookingDetail
-                                                    ?.closingTime ??
-                                                DateTime.now()))),
-                            isUseReferral: controller.isReferral ?? false,
-                            nannyUserId: controller.nannyId.value,
-                            totalMinutes:
-                                Utility.calculateTotalMinutesDifference(
-                                    controller.startTime != null
-                                        ? controller.startTime ??
-                                            TimeOfDay.now()
-                                        : Utility.convertDateTimeToTimeOfDay(
-                                            controller
-                                                    .singleDay
-                                                    ?.data
-                                                    ?.bookingDetail
-                                                    ?.openingTime ??
-                                                DateTime.now()),
-                                    controller.endTime != null
-                                        ? controller.endTime ?? TimeOfDay.now()
-                                        : Utility.convertDateTimeToTimeOfDay(
-                                            controller
-                                                    .singleDay
-                                                    ?.data
-                                                    ?.bookingDetail
-                                                    ?.closingTime ??
-                                                DateTime.now())),
-                            totalPrice: controller.totalPrice.value,
-                            childIds: controller.selectedChildIds,
-                            openingTime: startDate,
-                            closingTime: endDate,
-                          );
-                        } else {
-                          debugPrint('card is not added by the customer');
-                          bool value =
+                        // if (controller.getNannyData?.isCardAddedByCustomer ==
+                        //     true) {
+                        //
+                        // } else {
+                        //   debugPrint('card is not added by the customer');
+                        //   bool value =
                               await RouteManagement.goToCustomPaymentView(
                                   isComeFromConfirmBooking: true,
                                   isComeFromSendTip: false,
                                   isCardAdded: controller.getNannyData
                                           ?.isCardAddedByCustomer ??
-                                      false);
-                          if (value == true) {
-                            controller.confirmBookingApi(
-                              hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
-                                  childCount:
-                                      controller.selectedChildList.length,
-                                  minuets: Utility.calculateTotalMinutesDifference(
-                                      controller.startTime != null
-                                          ? controller.startTime ??
+                                      false,
+                              onTapSubmit: (){
+                                /// confirm booking api.
+                                controller.confirmBookingApi(
+                                  hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
+                                      childCount: controller.selectedChildList.length,
+                                      minuets: Utility.calculateTotalMinutesDifference(
+                                          controller.startTime != null
+                                              ? controller.startTime ??
                                               TimeOfDay.now()
-                                          : Utility.convertDateTimeToTimeOfDay(
+                                              : Utility.convertDateTimeToTimeOfDay(
                                               controller
-                                                      .singleDay
-                                                      ?.data
-                                                      ?.bookingDetail
-                                                      ?.openingTime ??
+                                                  .singleDay
+                                                  ?.data
+                                                  ?.bookingDetail
+                                                  ?.openingTime ??
                                                   DateTime.now()),
-                                      controller.endTime != null
-                                          ? controller.endTime ??
-                                              TimeOfDay.now()
-                                          : Utility.convertDateTimeToTimeOfDay(
+                                          controller.endTime != null
+                                              ? controller.endTime ?? TimeOfDay.now()
+                                              : Utility.convertDateTimeToTimeOfDay(
                                               controller
-                                                      .singleDay
-                                                      ?.data
-                                                      ?.bookingDetail
-                                                      ?.closingTime ??
+                                                  .singleDay
+                                                  ?.data
+                                                  ?.bookingDetail
+                                                  ?.closingTime ??
                                                   DateTime.now()))),
-                              isUseReferral: controller.isReferral ?? false,
-                              nannyUserId: controller.nannyId.value,
-                              totalMinutes: Utility
-                                  .calculateTotalMinutesDifference(
+                                  isUseReferral: controller.isReferral ?? false,
+                                  nannyUserId: controller.nannyId.value,
+                                  totalMinutes:
+                                  Utility.calculateTotalMinutesDifference(
                                       controller.startTime != null
                                           ? controller.startTime ??
-                                              TimeOfDay.now()
-                                          : Utility
-                                              .convertDateTimeToTimeOfDay(
-                                                  controller
-                                                          .singleDay
-                                                          ?.data
-                                                          ?.bookingDetail
-                                                          ?.openingTime ??
-                                                      DateTime.now()),
-                                      controller.endTime != null
-                                          ? controller.endTime ??
-                                              TimeOfDay.now()
+                                          TimeOfDay.now()
                                           : Utility.convertDateTimeToTimeOfDay(
-                                              controller
-                                                      .singleDay
-                                                      ?.data
-                                                      ?.bookingDetail
-                                                      ?.closingTime ??
-                                                  DateTime.now())),
-                              totalPrice: controller.totalPrice.value,
-                              childIds: controller.selectedChildIds,
-                              openingTime: startDate,
-                              closingTime: endDate,
-                            );
-                          }
+                                          controller
+                                              .singleDay
+                                              ?.data
+                                              ?.bookingDetail
+                                              ?.openingTime ??
+                                              DateTime.now()),
+                                      controller.endTime != null
+                                          ? controller.endTime ?? TimeOfDay.now()
+                                          : Utility.convertDateTimeToTimeOfDay(
+                                          controller
+                                              .singleDay
+                                              ?.data
+                                              ?.bookingDetail
+                                              ?.closingTime ??
+                                              DateTime.now())),
+                                  totalPrice: controller.totalPrice.value,
+                                  childIds: controller.selectedChildIds,
+                                  openingTime: startDate,
+                                  closingTime: endDate,
+                                );
+                              });
+                          // if (value == true) {
+                          //   controller.confirmBookingApi(
+                          //     hourlyPrice: Utility.returnPriceAccordingToMinuetBasis(
+                          //         childCount:
+                          //             controller.selectedChildList.length,
+                          //         minuets: Utility.calculateTotalMinutesDifference(
+                          //             controller.startTime != null
+                          //                 ? controller.startTime ??
+                          //                     TimeOfDay.now()
+                          //                 : Utility.convertDateTimeToTimeOfDay(
+                          //                     controller
+                          //                             .singleDay
+                          //                             ?.data
+                          //                             ?.bookingDetail
+                          //                             ?.openingTime ??
+                          //                         DateTime.now()),
+                          //             controller.endTime != null
+                          //                 ? controller.endTime ??
+                          //                     TimeOfDay.now()
+                          //                 : Utility.convertDateTimeToTimeOfDay(
+                          //                     controller
+                          //                             .singleDay
+                          //                             ?.data
+                          //                             ?.bookingDetail
+                          //                             ?.closingTime ??
+                          //                         DateTime.now()))),
+                          //     isUseReferral: controller.isReferral ?? false,
+                          //     nannyUserId: controller.nannyId.value,
+                          //     totalMinutes: Utility
+                          //         .calculateTotalMinutesDifference(
+                          //             controller.startTime != null
+                          //                 ? controller.startTime ??
+                          //                     TimeOfDay.now()
+                          //                 : Utility
+                          //                     .convertDateTimeToTimeOfDay(
+                          //                         controller
+                          //                                 .singleDay
+                          //                                 ?.data
+                          //                                 ?.bookingDetail
+                          //                                 ?.openingTime ??
+                          //                             DateTime.now()),
+                          //             controller.endTime != null
+                          //                 ? controller.endTime ??
+                          //                     TimeOfDay.now()
+                          //                 : Utility.convertDateTimeToTimeOfDay(
+                          //                     controller
+                          //                             .singleDay
+                          //                             ?.data
+                          //                             ?.bookingDetail
+                          //                             ?.closingTime ??
+                          //                         DateTime.now())),
+                          //     totalPrice: controller.totalPrice.value,
+                          //     childIds: controller.selectedChildIds,
+                          //     openingTime: startDate,
+                          //     closingTime: endDate,
+                          //   );
+                          // }
                           // RouteManagement.goToAddPaymentMethodScreen(
                           //   isComeFromNannyProfile: true,
                           //   buttonText: TranslationKeys.submit.tr,
@@ -878,7 +881,6 @@ class ScheduleNannyView extends StatelessWidget {
                           //     );
                           //   },
                           // );
-                        }
                       }
                     },
                   ),

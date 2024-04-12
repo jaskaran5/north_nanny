@@ -36,6 +36,7 @@ class Assets {
   static const String iconsCopy = 'assets/icons/copy.svg';
   static const String iconsDataNotFound = 'assets/icons/data_not_found.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
+  static const String iconsBlackDelete = 'assets/icons/black_delete.svg';
   static const String iconsDocumentText = 'assets/icons/document_text.svg';
   static const String iconsDollarCircle = 'assets/icons/dollar_circle.svg';
   static const String iconsDoller = 'assets/icons/doller.svg';

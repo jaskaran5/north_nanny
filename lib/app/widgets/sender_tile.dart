@@ -65,8 +65,9 @@ class SenderTile extends StatelessWidget {
             ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: Get.width / 1.6),
                 child: isFile ? _buildFileWidget() : _buildTextWidget()),
+
             CustomSenderChatTimeTile(
-              text: Utility.formatTimeTo12Hour(readTime),
+              text: readTime=='null'?'': Utility.formatTimeTo12Hour(readTime),
               isRead: isRead,
             ),
           ],

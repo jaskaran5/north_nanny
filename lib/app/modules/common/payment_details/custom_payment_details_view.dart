@@ -34,12 +34,12 @@ class CustomPaymentDetails extends StatelessWidget {
           Get.lazyPut<PaymentDetailController>(() => PaymentDetailController());
           Get.find<PaymentDetailController>().getCardList();
           debugPrint('card Added Or Not :$isCardAdded');
-          if ((isComeFromConfirmBooking || isComeFromSendTip) &&
-              isCardAdded == false) {
-            Get.find<PaymentDetailController>().postAddCard(
-                isComeFromBooking:
-                    isComeFromConfirmBooking || isComeFromSendTip);
-          }
+          // if ((isComeFromConfirmBooking || isComeFromSendTip) &&
+          //     isCardAdded == false) {
+          //   Get.find<PaymentDetailController>().postAddCard(
+          //       isComeFromBooking:
+          //           isComeFromConfirmBooking || isComeFromSendTip);
+          // }
         },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
@@ -80,13 +80,18 @@ class CustomPaymentDetails extends StatelessWidget {
                   titleStyle:
                       isComeFromSendTip ? AppStyles.ubNavyBlue15W600 : null,
                 ),
-                if (isComeFromSendTip || isComeFromConfirmBooking) ...[
+                if ((isComeFromSendTip || isComeFromConfirmBooking) &&
+                    controller.cardList?.isNotEmpty == true &&
+                    controller.cardList != null) ...[
                   Dimens.boxHeight16,
                   CustomButton(
                     title: isComeFromConfirmBooking
                         ? TranslationKeys.confirmBooking.tr
                         : TranslationKeys.submit.tr,
-                    backGroundColor: AppColors.navyBlue,
+                    backGroundColor: isComeFromConfirmBooking
+                        ? AppColors.lightNavyBlue
+                        : AppColors.navyBlue,
+                    titleStyle: AppStyles.ubNavyBlue15W700,
                     onTap: onTapSubmit,
                     // titleStyle: submitButtonStyle,
                   ),

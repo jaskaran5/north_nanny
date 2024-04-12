@@ -91,29 +91,30 @@ class SettingView extends StatelessWidget {
             } else if (index == 2) {
               log("click on index 2");
               RouteManagement.goToCustomPaymentView(
-                  isComeFromSendTip: false, isComeFromConfirmBooking: false, isCardAdded: true,
+                isComeFromSendTip: false, isComeFromConfirmBooking: false,
+                isCardAdded: true,
 
-                  // paymentDetails: controller.cardList ?? [],
-                  // appBarTitle: ,
-                  // addNewCardButtonTitle:,
-                  // addNewCardButtonBackgroundColor: ,
-                  // onTapDeleteButton: (index) {
-                  //   /// used to delete the card .
-                  //   controller.deleteCard(
-                  //       cardId: controller.cardList?[index].cardId ?? '');
-                  // },
-                  // onTapAddNewCardButton: () {
-                  //   controller.postAddCard();
-                  //   // RouteManagement.goToAddPaymentMethodScreen(
-                  //   //   isComeFromNannyProfile: true,
-                  //   //   buttonText: TranslationKeys.add.tr,
-                  //   //   onTapButton: () {
-                  //   //     Get.back();
-                  //   //   },
-                  //   // );
-                  // },
-                  // showDeleteButton: true,
-                  );
+                // paymentDetails: controller.cardList ?? [],
+                // appBarTitle: ,
+                // addNewCardButtonTitle:,
+                // addNewCardButtonBackgroundColor: ,
+                // onTapDeleteButton: (index) {
+                //   /// used to delete the card .
+                //   controller.deleteCard(
+                //       cardId: controller.cardList?[index].cardId ?? '');
+                // },
+                // onTapAddNewCardButton: () {
+                //   controller.postAddCard();
+                //   // RouteManagement.goToAddPaymentMethodScreen(
+                //   //   isComeFromNannyProfile: true,
+                //   //   buttonText: TranslationKeys.add.tr,
+                //   //   onTapButton: () {
+                //   //     Get.back();
+                //   //   },
+                //   // );
+                // },
+                // showDeleteButton: true,
+              );
             } else if (index == 3) {
               RouteManagement.goToChangePasswordScreen();
             } else if (index == 4) {
@@ -134,6 +135,8 @@ class SettingView extends StatelessWidget {
               controller.redirectToCommonWebView(
                   appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 11) {
+              controller.deleteAccount();
+            } else if (index == 12) {
               Utility.openBottomSheet(CustomLogOut(
                 onTapLogOut: () {
                   controller.logOutApi();
@@ -199,6 +202,9 @@ class SettingView extends StatelessWidget {
               controller.redirectToCommonWebView(
                   appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 9) {
+              /** Delete  Account */
+              controller.deleteAccount();
+            } else if (index == 10) {
               /** LOG OUT */
 
               Utility.openBottomSheet(CustomLogOut(

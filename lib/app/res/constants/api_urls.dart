@@ -25,7 +25,7 @@ class ApiUrls {
   static const String readNotification = "api/User/ReadNotification";
   static const String notificationList = "api/User/NotificationList";
   static const String faqList = "api/User/FaqList";
-  // static const String deleteAccount = "api/User/FaqList";
+  static const String deleteAccount = "api/User/DeleteAccount";
 
   ///
   ///

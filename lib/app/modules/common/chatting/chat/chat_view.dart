@@ -34,11 +34,11 @@ class ChatView extends StatelessWidget {
       builder: (controller) {
         return KeyboardVisibilityBuilder(
           builder: (ctx, isKeyboardVisible) {
-            if (isKeyboardVisible) {
-              controller.typingInvoke();
-            } else if (!isKeyboardVisible) {
-              controller.stopTypingInvoke();
-            }
+            // if (isKeyboardVisible) {
+            //   controller.typingInvoke();
+            // } else if (!isKeyboardVisible) {
+            //   controller.stopTypingInvoke();
+            // }
             log("is keyboard visible:---->>. $isKeyboardVisible");
             return Scaffold(
               backgroundColor: AppColors.profileBackgroundColor,
@@ -228,9 +228,10 @@ class ChatView extends StatelessWidget {
                                               fileLink: messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? "",
-                                              isRead: false,
-                                              readTime:
-                                                  messageList.date.toString(),
+                                              isRead:false,
+                                              readTime: messageList
+                                                  .messageDeliverDate
+                                                  .toString(),
                                             );
                                     },
                                     itemComparator: (item1, item2) =>
@@ -258,7 +259,7 @@ class ChatView extends StatelessWidget {
                         : Expanded(
                             child: Center(
                                 child: AppText(
-                              text: 'Please Send Message to Start Conversation',
+                              text: 'No Messages Found ',
                               style: AppStyles.b0b0fairPlay15w600,
                             )),
                           ),
