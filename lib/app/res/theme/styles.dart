@@ -285,6 +285,12 @@ class AppStyles {
     fontSize: Dimens.twelve,
     color: AppColors.fC3030RedColor,
   );
+  static TextStyle ubFc3030RedColor14W700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: AppConstants.fontFamilyUrbanist,
+    fontSize: Dimens.fourteen,
+    color: AppColors.fC3030RedColor,
+  );
   static TextStyle ubGrey10W400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: AppConstants.fontFamilyUrbanist,

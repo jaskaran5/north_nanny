@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/setting_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/utils/helper.dart';
@@ -135,7 +136,24 @@ class SettingView extends StatelessWidget {
               controller.redirectToCommonWebView(
                   appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 11) {
-              controller.deleteAccount();
+              Utility.showAlertDialog(
+                firstButtonTitle: TranslationKeys.no.tr,
+                secondButtonTitle: TranslationKeys.yes.tr,
+                title: 'Delete Account?',
+                message:
+                    'Do you really want to delete this account? after deleting you can’t undone',
+                firstButtonBackgroundColor: AppColors.lightNavyBlue,
+                secondButtonBackgroundColor:
+                    AppColors.fC3030RedColor.withOpacity(.1),
+                secondButtonStyle: AppStyles.ubFc3030RedColor12W500,
+                firstButtonStyle: AppStyles.ubNavyBlue14W700,
+                onTapFirstButton: () {
+                  Get.back();
+                },
+                onTapSecondButton: () {
+                  controller.deleteAccount();
+                },
+              );
             } else if (index == 12) {
               Utility.openBottomSheet(CustomLogOut(
                 onTapLogOut: () {
@@ -203,7 +221,24 @@ class SettingView extends StatelessWidget {
                   appBarTitle: TranslationKeys.privacyPolicy.tr);
             } else if (index == 9) {
               /** Delete  Account */
-              controller.deleteAccount();
+              Utility.showAlertDialog(
+                firstButtonTitle: TranslationKeys.no.tr,
+                secondButtonTitle: TranslationKeys.yes.tr,
+                title: 'Delete Account?',
+                message:
+                    'Do you really want to delete this account? after deleting you can’t undone',
+                firstButtonBackgroundColor: AppColors.lightNavyBlue,
+                secondButtonBackgroundColor:
+                    AppColors.fC3030RedColor.withOpacity(.1),
+                secondButtonStyle: AppStyles.ubFc3030RedColor12W500,
+                firstButtonStyle: AppStyles.ubNavyBlue14W700,
+                onTapFirstButton: () {
+                  Get.back();
+                },
+                onTapSecondButton: () {
+                  controller.deleteAccount();
+                },
+              );
             } else if (index == 10) {
               /** LOG OUT */
 
