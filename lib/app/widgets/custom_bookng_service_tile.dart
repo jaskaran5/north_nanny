@@ -49,7 +49,7 @@ class CustomBookingServiceTile extends StatelessWidget {
                       Services.values
                           .firstWhere((element) =>
                               element.serviceName ==
-                              serviceDetailsList[index].toString())
+                              serviceDetailsList[index].toLowerCase().toString())
                           .servicesSvg,
                       height: Dimens.thirteen,
                       width: Dimens.twelve,
@@ -59,7 +59,7 @@ class CustomBookingServiceTile extends StatelessWidget {
                       text: Services.values
                           .firstWhere((element) =>
                               element.serviceName ==
-                              serviceDetailsList[index].toString())
+                              serviceDetailsList[index].toLowerCase().toString())
                           .serviceName
                           .tr,
                       style: AppStyles.ubGrey15W500,
