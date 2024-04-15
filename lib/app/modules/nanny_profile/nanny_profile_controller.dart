@@ -173,7 +173,10 @@ class NannyProfileController extends GetxController {
           var response = MyProfileModel.fromJson(value);
           if (response.response == AppConstants.apiResponseSuccess) {
             toast(msg: response.message.toString(), isError: false);
-            selectedIndex = 1;
+            // selectedIndex = 1;
+            getAvailabilityList(
+                dateTime: DateTime.now().toUtc().toIso8601String().toString());
+            selectedDate = null;
             update();
           } else {
             toast(msg: response.message.toString(), isError: true);

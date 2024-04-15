@@ -34,11 +34,11 @@ class ChatView extends StatelessWidget {
       builder: (controller) {
         return KeyboardVisibilityBuilder(
           builder: (ctx, isKeyboardVisible) {
-            // if (isKeyboardVisible) {
-            //   controller.typingInvoke();
-            // } else if (!isKeyboardVisible) {
-            //   controller.stopTypingInvoke();
-            // }
+            if (isKeyboardVisible) {
+              // controller.typingInvoke();
+            } else if (!isKeyboardVisible) {
+              controller.stopTypingInvoke();
+            }
             log("is keyboard visible:---->>. $isKeyboardVisible");
             return Scaffold(
               backgroundColor: AppColors.profileBackgroundColor,
@@ -134,7 +134,7 @@ class ChatView extends StatelessWidget {
                                   },
                                   child: AppText(
                                     text: controller.isBlockByMe.value
-                                        ? "UnBlock"
+                                        ? "Unblock"
                                         : "Block",
                                     style: AppStyles.ubFc3030RedColor12W500,
                                   ),
@@ -158,15 +158,23 @@ class ChatView extends StatelessWidget {
                                     reverse: true,
                                     groupHeaderBuilder: (element) {
                                       return AppText(
-                                        text: controller.isMessageDateEqualToday(element.date.toString()),
+                                        text:
+                                            controller.isMessageDateEqualToday(
+                                                element.date.toString()),
                                         style: AppStyles.ub8F94AE12W400,
                                         textAlign: TextAlign.center,
                                       );
                                     },
-                                    groupBy: (message) => Utility.convertStringToDateFormatDDMMYY(message.date.toString()),
-                                    groupSeparatorBuilder: (String groupByValue) => Text(Utility.convertStringToDateFormatDDMMYY(groupByValue)),
+                                    groupBy: (message) =>
+                                        Utility.convertStringToDateFormatDDMMYY(
+                                            message.date.toString()),
+                                    groupSeparatorBuilder:
+                                        (String groupByValue) => Text(Utility
+                                            .convertStringToDateFormatDDMMYY(
+                                                groupByValue)),
                                     itemBuilder: (context, messageList) {
-                                      return messageList.toUserId == controller.myUserId.value
+                                      return messageList.toUserId ==
+                                              controller.myUserId.value
                                           ? ReceiverTile(
                                               onTapOnImage: () {
                                                 Get.to(() => FullViewImage(
@@ -186,8 +194,12 @@ class ChatView extends StatelessWidget {
                                                 ));
                                               },
                                               fileType: messageList.fileType,
-                                              isFile: messageList.isFile ?? false,
-                                              fileLink: messageList.fileLink!.isEmpty ? null : messageList.fileLink,
+                                              isFile:
+                                                  messageList.isFile ?? false,
+                                              fileLink:
+                                                  messageList.fileLink!.isEmpty
+                                                      ? null
+                                                      : messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? '',
                                             )
@@ -211,17 +223,25 @@ class ChatView extends StatelessWidget {
                                                 ));
                                               },
                                               fileType: messageList.fileType,
-                                              isFile: messageList.isFile ?? false,
+                                              isFile:
+                                                  messageList.isFile ?? false,
                                               fileLink: messageList.fileLink,
                                               time: messageList.date.toString(),
                                               title: messageList.message ?? "",
-                                              isRead: messageList.isDeliver??false,
-                                              readTime: messageList.messageDeliverDate.toString(),
+                                              isRead: messageList.isDeliver ??
+                                                  false,
+                                              readTime: messageList
+                                                  .messageDeliverDate
+                                                  .toString(),
                                             );
                                     },
                                     itemComparator: (item1, item2) =>
-                                        Utility.convertStringToDateFormatDDMMYY(item1.date.toString()).compareTo(
-                                        Utility.convertStringToDateFormatDDMMYY(item2.date.toString(),),
+                                        Utility.convertStringToDateFormatDDMMYY(
+                                                item1.date.toString())
+                                            .compareTo(
+                                      Utility.convertStringToDateFormatDDMMYY(
+                                        item2.date.toString(),
+                                      ),
                                     ), // optional
                                     useStickyGroupSeparators: true,
                                     floatingHeader: true,
@@ -267,8 +287,19 @@ class ChatView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    (!controller.isBlockByOtherUser.value)
-                        ? Padding(
+                    (controller.isBlockByMe.value ||
+                            controller.isBlockByOtherUser.value)
+                        ? Container(
+                            margin: Dimens.edgeInsets10,
+                            child: AppText(
+                              text: controller.isBlockByMe.value
+                                  ? 'You have blocked this user '
+                                  : "You Can't send messages you are blocked by this user ",
+                              style: AppStyles.fC3030RedColorUrban15w600,
+                              maxLines: 2,
+                            ),
+                          )
+                        : Padding(
                             padding: Dimens.edgeInsetsL16R16B16,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -352,13 +383,6 @@ class ChatView extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ),
-                          )
-                        : Container(
-                            margin: Dimens.edgeInsets10,
-                            child: AppText(
-                              text: "You Can't send message",
-                              style: AppStyles.b0b0fairPlay15w600,
                             ),
                           )
                   ],

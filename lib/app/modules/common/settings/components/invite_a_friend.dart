@@ -159,7 +159,11 @@ class InviteAFriendView extends StatelessWidget {
                         SizedBox(
                           width: Dimens.twoHundredSeventy,
                           child: AppText(
-                            text: controller.inviteList[index].toString(),
+                            text: controller.loginType.value ==
+                                        StringConstants.customer &&
+                                    index == 2
+                                ? 'Book a nanny!'
+                                : controller.inviteList[index].toString(),
                             style: AppStyles.ubGrey16W400,
                             maxLines: 2,
                             textAlign: TextAlign.start,

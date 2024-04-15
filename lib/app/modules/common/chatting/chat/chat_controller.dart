@@ -12,7 +12,6 @@ import 'package:northshore_nanny_flutter/app/models/block_unblock_listen_respons
 import 'package:northshore_nanny_flutter/app/models/chat_other_user_data_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/clear_chat_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_details_response_model.dart';
-import 'package:northshore_nanny_flutter/app/models/deliver_message_response.dart';
 import 'package:northshore_nanny_flutter/app/models/get_nanny_details_reponse_model.dart';
 import 'package:northshore_nanny_flutter/app/models/send_messgae_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/single_chat_data_response_model.dart';
@@ -308,7 +307,9 @@ class ChatController extends GetxController {
         log(res.toJson().toString(), name: "custom_logs_2");
 
         if (!res.data!.isBlockChat!) {
-          final isCurrentUser = otherUserId.value == res.data?.toUserId.toString() || otherUserId.value == res.data?.userId.toString();
+          final isCurrentUser =
+              otherUserId.value == res.data?.toUserId.toString() ||
+                  otherUserId.value == res.data?.userId.toString();
           // myUserId:99 otherUserId:97 userId:99  toUserId:97 current:99
           log("=============> $isCurrentUser");
           log("OtherUserId=============> ${otherUserId.value}");
@@ -332,7 +333,8 @@ class ChatController extends GetxController {
                 toUserImage: res.data?.toUserImage,
               ),
             );
-            if(Get.currentRoute==Paths.chat && otherUserId.value == res.data?.userId.toString()){
+            if (Get.currentRoute == Paths.chat &&
+                otherUserId.value == res.data?.userId.toString()) {
               deliverMessage(
                 chatId: int.parse(otherUserId.value),
                 date: DateTime.now().toUtc().toIso8601String(),
@@ -473,7 +475,6 @@ class ChatController extends GetxController {
         var data = arguments?[0] as Map<String, dynamic>;
 
         var res = SingleChatDataResponseModel.fromJson(data);
-
         log("single chat messgae listen");
 
         log("isbloack --->.. " "${res.data?.isBlock}");
@@ -605,7 +606,9 @@ class ChatController extends GetxController {
   }
 
   pickDocuments() {
-    ImagePicker().pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000).then((value) async {
+    ImagePicker()
+        .pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000)
+        .then((value) async {
       if (value != null) {
         File imageFile = File(value.path);
         debugPrint("filePath-->${imageFile.path.split(".").last}");
@@ -666,7 +669,8 @@ class ChatController extends GetxController {
 
         if (res.data?.isBlock == true) {
           if ((res.data?.blockedBy.toString() == myUserId.value.toString()) &&
-              (res.data?.blockedTo.toString() == otherUserId.value)) {
+              (res.data?.blockedTo.toString() ==
+                  otherUserId.value.toString())) {
             isBlockByMe.value = true;
           } else if ((res.data?.blockedBy.toString() == otherUserId.value) &&
               (res.data?.blockedTo.toString() == myUserId.value.toString())) {
@@ -713,7 +717,8 @@ class ChatController extends GetxController {
   }
 
   /// used to get invoke the socket
-  Future<void> deliverMessage({required int chatId, required String date}) async {
+  Future<void> deliverMessage(
+      {required int chatId, required String date}) async {
     debugPrint('>>>>>>>>>>>>hit the deliver message invoke socket');
     _socketHelper.hubConnection.invoke('DeliverMessage', args: [chatId, date]);
   }
@@ -724,18 +729,13 @@ class ChatController extends GetxController {
     _socketHelper.hubConnection.on('DeliverResponseResponse', (arguments) {
       var response = arguments?[0] as Map<String, dynamic>;
       debugPrint('Deliver Message Response >>>>>>>>> $response');
-      var data = DeliverMessageResponse.fromJson(response);
-      debugPrint('data-----------------:${data.toJson()}');
-      if (data.response == AppConstants.apiResponseSuccess) {
-        for (var element in messageList) {
-          if (element.id == data.data?.chatId) {
-            debugPrint('Condition true');
-            element.messageDeliverDate = data.data?.date;
-          }
+      for(var item in messageList){
+        if(item.isDeliver==false){
+          item.isDeliver=true;
         }
-        messageList.refresh();
 
       }
+      messageList.refresh();
       update();
     });
   }

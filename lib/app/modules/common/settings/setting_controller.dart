@@ -245,6 +245,7 @@ class SettingController extends GetxController {
     'Accept a job!',
   ];
 
+
   /// validator for contact us
   contactUsValidator() {
     bool isValidate = Validator.instance.contactUsValidator(
