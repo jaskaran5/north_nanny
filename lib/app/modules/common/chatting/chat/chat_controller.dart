@@ -732,6 +732,7 @@ class ChatController extends GetxController {
       for(var item in messageList){
         if(item.isDeliver == null ||item.isDeliver==false){
           item.isDeliver=true;
+          item.messageDeliverDate=DateTime.now().toUtc();
         }
 
       }
