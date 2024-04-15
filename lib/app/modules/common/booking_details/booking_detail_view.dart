@@ -369,8 +369,16 @@ class BookingDetailView extends StatelessWidget {
                         controller.bookingDataById?.servicesType ?? [],
                     totalTimeHour: controller.bookingDataById?.totalHour,
                     totalTimeHourPrice: controller.bookingDataById?.hourlyPrice,
+                    isMinus: controller.bookingDataById?.isUseReferrals == true
+                        ? false
+                        : true,
                     isReferralBonus:
                         controller.bookingDataById?.isUseReferrals ?? false,
+                    netPayBalAmount:
+                        controller.bookingDataById?.isUseReferrals == true
+                            ? (controller.bookingDataById!.totalAmount ?? 0.0) +
+                                5.0
+                            : 0.0,
                   ),
                   Dimens.boxHeight16,
                   if ((controller.bookingDetailStatus ==

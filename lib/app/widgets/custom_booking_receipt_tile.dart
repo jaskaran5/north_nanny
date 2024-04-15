@@ -22,6 +22,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
     required this.totalTimeHour,
     required this.totalTimeHourPrice,
     this.netPayBalAmount = 0.0,
+    this.isMinus = true,
   });
 
   final String receiptHeader;
@@ -35,6 +36,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
   final bool shoBorder;
   final bool showHeader;
   final bool isReferralBonus;
+  final bool isMinus;
   final dynamic serviceFees;
 
   @override
@@ -178,7 +180,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   AppText(
-                    text: '-\$5',
+                    text: isMinus ? '-\$5' : '+\$5',
                     style: AppStyles.ubGrey15W500,
                     maxLines: 1,
                     textAlign: TextAlign.start,

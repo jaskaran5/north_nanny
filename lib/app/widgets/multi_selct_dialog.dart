@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
+
+import '../res/constants/enums.dart';
 
 class MultiSelectDialog extends StatefulWidget {
   final List<dynamic> options;
@@ -67,12 +70,21 @@ class MultiSelectDialogState extends State<MultiSelectDialog> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: widget.options[index].toString(),
+                              text: (Services.values
+                                  .firstWhereOrNull((element) =>
+                                      element.serviceName ==
+                                      widget.options[index].toString())
+                                  ?.serviceName
+                                  .tr),
                               style: AppStyles.ubNavyBlue16W700,
                               maxLines: 1,
                             ),
-                            if (_selectedOptions
-                                .contains(widget.options[index]))
+                            if (_selectedOptions.contains(Services.values
+                                .firstWhereOrNull((element) =>
+                                    element.serviceName ==
+                                    widget.options[index].toString())
+                                ?.serviceName
+                                .tr))
                               SvgPicture.asset(
                                 Assets.iconsCircleTick,
                                 width: 24,
@@ -82,16 +94,34 @@ class MultiSelectDialogState extends State<MultiSelectDialog> {
                         ),
                         onTap: () {
                           setState(() {
-                            if (_selectedOptions
-                                .contains(widget.options[index])) {
-                              _selectedOptions.remove(widget.options[index]);
+                            if (_selectedOptions.contains(Services.values
+                                .firstWhereOrNull((element) =>
+                                    element.serviceName ==
+                                    widget.options[index].toString())
+                                ?.serviceName
+                                .tr)) {
+                              _selectedOptions.remove(Services.values
+                                  .firstWhereOrNull((element) =>
+                                      element.serviceName ==
+                                      widget.options[index].toString())!
+                                  .serviceName
+                                  .tr);
                             } else {
-                              _selectedOptions.add(widget.options[index]);
+                              _selectedOptions.add(Services.values
+                                  .firstWhereOrNull((element) =>
+                                      element.serviceName ==
+                                      widget.options[index].toString())!
+                                  .serviceName
+                                  .tr);
                             }
                           });
                         },
-                        selected:
-                            _selectedOptions.contains(widget.options[index]),
+                        selected: _selectedOptions.contains(Services.values
+                            .firstWhereOrNull((element) =>
+                                element.serviceName ==
+                                widget.options[index].toString())
+                            ?.serviceName
+                            .tr),
                         // selectedTileColor: Colors.grey.withOpacity(0.3),
                       );
                     },

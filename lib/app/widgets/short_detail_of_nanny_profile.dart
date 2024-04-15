@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -15,12 +16,13 @@ class ShortDetailProfileView extends StatelessWidget {
     required this.nannyName,
     required this.totalRating,
     required this.totalReviews,
-    required this.image,
+    required this.image, required this.ratingList,
   });
   final String nannyName;
   final double totalRating;
   final int totalReviews;
   final String image;
+  final List<RatingList> ratingList;
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +65,10 @@ class ShortDetailProfileView extends StatelessWidget {
               Dimens.boxHeight8,
               GestureDetector(
                 onTap: () {
-                  Utility.openBottomSheet(const CustomReviewBottomSheet(
-                      totalReviews: 0,
-                      totalReviewsRating: 4.5,
-                      reviewsList: []));
+                  Utility.openBottomSheet(CustomReviewBottomSheet(
+                      totalReviews: totalReviews,
+                      totalReviewsRating: totalRating,
+                      reviewsList: ratingList ));
                   //   'Michael Johnson',
                   //   'Giorgio Chiellini',
                   //   'Michael Johnson',

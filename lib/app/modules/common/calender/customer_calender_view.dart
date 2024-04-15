@@ -45,8 +45,7 @@ class CustomerCalenderView extends StatelessWidget {
                         defaultTextStyle: AppStyles.ubBlack15W600,
                         weekendTextStyle: AppStyles.ubBlack15W600,
                         outsideTextStyle: AppStyles.ubHintColor15W500,
-                        isTodayHighlighted:
-                            controller.selectedDay != null ? false : true,
+                        isTodayHighlighted: false,
                         todayDecoration: const BoxDecoration(
                           color: AppColors.navyBlue,
                           shape: BoxShape.circle,
@@ -85,8 +84,12 @@ class CustomerCalenderView extends StatelessWidget {
                         controller.getSelectedDateBookingDetail(
                             selectedDate: selectedDay);
                       },
-                      selectedDayPredicate: (day) =>
-                          controller.selectedDay == day,
+                      selectedDayPredicate: (day) {
+                        // debugPrint('selected day:${controller.selectedDay}');
+                        // debugPrint('day:$day}');
+                        // debugPrint('day>>>>>>>>:${controller.selectedDay==day}');
+                        return controller.selectedDay?.day == day.day&& controller.selectedDay?.month==day.month&& controller.selectedDay?.year==day.year;
+                      },
                       focusedDay: controller.focusDay,
                       onPageChanged: (focusedDay) {
                         controller.focusDay = focusedDay;
@@ -94,6 +97,7 @@ class CustomerCalenderView extends StatelessWidget {
                         /// get events of other month .
                         controller.getCustomerAllBookingDetailsApi(
                             date: focusedDay);
+                        controller.update();
                       },
                       eventLoader: (day) {
                         return controller.isEvent(

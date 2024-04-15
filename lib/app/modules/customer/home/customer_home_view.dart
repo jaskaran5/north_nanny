@@ -366,7 +366,7 @@ class CustomerHomeView extends StatelessWidget {
                                       totalReviews: controller
                                           .homeNannyList[index].reviewCount,
                                       totalReviewsRating: controller
-                                          .homeNannyList[index].rating,
+                                          .homeNannyList[index].rating ,
                                       reviewsList: controller
                                               .homeNannyList[index]
                                               .ratingList ??

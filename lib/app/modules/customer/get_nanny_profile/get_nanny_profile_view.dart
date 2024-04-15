@@ -86,12 +86,11 @@ class GetNannyProfileView extends StatelessWidget {
                         onTapRating: () {
                           Utility.openBottomSheet(CustomReviewBottomSheet(
                               totalReviews:
-                                  controller.profileData.data?.reviewCount ?? 0,
+                                  controller.getNannyData?.reviewCount ?? 0,
                               totalReviewsRating:
-                                  controller.profileData.data?.rating ?? 0.0,
+                                  controller.getNannyData?.rating ?? 0.0,
                               reviewsList:
-                                  controller.profileData.data?.ratingList ??
-                                      []));
+                                  controller.getNannyData?.ratingList ?? []));
                         },
                       ),
                       Dimens.boxHeight20,

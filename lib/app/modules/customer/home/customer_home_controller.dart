@@ -34,7 +34,7 @@ class CustomerHomeController extends GetxController {
   RxBool nannyListLoading = true.obs;
 
   double distanceLowerValue = Dimens.zero;
-  double distanceHigherValue = 11;
+  double distanceHigherValue = 25;
   double ageLowerValue = 13;
   double ageHigherValue = 50;
   RxString address = ''.obs;
@@ -569,7 +569,7 @@ class CustomerHomeController extends GetxController {
   /// used for reset filters
   resetFilters() {
     distanceLowerValue = Dimens.zero;
-    distanceHigherValue = 11;
+    distanceHigherValue = Dimens.twentyFive;
     ageLowerValue = 13;
     ageHigherValue = 50;
     selectedGender = '';

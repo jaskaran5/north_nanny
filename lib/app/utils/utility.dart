@@ -13,6 +13,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
@@ -637,5 +638,36 @@ class Utility {
     var timeZone = await FlutterTimezone.getLocalTimezone();
     debugPrint('timeZone:$timeZone');
     return timeZone;
+  }
+
+  /// used to check the opening time a closing time is between the given time.
+  static Future<bool> checkTimeRange(
+      DateTime selectedTime, DateTime openingTime, DateTime closingTime) async {
+    var selectedDateTime =
+        DateTime.parse(DateFormat('yyyy-MM-dd HH:mm').format(selectedTime));
+    var openingDateTime =
+        DateTime.parse(DateFormat('yyyy-MM-dd HH:mm').format(openingTime));
+    var closingDateTime =
+        DateTime.parse(DateFormat('yyyy-MM-dd HH:mm').format(closingTime));
+    log('selected Time:$selectedDateTime');
+    log('Opening Time:$openingDateTime');
+    log('Closing Time:$closingDateTime');
+    if (selectedDateTime.isBefore(openingDateTime) ||
+        selectedDateTime.isAfter(closingDateTime)) {
+      log(" Start time is before opening time or end time is after closing time.");
+      toast(
+          msg:
+              'Start time is before opening time or end time is after closing time.',
+          isError: true);
+      return false;
+    } else {
+      log("Start time and end time are within the opening hours.");
+      return true;
+    }
+  }
+
+  /// used to convert time of day to date time
+  static DateTime timeOfDayToDateTime(TimeOfDay time, DateTime date) {
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 }

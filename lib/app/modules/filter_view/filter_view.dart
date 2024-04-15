@@ -83,7 +83,7 @@ class FilterView extends StatelessWidget {
 /**DISTANCE slider */
                     FlutterSlider(
                       minimumDistance: 0.0,
-                      maximumDistance: 11.0,
+                      maximumDistance: 25.0,
                       handler: FlutterSliderHandler(
                         child: SvgPicture.asset(Assets.iconsSliderThumb),
                       ),
@@ -101,7 +101,7 @@ class FilterView extends StatelessWidget {
                       ],
                       rangeSlider: true,
                       min: Dimens.zero,
-                      max: 11,
+                      max: 25,
                       axis: Axis.horizontal,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
                         log("handlerIndex:-->> $handlerIndex");

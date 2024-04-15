@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'nanny_profile_model.dart';
+
 GetNannyDetailsResponseModel getNannyDetailsResponseModelFromJson(String str) =>
     GetNannyDetailsResponseModel.fromJson(json.decode(str));
 
@@ -50,7 +52,7 @@ class GetNannyData {
   bool? isOnline;
   bool? isCardAddedByCustomer;
   List<AvilabilityList>? avilabilityList;
-
+  List<RatingList>? ratingList;
   List<String>? services;
 
   GetNannyData({
@@ -69,6 +71,7 @@ class GetNannyData {
     this.gender,
     this.isOnline,
     this.isCardAddedByCustomer,
+    this.ratingList,
   });
 
   factory GetNannyData.fromJson(Map<String, dynamic> json) => GetNannyData(
@@ -92,6 +95,10 @@ class GetNannyData {
         services: json["services"] == null
             ? []
             : List<String>.from(json["services"]!.map((x) => x)),
+    ratingList: json["ratingList"] == null
+        ? []
+        : List<RatingList>.from(
+        json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,6 +112,9 @@ class GetNannyData {
         "distance": distance,
         "isOnline": isOnline,
         "isCardAddedByCustomer": isCardAddedByCustomer,
+    "ratingList": ratingList == null
+        ? []
+        : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
         "services":
             services == null ? [] : List<dynamic>.from(services!.map((x) => x)),
       };

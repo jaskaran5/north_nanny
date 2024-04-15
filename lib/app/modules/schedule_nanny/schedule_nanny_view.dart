@@ -272,6 +272,44 @@ class ScheduleNannyView extends StatelessWidget {
                           );
                           controller.update();
                           log('Edit endTime:${controller.endTime}');
+                          // var value = Utility.timeOfDayToDateTime(
+                          //         controller.endTime ??
+                          //             Utility.convertDateTimeToTimeOfDay(
+                          //                 controller
+                          //                         .singleDay
+                          //                         ?.data
+                          //                         ?.bookingDetail
+                          //                         ?.closingTime ??
+                          //                     DateTime.now()),
+                          //         controller.singleDay?.data?.bookingDetail
+                          //                 ?.closingTime ??
+                          //             DateTime.now())
+                          //     .toUtc();
+                          // var validate = await Utility.checkTimeRange(
+                          //     value,
+                          //     controller
+                          //         .singleDay!.data!.bookingDetail!.openingTime!,
+                          //     controller.singleDay!.data!.bookingDetail!
+                          //         .closingTime!);
+                          // if (validate) {
+                          //   controller.update();
+                          // }
+                          //  var v1 = DateTime.parse(
+                          //      DateFormat('yyyy-MM-dd HH:mm').format(value));
+                          //  var v2 = DateTime.parse(DateFormat('yyyy-MM-dd HH:mm')
+                          //      .format(controller.singleDay!.data!.bookingDetail!
+                          //          .closingTime!));
+                          // var v3= DateTime.parse(DateFormat('yyyy-MM-dd HH:mm')
+                          //      .format(controller.singleDay!.data!.bookingDetail!
+                          //      .closingTime!));
+                          //  if (v1.isAfter(v2) || v1.isBefore(v3)) {
+                          //    toast(
+                          //        msg:
+                          //            'selected time is not within the available time.',
+                          //        isError: true);
+                          //  } else {
+                          //    controller.update();
+                          //  }
                         },
                         child: Container(
                           height: Dimens.fiftyThree,

@@ -54,7 +54,9 @@ class CustomerCalenderController extends GetxController {
   void onInit() {
     super.onInit();
     getCustomerAllBookingDetailsApi(date: DateTime.now());
-    getSelectedDateBookingDetail(selectedDate: selectedDay ?? DateTime.now());
+
+    selectedDay = DateTime.now();
+    getSelectedDateBookingDetail(selectedDate: DateTime.now());
   }
 
   /// this  method used to check the which days have events

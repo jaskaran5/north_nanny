@@ -114,6 +114,9 @@ class SearchView extends StatelessWidget {
                                         controller.homeNannyList[index].rating,
                                     totalReviews: controller
                                         .homeNannyList[index].reviewCount,
+                                    ratingList: controller
+                                            .homeNannyList[index].ratingList ??
+                                        [],
                                   ),
                                 );
                               },
