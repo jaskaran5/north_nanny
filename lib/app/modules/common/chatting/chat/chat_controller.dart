@@ -729,12 +729,11 @@ class ChatController extends GetxController {
     _socketHelper.hubConnection.on('DeliverResponseResponse', (arguments) {
       var response = arguments?[0] as Map<String, dynamic>;
       debugPrint('Deliver Message Response >>>>>>>>> $response');
-      for(var item in messageList){
-        if(item.isDeliver == null ||item.isDeliver==false){
-          item.isDeliver=true;
-          item.messageDeliverDate=DateTime.now().toUtc();
+      for (var item in messageList) {
+        if (item.isDeliver == null || item.isDeliver == false) {
+          item.isDeliver = true;
+          item.messageDeliverDate = DateTime.now().toUtc();
         }
-
       }
       messageList.refresh();
       update();

@@ -127,7 +127,7 @@ class NannyBookingDetailController extends GetxController {
       update(['timerView']);
     } else if (bookingStatus == 7) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.approvedByAdmin;
-    }  else if (bookingStatus == 8) {
+    } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
     } else if (bookingStatus == 10 || bookingStatus == 9) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
@@ -293,7 +293,6 @@ class NannyBookingDetailController extends GetxController {
               isImage: true,
               showCrossSvg: true,
             );
-
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
 

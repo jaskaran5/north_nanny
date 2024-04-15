@@ -45,81 +45,84 @@ class CustomBookingDetailView extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Dimens.boxHeight10,
-            if(location.isNotEmpty)...
-          [  Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  BookingDetails.location.bookingDetailSvg,
-                  height: Dimens.thirteen,
-                  width: Dimens.twelve,
-                ),
-                Dimens.boxWidth8,
-                AppText(
-                  text: location.toString(),
-                  style: AppStyles.ubGrey15W500,
-                  maxLines: 1,
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),],
-      if(hours.isNotEmpty)...[
-            Dimens.boxHeight10,
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  BookingDetails.hours.bookingDetailSvg,
-                  height: Dimens.thirteen,
-                  width: Dimens.twelve,
-                ),
-                Dimens.boxWidth8,
-                AppText(
-                  text: '$hours Minutes',
-                  style: AppStyles.ubGrey15W500,
-                  maxLines: 1,
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            Dimens.boxHeight10,],
-            if(date!=null)...[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  BookingDetails.date.bookingDetailSvg,
-                  height: Dimens.thirteen,
-                  width: Dimens.twelve,
-                ),
-                Dimens.boxWidth8,
-                AppText(
-                  text: Utility.convertDatetimeToMMMMddYYYY(date!),
-                  style: AppStyles.ubGrey15W500,
-                  maxLines: 1,
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            Dimens.boxHeight8,],
-            if(time.isNotEmpty)
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  BookingDetails.time.bookingDetailSvg,
-                  height: Dimens.thirteen,
-                  width: Dimens.twelve,
-                ),
-                Dimens.boxWidth8,
-                AppText(
-                  text: time.toString(),
-                  style: AppStyles.ubGrey15W500,
-                  maxLines: 1,
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
+            if (location.isNotEmpty) ...[
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    BookingDetails.location.bookingDetailSvg,
+                    height: Dimens.thirteen,
+                    width: Dimens.twelve,
+                  ),
+                  Dimens.boxWidth8,
+                  AppText(
+                    text: location.toString(),
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+            ],
+            if (hours.isNotEmpty) ...[
+              Dimens.boxHeight10,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    BookingDetails.hours.bookingDetailSvg,
+                    height: Dimens.thirteen,
+                    width: Dimens.twelve,
+                  ),
+                  Dimens.boxWidth8,
+                  AppText(
+                    text: '$hours Minutes',
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+              Dimens.boxHeight10,
+            ],
+            if (date != null) ...[
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    BookingDetails.date.bookingDetailSvg,
+                    height: Dimens.thirteen,
+                    width: Dimens.twelve,
+                  ),
+                  Dimens.boxWidth8,
+                  AppText(
+                    text: Utility.convertDatetimeToMMMMddYYYY(date!),
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+              Dimens.boxHeight8,
+            ],
+            if (time.isNotEmpty)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    BookingDetails.time.bookingDetailSvg,
+                    height: Dimens.thirteen,
+                    width: Dimens.twelve,
+                  ),
+                  Dimens.boxWidth8,
+                  AppText(
+                    text: time.toString(),
+                    style: AppStyles.ubGrey15W500,
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
           ],
         ),
       );

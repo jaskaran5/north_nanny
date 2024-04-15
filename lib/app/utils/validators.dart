@@ -295,7 +295,6 @@ class Validator {
     required String state,
     required String country,
     required String postalCode,
-
   }) {
     if (bankName.isEmpty) {
       error = 'Please enter your bank name';

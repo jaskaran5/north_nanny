@@ -33,8 +33,6 @@ class RecentChatController extends GetxController {
 
   RxBool isSearchable = false.obs;
 
-
-
   toggleSearch() {
     isSearchable.value = !isSearchable.value;
     update();
@@ -66,8 +64,6 @@ class RecentChatController extends GetxController {
       invokeRecentChat();
     }
   }
-
-
 
   void invokeRecentChat() {
     socketHelper.hubConnection.off("MyChatList");

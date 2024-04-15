@@ -15,7 +15,8 @@ class CustomSenderChatTimeTile extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: isRead ? 'Read ' : 'Delivered',
-        style:isRead? AppStyles.ubGrey3b3c42f10w600:AppStyles.ub8F94AE10W400,
+        style:
+            isRead ? AppStyles.ubGrey3b3c42f10w600 : AppStyles.ub8F94AE10W400,
         children: <TextSpan>[
           if (isRead)
             TextSpan(text: text, style: AppStyles.ubGrey3b3c42f10w400),

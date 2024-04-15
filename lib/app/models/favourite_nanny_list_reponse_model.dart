@@ -58,28 +58,27 @@ class FavouriteNanny {
   dynamic rating;
   List<dynamic>? ratingList;
 
-  FavouriteNanny({
-    this.id,
-    this.gender,
-    this.name,
-    this.image,
-    this.isFavorite,
-    this.aboutMe,
-    this.distance,
-    this.age,
-    this.experience,
-    this.location,
-    this.latitude,
-    this.longitude,
-    this.reviewCount,
-    this.rating,
-    this.ratingList,
-    this.nannyId
-  });
+  FavouriteNanny(
+      {this.id,
+      this.gender,
+      this.name,
+      this.image,
+      this.isFavorite,
+      this.aboutMe,
+      this.distance,
+      this.age,
+      this.experience,
+      this.location,
+      this.latitude,
+      this.longitude,
+      this.reviewCount,
+      this.rating,
+      this.ratingList,
+      this.nannyId});
 
   factory FavouriteNanny.fromJson(Map<String, dynamic> json) => FavouriteNanny(
         id: json["id"],
-         nannyId: json["nannyId"],
+        nannyId: json["nannyId"],
         gender: json["gender"] ?? 0,
         name: json["name"] ?? '',
         image: json["image"] ?? '',

@@ -1,10 +1,10 @@
-
-
 import 'dart:convert';
 
-NotificationListModel notificationEntityModelFromJson(String str) => NotificationListModel.fromJson(json.decode(str));
+NotificationListModel notificationEntityModelFromJson(String str) =>
+    NotificationListModel.fromJson(json.decode(str));
 
-String notificationEntityModelToJson(NotificationListModel data) => json.encode(data.toJson());
+String notificationEntityModelToJson(NotificationListModel data) =>
+    json.encode(data.toJson());
 
 class NotificationListModel {
   int? response;
@@ -17,17 +17,23 @@ class NotificationListModel {
     this.data,
   });
 
-  factory NotificationListModel.fromJson(Map<String, dynamic> json) => NotificationListModel(
-    response: json["response"],
-    message: json["message"],
-    data: json["data"] == null ? [] : List<NotificationData>.from(json["data"]!.map((x) => NotificationData.fromJson(x))),
-  );
+  factory NotificationListModel.fromJson(Map<String, dynamic> json) =>
+      NotificationListModel(
+        response: json["response"],
+        message: json["message"],
+        data: json["data"] == null
+            ? []
+            : List<NotificationData>.from(
+                json["data"]!.map((x) => NotificationData.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "response": response,
-    "message": message,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-  };
+        "response": response,
+        "message": message,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class NotificationData {
@@ -53,27 +59,30 @@ class NotificationData {
     this.bookingId,
   });
 
-  factory NotificationData.fromJson(Map<String, dynamic> json) => NotificationData(
-    notificationId: json["notificationId"],
-    senderId: json["senderId"],
-    title: json["title"],
-    description: json["description"],
-    createdOn: json["createdOn"] == null ? null : DateTime.parse(json["createdOn"]),
-    notificationType: json["notificationType"],
-    isRead: json["isRead"],
-    bookingStatus: json["bookingStatus"],
-    bookingId: json["bookingId"],
-  );
+  factory NotificationData.fromJson(Map<String, dynamic> json) =>
+      NotificationData(
+        notificationId: json["notificationId"],
+        senderId: json["senderId"],
+        title: json["title"],
+        description: json["description"],
+        createdOn: json["createdOn"] == null
+            ? null
+            : DateTime.parse(json["createdOn"]),
+        notificationType: json["notificationType"],
+        isRead: json["isRead"],
+        bookingStatus: json["bookingStatus"],
+        bookingId: json["bookingId"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "notificationId": notificationId,
-    "senderId": senderId,
-    "title": title,
-    "description": description,
-    "createdOn": createdOn?.toIso8601String(),
-    "notificationType": notificationType,
-    "isRead": isRead,
-    "bookingStatus": bookingStatus,
-    "bookingId": bookingId,
-  };
+        "notificationId": notificationId,
+        "senderId": senderId,
+        "title": title,
+        "description": description,
+        "createdOn": createdOn?.toIso8601String(),
+        "notificationType": notificationType,
+        "isRead": isRead,
+        "bookingStatus": bookingStatus,
+        "bookingId": bookingId,
+      };
 }

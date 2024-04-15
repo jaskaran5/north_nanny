@@ -240,19 +240,19 @@ class LogInView extends StatelessWidget {
                               width: Dimens.fiftyThree,
                             ),
                             Dimens.boxWidth16,
-                            if(Platform.isIOS)
-                            GestureDetector(
-                              onTap: () {
-                                /// signup with apple.
-                                controller.signInWithApple();
-                              },
-                              child: SvgPicture.asset(
-                                Assets.iconsApple,
-                                alignment: Alignment.center,
-                                height: Dimens.fiftyThree,
-                                width: Dimens.fiftyThree,
+                            if (Platform.isIOS)
+                              GestureDetector(
+                                onTap: () {
+                                  /// signup with apple.
+                                  controller.signInWithApple();
+                                },
+                                child: SvgPicture.asset(
+                                  Assets.iconsApple,
+                                  alignment: Alignment.center,
+                                  height: Dimens.fiftyThree,
+                                  width: Dimens.fiftyThree,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                         Dimens.boxHeight24,

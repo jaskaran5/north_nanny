@@ -8,6 +8,9 @@ class DashboardBottomBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<DashboardBottomController>(
       () => DashboardBottomController(),
-    ); Get.lazyPut<RecentChatController>(() => RecentChatController(),);
+    );
+    Get.lazyPut<RecentChatController>(
+      () => RecentChatController(),
+    );
   }
 }

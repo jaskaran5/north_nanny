@@ -638,5 +638,4 @@ class Utility {
     debugPrint('timeZone:$timeZone');
     return timeZone;
   }
-
 }

@@ -67,8 +67,7 @@ class MultiSelectDialogState extends State<MultiSelectDialog> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: widget.options[index]
-                                  .toString(),
+                              text: widget.options[index].toString(),
                               style: AppStyles.ubNavyBlue16W700,
                               maxLines: 1,
                             ),

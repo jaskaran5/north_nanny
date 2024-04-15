@@ -240,7 +240,7 @@ class AddBankView extends StatelessWidget {
                           Dimens.boxHeight20,
                           TextField(
                             controller:
-                            controller.postalCodeTextEditingController,
+                                controller.postalCodeTextEditingController,
                             maxLines: 1,
                             minLines: 1,
                             maxLength: 9,

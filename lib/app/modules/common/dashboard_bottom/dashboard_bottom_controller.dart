@@ -59,7 +59,6 @@ class DashboardBottomController extends GetxController {
       selectedTabIndex.value = 4;
     }
     checkLoginType();
-
   }
 
   /// CUSTOMER

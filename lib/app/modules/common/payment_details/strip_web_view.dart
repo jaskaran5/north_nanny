@@ -14,7 +14,7 @@ class StripWebView extends StatelessWidget {
         init: PaymentDetailController(),
         initState: (state) {
           Get.lazyPut<PaymentDetailController>(
-                () => PaymentDetailController(),
+            () => PaymentDetailController(),
           );
           Get.find<PaymentDetailController>().initPaymentView(url: url);
         },
