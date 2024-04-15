@@ -48,20 +48,15 @@ class CustomBookingServiceTile extends StatelessWidget {
                     SvgPicture.asset(
                       Services.values
                           .firstWhere((element) =>
-                              element.serviceName ==
-                              serviceDetailsList[index].toLowerCase().toString())
-                          .servicesSvg,
+                              element.serviceName.tr ==
+                              serviceDetailsList[index])
+                          .servicesSvg ,
                       height: Dimens.thirteen,
                       width: Dimens.twelve,
                     ),
                     Dimens.boxWidth8,
                     AppText(
-                      text: Services.values
-                          .firstWhere((element) =>
-                              element.serviceName ==
-                              serviceDetailsList[index].toLowerCase().toString())
-                          .serviceName
-                          .tr,
+                      text: serviceDetailsList[index].toString(),
                       style: AppStyles.ubGrey15W500,
                       maxLines: 1,
                       textAlign: TextAlign.start,
