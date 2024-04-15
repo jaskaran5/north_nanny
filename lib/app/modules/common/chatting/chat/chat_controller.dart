@@ -730,7 +730,7 @@ class ChatController extends GetxController {
       var response = arguments?[0] as Map<String, dynamic>;
       debugPrint('Deliver Message Response >>>>>>>>> $response');
       for(var item in messageList){
-        if(item.isDeliver==false){
+        if(item.isDeliver == null ||item.isDeliver==false){
           item.isDeliver=true;
         }
 
