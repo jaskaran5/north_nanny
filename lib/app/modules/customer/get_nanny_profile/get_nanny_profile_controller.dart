@@ -188,6 +188,7 @@ class GetNannyProfileController extends GetxController {
 
   /// used to on the range selection
   bool isRangeSelection = false;
+  bool isBookingMore = false;
 
   /// GET NANNY DETAILS
   getNannyDetails({required DateTime time}) async {
