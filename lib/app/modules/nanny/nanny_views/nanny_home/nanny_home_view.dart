@@ -218,9 +218,13 @@ class NannyHomeView extends StatelessWidget {
                                         ?.bookingRequest?[index].name ??
                                     '',
                                 rating: controller.nannyHomeData.data
-                                        ?.bookingRequest?[index].rating
-                                        .toString() ??
-                                    '',
+                                            ?.bookingRequest?[index].rating ==
+                                        0.0
+                                    ? '0'
+                                    : controller.nannyHomeData.data
+                                            ?.bookingRequest?[index].rating
+                                            .toString() ??
+                                        '',
                                 reviews: controller.nannyHomeData.data
                                         ?.bookingRequest?[index].reviewCount
                                         .toString() ??

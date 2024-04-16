@@ -224,11 +224,18 @@ class NannyBookingDetailView extends StatelessWidget {
                                         Dimens.boxWidth2,
                                         AppText(
                                           text: trackController
-                                              .bookingDetailsModel
-                                              ?.data
-                                              ?.userDetails
-                                              ?.rating
-                                              .toString(),
+                                                      .bookingDetailsModel
+                                                      ?.data
+                                                      ?.userDetails
+                                                      ?.rating ==
+                                                  0.0
+                                              ? '0'
+                                              : trackController
+                                                  .bookingDetailsModel
+                                                  ?.data
+                                                  ?.userDetails
+                                                  ?.rating
+                                                  .toString(),
                                           style: AppStyles.ubWhite12W500,
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
@@ -740,11 +747,8 @@ class NannyBookingDetailView extends StatelessWidget {
                   ],
                   if (controller.bookingDetailsModel?.data?.reviewGivenByMe ==
                           null &&
-                      controller.nannyBookingDetailStatus !=
-                          NannyBookingDetailStatus.rejected &&
-                      controller
-                              .bookingDetailsModel?.data?.reviewGivenByOther !=
-                          null) ...[
+                      controller.nannyBookingDetailStatus ==
+                          NannyBookingDetailStatus.approvedByAdmin) ...[
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: 'Rate Your Experience',

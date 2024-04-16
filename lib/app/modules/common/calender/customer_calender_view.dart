@@ -88,7 +88,9 @@ class CustomerCalenderView extends StatelessWidget {
                         // debugPrint('selected day:${controller.selectedDay}');
                         // debugPrint('day:$day}');
                         // debugPrint('day>>>>>>>>:${controller.selectedDay==day}');
-                        return controller.selectedDay?.day == day.day&& controller.selectedDay?.month==day.month&& controller.selectedDay?.year==day.year;
+                        return controller.selectedDay?.day == day.day &&
+                            controller.selectedDay?.month == day.month &&
+                            controller.selectedDay?.year == day.year;
                       },
                       focusedDay: controller.focusDay,
                       onPageChanged: (focusedDay) {
@@ -296,11 +298,10 @@ class CustomerCalenderView extends StatelessWidget {
                                                             .singleDateBookingData
                                                             ?.rating ??
                                                         0,
-                                                    reviewsList:
-                                                        // controller
-                                                        //         .singleDateBookingData
-                                                        //         ?.ratingList ??
-                                                        const [],
+                                                    reviewsList: controller
+                                                            .singleDateBookingData
+                                                            ?.ratingList ??
+                                                        [],
                                                   ),
                                                 );
                                               },
@@ -312,7 +313,9 @@ class CustomerCalenderView extends StatelessWidget {
                                                   Dimens.boxWidth4,
                                                   RichText(
                                                     text: TextSpan(
-                                                      text: controller
+                                                      text:controller
+                                                          .singleDateBookingData
+                                                          ?.rating==0.0?'0': controller
                                                           .singleDateBookingData
                                                           ?.rating
                                                           .toString(),

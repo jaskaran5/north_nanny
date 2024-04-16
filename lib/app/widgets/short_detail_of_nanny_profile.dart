@@ -16,7 +16,8 @@ class ShortDetailProfileView extends StatelessWidget {
     required this.nannyName,
     required this.totalRating,
     required this.totalReviews,
-    required this.image, required this.ratingList,
+    required this.image,
+    required this.ratingList,
   });
   final String nannyName;
   final double totalRating;
@@ -68,7 +69,7 @@ class ShortDetailProfileView extends StatelessWidget {
                   Utility.openBottomSheet(CustomReviewBottomSheet(
                       totalReviews: totalReviews,
                       totalReviewsRating: totalRating,
-                      reviewsList: ratingList ));
+                      reviewsList: ratingList));
                   //   'Michael Johnson',
                   //   'Giorgio Chiellini',
                   //   'Michael Johnson',
@@ -83,7 +84,7 @@ class ShortDetailProfileView extends StatelessWidget {
                     Dimens.boxWidth4,
                     RichText(
                       text: TextSpan(
-                        text: totalRating.toString(),
+                        text: totalRating == 0.0 ? '0' : totalRating.toString(),
                         style: AppStyles.ubBlack12W500,
                         children: [
                           TextSpan(

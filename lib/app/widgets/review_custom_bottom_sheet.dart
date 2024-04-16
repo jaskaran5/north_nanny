@@ -109,7 +109,7 @@ class CustomReviewBottomSheet extends StatelessWidget {
                       ],
                     ),
                     AppText(
-                      text: totalReviewsRating.toString(),
+                      text:totalReviewsRating==0.0?'0': totalReviewsRating.toString(),
                       style: AppStyles.ubNavyBlue30W600,
                       maxLines: 1,
                     ),

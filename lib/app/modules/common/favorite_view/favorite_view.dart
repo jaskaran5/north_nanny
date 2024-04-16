@@ -62,10 +62,13 @@ class FavoriteView extends StatelessWidget {
                           image:
                               controller.favouriteListNanny[index].image ?? '',
                           name: controller.favouriteListNanny[index].name ?? '',
-                          rating: controller.favouriteListNanny[index].rating
-                              .toString(),
+                          rating:
+                              controller.favouriteListNanny[index].rating == 0.0
+                                  ? '0'
+                                  : controller.favouriteListNanny[index].rating
+                                      .toString(),
                           reviews:
-                              '(${controller.favouriteListNanny[index].reviewCount} reviews)',
+                              '${controller.favouriteListNanny[index].reviewCount}',
                           // servicesList: controller.homeCustomList,
                           isHeartTapped: true,
                           heartSvg: Assets.iconsHeartOutline,
@@ -83,7 +86,9 @@ class FavoriteView extends StatelessWidget {
                                     .favouriteListNanny[index].reviewCount,
                                 totalReviewsRating:
                                     controller.favouriteListNanny[index].rating,
-                                reviewsList: const [],
+                                reviewsList: controller
+                                        .favouriteListNanny[index].ratingList ??
+                                    [],
                               ),
                             );
                           },

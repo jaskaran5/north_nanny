@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
+
 favouriteListResponseModelFromJson(String str) =>
     FavouriteListResponseModel.fromJson(json.decode(str));
 
@@ -56,7 +58,7 @@ class FavouriteNanny {
   dynamic longitude;
   dynamic reviewCount;
   dynamic rating;
-  List<dynamic>? ratingList;
+  List<RatingList>? ratingList;
 
   FavouriteNanny(
       {this.id,
@@ -94,7 +96,8 @@ class FavouriteNanny {
         rating: json["rating"] ?? 0.0,
         ratingList: json["ratingList"] == null
             ? []
-            : List<dynamic>.from(json["ratingList"]!.map((x) => x)),
+            : List<RatingList>.from(
+                json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,6 +118,6 @@ class FavouriteNanny {
         "rating": rating,
         "ratingList": ratingList == null
             ? []
-            : List<dynamic>.from(ratingList!.map((x) => x)),
+            : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
       };
 }

@@ -213,6 +213,7 @@ class NannyBookingDetailController extends GetxController {
             );
           }
           typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
+          update(['timerView']);
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
@@ -312,7 +313,7 @@ class NannyBookingDetailController extends GetxController {
   /// used to show the start time.
   showTimer({required DateTime startTime}) {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      seconds = DateTime.now().difference(startTime).inSeconds;
+        seconds = DateTime.now().difference(startTime).inSeconds;
       update(['timerView']);
     });
   }

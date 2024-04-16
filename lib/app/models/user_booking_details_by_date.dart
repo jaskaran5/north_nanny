@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-import 'package:northshore_nanny_flutter/app/models/rating_review_reponse_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
+
 
 UserBookingDetailsByDateResponseModel
     userBookingDetailsByDateResponseModelFromJson(String str) =>
@@ -94,7 +95,8 @@ class UserBookingDataByDate {
         bookingStatus: json["bookingStatus"],
         ratingList: json["ratingList"] == null
             ? []
-            : List<RatingList>.from(json["ratingList"]!.map((x) => x)),
+            : List<RatingList>.from(
+            json["ratingList"]!.map((x) => RatingList.fromJson(x))),
         bookingId: json["bookingId"],
       );
 
@@ -110,9 +112,9 @@ class UserBookingDataByDate {
         "reviewCount": reviewCount,
         "rating": rating,
         "bookingStatus": bookingStatus,
-        "ratingList": ratingList == null
-            ? []
-            : List<RatingList>.from(ratingList!.map((x) => x)),
+    "ratingList": ratingList == null
+        ? []
+        : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
         "bookingId": bookingId,
         "aboutMe": aboutMe,
       };

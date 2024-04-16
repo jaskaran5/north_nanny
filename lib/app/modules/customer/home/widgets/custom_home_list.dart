@@ -5,6 +5,7 @@ import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
+import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network.dart';
 
@@ -133,7 +134,7 @@ class HomeCustomListView extends StatelessWidget {
                               style: AppStyles.ubBlack12W500,
                               children: [
                                 TextSpan(
-                                  text: reviews,
+                                  text: '($reviews ${TranslationKeys.reviews.tr})',
                                   style: AppStyles.ubGrey12W400,
                                 ),
                               ],

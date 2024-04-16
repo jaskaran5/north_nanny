@@ -13,7 +13,7 @@
         android:label="NorthShore Nanny"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher_round">
 <!--   this code is used for google map key which is use to access the map -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"

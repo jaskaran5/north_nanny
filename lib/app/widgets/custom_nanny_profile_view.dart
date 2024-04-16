@@ -82,7 +82,7 @@ class CustomNannyProfileView extends StatelessWidget {
                   Dimens.boxWidth4,
                   RichText(
                     text: TextSpan(
-                      text: totalRating.toString(),
+                      text: totalRating == 0.0 ? '0' : totalRating.toString(),
                       style: AppStyles.ubBlack12W500,
                       children: [
                         TextSpan(

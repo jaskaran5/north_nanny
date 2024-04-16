@@ -175,9 +175,13 @@ class BookingDetailView extends StatelessWidget {
                                     .bookingDataById?.userDetails?.name ??
                                 '',
                             rating: trackingController
-                                    .bookingDataById?.userDetails?.rating
-                                    .toString() ??
-                                '',
+                                        .bookingDataById?.userDetails?.rating ==
+                                    0.0
+                                ? '0'
+                                : trackingController
+                                        .bookingDataById?.userDetails?.rating
+                                        .toString() ??
+                                    '',
                             reviews: trackingController
                                     .bookingDataById?.userDetails?.reviewCount
                                     .toString() ??
@@ -398,8 +402,9 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   if (controller.bookingDataById?.reviewGivenByMe == null &&
-                      controller.bookingDataById?.reviewGivenByOther !=
-                          null) ...[
+                          controller.bookingDataById?.bookingStatus == 7 ||
+                      controller.bookingDetailStatus ==
+                          BookingDetailStatus.reviewByOtherUser) ...[
                     CustomButton(
                       title: 'Rate your Experience',
                       backGroundColor: AppColors.navyBlue,

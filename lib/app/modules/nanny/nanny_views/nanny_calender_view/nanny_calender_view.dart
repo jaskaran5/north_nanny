@@ -313,7 +313,7 @@ class NannyCalenderView extends StatelessWidget {
                                                   RichText(
                                                     text: TextSpan(
                                                       text:
-                                                          '${controller.nannyBookingDetail?.data?.rating.toString()} ',
+                                                      controller.nannyBookingDetail?.data?.rating==0.0?'0 ':'${controller.nannyBookingDetail?.data?.rating.toString()} ',
                                                       style: AppStyles
                                                           .ubLightNavy12W500,
                                                       children: [

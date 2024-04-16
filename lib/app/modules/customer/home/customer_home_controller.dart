@@ -12,6 +12,7 @@ import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_home_dashboard_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_favourite_response_model.dart';
+import 'package:northshore_nanny_flutter/app/models/nanny_profile_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_socket.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/get_nanny_profile/get_nanny_profile_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
@@ -47,6 +48,7 @@ class CustomerHomeController extends GetxController {
 
   RxBool nannyFavourite = false.obs;
   RxString nannyRatingCount = '0'.obs;
+  List<RatingList> nannyRatingList = [];
   RxInt nannyUserId = 0.obs;
 
   RxString nannyDescription = ''.obs;
@@ -83,9 +85,11 @@ class CustomerHomeController extends GetxController {
     required String experience,
     required String image,
     required int userId,
+    required List<RatingList> ratingList,
   }) async {
     log("exper::->> $experience");
     log("exper is fav::->> $isFavourite");
+    log('Tile in map Data : updateNanny');
 
     nannyName.value = name;
     nannyFavourite.value = isFavourite;
@@ -97,7 +101,7 @@ class CustomerHomeController extends GetxController {
     nannyExperience.value = experience;
     nannyImage.value = image;
     nannyUserId.value = userId;
-
+    nannyRatingList = ratingList;
     update();
   }
 
@@ -281,6 +285,7 @@ class CustomerHomeController extends GetxController {
         "name": filterName.value,
       };
 
+      debugPrint('dashboard api body :$body');
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue(
           (value) async {
         Utils.loadingDialog();
@@ -338,7 +343,8 @@ class CustomerHomeController extends GetxController {
                       age: homeNannyList[a].age.toString(),
                       experience: homeNannyList[a].experience.toString(),
                       image: homeNannyList[a].image.toString(),
-                      userId: homeNannyList[a].id ?? 0)
+                      userId: homeNannyList[a].id ?? 0,
+                      ratingList: homeNannyList[a].ratingList ?? [])
                   .then((value) async {
                 toggleIsNannyMarkerVisible();
 
@@ -369,6 +375,7 @@ class CustomerHomeController extends GetxController {
   @override
   void onReady() async {
     getDashboardApi();
+    onClickOnFilterApply(isResetFilters: true);
     super.onReady();
 
     var address = getAddressFromCoordinates(
@@ -467,10 +474,8 @@ class CustomerHomeController extends GetxController {
           log("response success");
           homeNannyList.value = res.data ?? [];
           isNannyDataLoading.value = false;
-
           update();
           updateNannyMarkers();
-
           Get.back();
         }
       }, retryFunction: getDashboardApi);
@@ -501,6 +506,7 @@ class CustomerHomeController extends GetxController {
         "name": name,
       };
 
+      log('body of search api $body');
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
 
@@ -569,7 +575,7 @@ class CustomerHomeController extends GetxController {
   /// used for reset filters
   resetFilters() {
     distanceLowerValue = Dimens.zero;
-    distanceHigherValue = Dimens.twentyFive;
+    distanceHigherValue = 25;
     ageLowerValue = 13;
     ageHigherValue = 50;
     selectedGender = '';

@@ -244,9 +244,11 @@ class CustomerHomeView extends StatelessWidget {
                                 description: controller.nannyDescription.value,
                                 image: controller.nannyImage.value,
                                 name: controller.nannyName.value,
-                                rating: controller.nannyRatingCount.value,
-                                reviews:
-                                    '(${controller.nannyTotalReviews.value} reviews)',
+                                rating:
+                                    controller.nannyRatingCount.value == '0.0'
+                                        ? '0'
+                                        : controller.nannyRatingCount.value,
+                                reviews: controller.nannyTotalReviews.value,
                                 // servicesList: controller.homeCustomList,
                                 isHeartTapped: controller.nannyFavourite.value,
                                 heartSvg: controller.nannyFavourite.value
@@ -267,10 +269,12 @@ class CustomerHomeView extends StatelessWidget {
                                 },
                                 onTapRating: () {
                                   Utility.openBottomSheet(
-                                    const CustomReviewBottomSheet(
-                                      totalReviews: 0,
-                                      totalReviewsRating: 0.0,
-                                      reviewsList: [],
+                                    CustomReviewBottomSheet(
+                                      totalReviews: int.parse(
+                                          controller.nannyTotalReviews.value),
+                                      totalReviewsRating: double.parse(
+                                          controller.nannyRatingCount.value),
+                                      reviewsList: controller.nannyRatingList,
                                     ),
                                   );
                                 },
@@ -345,10 +349,14 @@ class CustomerHomeView extends StatelessWidget {
                                     controller.homeNannyList[index].aboutMe,
                                 image: controller.homeNannyList[index].image,
                                 name: controller.homeNannyList[index].name,
-                                rating: controller.homeNannyList[index].rating
-                                    .toString(),
+                                rating:
+                                    controller.homeNannyList[index].rating ==
+                                            0.0
+                                        ? '0'
+                                        : controller.homeNannyList[index].rating
+                                            .toString(),
                                 reviews:
-                                    '(${controller.homeNannyList[index].reviewCount} reviews)',
+                                    '${controller.homeNannyList[index].reviewCount}',
                                 // servicesList: controller.homeCustomList,
                                 isHeartTapped:
                                     controller.homeNannyList[index].isFavorite!,
@@ -366,7 +374,7 @@ class CustomerHomeView extends StatelessWidget {
                                       totalReviews: controller
                                           .homeNannyList[index].reviewCount,
                                       totalReviewsRating: controller
-                                          .homeNannyList[index].rating ,
+                                          .homeNannyList[index].rating,
                                       reviewsList: controller
                                               .homeNannyList[index]
                                               .ratingList ??
