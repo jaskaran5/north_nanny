@@ -42,7 +42,7 @@ enum NannyBookingDetailStatus {
   arrived,
   endJob,
   waitingForApproval,
-  givenReviewByNanny,
+  givenReviewByCustomer,
   rejected,
   disputeRaised,
   approvedByAdmin,

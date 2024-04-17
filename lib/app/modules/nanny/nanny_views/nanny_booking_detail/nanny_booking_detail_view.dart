@@ -275,13 +275,13 @@ class NannyBookingDetailView extends StatelessWidget {
                         ],
                         //
                       ),
-                      showTrackLocation:
-                          trackController.nannyBookingDetailStatus ==
-                                  NannyBookingDetailStatus.givenReviewByNanny
-                              ? false
-                              : trackController.bookingDetailsModel != null
-                                  ? true
-                                  : false,
+                      showTrackLocation: trackController
+                                  .bookingDetailsModel?.data?.bookingStatus ==
+                              10
+                          ? false
+                          : trackController.bookingDetailsModel != null
+                              ? true
+                              : false,
                       latitude: trackController.currentPosition?.latitude ??
                           double.parse(trackController
                                   .bookingDetailsModel?.data?.latitude ??
@@ -292,32 +292,39 @@ class NannyBookingDetailView extends StatelessWidget {
                               '0.0'),
                       polyline: {
                         trackController.nannyPolyLine ??
-                        Polyline(
-                          polylineId: const PolylineId('line'),
-                          color: AppColors.navyBlue3288DE,
-                          points: [
-                            LatLng(
-                                trackController.currentPosition?.latitude ??
+                            Polyline(
+                              polylineId: const PolylineId('line'),
+                              color: AppColors.navyBlue3288DE,
+                              points: [
+                                LatLng(
+                                    trackController.currentPosition?.latitude ??
+                                        double.parse(trackController
+                                                .bookingDetailsModel
+                                                ?.data
+                                                ?.latitude ??
+                                            '0.0'),
+                                    trackController
+                                            .currentPosition?.longitude ??
+                                        double.parse(trackController
+                                                .bookingDetailsModel
+                                                ?.data
+                                                ?.longitude ??
+                                            '0.0')),
+                                LatLng(
                                     double.parse(trackController
                                             .bookingDetailsModel
                                             ?.data
+                                            ?.userDetails
                                             ?.latitude ??
                                         '0.0'),
-                                trackController.currentPosition?.longitude ??
                                     double.parse(trackController
                                             .bookingDetailsModel
                                             ?.data
+                                            ?.userDetails
                                             ?.longitude ??
                                         '0.0')),
-                            LatLng(
-                                double.parse(trackController.bookingDetailsModel
-                                        ?.data?.userDetails?.latitude ??
-                                    '0.0'),
-                                double.parse(trackController.bookingDetailsModel
-                                        ?.data?.userDetails?.longitude ??
-                                    '0.0')),
-                          ],
-                        ),
+                              ],
+                            ),
                       },
                       markers: {
                         Marker(
@@ -359,10 +366,8 @@ class NannyBookingDetailView extends StatelessWidget {
                             0.0,
                   ),
                   Dimens.boxHeight14,
-                  if (controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.givenReviewByNanny &&
-                      controller.bookingDetailsModel?.data?.reviewGivenByMe !=
-                          null) ...[
+                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe !=
+                      null) ...[
                     CustomBookingReview(
                       reviewsList: [
                         if (controller
@@ -747,9 +752,11 @@ class NannyBookingDetailView extends StatelessWidget {
                     ),
                   ],
                   if (controller.bookingDetailsModel?.data?.reviewGivenByMe ==
-                          null &&
+                              null &&
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.approvedByAdmin ||
                       controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.approvedByAdmin) ...[
+                          NannyBookingDetailStatus.givenReviewByCustomer) ...[
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: 'Rate Your Experience',

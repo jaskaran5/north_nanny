@@ -130,8 +130,8 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.approvedByAdmin;
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
-    } else if (bookingStatus == 10 || bookingStatus == 9) {
-      nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByNanny;
+    } else if (bookingStatus == 9 ) {
+      nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByCustomer;
     }
     log('Booking Status Nanny Side :$bookingStatus');
     update();
