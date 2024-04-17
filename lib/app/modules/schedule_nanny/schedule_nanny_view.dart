@@ -196,7 +196,8 @@ class ScheduleNannyView extends StatelessWidget {
                               Dimens.boxWidth10,
                               Flexible(
                                 child: AppText(
-                                  text: 'This nanny is available from  ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.closingTime.toString())} ',
+                                  text:
+                                      'This nanny is available from  ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDay?.data?.bookingDetail?.closingTime.toString())} ',
                                   maxLines: 2,
                                   style: AppStyles.ubGreen12W600,
                                   textAlign: TextAlign.start,
@@ -214,20 +215,40 @@ class ScheduleNannyView extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                         TimeOfDay? bookingStartTime = await showTimePicker(
+                          TimeOfDay? bookingStartTime = await showTimePicker(
                             context: Get.context!,
-                            initialTime: Utility.convertDateTimeToTimeOfDay(controller.singleDay?.data?.bookingDetail?.openingTime ?? DateTime.now()),
+                            initialTime: Utility.convertDateTimeToTimeOfDay(
+                                controller.singleDay?.data?.bookingDetail
+                                        ?.openingTime ??
+                                    DateTime.now()),
                           );
-                         if(bookingStartTime != null){
-                           final openingTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay!.data!.bookingDetail!.openingTime!);
-                           final closingTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay!.data!.bookingDetail!.closingTime!);
-                           if (isTimeBefore(bookingStartTime,openingTime)||isTimeAfter(bookingStartTime,closingTime)) {
-                             toast(msg: "Invalid time slot",isError: true);
-                             controller.startTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay?.data?.bookingDetail?.openingTime ?? DateTime.now());
-                           }else{
-                             controller.startTime = bookingStartTime;
-                               }
-                         }
+                          if (bookingStartTime != null) {
+                            final openingTime =
+                                Utility.convertDateTimeToTimeOfDay(controller
+                                    .singleDay!
+                                    .data!
+                                    .bookingDetail!
+                                    .openingTime!);
+                            final closingTime =
+                                Utility.convertDateTimeToTimeOfDay(controller
+                                    .singleDay!
+                                    .data!
+                                    .bookingDetail!
+                                    .closingTime!);
+                            if (isTimeBefore(bookingStartTime, openingTime) ||
+                                isTimeAfter(bookingStartTime, closingTime)) {
+                              toast(msg: "Invalid time slot", isError: true);
+                              controller.startTime =
+                                  Utility.convertDateTimeToTimeOfDay(controller
+                                          .singleDay
+                                          ?.data
+                                          ?.bookingDetail
+                                          ?.openingTime ??
+                                      DateTime.now());
+                            } else {
+                              controller.startTime = bookingStartTime;
+                            }
+                          }
                           controller.update();
                           log('Edit startTime:${controller.startTime}');
                         },
@@ -271,17 +292,37 @@ class ScheduleNannyView extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () async {
-                        TimeOfDay? bookingEndTime   = await showTimePicker(
+                          TimeOfDay? bookingEndTime = await showTimePicker(
                             context: Get.context!,
-                            initialTime: Utility.convertDateTimeToTimeOfDay(controller.singleDay?.data?.bookingDetail?.closingTime ?? DateTime.now()),
+                            initialTime: Utility.convertDateTimeToTimeOfDay(
+                                controller.singleDay?.data?.bookingDetail
+                                        ?.closingTime ??
+                                    DateTime.now()),
                           );
-                          if(bookingEndTime != null){
-                            final openingTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay!.data!.bookingDetail!.openingTime!);
-                            final closingTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay!.data!.bookingDetail!.closingTime!);
-                            if (isTimeBefore(bookingEndTime,openingTime)||isTimeAfter(bookingEndTime,closingTime)) {
-                              toast(msg: "Invalid time slot",isError: true);
-                              controller.endTime = Utility.convertDateTimeToTimeOfDay(controller.singleDay?.data?.bookingDetail?.closingTime ?? DateTime.now());
-                            }else{
+                          if (bookingEndTime != null) {
+                            final openingTime =
+                                Utility.convertDateTimeToTimeOfDay(controller
+                                    .singleDay!
+                                    .data!
+                                    .bookingDetail!
+                                    .openingTime!);
+                            final closingTime =
+                                Utility.convertDateTimeToTimeOfDay(controller
+                                    .singleDay!
+                                    .data!
+                                    .bookingDetail!
+                                    .closingTime!);
+                            if (isTimeBefore(bookingEndTime, openingTime) ||
+                                isTimeAfter(bookingEndTime, closingTime)) {
+                              toast(msg: "Invalid time slot", isError: true);
+                              controller.endTime =
+                                  Utility.convertDateTimeToTimeOfDay(controller
+                                          .singleDay
+                                          ?.data
+                                          ?.bookingDetail
+                                          ?.closingTime ??
+                                      DateTime.now());
+                            } else {
                               controller.endTime = bookingEndTime;
                             }
                           }
@@ -753,25 +794,46 @@ class ScheduleNannyView extends StatelessWidget {
                     backGroundColor: AppColors.navyBlue,
                     onTap: () async {
                       log('total Price:${controller.totalPrice}');
+                      log('start------> ${controller.selectedDate} ${controller.startTime} ${controller.endTime}');
                       final timeOfDay = TimeOfDay.now();
                       final now = DateTime.now();
-                      if(controller.selectedDate== null || controller.startTime==null){
-                        toast(msg: "Please select booking time slot.",isError: true);
+                      if (controller.selectedDate == null &&
+                          controller.startTime == null) {
+                        toast(
+                            msg: "Please select booking time slot.",
+                            isError: true);
                         return;
                       }
-                      final myBookingTime = DateTime(controller.selectedDate!.year,controller.selectedDate!.month,controller.selectedDate!.day,controller.startTime!.hour,controller.startTime!.minute);
-                      if(!isTimeDifferenceGreaterThanOrEqualToOneHour(controller.endTime??timeOfDay,controller.startTime??timeOfDay)){
-                        toast(msg: "Booking a nanny requires a minimum of 1 hour.",isError: true);
-                        return;
+                      final myBookingTime = DateTime(
+                          controller.selectedDate!.year,
+                          controller.selectedDate!.month,
+                          controller.selectedDate!.day,
+                          controller.startTime?.hour ?? 0,
+                          controller.startTime?.minute ?? 0);
+                      if (controller.startTime != null &&
+                          controller.endTime != null) {
+                        if (!isTimeDifferenceGreaterThanOrEqualToOneHour(
+                            controller.endTime ?? timeOfDay,
+                            controller.startTime ?? timeOfDay)) {
+                          toast(
+                              msg:
+                                  "Booking a nanny requires a minimum of 1 hour.",
+                              isError: true);
+                          return;
+                        }
                       }
-                      if(myBookingTime.isBefore(now)){
-                        toast(msg: "Booking date and time has passed. Please select a future date and time for your booking.",isError: true);
+                      if (myBookingTime.isBefore(now)) {
+                        toast(
+                            msg:
+                                "Booking date and time has passed. Please select a future date and time for your booking.",
+                            isError: true);
                         return;
                       }
 
                       /// used to store opening  time with date.
 
-                      DateTime startDate = controller.returnFinalTimeAccordingToDate(
+                      DateTime startDate =
+                          controller.returnFinalTimeAccordingToDate(
                               startTime: controller.startTime ??
                                   Utility.convertDateTimeToTimeOfDay(controller
                                           .singleDay

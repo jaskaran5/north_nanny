@@ -247,7 +247,6 @@ class NannyBookingDetailController extends GetxController {
         var response = BookingDetailsModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDetailsModel = response;
-          update();
           if (response.data?.bookingStatus == 5) {
             seconds = 0;
             showTimer(
@@ -297,11 +296,11 @@ class NannyBookingDetailController extends GetxController {
             );
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
-
           getCurrentLocation();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
+        update();
       }, retryFunction: () {});
       //
     } catch (e, s) {
@@ -409,8 +408,8 @@ class NannyBookingDetailController extends GetxController {
                   /// used to animate the controller based on lat long.
                   googleMapController?.animateCamera(
                       CameraUpdate.newCameraPosition(CameraPosition(
-                          target:
-                              LatLng(position.latitude, position.longitude),zoom: 10)));
+                          target: LatLng(position.latitude, position.longitude),
+                          zoom: 10)));
                   log('-----------------------tracking on -------------------> ');
                 }
 
@@ -484,7 +483,4 @@ class NannyBookingDetailController extends GetxController {
         await Utility.setPolylineDirection(fistCoordinate, secondCoordinate);
     update(['tracking-view']);
   }
-
-  /// used to set the polyLine Coordinate.
 }
-

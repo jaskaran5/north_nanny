@@ -84,6 +84,9 @@ class BookingDetailController extends GetxController {
         var response = BookingDataByIdResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           bookingDataById = response.data;
+          addPolyLine(
+              trackerLocationModel: trackerLocationModel,
+              bookingDataById: response.data);
           update();
           if (response.data?.startTime != null &&
               response.data?.bookingStatus == 5) {
@@ -491,11 +494,13 @@ class BookingDetailController extends GetxController {
       log('tracking lat long Response:$response');
       if (response.response == AppConstants.apiResponseSuccess) {
         trackerLocationModel = response;
-        addPolyLine(response);
       } else {
         toast(msg: response.message.toString(), isError: true);
       }
       update(['customer_tracking']);
+      addPolyLine(
+          bookingDataById: bookingDataById,
+          trackerLocationModel: trackerLocationModel);
     });
   }
 
@@ -503,7 +508,9 @@ class BookingDetailController extends GetxController {
   GoogleMapController? googleMapController;
 
   /// used  for create poly Line with the road by route.
-  addPolyLine(TrackerLocationModel? trackerLocationModel) async {
+  addPolyLine(
+      {BookingDataById? bookingDataById,
+      TrackerLocationModel? trackerLocationModel}) async {
     var fistCoordinate = LatLng(
       double.parse(bookingDataById?.latitude ?? '0.0'),
       double.parse(bookingDataById?.longitude ?? '0.0'),

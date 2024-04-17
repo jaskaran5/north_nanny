@@ -244,7 +244,7 @@ class BookingDetailView extends StatelessWidget {
                                                       .bookingDataById
                                                       ?.longitude ??
                                                   '0.0')),
-                                          zoom: Dimens.fifteen),
+                                          zoom: Dimens.ten),
                                       myLocationEnabled: false,
                                       indoorViewEnabled: true,
                                       myLocationButtonEnabled: false,

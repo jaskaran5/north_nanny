@@ -64,37 +64,38 @@ class CustomerTrackingView extends StatelessWidget {
                 ),
               },
               polylines: {
-                Polyline(
-                  polylineId: const PolylineId('nannyLine'),
-                  color: AppColors.navyBlue3288DE,
-                  points: [
-                    LatLng(
-                      double.parse(
-                          trackingController.bookingDataById?.latitude ??
-                              '0.0'),
-                      double.parse(
-                          trackingController.bookingDataById?.longitude ??
-                              '0.0'),
+                trackingController.customerPolyLine ??
+                    Polyline(
+                      polylineId: const PolylineId('nannyLine'),
+                      color: AppColors.navyBlue3288DE,
+                      points: [
+                        LatLng(
+                          double.parse(
+                              trackingController.bookingDataById?.latitude ??
+                                  '0.0'),
+                          double.parse(
+                              trackingController.bookingDataById?.longitude ??
+                                  '0.0'),
+                        ),
+                        LatLng(
+                          trackingController.trackerLocationModel != null
+                              ? double.parse(trackingController
+                                      .trackerLocationModel?.data?.latitude
+                                      .toString() ??
+                                  '0.0')
+                              : double.parse(trackingController
+                                      .bookingDataById?.userDetails?.latitude ??
+                                  '0.0'),
+                          trackingController.trackerLocationModel != null
+                              ? double.parse(trackingController
+                                      .trackerLocationModel?.data?.longitude ??
+                                  '0.0')
+                              : double.parse(trackingController.bookingDataById
+                                      ?.userDetails?.longitude ??
+                                  '0.0'),
+                        ),
+                      ],
                     ),
-                    LatLng(
-                      trackingController.trackerLocationModel != null
-                          ? double.parse(trackingController
-                                  .trackerLocationModel?.data?.latitude
-                                  .toString() ??
-                              '0.0')
-                          : double.parse(trackingController
-                                  .bookingDataById?.userDetails?.latitude ??
-                              '0.0'),
-                      trackingController.trackerLocationModel != null
-                          ? double.parse(trackingController
-                                  .trackerLocationModel?.data?.longitude ??
-                              '0.0')
-                          : double.parse(trackingController
-                                  .bookingDataById?.userDetails?.longitude ??
-                              '0.0'),
-                    ),
-                  ],
-                ),
               },
               mapType: MapType.normal,
             ),
