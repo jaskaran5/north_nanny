@@ -263,7 +263,7 @@ class NannyBookingDetailController extends GetxController {
             seconds == 0;
             timer?.cancel();
             update(['timerView']);
-            Future.delayed(const Duration(seconds: 2));
+            Future.delayed(const Duration(seconds: 4));
             Utility.showDialog(
               title: 'Congratulations! ',
               assetName: Assets.imagesStar,
