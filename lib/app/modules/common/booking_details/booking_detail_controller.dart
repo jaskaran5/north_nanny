@@ -23,6 +23,7 @@ import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
 import '../../../utils/translations/translation_keys.dart';
 import '../../../utils/utility.dart';
+import '../../nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import '../rating_and_review/rating_and_review_binding.dart';
 import '../rating_and_review/rating_and_review_controller.dart';
 import '../send_tip_view/send_tip_view.dart';
@@ -40,6 +41,7 @@ class BookingDetailController extends GetxController {
   /// used to show timer
   Timer? timer;
   int seconds = 0;
+  Polyline? customerPolyLine;
 
   /// used to show the start time.
   showTimer({required DateTime startTime}) {
@@ -54,6 +56,7 @@ class BookingDetailController extends GetxController {
 
   /// used to show  send tip text Editing Controller.
   final sendTipAmountTextEditingController = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
@@ -489,6 +492,7 @@ class BookingDetailController extends GetxController {
       log('tracking lat long Response:$response');
       if (response.response == AppConstants.apiResponseSuccess) {
         trackerLocationModel = response;
+        addPolyLine(response);
       } else {
         toast(msg: response.message.toString(), isError: true);
       }
@@ -498,6 +502,27 @@ class BookingDetailController extends GetxController {
 
   /// used to initialize google Map
   GoogleMapController? googleMapController;
+
+  /// used  for create poly Line with the road by route.
+  addPolyLine(TrackerLocationModel? trackerLocationModel) async {
+    var fistCoordinate = LatLng(
+      double.parse(bookingDataById?.latitude ?? '0.0'),
+      double.parse(bookingDataById?.longitude ?? '0.0'),
+    );
+    var secondCoordinate = LatLng(
+      trackerLocationModel != null
+          ? double.parse(
+              trackerLocationModel.data?.latitude.toString() ?? '0.0')
+          : double.parse(bookingDataById?.userDetails?.latitude ?? '0.0'),
+      trackerLocationModel != null
+          ? double.parse(trackerLocationModel.data?.longitude ?? '0.0')
+          : double.parse(bookingDataById?.userDetails?.longitude ?? '0.0'),
+    );
+
+    customerPolyLine =
+        await setPolylineDirection(fistCoordinate, secondCoordinate);
+    update(['customer_tracking']);
+  }
 
   @override
   void onInit() {

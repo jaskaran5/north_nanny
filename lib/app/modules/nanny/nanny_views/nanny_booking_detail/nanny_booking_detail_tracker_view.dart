@@ -56,6 +56,7 @@ class NannyBookingDetailTrackerView extends StatelessWidget {
                 )
               },
               polylines: {
+                trackingController.nannyPoliyLine ??
                 Polyline(
                   polylineId: const PolylineId('line'),
                   color: AppColors.navyBlue3288DE,

@@ -17,11 +17,13 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../data/api/api_helper.dart';
+import '../../../../google_maps/direction_helper.dart';
 import '../../../../models/nanny_booking_details.dart';
 import '../../../../res/constants/api_urls.dart';
 import '../../../../res/constants/app_constants.dart';
 import '../../../../res/constants/assets.dart';
 import '../../../../res/constants/enums.dart';
+import '../../../../res/theme/colors.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/custom_toast.dart';
 import '../../../../utils/utility.dart';
@@ -36,6 +38,7 @@ class NannyBookingDetailController extends GetxController {
   NannyBookingDetailStatus? nannyBookingDetailStatus;
   Timer? timer;
   int seconds = 0;
+  Polyline? nannyPoliyLine;
   BookingDetailsModel? bookingDetailsModel;
 
   /// used to check google map controller is Initialize or not
@@ -313,7 +316,7 @@ class NannyBookingDetailController extends GetxController {
   /// used to show the start time.
   showTimer({required DateTime startTime}) {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        seconds = DateTime.now().difference(startTime).inSeconds;
+      seconds = DateTime.now().difference(startTime).inSeconds;
       update(['timerView']);
     });
   }
@@ -402,6 +405,9 @@ class NannyBookingDetailController extends GetxController {
                       latitude: position.latitude,
                       longitude: position.longitude);
 
+                  /// used to add poly Line according to the road or route.
+                  addPolyLine();
+
                   /// used to animate the controller based on lat long.
                   googleMapController?.animateCamera(
                       CameraUpdate.newCameraPosition(CameraPosition(
@@ -464,4 +470,49 @@ class NannyBookingDetailController extends GetxController {
     ]);
     log('lat long sent');
   }
+
+  /// used  for create poly Line with the road by route.
+  addPolyLine() async {
+    var fistCoordinate = LatLng(
+        currentPosition?.latitude ??
+            double.parse(bookingDetailsModel?.data?.latitude ?? '0.0'),
+        currentPosition?.longitude ??
+            double.parse(bookingDetailsModel?.data?.longitude ?? '0.0'));
+    var secondCoordinate = LatLng(
+        double.parse(bookingDetailsModel?.data?.userDetails?.latitude ?? '0.0'),
+        double.parse(
+            bookingDetailsModel?.data?.userDetails?.longitude ?? '0.0'));
+    nannyPoliyLine =
+        await setPolylineDirection(fistCoordinate, secondCoordinate);
+    update(['tracking-view']);
+  }
+
+  /// used to set the polyLine Coordinate.
+}
+setPolylineDirection(LatLng origin, LatLng destination) async {
+  List<LatLng> polylineCoordinates = [];
+
+  log("polyline :${origin.latitude}");
+  log("polyline :${destination.latitude}");
+  await DirectionHelper()
+      .getRouteBetweenCoordinates(origin.latitude, origin.longitude,
+      destination.latitude, destination.longitude)
+      .then((result) {
+    log(result.toString());
+    if (result.isNotEmpty) {
+
+      for (PointLatLng point in result) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+
+      return Polyline(
+        polylineId: const PolylineId('line'),
+        color: AppColors.navyBlue3288DE,
+        points: polylineCoordinates,
+        width: 6,
+        startCap: Cap.squareCap,
+        endCap: Cap.roundCap,
+      );
+    }
+  });
 }
