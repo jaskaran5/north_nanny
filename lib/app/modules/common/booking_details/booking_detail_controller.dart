@@ -23,7 +23,6 @@ import '../../../res/theme/colors.dart';
 import '../../../res/theme/styles.dart';
 import '../../../utils/translations/translation_keys.dart';
 import '../../../utils/utility.dart';
-import '../../nanny/nanny_views/nanny_booking_detail/nanny_booking_detail_controller.dart';
 import '../rating_and_review/rating_and_review_binding.dart';
 import '../rating_and_review/rating_and_review_controller.dart';
 import '../send_tip_view/send_tip_view.dart';
@@ -520,7 +519,7 @@ class BookingDetailController extends GetxController {
     );
 
     customerPolyLine =
-        await setPolylineDirection(fistCoordinate, secondCoordinate);
+        await Utility.setPolylineDirection(fistCoordinate, secondCoordinate);
     update(['customer_tracking']);
   }
 

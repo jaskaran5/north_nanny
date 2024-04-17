@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,7 @@ import 'package:northshore_nanny_flutter/app/utils/custom_toast.dart';
 import 'package:northshore_nanny_flutter/app/widgets/app_text.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
+import '../google_maps/direction_helper.dart';
 import '../res/theme/colors.dart';
 
 class Utility {
@@ -670,4 +672,31 @@ class Utility {
   static DateTime timeOfDayToDateTime(TimeOfDay time, DateTime date) {
     return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
+
+  /// used to return the polyLine according to origin and designation.
+static setPolylineDirection(LatLng origin, LatLng destination) async {
+  List<LatLng> polylineCoordinates = [];
+
+  log("polyline :${origin.latitude}");
+  log("polyline :${destination.longitude}");
+  final result=await DirectionHelper()
+      .getRouteBetweenCoordinates(origin.latitude, origin.longitude,
+      destination.latitude, destination.longitude);
+  log("result.toString()---->${result.toString()}");
+  if (result.isNotEmpty) {
+
+    for (PointLatLng point in result) {
+      polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+    }
+
+    return Polyline(
+      polylineId: const PolylineId('line'),
+      color: AppColors.navyBlue3288DE,
+      points: polylineCoordinates,
+      width: 6,
+      startCap: Cap.squareCap,
+      endCap: Cap.roundCap,
+    );
+  }
+}
 }

@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,7 +18,9 @@ class NannyBookingDetailTrackerView extends StatelessWidget {
   Widget build(BuildContext context) =>
       GetBuilder<NannyBookingDetailController>(
         id: 'tracking-view',
-        builder: (trackingController) => Scaffold(
+        builder: (trackingController) {
+          log("trackingController.nannyPoliyLine>>>>>>>>${trackingController.nannyPolyLine}");
+          return Scaffold(
           body: SafeArea(
             child: GoogleMap(
               initialCameraPosition: CameraPosition(
@@ -56,7 +61,7 @@ class NannyBookingDetailTrackerView extends StatelessWidget {
                 )
               },
               polylines: {
-                trackingController.nannyPoliyLine ??
+                trackingController.nannyPolyLine ??
                 Polyline(
                   polylineId: const PolylineId('line'),
                   color: AppColors.navyBlue3288DE,
@@ -83,6 +88,7 @@ class NannyBookingDetailTrackerView extends StatelessWidget {
               mapType: MapType.normal,
             ),
           ),
-        ),
+        );
+        },
       );
 }

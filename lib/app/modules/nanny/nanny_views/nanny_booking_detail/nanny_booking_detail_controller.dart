@@ -17,13 +17,11 @@ import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
 import '../../../../data/api/api_helper.dart';
-import '../../../../google_maps/direction_helper.dart';
 import '../../../../models/nanny_booking_details.dart';
 import '../../../../res/constants/api_urls.dart';
 import '../../../../res/constants/app_constants.dart';
 import '../../../../res/constants/assets.dart';
 import '../../../../res/constants/enums.dart';
-import '../../../../res/theme/colors.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/custom_toast.dart';
 import '../../../../utils/utility.dart';
@@ -38,7 +36,7 @@ class NannyBookingDetailController extends GetxController {
   NannyBookingDetailStatus? nannyBookingDetailStatus;
   Timer? timer;
   int seconds = 0;
-  Polyline? nannyPoliyLine;
+  Polyline? nannyPolyLine;
   BookingDetailsModel? bookingDetailsModel;
 
   /// used to check google map controller is Initialize or not
@@ -412,7 +410,7 @@ class NannyBookingDetailController extends GetxController {
                   googleMapController?.animateCamera(
                       CameraUpdate.newCameraPosition(CameraPosition(
                           target:
-                              LatLng(position.latitude, position.longitude))));
+                              LatLng(position.latitude, position.longitude),zoom: 10)));
                   log('-----------------------tracking on -------------------> ');
                 }
 
@@ -482,37 +480,11 @@ class NannyBookingDetailController extends GetxController {
         double.parse(bookingDetailsModel?.data?.userDetails?.latitude ?? '0.0'),
         double.parse(
             bookingDetailsModel?.data?.userDetails?.longitude ?? '0.0'));
-    nannyPoliyLine =
-        await setPolylineDirection(fistCoordinate, secondCoordinate);
+    nannyPolyLine =
+        await Utility.setPolylineDirection(fistCoordinate, secondCoordinate);
     update(['tracking-view']);
   }
 
   /// used to set the polyLine Coordinate.
 }
-setPolylineDirection(LatLng origin, LatLng destination) async {
-  List<LatLng> polylineCoordinates = [];
 
-  log("polyline :${origin.latitude}");
-  log("polyline :${destination.latitude}");
-  await DirectionHelper()
-      .getRouteBetweenCoordinates(origin.latitude, origin.longitude,
-      destination.latitude, destination.longitude)
-      .then((result) {
-    log(result.toString());
-    if (result.isNotEmpty) {
-
-      for (PointLatLng point in result) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      }
-
-      return Polyline(
-        polylineId: const PolylineId('line'),
-        color: AppColors.navyBlue3288DE,
-        points: polylineCoordinates,
-        width: 6,
-        startCap: Cap.squareCap,
-        endCap: Cap.roundCap,
-      );
-    }
-  });
-}
