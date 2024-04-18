@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
@@ -200,16 +202,18 @@ class NannyCalenderView extends StatelessWidget {
                                                     color:
                                                         AppColors.blackColor),
                                                 Dimens.boxWidth4,
-                                                AppText(
-                                                  text: controller
-                                                      .nannyBookingDetail
-                                                      ?.data?[index]
-                                                      .services
-                                                      ?.join(', ')
-                                                      .capitalizeFirst,
-                                                  style: AppStyles.ubGrey15W500,
-                                                  maxLines: 3,
-                                                  textAlign: TextAlign.start,
+                                                Flexible(
+                                                  child: AppText(
+                                                    text: controller
+                                                        .nannyBookingDetail
+                                                        ?.data?[index]
+                                                        .services
+                                                        ?.join(', ')
+                                                        .capitalizeFirst,
+                                                    style: AppStyles.ubGrey15W500,
+                                                    maxLines: 3,
+                                                    textAlign: TextAlign.start,
+                                                  ),
                                                 ),
                                               ],
                                             ),

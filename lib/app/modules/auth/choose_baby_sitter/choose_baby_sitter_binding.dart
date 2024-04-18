@@ -5,5 +5,6 @@ class ChooseBabySitterBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ChooseBabySitterController>(() => ChooseBabySitterController());
+    //
   }
 }

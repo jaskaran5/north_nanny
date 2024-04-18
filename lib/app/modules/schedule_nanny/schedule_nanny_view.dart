@@ -104,13 +104,19 @@ class ScheduleNannyView extends StatelessWidget {
                             onDaySelected: (selectedDay, focusedDay) {
                               log("selected day:--$selectedDay");
                               log("focusedDay day:--$focusedDay");
+                              if (controller.isElementEqualToData(
+                                controller.getNannyData!.availabilityList ?? [],
+                                selectedDay.day,
+                                selectedDay.month,
+                              )) {
+                                /// used to update the  values of selected date and focus date.
+                                controller.updateSelectedDate(
+                                    date: selectedDay, focusDate: focusedDay);
 
-                              /// used to update the  values of selected date and focus date.
-                              controller.updateSelectedDate(
-                                  date: selectedDay, focusDate: focusedDay);
-
-                              /// used to get the data by date.
-                              controller.getNannyDataByDate(date: selectedDay);
+                                /// used to get the data by date.
+                                controller.getNannyDataByDate(
+                                    date: selectedDay,nannyUserId:  controller.getNannyData?.id);
+                              }
                             },
                             focusedDay: controller.focusedDay,
                             selectedDayPredicate: (day) =>
@@ -127,11 +133,19 @@ class ScheduleNannyView extends StatelessWidget {
                                   : [];
                             },
                             onPageChanged: (focusedDay) {
-                              controller.focusedDay = focusedDay;
+                              if (controller.isElementEqualToData(
+                                controller.getNannyData!.availabilityList ?? [],
+                                focusedDay.day,
+                                focusedDay.month,
+                              )) {
+                                controller.focusedDay = focusedDay;
 
-                              /// used to  call api when calender month change.
-                              controller.getNannyDetails(time: focusedDay);
-                              controller.update();
+                                /// used to  call api when calender month change.
+                                controller.getNannyDetails(
+                                    time: focusedDay,
+                                    nannyUserID: controller.getNannyData?.id);
+                                controller.update();
+                              }
                             },
                           ),
                         ),
@@ -810,21 +824,45 @@ class ScheduleNannyView extends StatelessWidget {
                           controller.selectedDate!.year,
                           controller.selectedDate!.month,
                           controller.selectedDate!.day,
-                          controller.startTime?.hour ?? 0,
-                          controller.startTime?.minute ?? 0);
-                      if (controller.startTime != null &&
-                          controller.endTime != null) {
-                        if (!isTimeDifferenceGreaterThanOrEqualToOneHour(
-                            controller.endTime ?? timeOfDay,
-                            controller.startTime ?? timeOfDay)) {
-                          toast(
-                              msg:
-                                  "Booking a nanny requires a minimum of 1 hour.",
-                              isError: true);
-                          return;
-                        }
+                          controller.startTime?.hour ??
+                              Utility.formatTimeOfDay(controller.singleDay?.data
+                                      ?.bookingDetail?.openingTime
+                                      .toString())
+                                  ?.hour ??
+                              0,
+                          controller.startTime?.minute ??
+                              Utility.formatTimeOfDay(controller.singleDay?.data
+                                      ?.bookingDetail?.openingTime
+                                      .toString())
+                                  ?.minute ??
+                              0);
+
+                      print(Utility.formatTimeOfDay(controller
+                          .singleDay?.data?.bookingDetail?.openingTime
+                          .toString()));
+                      print(controller.startTime?.minute);
+                      // if (controller.startTime != null &&
+                      //     controller.endTime != null) {
+                      if (!isTimeDifferenceGreaterThanOrEqualToOneHour(
+                          controller.endTime ??
+                              Utility.formatTimeOfDay(controller
+                                  .singleDay?.data?.bookingDetail?.closingTime
+                                  .toString()) ??
+                              timeOfDay,
+                          controller.startTime ??
+                              Utility.formatTimeOfDay(controller
+                                  .singleDay?.data?.bookingDetail?.openingTime
+                                  .toString()) ??
+                              timeOfDay)) {
+                        toast(
+                            msg:
+                                "Booking a nanny requires a minimum of 1 hour.",
+                            isError: true);
+                        return;
                       }
-                      if (myBookingTime.isBefore(now)) {
+                      // }
+                      if (controller.selectedDate!.isSameDate(now) &&
+                          myBookingTime.isBefore(now)) {
                         toast(
                             msg:
                                 "Booking date and time has passed. Please select a future date and time for your booking.",
