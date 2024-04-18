@@ -104,7 +104,7 @@ var en = <String, String>{
   TranslationKeys.settings: 'Settings',
   TranslationKeys.listView: 'List View',
   TranslationKeys.mapView: 'Map View',
-  TranslationKeys.noResultFound: 'No result found',
+  TranslationKeys.noResultFound: 'No results found',
   TranslationKeys.filters: 'Filter',
   TranslationKeys.distance: 'Distance',
   TranslationKeys.dateAndTime: 'Date And Time',

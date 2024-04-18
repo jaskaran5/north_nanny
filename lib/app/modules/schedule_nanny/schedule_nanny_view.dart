@@ -104,13 +104,18 @@ class ScheduleNannyView extends StatelessWidget {
                             onDaySelected: (selectedDay, focusedDay) {
                               log("selected day:--$selectedDay");
                               log("focusedDay day:--$focusedDay");
+                             if(controller.isElementEqualToData(
+                               controller.getNannyData!.availabilityList ?? [],
+                               selectedDay.day,
+                               selectedDay.month,
+                             )) {
+                               /// used to update the  values of selected date and focus date.
+                               controller.updateSelectedDate(
+                                   date: selectedDay, focusDate: focusedDay);
 
-                              /// used to update the  values of selected date and focus date.
-                              controller.updateSelectedDate(
-                                  date: selectedDay, focusDate: focusedDay);
-
-                              /// used to get the data by date.
-                              controller.getNannyDataByDate(date: selectedDay);
+                               /// used to get the data by date.
+                               controller.getNannyDataByDate(date: selectedDay);
+                             }
                             },
                             focusedDay: controller.focusedDay,
                             selectedDayPredicate: (day) =>
