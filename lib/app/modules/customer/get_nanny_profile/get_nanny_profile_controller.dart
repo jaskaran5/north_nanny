@@ -173,8 +173,8 @@ class GetNannyProfileController extends GetxController {
   updateSelectedDate({required DateTime date, required DateTime focusDate}) {
     selectedDate = date;
     focusedDay = focusDate;
-    startTime=null;
-    endTime=null;
+    startTime = null;
+    endTime = null;
     update();
   }
 
@@ -192,16 +192,21 @@ class GetNannyProfileController extends GetxController {
   bool isRangeSelection = false;
   bool isBookingMore = false;
 
-  /// GET NANNY DETAILS
-  getNannyDetails({required DateTime time}) async {
+  usedToStoreNannyID(){
     nannyId.value = Get.arguments ?? 0;
+    update();
+  }
+
+  /// GET NANNY DETAILS
+  getNannyDetails({required DateTime time, int? nannyUserID}) async {
+    usedToStoreNannyID();
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
 
       var body = {
-        "id": nannyId.value,
+        "id":nannyUserID ?? nannyId.value,
         "dateTime": time.toUtc().toIso8601String(),
       };
 
@@ -290,16 +295,16 @@ class GetNannyProfileController extends GetxController {
   }
 
   /// used to get single day data
-  getNannyDataByDate({required DateTime date}) async {
+  getNannyDataByDate({required DateTime date,int? nannyUserId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
       var body = {
-        "nannyUserId": nannyId.value,
+        "nannyUserId":nannyUserId ?? nannyId.value,
         "utcDateTime": date.toUtc().toIso8601String(),
       };
-
+      log('get nanny Data by Date:$body');
       _apiHelper
           .postApi(ApiUrls.nannyBookingDataByDate, jsonEncode(body))
           .futureValue((value) {

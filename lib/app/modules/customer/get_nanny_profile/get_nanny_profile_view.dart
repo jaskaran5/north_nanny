@@ -363,7 +363,7 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
                     date: selectedDay, focusDate: focusedDay);
 
                 /// used to get the data by date.
-                controller.getNannyDataByDate(date: selectedDay);
+                controller.getNannyDataByDate(date: selectedDay,nannyUserId: controller.getNannyData?.id);
               },
               selectedDayPredicate: (day) => controller.selectedDate == day,
               focusedDay: controller.focusedDay,
@@ -393,7 +393,7 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
                 controller.getNannyData?.availabilityList ?? [],
                 controller.selectedDate?.day ?? 0,
                 controller.selectedDate?.month ?? 0,
-              ))
+              ) && controller.singleDay?.data?.bookingDetail!=null)
             CustomButton(
               title: TranslationKeys.bookSitter.tr,
               backGroundColor: AppColors.navyBlue,
