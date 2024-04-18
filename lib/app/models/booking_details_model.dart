@@ -217,6 +217,7 @@ class UserDetails {
   String? longitude;
   String? aboutMe;
   int? reviewCount;
+  List<RatingList>? ratingList;
 
   UserDetails({
     this.userId,
@@ -229,6 +230,7 @@ class UserDetails {
     this.longitude,
     this.aboutMe,
     this.reviewCount,
+    this.ratingList,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
@@ -242,6 +244,10 @@ class UserDetails {
         longitude: json["longitude"],
         aboutMe: json["aboutMe"],
         reviewCount: json["reviewCount"],
+        ratingList: json["ratingList"] == null
+            ? []
+            : List<RatingList>.from(
+                json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -255,5 +261,8 @@ class UserDetails {
         "longitude": longitude,
         "aboutMe": aboutMe,
         "reviewCount": reviewCount,
+        "ratingList": ratingList == null
+            ? []
+            : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
       };
 }

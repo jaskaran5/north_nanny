@@ -208,7 +208,7 @@ class NannyBookingDetailView extends StatelessWidget {
                                           reviewsList: trackController
                                                   .bookingDetailsModel
                                                   ?.data
-                                                  ?.userReviewList ??
+                                                  ?.userDetails?.ratingList ??
                                               [],
                                         ),
                                       );
@@ -740,9 +740,10 @@ class NannyBookingDetailView extends StatelessWidget {
                       ),
                     ),
                   ],
-                  Dimens.boxHeight16,
+
                   if (controller.nannyBookingDetailStatus ==
                       NannyBookingDetailStatus.disputeRaised) ...[
+                    Dimens.boxHeight16,
                     CustomButton(
                       backGroundColor: AppColors.fC3030RedColor,
                       title: 'Dispute Raised',
@@ -751,12 +752,8 @@ class NannyBookingDetailView extends StatelessWidget {
                       },
                     ),
                   ],
-                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe ==
-                              null &&
-                          controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.approvedByAdmin ||
-                      controller.nannyBookingDetailStatus ==
-                          NannyBookingDetailStatus.givenReviewByCustomer) ...[
+                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe == null && (controller.nannyBookingDetailStatus == NannyBookingDetailStatus.approvedByAdmin || controller.nannyBookingDetailStatus == NannyBookingDetailStatus.givenReviewByCustomer)) ...[
+                    Dimens.boxHeight16,
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,
                       title: 'Rate Your Experience',

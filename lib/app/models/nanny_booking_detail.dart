@@ -11,7 +11,7 @@ String nannyBookingDetailToJson(NannyBookingDetail data) =>
 class NannyBookingDetail {
   int? response;
   String? message;
-  Data? data;
+  List<NannyBookingDetailData>? data;
 
   NannyBookingDetail({
     this.response,
@@ -21,19 +21,23 @@ class NannyBookingDetail {
 
   factory NannyBookingDetail.fromJson(Map<String, dynamic> json) =>
       NannyBookingDetail(
-        response: json["response"],
-        message: json["message"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-      );
+          response: json["response"],
+          message: json["message"],
+          data: json["data"] == null
+              ? []
+              : List<NannyBookingDetailData>.from(json["data"]!
+                  .map((x) => NannyBookingDetailData.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
         "response": response,
         "message": message,
-        "data": data?.toJson(),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
-class Data {
+class NannyBookingDetailData {
   DateTime? openingTime;
   DateTime? closingTime;
   double? billAmount;
@@ -47,7 +51,7 @@ class Data {
   int? bookingStatus;
   List<RatingList>? ratingList;
 
-  Data({
+  NannyBookingDetailData({
     this.openingTime,
     this.closingTime,
     this.billAmount,
@@ -62,7 +66,8 @@ class Data {
     this.bookingId,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory NannyBookingDetailData.fromJson(Map<String, dynamic> json) =>
+      NannyBookingDetailData(
         openingTime: json["openingTime"] == null
             ? null
             : DateTime.parse(json["openingTime"]),

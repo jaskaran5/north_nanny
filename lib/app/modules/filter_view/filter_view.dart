@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
+import 'package:northshore_nanny_flutter/app/utils/utility.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../res/constants/assets.dart';
 import '../../res/theme/colors.dart';
@@ -78,7 +79,7 @@ class FilterView extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   Dimens.boxHeight4,
-            /**DISTANCE slider */
+                  /**DISTANCE slider */
                   FlutterSlider(
                     minimumDistance: 0.0,
                     maximumDistance: 25.0,
@@ -245,8 +246,7 @@ class FilterView extends StatelessWidget {
                           Padding(
                             padding: Dimens.edgeInsetsH20V15,
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppText(
                                   text: item.toString().tr,
@@ -329,9 +329,8 @@ class FilterView extends StatelessWidget {
                       custom: (value) => Padding(
                         padding: Dimens.edgeInsetsL16R16,
                         child: AppText(
-                          text: double.parse(value.toString())
-                              .toInt()
-                              .toString(),
+                          text:
+                              double.parse(value.toString()).toInt().toString(),
                           style: AppStyles.ubGrey14W600,
                           textAlign: TextAlign.center,
                           maxLines: 1,
@@ -384,8 +383,8 @@ class FilterView extends StatelessWidget {
                                     ),
                                     decoration: BoxDecoration(
                                       color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(
-                                          Dimens.twenty),
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.twenty),
                                     ),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -394,19 +393,16 @@ class FilterView extends StatelessWidget {
                                           padding: Dimens.edgeInsets10,
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               AppText(
                                                 text: TranslationKeys
                                                     .selectDate.tr,
-                                                style:
-                                                    AppStyles.ubBlack16W700,
+                                                style: AppStyles.ubBlack16W700,
                                                 maxLines: 1,
                                               ),
                                               InkWell(
-                                                hoverColor:
-                                                    Colors.transparent,
+                                                hoverColor: Colors.transparent,
                                                 onTap: () {
                                                   Get.back();
                                                 },
@@ -468,7 +464,7 @@ class FilterView extends StatelessWidget {
                                                 ),
                                                 firstDay: DateTime.now(),
                                                 lastDay: DateTime.utc(
-                                                  DateTime.now().year+5,
+                                                  DateTime.now().year + 5,
                                                 ),
                                                 headerStyle: HeaderStyle(
                                                   titleCentered: true,
@@ -479,8 +475,8 @@ class FilterView extends StatelessWidget {
                                                 selectedDayPredicate: (day) =>
                                                     day ==
                                                     controller.selectedDate,
-                                                onDaySelected: (selectedDay,
-                                                    focusedDay) {
+                                                onDaySelected:
+                                                    (selectedDay, focusedDay) {
                                                   log("on data select:-->.$selectedDay");
                                                   filterController
                                                           .selectedDate =
@@ -499,8 +495,7 @@ class FilterView extends StatelessWidget {
                                           padding: Dimens.edgeInsetsL16R16,
                                           child: CustomButton(
                                             title: TranslationKeys.apply.tr,
-                                            backGroundColor:
-                                                AppColors.navyBlue,
+                                            backGroundColor: AppColors.navyBlue,
                                             onTap: () {
                                               Get.back();
                                               // controller
@@ -568,8 +563,8 @@ class FilterView extends StatelessWidget {
                                     ),
                                     decoration: BoxDecoration(
                                       color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(
-                                          Dimens.twenty),
+                                      borderRadius:
+                                          BorderRadius.circular(Dimens.twenty),
                                     ),
                                     child: Column(
                                       children: [
@@ -577,19 +572,16 @@ class FilterView extends StatelessWidget {
                                           padding: Dimens.edgeInsets10,
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               AppText(
                                                 text: TranslationKeys
                                                     .selectTime.tr,
-                                                style:
-                                                    AppStyles.ubBlack16W700,
+                                                style: AppStyles.ubBlack16W700,
                                                 maxLines: 1,
                                               ),
                                               InkWell(
-                                                hoverColor:
-                                                    Colors.transparent,
+                                                hoverColor: Colors.transparent,
                                                 onTap: () {
                                                   Get.back();
                                                 },
@@ -669,8 +661,9 @@ class FilterView extends StatelessWidget {
                               ),
                               Dimens.boxWidth10,
                               AppText(
-                                text:
-                                    '${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')} ${controller.selectedTime.hour > 12 ? 'PM' : 'AM'} ',
+                                text: Utility.formatTimeTo12Hour(
+                                    controller.selectedTime.toUtc().toString()),
+                                // '${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')} ${controller.selectedTime.hour > 12 ? 'PM' : 'AM'} ',
                                 style: AppStyles.ubHintColor15W500,
                                 maxLines: 1,
                               ),

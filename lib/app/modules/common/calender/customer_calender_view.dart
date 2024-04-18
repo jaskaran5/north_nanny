@@ -119,244 +119,283 @@ class CustomerCalenderView extends StatelessWidget {
                     //                 controller.userBookingDetail?.data ?? [],
                     //             day: controller.selectedDay?.day ?? 0,
                     //             month: controller.selectedDay?.month ?? 0) &&
-                    controller.singleDateBookingData != null
-                        ? GestureDetector(
-                            onTap: () {
-                              if (!Get.isRegistered<
-                                  BookingDetailController>()) {
-                                BookingDetailBinding().dependencies();
-                              }
-                              var customerBookingController =
-                                  Get.find<BookingDetailController>();
-
-                              /// used to store the  booking status
-                              customerBookingController.typeOfBooking(
-                                  bookingStatus: controller
-                                      .singleDateBookingData?.bookingStatus);
-
-                              /// used to store the detail of booking
-                              customerBookingController.getBookingDataById(
-                                  bookingId: controller
-                                      .singleDateBookingData?.bookingId);
-
-                              RouteManagement.goToCustomerBookingDetailView();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimens.fourteen),
-                                border: Border.all(
-                                  color: AppColors.navyBlue,
-                                  width: Dimens.two,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: Dimens.edgeInsets16,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CustomDateFormatTile(
-                                          day: controller.selectedDay?.day
-                                                  .toString()
-                                                  .padLeft(2, '0') ??
-                                              '',
-                                          dateFormatInMonthYearDayOfWeek:
-                                              Utility.convertDateToMMMMYYYEEE(
-                                                  controller
-                                                          .singleDateBookingData
-                                                          ?.openingTime ??
-                                                      DateTime.now()),
-                                          timing:
-                                              '${Utility.formatTimeTo12Hour(controller.singleDateBookingData?.openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDateBookingData?.closingTime.toString())}',
-                                          totalPrice: controller
-                                                  .singleDateBookingData
-                                                  ?.billAmount
-                                                  .toString() ??
-                                              '',
+                    controller.singleDateBookingData != null && controller.singleDateBookingData?.isNotEmpty==true
+                        ? Flexible(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.singleDateBookingData?.length,
+                              itemBuilder: (context, index) => GestureDetector(
+                                    onTap: () {
+                                      if (!Get.isRegistered<
+                                          BookingDetailController>()) {
+                                        BookingDetailBinding().dependencies();
+                                      }
+                                      var customerBookingController =
+                                          Get.find<BookingDetailController>();
+                          
+                                      /// used to store the  booking status
+                                      customerBookingController.typeOfBooking(
+                                          bookingStatus: controller
+                                                  .singleDateBookingData?[index]
+                                                  .bookingStatus ??
+                                              0);
+                          
+                                      /// used to store the detail of booking
+                                      customerBookingController
+                                          .getBookingDataById(
+                                              bookingId: controller
+                                                      .singleDateBookingData?[
+                                                          index]
+                                                      .bookingId ??
+                                                  0);
+                          
+                                      RouteManagement
+                                          .goToCustomerBookingDetailView();
+                                    },
+                                    child: Container(
+                                      margin: Dimens.edgeInsetsB16,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.fourteen),
+                                        border: Border.all(
+                                          color: AppColors.navyBlue,
+                                          width: Dimens.two,
                                         ),
-                                        Dimens.boxHeight16,
-                                        Divider(
-                                          color: AppColors.dividerColor,
-                                          height: Dimens.one,
-                                        ),
-                                        Dimens.boxHeight16,
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            CustomDot(
-                                                size: Dimens.four,
-                                                color: AppColors.blackColor),
-                                            Dimens.boxWidth4,
-                                            AppText(
-                                              text: controller
-                                                  .singleDateBookingData
-                                                  ?.services
-                                                  ?.join(', ')
-                                                  .capitalizeFirst,
-                                              style: AppStyles.ubGrey15W500,
-                                              maxLines: 1,
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
-                                        Dimens.boxHeight16,
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            CustomDot(
-                                                size: Dimens.four,
-                                                color: AppColors.blackColor),
-                                            Dimens.boxWidth4,
-                                            AppText(
-                                              text:
-                                                  '${controller.singleDateBookingData?.childCount} children',
-                                              style: AppStyles.ubGrey15W500,
-                                              maxLines: 1,
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: Dimens.edgeInsets10,
-                                    width: Get.width,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.navyBlue,
-                                      border: Border.all(
-                                        color: AppColors.navyBlue,
-                                        width: Dimens.two,
                                       ),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(Dimens.ten),
-                                        bottomRight:
-                                            Radius.circular(Dimens.ten),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                            height: Dimens.hundred,
-                                            width: Dimens.eightySix,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimens.ten),
-                                            ),
-                                            child: CustomCacheNetworkImage(
-                                                img: controller
-                                                        .singleDateBookingData
-                                                        ?.image ??
-                                                    '',
-                                                size: 100,
-                                                imageRadius: 15)
-
-                                            //  Image.asset(
-                                            //   Assets.iconsImage,
-                                            //   fit: BoxFit.contain,
-                                            // ),
-                                            ),
-                                        Dimens.boxWidth16,
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            AppText(
-                                              text: controller
-                                                      .singleDateBookingData
-                                                      ?.name ??
-                                                  '',
-                                              style: AppStyles.ubWhite14700,
-                                              maxLines: 1,
-                                              textAlign: TextAlign.start,
-                                            ),
-                                            Dimens.boxHeight4,
-                                            GestureDetector(
-                                              onTap: () {
-                                                Utility.openBottomSheet(
-                                                  CustomReviewBottomSheet(
-                                                    totalReviews: controller
-                                                            .singleDateBookingData
-                                                            ?.reviewCount ??
-                                                        0,
-                                                    totalReviewsRating: controller
-                                                            .singleDateBookingData
-                                                            ?.rating ??
-                                                        0,
-                                                    reviewsList: controller
-                                                            .singleDateBookingData
-                                                            ?.ratingList ??
-                                                        [],
-                                                  ),
-                                                );
-                                              },
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      Assets.iconsStar),
-                                                  Dimens.boxWidth4,
-                                                  RichText(
-                                                    text: TextSpan(
-                                                      text:controller
-                                                          .singleDateBookingData
-                                                          ?.rating==0.0?'0': controller
-                                                          .singleDateBookingData
-                                                          ?.rating
-                                                          .toString(),
-                                                      style: AppStyles
-                                                          .ubLightNavy12W500,
-                                                      children: [
-                                                        TextSpan(
-                                                          text:
-                                                              ' (${controller.singleDateBookingData?.reviewCount} reviews)',
-                                                          style: AppStyles
-                                                              .ubLightNavy12W400,
-                                                        ),
-                                                      ],
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: Dimens.edgeInsets16,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CustomDateFormatTile(
+                                                  day: controller.selectedDay?.day
+                                                          .toString()
+                                                          .padLeft(2, '0') ??
+                                                      '',
+                                                  dateFormatInMonthYearDayOfWeek:
+                                                      Utility.convertDateToMMMMYYYEEE(
+                                                          controller
+                                                                  .singleDateBookingData?[
+                                                                      index]
+                                                                  .openingTime ??
+                                                              DateTime.now()),
+                                                  timing:
+                                                      '${Utility.formatTimeTo12Hour(controller.singleDateBookingData?[index].openingTime.toString())} to ${Utility.formatTimeTo12Hour(controller.singleDateBookingData?[index].closingTime.toString())}',
+                                                  totalPrice: controller
+                                                          .singleDateBookingData?[
+                                                              index]
+                                                          .billAmount
+                                                          .toString() ??
+                                                      '',
+                                                ),
+                                                Dimens.boxHeight16,
+                                                Divider(
+                                                  color: AppColors.dividerColor,
+                                                  height: Dimens.one,
+                                                ),
+                                                Dimens.boxHeight16,
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    CustomDot(
+                                                        size: Dimens.four,
+                                                        color:
+                                                            AppColors.blackColor),
+                                                    Dimens.boxWidth4,
+                                                    AppText(
+                                                      text: controller
+                                                          .singleDateBookingData?[
+                                                              index]
+                                                          .services
+                                                          ?.join(', ')
+                                                          .capitalizeFirst,
+                                                      style:
+                                                          AppStyles.ubGrey15W500,
+                                                      maxLines: 1,
+                                                      textAlign: TextAlign.start,
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
+                                                Dimens.boxHeight16,
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    CustomDot(
+                                                        size: Dimens.four,
+                                                        color:
+                                                            AppColors.blackColor),
+                                                    Dimens.boxWidth4,
+                                                    AppText(
+                                                      text:
+                                                          '${controller.singleDateBookingData?[index].childCount} children',
+                                                      style:
+                                                          AppStyles.ubGrey15W500,
+                                                      maxLines: 1,
+                                                      textAlign: TextAlign.start,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: Dimens.edgeInsets10,
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.navyBlue,
+                                              border: Border.all(
+                                                color: AppColors.navyBlue,
+                                                width: Dimens.two,
+                                              ),
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(Dimens.ten),
+                                                bottomRight:
+                                                    Radius.circular(Dimens.ten),
                                               ),
                                             ),
-                                            Dimens.boxHeight4,
-                                            SizedBox(
-                                              width: Dimens.oneHundredEightyTwo,
-                                              child: AppText(
-                                                text: controller
-                                                        .singleDateBookingData
-                                                        ?.aboutMe ??
-                                                    '',
-                                                maxLines: 4,
-                                                style:
-                                                    AppStyles.ubLightNavy10W400,
-                                                textAlign: TextAlign.start,
-                                              ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                    height: Dimens.hundred,
+                                                    width: Dimens.eightySix,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              Dimens.ten),
+                                                    ),
+                                                    child: CustomCacheNetworkImage(
+                                                        img: controller
+                                                                .singleDateBookingData?[
+                                                                    index]
+                                                                .image ??
+                                                            '',
+                                                        size: 100,
+                                                        imageRadius: 15)
+                          
+                                                    //  Image.asset(
+                                                    //   Assets.iconsImage,
+                                                    //   fit: BoxFit.contain,
+                                                    // ),
+                                                    ),
+                                                Dimens.boxWidth16,
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    AppText(
+                                                      text: controller
+                                                              .singleDateBookingData?[
+                                                                  index]
+                                                              .name ??
+                                                          '',
+                                                      style:
+                                                          AppStyles.ubWhite14700,
+                                                      maxLines: 1,
+                                                      textAlign: TextAlign.start,
+                                                    ),
+                                                    Dimens.boxHeight4,
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Utility.openBottomSheet(
+                                                          CustomReviewBottomSheet(
+                                                            totalReviews: controller
+                                                                    .singleDateBookingData?[
+                                                                        index]
+                                                                    .reviewCount ??
+                                                                0,
+                                                            totalReviewsRating:
+                                                                controller
+                                                                        .singleDateBookingData?[
+                                                                            index]
+                                                                        .rating ??
+                                                                    0,
+                                                            reviewsList: controller
+                                                                    .singleDateBookingData?[
+                                                                        index]
+                                                                    .ratingList ??
+                                                                [],
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                              Assets.iconsStar),
+                                                          Dimens.boxWidth4,
+                                                          RichText(
+                                                            text: TextSpan(
+                                                              text: controller
+                                                                          .singleDateBookingData?[
+                                                                              index]
+                                                                          .rating ==
+                                                                      0.0
+                                                                  ? '0'
+                                                                  : controller
+                                                                      .singleDateBookingData?[
+                                                                          index]
+                                                                      .rating
+                                                                      .toString(),
+                                                              style: AppStyles
+                                                                  .ubLightNavy12W500,
+                                                              children: [
+                                                                TextSpan(
+                                                                  text:
+                                                                      ' (${controller.singleDateBookingData?[index].reviewCount} reviews)',
+                                                                  style: AppStyles
+                                                                      .ubLightNavy12W400,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Dimens.boxHeight4,
+                                                    SizedBox(
+                                                      width: Dimens
+                                                          .oneHundredEightyTwo,
+                                                      child: AppText(
+                                                        text: controller
+                                                                .singleDateBookingData?[
+                                                                    index]
+                                                                .about ??
+                                                            '',
+                                                        maxLines: 4,
+                                                        style: AppStyles
+                                                            .ubLightNavy10W400,
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
+                                  )),
+                        )
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -130,7 +130,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.approvedByAdmin;
     } else if (bookingStatus == 8) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.disputeRaised;
-    } else if (bookingStatus == 9 ) {
+    } else if (bookingStatus == 9) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.givenReviewByCustomer;
     }
     log('Booking Status Nanny Side :$bookingStatus');
@@ -296,6 +296,8 @@ class NannyBookingDetailController extends GetxController {
             );
           }
           typeOfBooking(bookingStatus: response.data?.bookingStatus ?? 0);
+          addPolyLine(
+              currentPosition: currentPosition, bookingDetailsModel: response);
           getCurrentLocation();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -403,7 +405,10 @@ class NannyBookingDetailController extends GetxController {
                       longitude: position.longitude);
 
                   /// used to add poly Line according to the road or route.
-                  addPolyLine();
+                  addPolyLine(
+                    currentPosition: currentPosition,
+                    bookingDetailsModel: bookingDetailsModel,
+                  );
 
                   /// used to animate the controller based on lat long.
                   googleMapController?.animateCamera(
@@ -469,7 +474,9 @@ class NannyBookingDetailController extends GetxController {
   }
 
   /// used  for create poly Line with the road by route.
-  addPolyLine() async {
+  addPolyLine(
+      {required Position? currentPosition,
+      required BookingDetailsModel? bookingDetailsModel}) async {
     var fistCoordinate = LatLng(
         currentPosition?.latitude ??
             double.parse(bookingDetailsModel?.data?.latitude ?? '0.0'),

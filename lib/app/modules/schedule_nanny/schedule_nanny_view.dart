@@ -117,7 +117,7 @@ class ScheduleNannyView extends StatelessWidget {
                                 controller.selectedDate == day,
                             eventLoader: (day) {
                               return controller.isElementEqualToData(
-                                controller.getNannyData!.avilabilityList ?? [],
+                                controller.getNannyData!.availabilityList ?? [],
                                 day.day,
                                 day.month,
                               )
@@ -609,62 +609,64 @@ class ScheduleNannyView extends StatelessWidget {
                     style: AppStyles.ubBlack15W600,
                   ),
 
-                  Dimens.boxHeight16,
-                  Container(
-                    padding: Dimens.edgeInsets16,
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(Dimens.eight),
-                      border: Border.all(
-                        color: AppColors.dividerColor,
-                        width: Dimens.one,
+                  if (controller.getNannyData?.isCustomerReferral == true) ...[
+                    Dimens.boxHeight16,
+                    Container(
+                      padding: Dimens.edgeInsets16,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(Dimens.eight),
+                        border: Border.all(
+                          color: AppColors.dividerColor,
+                          width: Dimens.one,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.lightNavyBlue.withOpacity(.8),
+                            blurRadius: Dimens.five,
+                          )
+                        ],
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.lightNavyBlue.withOpacity(.8),
-                          blurRadius: Dimens.five,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: Dimens.twenty,
-                          width: Dimens.twenty,
-                          child: Checkbox(
-                            value: controller.isReferral,
-                            activeColor: AppColors.navyBlue,
-                            onChanged: (value) {
-                              controller.isReferral = value;
-                              controller.update();
-                            },
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.four,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: Dimens.twenty,
+                            width: Dimens.twenty,
+                            child: Checkbox(
+                              value: controller.isReferral,
+                              activeColor: AppColors.navyBlue,
+                              onChanged: (value) {
+                                controller.isReferral = value;
+                                controller.update();
+                              },
+                              shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  Dimens.four,
+                                ),
+                                side: BorderSide(
+                                  color: AppColors.checkBoxBorderColor,
+                                  width: Dimens.one,
+                                ),
                               ),
                               side: BorderSide(
                                 color: AppColors.checkBoxBorderColor,
                                 width: Dimens.one,
                               ),
                             ),
-                            side: BorderSide(
-                              color: AppColors.checkBoxBorderColor,
-                              width: Dimens.one,
-                            ),
                           ),
-                        ),
-                        Dimens.boxWidth8,
-                        AppText(
-                          text: TranslationKeys.useReferralBonus.tr,
-                          style: AppStyles.ubGrey15W500,
-                          maxLines: 1,
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
+                          Dimens.boxWidth8,
+                          AppText(
+                            text: TranslationKeys.useReferralBonus.tr,
+                            style: AppStyles.ubGrey15W500,
+                            maxLines: 1,
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                   Dimens.boxHeight16,
 
                   ///-------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RECEIPT DATA ------------>>>>>>>>

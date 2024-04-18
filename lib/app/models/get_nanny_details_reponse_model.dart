@@ -51,7 +51,8 @@ class GetNannyData {
   bool? isFavorite;
   bool? isOnline;
   bool? isCardAddedByCustomer;
-  List<AvilabilityList>? avilabilityList;
+  bool? isCustomerReferral;
+  List<AvailabilityList>? availabilityList;
   List<RatingList>? ratingList;
   List<String>? services;
 
@@ -66,12 +67,13 @@ class GetNannyData {
     this.distance,
     this.services,
     this.isFavorite,
-    this.avilabilityList,
+    this.availabilityList,
     this.age,
     this.gender,
     this.isOnline,
     this.isCardAddedByCustomer,
     this.ratingList,
+    this.isCustomerReferral,
   });
 
   factory GetNannyData.fromJson(Map<String, dynamic> json) => GetNannyData(
@@ -86,19 +88,20 @@ class GetNannyData {
         isFavorite: json["isFavorite"],
         isOnline: json["isOnline"],
         isCardAddedByCustomer: json["isCardAddedByCustomer"] ?? false,
-        avilabilityList: json["avilabilityList"] == null
+        isCustomerReferral: json["isCustomerRefferals"] ?? false,
+        availabilityList: json["avilabilityList"] == null
             ? []
-            : List<AvilabilityList>.from(json["avilabilityList"]!
-                .map((x) => AvilabilityList.fromJson(x))),
+            : List<AvailabilityList>.from(json["avilabilityList"]!
+                .map((x) => AvailabilityList.fromJson(x))),
         age: json["age"],
         gender: json["gender"],
         services: json["services"] == null
             ? []
             : List<String>.from(json["services"]!.map((x) => x)),
-    ratingList: json["ratingList"] == null
-        ? []
-        : List<RatingList>.from(
-        json["ratingList"]!.map((x) => RatingList.fromJson(x))),
+        ratingList: json["ratingList"] == null
+            ? []
+            : List<RatingList>.from(
+                json["ratingList"]!.map((x) => RatingList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -112,25 +115,26 @@ class GetNannyData {
         "distance": distance,
         "isOnline": isOnline,
         "isCardAddedByCustomer": isCardAddedByCustomer,
-    "ratingList": ratingList == null
-        ? []
-        : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
+        "isCustomerRefferals": isCustomerReferral,
+        "ratingList": ratingList == null
+            ? []
+            : List<dynamic>.from(ratingList!.map((x) => x.toJson())),
         "services":
             services == null ? [] : List<dynamic>.from(services!.map((x) => x)),
       };
 }
 
-class AvilabilityList {
+class AvailabilityList {
   DateTime? openingTime;
   DateTime? closingTime;
 
-  AvilabilityList({
+  AvailabilityList({
     this.openingTime,
     this.closingTime,
   });
 
-  factory AvilabilityList.fromJson(Map<String, dynamic> json) =>
-      AvilabilityList(
+  factory AvailabilityList.fromJson(Map<String, dynamic> json) =>
+      AvailabilityList(
         openingTime: json["openingTime"] == null
             ? null
             : DateTime.parse(json["openingTime"]),

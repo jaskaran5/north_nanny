@@ -17,7 +17,7 @@ class CustomerCalenderController extends GetxController {
 //
   /// used to store availability list
   UserBookingDetailsResponseModel? userBookingDetail;
-  UserBookingDataByDate? singleDateBookingData;
+  List<UserBookingDataByDate>? singleDateBookingData;
 
   getCustomerAllBookingDetailsApi({required DateTime date}) async {
     try {

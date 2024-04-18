@@ -98,7 +98,7 @@ class GetNannyProfileController extends GetxController {
   }
 
   /// used to check element have event or not
-  bool isElementEqualToData(List<AvilabilityList> list, int day, int month) {
+  bool isElementEqualToData(List<AvailabilityList> list, int day, int month) {
     for (var value in list) {
       if (value.openingTime?.day == day && value.openingTime?.month == month) {
         return true;
@@ -342,7 +342,7 @@ class GetNannyProfileController extends GetxController {
         "childId": childIds,
         "totalHour": totalMinutes,
         "hourlyPrice": double.parse(hourlyPrice),
-        "totalBillAmount": isUseReferral ? totalPrice - 5 : totalPrice,
+        "totalBillAmount": totalPrice,
       };
       log('confirm Api body:$body');
       _apiHelper

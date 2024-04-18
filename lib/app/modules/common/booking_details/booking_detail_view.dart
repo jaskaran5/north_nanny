@@ -86,36 +86,36 @@ class BookingDetailView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (controller.bookingDetailStatus ==
-                        BookingDetailStatus.arrived) ...[
-                      Dimens.boxHeight16,
-                      Container(
-                        padding: Dimens.edgeInsets10,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.greenColor05B016,
-                          borderRadius: BorderRadius.circular(
-                            Dimens.ten,
-                          ),
-                          border: Border.all(
-                              color: AppColors.greenColor05B016,
-                              width: Dimens.two),
+                    Dimens.boxHeight16,
+                  ],
+                  if (controller.bookingDetailStatus ==
+                      BookingDetailStatus.arrived) ...[
+                    Container(
+                      padding: Dimens.edgeInsets10,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.greenColor05B016,
+                        borderRadius: BorderRadius.circular(
+                          Dimens.ten,
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(Assets.iconsGreenBoxInfo),
-                            Dimens.boxWidth10,
-                            AppText(
-                              text: 'Nanny has arrived at your location.',
-                              style: AppStyles.ubWhite14700,
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
+                        border: Border.all(
+                            color: AppColors.greenColor05B016,
+                            width: Dimens.two),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(Assets.iconsGreenBoxInfo),
+                          Dimens.boxWidth10,
+                          AppText(
+                            text: 'Nanny has arrived at your location.',
+                            style: AppStyles.ubWhite14700,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      ),
+                    ),
                     Dimens.boxHeight16,
                   ],
                   CustomBookingDetailView(
@@ -378,14 +378,11 @@ class BookingDetailView extends StatelessWidget {
                         controller.bookingDataById?.servicesType ?? [],
                     totalTimeHour: controller.bookingDataById?.totalHour,
                     totalTimeHourPrice: controller.bookingDataById?.hourlyPrice,
-                    isMinus: controller.bookingDataById?.isUseReferrals == true
-                        ? false
-                        : true,
                     isReferralBonus:
                         controller.bookingDataById?.isUseReferrals ?? false,
                     netPayBalAmount:
                         controller.bookingDataById?.isUseReferrals == true
-                            ? (controller.bookingDataById!.totalAmount ?? 0.0) +
+                            ? (controller.bookingDataById!.totalAmount ?? 0.0) -
                                 5.0
                             : 0.0,
                   ),
@@ -407,9 +404,9 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   if (controller.bookingDataById?.reviewGivenByMe == null &&
-                          controller.bookingDataById?.bookingStatus == 7 ||
-                      controller.bookingDetailStatus ==
-                          BookingDetailStatus.reviewByOtherUser) ...[
+                      (controller.bookingDataById?.bookingStatus == 7 ||
+                          controller.bookingDetailStatus ==
+                              BookingDetailStatus.reviewByOtherUser)) ...[
                     CustomButton(
                       title: 'Rate your Experience',
                       backGroundColor: AppColors.navyBlue,

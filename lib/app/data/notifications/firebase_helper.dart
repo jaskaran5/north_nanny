@@ -11,6 +11,8 @@ import 'package:northshore_nanny_flutter/app/models/chat_notification_response_m
 import 'package:northshore_nanny_flutter/app/models/notification_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/dashboard_bottom/dashboard_bottom_controller.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_binding.dart';
+import 'package:northshore_nanny_flutter/app/modules/common/notification/notification_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_home/nanny_home_binding.dart';
@@ -49,7 +51,7 @@ class FCMService {
     const initializationSettingsAndroid =
         AndroidInitializationSettings(iconNotification);
 
-    const darwinInitializationSettings = DarwinInitializationSettings();
+    const darwinInitializationSettings = DarwinInitializationSettings(defaultPresentSound: true,defaultPresentAlert: true,defaultPresentBadge: true,requestProvisionalPermission: true);
     const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
@@ -74,7 +76,7 @@ class FCMService {
       badge: true,
       carPlay: false,
       criticalAlert: false,
-      provisional: false,
+      provisional: true,
       sound: true,
     );
 
@@ -145,10 +147,12 @@ class FCMService {
       icon: "@drawable/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
+      playSound: true,
     );
 
     DarwinNotificationDetails drawinNotificationDetail =
-        const DarwinNotificationDetails();
+        const DarwinNotificationDetails(
+            presentAlert: true, presentSound: true, presentBanner: true);
 
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: drawinNotificationDetail);
@@ -170,7 +174,22 @@ class FCMService {
       log("get notification api called in firebase helper");
     });
 
+    /// used to get the notification list in notification view.
+    if (!Get.isRegistered<NotificationController>()) {
+      NotificationBinding().dependencies();
+    }
+
+    Get.find<NotificationController>().getNotificationList();
+
     if (logInType == StringConstants.customer) {
+      if (!Get.isRegistered<BookingDetailController>()) {
+        BookingDetailBinding().dependencies();
+      }
+
+      /// used to  get the booking detail.
+      Get.find<BookingDetailController>().getBookingDataById(
+          bookingId: int.parse(response.bookingId.toString()));
+
       if (dashBoardBottomController.selectedTabIndex.value == 0) {
         if (!Get.isRegistered<CustomerHomeController>()) {
           CustomerHomeBinding().dependencies();
@@ -179,28 +198,23 @@ class FCMService {
 
         /// used to get customer list .
         customerHomeController.getDashboardApi();
-      } else {
-        if (!Get.isRegistered<BookingDetailController>()) {
-          BookingDetailBinding().dependencies();
-        }
-
-        /// used to  get the booking detail.
-        Get.find<BookingDetailController>().getBookingDataById(
-            bookingId: int.parse(response.bookingId.toString()));
       }
     } else if (logInType == StringConstants.nanny) {
+      if (!Get.isRegistered<NannyBookingDetailController>()) {
+        NannyBookingDetailBinding().dependencies();
+      }
+
+      /// used to get booking detail.
+      Get.find<NannyBookingDetailController>().getBookingDetailOfCustomer(
+          bookingId: int.parse(response.bookingId.toString()));
+
+      /// call if index ==0,
       if (dashBoardBottomController.selectedTabIndex.value == 0) {
         if (!Get.isRegistered<NannyHomeController>()) {
           NannyHomeBinding().dependencies();
         }
         var nannyHomeController = Get.find<NannyHomeController>();
         nannyHomeController.getHomeData();
-      } else {
-        if (!Get.isRegistered<NannyBookingDetailController>()) {
-          NannyBookingDetailBinding().dependencies();
-        }
-        Get.find<NannyBookingDetailController>().getBookingDetailOfCustomer(
-            bookingId: int.parse(response.bookingId.toString()));
       }
     }
 
@@ -230,10 +244,11 @@ class FCMService {
       icon: "@drawable/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
+      playSound: true,
     );
 
     DarwinNotificationDetails drawinNotificationDetail =
-        const DarwinNotificationDetails();
+        const DarwinNotificationDetails(presentSound: true);
 
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: drawinNotificationDetail);
@@ -315,8 +330,9 @@ class FCMService {
 
     var controller = Get.find<DashboardBottomController>();
     controller.selectedBottomTab = 2;
+    controller.getNotificationCount();
     Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 4),
       () => controller.update(),
     );
 

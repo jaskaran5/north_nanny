@@ -369,7 +369,7 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
               focusedDay: controller.focusedDay,
               eventLoader: (day) {
                 return controller.isElementEqualToData(
-                  controller.getNannyData?.avilabilityList ?? [],
+                  controller.getNannyData?.availabilityList ?? [],
                   day.day,
                   day.month,
                 )
@@ -390,7 +390,7 @@ Widget availabilityView({required GetNannyProfileController controller}) =>
           Dimens.boxHeight20,
           if (controller.selectedDate != null &&
               controller.isElementEqualToData(
-                controller.getNannyData?.avilabilityList ?? [],
+                controller.getNannyData?.availabilityList ?? [],
                 controller.selectedDate?.day ?? 0,
                 controller.selectedDate?.month ?? 0,
               ))
