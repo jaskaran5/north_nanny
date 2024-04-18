@@ -29,3 +29,9 @@ bool isTimeDifferenceGreaterThanOrEqualToOneHour(TimeOfDay time1, TimeOfDay time
   return minutesDifference >= 60 || minutesDifference <= -60;
 }
 
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return year == other.year && month == other.month
+        && day == other.day;
+  }
+}

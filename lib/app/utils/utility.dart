@@ -499,6 +499,16 @@ class Utility {
     return formattedTime;
   }
 
+  static TimeOfDay? formatTimeOfDay(String? dateTimeString) {
+    if ((dateTimeString == null) || (dateTimeString.isEmpty)) {
+      return null;
+    }
+    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
+    var dateLocal = dateTime.toLocal();
+    TimeOfDay formattedTime = TimeOfDay(hour: dateLocal.hour, minute: dateLocal.minute);
+    return formattedTime;
+  }
+
   /// this is used to get a day from date
   static String getDay({required DateTime? dateTime}) {
     return dateTime?.day.toString().padLeft(2, '0') ?? '';

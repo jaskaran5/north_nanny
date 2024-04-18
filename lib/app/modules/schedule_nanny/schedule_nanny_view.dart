@@ -810,21 +810,28 @@ class ScheduleNannyView extends StatelessWidget {
                           controller.selectedDate!.year,
                           controller.selectedDate!.month,
                           controller.selectedDate!.day,
-                          controller.startTime?.hour ?? 0,
-                          controller.startTime?.minute ?? 0);
-                      if (controller.startTime != null &&
-                          controller.endTime != null) {
+                          controller.startTime?.hour ?? Utility.formatTimeOfDay( controller.singleDay?.data?.bookingDetail?.openingTime.toString())?.hour ??
+                              0,
+                          controller.startTime?.minute ??
+                              Utility.formatTimeOfDay( controller.singleDay?.data?.bookingDetail?.openingTime.toString())?.minute??
+                              0);
+
+                      print(Utility.formatTimeOfDay( controller.singleDay?.data?.bookingDetail?.openingTime.toString()));
+                      print( controller.startTime?.minute);
+                      // if (controller.startTime != null &&
+                      //     controller.endTime != null) {
                         if (!isTimeDifferenceGreaterThanOrEqualToOneHour(
-                            controller.endTime ?? timeOfDay,
-                            controller.startTime ?? timeOfDay)) {
+                            controller.endTime ?? Utility.formatTimeOfDay( controller.singleDay?.data?.bookingDetail?.closingTime.toString()) ?? timeOfDay,
+                            controller.startTime ??Utility.formatTimeOfDay( controller.singleDay?.data?.bookingDetail?.openingTime.toString()) ?? timeOfDay)) {
                           toast(
                               msg:
                                   "Booking a nanny requires a minimum of 1 hour.",
                               isError: true);
                           return;
                         }
-                      }
-                      if (myBookingTime.isBefore(now)) {
+                      // }
+                      if (controller.selectedDate!.isSameDate(now) &&
+                          myBookingTime.isBefore(now)) {
                         toast(
                             msg:
                                 "Booking date and time has passed. Please select a future date and time for your booking.",
