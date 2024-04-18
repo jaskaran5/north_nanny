@@ -51,7 +51,11 @@ class FCMService {
     const initializationSettingsAndroid =
         AndroidInitializationSettings(iconNotification);
 
-    const darwinInitializationSettings = DarwinInitializationSettings(defaultPresentSound: true,defaultPresentAlert: true,defaultPresentBadge: true,requestProvisionalPermission: true);
+    const darwinInitializationSettings = DarwinInitializationSettings(
+        defaultPresentSound: true,
+        defaultPresentAlert: true,
+        defaultPresentBadge: true,
+        requestProvisionalPermission: true);
     const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
