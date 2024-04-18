@@ -173,6 +173,8 @@ class GetNannyProfileController extends GetxController {
   updateSelectedDate({required DateTime date, required DateTime focusDate}) {
     selectedDate = date;
     focusedDay = focusDate;
+    startTime=null;
+    endTime=null;
     update();
   }
 
