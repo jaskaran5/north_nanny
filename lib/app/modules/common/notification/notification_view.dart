@@ -23,6 +23,9 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GetBuilder<NotificationController>(
         init: NotificationController(),
+        initState: (_){
+
+        },
         builder: (notificationController) => Scaffold(
           appBar: CustomAppbarWidget(
             addBackButton: false,

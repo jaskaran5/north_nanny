@@ -37,6 +37,9 @@ class DashboardBottomController extends GetxController {
     if (selectedTabIndex.value == 1) {
       Get.find<RecentChatController>().initMessages();
     }
+    if(value==2){
+      getNotificationCount();
+    }
     debugPrint(
         'Selected Bottom Tab --->>>>>>>>>>>>>>> ${selectedTabIndex.value}');
     update();

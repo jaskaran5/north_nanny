@@ -106,8 +106,8 @@ class CustomPaymentDetails extends StatelessWidget {
           body: Padding(
               padding: Dimens.edgeInsets16,
               child:
-            !controller.isCardLoading.value && controller.cardList?.isEmpty == true &&
-                      controller.cardList == null
+              controller.cardList?.isEmpty == true &&
+                      controller.cardList == null && !controller.isCardLoading.value
                   ? Center(
                       child: AppText(
                         text: TranslationKeys.noResultFound.tr,

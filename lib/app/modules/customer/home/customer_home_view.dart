@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/home/widgets/custom_home_list.dart';
 import 'package:northshore_nanny_flutter/app/modules/search_view/search_view.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -24,6 +26,11 @@ class CustomerHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GetBuilder<CustomerHomeController>(
         // init: CustomerHomeController(),
+    initState: (_){
+      if(Storage.getValue(StringConstants.loginType)==StringConstants.customer) {
+        Get.find<CustomerHomeController>().getDashboardApi();
+      }
+    },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             leadingWidth: Dimens.zero,
