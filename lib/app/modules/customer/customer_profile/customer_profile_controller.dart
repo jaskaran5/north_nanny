@@ -66,7 +66,7 @@ class CustomerProfileController extends GetxController {
           customerEmail.value = res.customerProfileData!.email!;
           customerPhoneNumber.value = res.customerProfileData!.mobileNo!;
           customerImageUrl.value = res.customerProfileData!.image!;
-          referralEarned.value = res.customerProfileData!.referralsEarned;
+          referralEarned.value = res.customerProfileData!.referralsEarned.toString();
 
           updateEditProfileFields(
             firstName: res.customerProfileData!.firstName!,

@@ -262,7 +262,7 @@ class ChatView extends StatelessWidget {
                                 child: AppText(
                               text: 'No Messages Found ',
                               style: AppStyles.b0b0fairPlay15w600,
-                            )),
+                            ),),
                           ),
                     Align(
                       alignment: Alignment.centerLeft,

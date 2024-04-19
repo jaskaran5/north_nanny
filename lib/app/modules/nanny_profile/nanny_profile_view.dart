@@ -249,7 +249,8 @@ class NannyProfileView extends StatelessWidget {
                           CustomNannySvgTile(
                             assetName: Assets.iconsDollarCircle,
                             heading: TranslationKeys.referralEarned.tr,
-                            aboutHeading: '\$5.00',
+                            aboutHeading:
+                                '${controller.profileData.data?.bonusReferrals?.toInt()}',
                           ),
                         ],
                       ),

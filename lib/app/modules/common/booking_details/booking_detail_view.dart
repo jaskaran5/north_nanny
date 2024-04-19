@@ -358,12 +358,20 @@ class BookingDetailView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            showChat: (trackingController
-                                            .bookingDataById?.bookingStatus ??
-                                        0) >=
-                                    6
-                                ? false
-                                : true,
+                            showChat: (trackingController.bookingDataById
+                                                ?.bookingStatus ??
+                                            0) ==
+                                        2 ||
+                                    (trackingController.bookingDataById
+                                                ?.bookingStatus ??
+                                            0) ==
+                                        4 ||
+                                    (trackingController.bookingDataById
+                                                ?.bookingStatus ??
+                                            0) ==
+                                        5
+                                ? true
+                                : false,
                           )
                         : const CircularProgressIndicator(),
                   ),

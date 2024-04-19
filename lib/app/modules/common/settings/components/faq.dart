@@ -52,7 +52,7 @@ class FAQView extends StatelessWidget {
                   : Center(
                       child: AppText(
                         text: TranslationKeys.noResultFound.tr,
-                        style: AppStyles.ubNavyBlue30W600,
+                        style: AppStyles.pdNavyBlue20W600,
                       ),
                     ),
             ));

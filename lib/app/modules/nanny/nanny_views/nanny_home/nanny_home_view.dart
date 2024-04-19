@@ -157,9 +157,18 @@ class NannyHomeView extends StatelessWidget {
                   style: AppStyles.ubBlack16W600,
                 ),
                 Dimens.boxHeight14,
-                controller.nannyHomeData.data?.bookingRequest?.isNotEmpty ==
-                        true
+                controller.nannyHomeData.data?.bookingRequest?.isEmpty ==
+                            true &&
+                        !controller.isBookingLoading.value
                     ? Expanded(
+                        child: Center(
+                          child: AppText(
+                            text: TranslationKeys.noResultFound.tr,
+                            style: AppStyles.pdNavyBlue20W600,
+                          ),
+                        ),
+                      )
+                    : Expanded(
                         child: ListView(
                           children: List.generate(
                             controller.nannyHomeData.data?.bookingRequest
@@ -267,14 +276,6 @@ class NannyHomeView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
-                    : Expanded(
-                        child: Center(
-                            child: Image.asset(
-                          Assets.imagesNoDataPng,
-                          height: Dimens.twoHundred,
-                          width: Dimens.twoHundred,
-                        )),
                       ),
               ],
             ),

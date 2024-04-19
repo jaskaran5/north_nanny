@@ -208,7 +208,8 @@ class NannyBookingDetailView extends StatelessWidget {
                                           reviewsList: trackController
                                                   .bookingDetailsModel
                                                   ?.data
-                                                  ?.userDetails?.ratingList ??
+                                                  ?.userDetails
+                                                  ?.ratingList ??
                                               [],
                                         ),
                                       );
@@ -636,8 +637,21 @@ class NannyBookingDetailView extends StatelessWidget {
                           NannyBookingDetailStatus.approvedByAdmin) ...[
                     Opacity(
                       opacity:
-                          controller.bookingDetailsModel?.data?.isJobStarted ==
-                                  true
+                          (controller.bookingDetailsModel?.data?.isJobStarted ==
+                                          true &&
+                                      controller.nannyBookingDetailStatus ==
+                                          NannyBookingDetailStatus.onMyWay) ||
+                                  (controller.bookingDetailsModel?.data
+                                              ?.isJobStarted ==
+                                          true &&
+                                      controller.nannyBookingDetailStatus ==
+                                          NannyBookingDetailStatus.arrived &&
+                                      controller.isArrivedButtonEnable.value) ||
+                                  (controller.bookingDetailsModel?.data
+                                              ?.isJobStarted ==
+                                          true &&
+                                      controller.nannyBookingDetailStatus ==
+                                          NannyBookingDetailStatus.endJob)
                               ? 1.0
                               : 0.5,
                       child: CustomButton(
@@ -673,7 +687,8 @@ class NannyBookingDetailView extends StatelessWidget {
                                     0,
                                 bookingStatus: 4);
                           } else if (controller.nannyBookingDetailStatus ==
-                              NannyBookingDetailStatus.arrived) {
+                                  NannyBookingDetailStatus.arrived &&
+                              controller.isArrivedButtonEnable.value) {
                             // controller.nannyBookingDetailStatus =
                             //     NannyBookingDetailStatus.endJob;
                             controller.updateStatus(
@@ -740,7 +755,6 @@ class NannyBookingDetailView extends StatelessWidget {
                       ),
                     ),
                   ],
-
                   if (controller.nannyBookingDetailStatus ==
                       NannyBookingDetailStatus.disputeRaised) ...[
                     Dimens.boxHeight16,
@@ -752,7 +766,13 @@ class NannyBookingDetailView extends StatelessWidget {
                       },
                     ),
                   ],
-                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe == null && (controller.nannyBookingDetailStatus == NannyBookingDetailStatus.approvedByAdmin || controller.nannyBookingDetailStatus == NannyBookingDetailStatus.givenReviewByCustomer)) ...[
+                  if (controller.bookingDetailsModel?.data?.reviewGivenByMe ==
+                          null &&
+                      (controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus.approvedByAdmin ||
+                          controller.nannyBookingDetailStatus ==
+                              NannyBookingDetailStatus
+                                  .givenReviewByCustomer)) ...[
                     Dimens.boxHeight16,
                     CustomButton(
                       backGroundColor: AppColors.navyBlue,

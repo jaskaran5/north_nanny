@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/settings/components/manage_child_profile/manage_child_profile_controller.dart';
-import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -11,6 +10,8 @@ import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_child_profile_tile.dart';
+
+import '../../../../../widgets/app_text.dart';
 
 //** this is  Manage child profile screen
 class ManageChildProfileView extends StatelessWidget {
@@ -61,9 +62,9 @@ class ManageChildProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
-                      child: Image.asset(
-                        Assets.imagesNoDataPng,
-                        scale: 2,
+                      child:  AppText(
+                        text: TranslationKeys.noResultFound.tr,
+                        style: AppStyles.pdNavyBlue20W600,
                       ),
 
                       //   SvgPicture.asset(

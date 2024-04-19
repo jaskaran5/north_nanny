@@ -5,8 +5,9 @@ import 'customer_home_controller.dart';
 class CustomerHomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CustomerHomeController>(
-      () => CustomerHomeController(),
+    Get.put<CustomerHomeController>(
+      CustomerHomeController(),
+      permanent: true,
     );
   }
 }

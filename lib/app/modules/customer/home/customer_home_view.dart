@@ -22,8 +22,8 @@ import 'customer_home_controller.dart';
 class CustomerHomeView extends StatelessWidget {
   const CustomerHomeView({super.key});
   @override
-  Widget build(BuildContext context) => GetBuilder(
-        init: CustomerHomeController(),
+  Widget build(BuildContext context) => GetBuilder<CustomerHomeController>(
+        // init: CustomerHomeController(),
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             leadingWidth: Dimens.zero,
@@ -303,14 +303,14 @@ class CustomerHomeView extends StatelessWidget {
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
                 )
-              : controller.homeNannyList.isEmpty
+              : controller.homeNannyList.isEmpty && !controller.isNannyDataLoading.value
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Center(
-                          child: Image.asset(
-                            Assets.imagesNoDataPng,
-                            scale: 2,
+                          child: AppText(
+                            text: TranslationKeys.noResultFound.tr,
+                            style: AppStyles.pdNavyBlue20W600,
                           ),
                         ),
                       ],

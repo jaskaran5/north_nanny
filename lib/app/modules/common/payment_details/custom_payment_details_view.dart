@@ -50,7 +50,9 @@ class CustomPaymentDetails extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height: isComeFromSendTip || isComeFromConfirmBooking
+            height: (isComeFromSendTip || isComeFromConfirmBooking) &&
+                    controller.cardList?.isNotEmpty == true &&
+                    controller.cardList != null
                 ? Dimens.oneHundredSeventy
                 : Dimens.eightySix,
             padding: Dimens.edgeInsets16,
@@ -102,128 +104,132 @@ class CustomPaymentDetails extends StatelessWidget {
             ),
           ),
           body: Padding(
-            padding: Dimens.edgeInsets16,
-            child: controller.cardList?.isNotEmpty == true &&
-                    controller.cardList != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      controller.cardList?.length ?? 0,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          /// used to set the card default.
-                          controller.setCardDefault(
-                              cardId: controller.cardList?[index].cardId ?? '');
-                        },
-                        child: Container(
-                          padding: Dimens.edgeInsets10,
-                          margin: Dimens.edgeInsetsB16,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            border: Border.all(
-                              color:
+              padding: Dimens.edgeInsets16,
+              child:
+            !controller.isCardLoading.value && controller.cardList?.isEmpty == true &&
+                      controller.cardList == null
+                  ? Center(
+                      child: AppText(
+                        text: TranslationKeys.noResultFound.tr,
+                        style: AppStyles.pdNavyBlue20W600,
+                        maxLines: 1,
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        controller.cardList?.length ?? 0,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            /// used to set the card default.
+                            controller.setCardDefault(
+                                cardId:
+                                    controller.cardList?[index].cardId ?? '');
+                          },
+                          child: Container(
+                            padding: Dimens.edgeInsets10,
+                            margin: Dimens.edgeInsetsB16,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              border: Border.all(
+                                color: (controller
+                                            .cardList![index].isDefaultCard ??
+                                        false)
+                                    ? AppColors.navyBlue
+                                    : AppColors.primaryColor,
+                                width: 1.5,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      AppColors.lightNavyBlue.withOpacity(.8),
+                                  blurRadius: Dimens.eight,
+                                )
+                              ],
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.twenty),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      height: Dimens.fiftyFive + Dimens.three,
+                                      width: Dimens.fiftyFive + Dimens.three,
+                                      padding: Dimens.edgeInsets6,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            AppColors.colorEEF5FCLightNavyBlue,
+                                        borderRadius:
+                                            BorderRadius.circular(Dimens.ten),
+                                      ),
+                                      child: SvgPicture.asset(
+                                        controller.cardList?[index].cardImage ==
+                                                'visa'
+                                            ? Assets.iconsVisa
+                                            : Assets.iconsMasterCard,
+                                      ),
+                                    ),
+                                    Dimens.boxWidth10,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'XXXX XXXX ',
+                                            style: AppStyles.ubBlack16W600,
+                                            children: [
+                                              TextSpan(
+                                                text: controller
+                                                    .cardList?[index].cardNumber
+                                                    .toString(),
+                                                style: AppStyles.ubBlack16W600,
+                                              ),
+                                            ],
+                                          ),
+                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        Dimens.boxHeight4,
+                                        AppText(
+                                          text: controller
+                                              .cardList?[index].cardImage,
+                                          maxLines: 1,
+                                          style: AppStyles.ubGrey12W500,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    /// used to delete the card .
+                                    controller.deleteCard(
+                                        cardId: controller
+                                                .cardList?[index].cardId ??
+                                            '');
+                                  },
+                                  child: SvgPicture.asset(
+                                    Assets.iconsDelete,
+                                    height: Dimens.thirty,
+                                    width: Dimens.thirty,
+                                  ),
+                                ),
+                                SvgPicture.asset(
                                   (controller.cardList![index].isDefaultCard ??
                                           false)
-                                      ? AppColors.navyBlue
-                                      : AppColors.primaryColor,
-                              width: 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.lightNavyBlue.withOpacity(.8),
-                                blurRadius: Dimens.eight,
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(Dimens.twenty),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    height: Dimens.fiftyFive + Dimens.three,
-                                    width: Dimens.fiftyFive + Dimens.three,
-                                    padding: Dimens.edgeInsets6,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.colorEEF5FCLightNavyBlue,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimens.ten),
-                                    ),
-                                    child: SvgPicture.asset(
-                                      controller.cardList?[index].cardImage ==
-                                              'visa'
-                                          ? Assets.iconsVisa
-                                          : Assets.iconsMasterCard,
-                                    ),
-                                  ),
-                                  Dimens.boxWidth10,
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'XXXX XXXX ',
-                                          style: AppStyles.ubBlack16W600,
-                                          children: [
-                                            TextSpan(
-                                              text: controller
-                                                  .cardList?[index].cardNumber
-                                                  .toString(),
-                                              style: AppStyles.ubBlack16W600,
-                                            ),
-                                          ],
-                                        ),
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Dimens.boxHeight4,
-                                      AppText(
-                                        text: controller
-                                            .cardList?[index].cardImage,
-                                        maxLines: 1,
-                                        style: AppStyles.ubGrey12W500,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  /// used to delete the card .
-                                  controller.deleteCard(
-                                      cardId:
-                                          controller.cardList?[index].cardId ??
-                                              '');
-                                },
-                                child: SvgPicture.asset(
-                                  Assets.iconsDelete,
-                                  height: Dimens.thirty,
-                                  width: Dimens.thirty,
+                                      ? Assets.iconsCircleTick
+                                      : Assets.iconsUncheckCircle,
                                 ),
-                              ),
-                              SvgPicture.asset(
-                                (controller.cardList![index].isDefaultCard ??
-                                        false)
-                                    ? Assets.iconsCircleTick
-                                    : Assets.iconsUncheckCircle,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : Center(
-                    child: AppText(
-                      text: TranslationKeys.noResultFound.tr,
-                      style: AppStyles.ubNavyBlue30W600,
-                      maxLines: 1,
-                    ),
-                  ),
-          ),
+                    )),
         ),
       );
 }

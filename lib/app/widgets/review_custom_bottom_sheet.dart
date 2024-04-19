@@ -62,11 +62,11 @@ class CustomReviewBottomSheet extends StatelessWidget {
             if (reviewsList.isEmpty) ...[
               Dimens.boxHeight20,
               Center(
-                  child: Image.asset(
-                Assets.imagesNoDataPng,
-                height: Dimens.twoHundredFifty,
-                width: Dimens.twoHundredFifty,
-              )),
+                child: AppText(
+                  text: TranslationKeys.noResultFound.tr,
+                  style: AppStyles.pdNavyBlue20W600,
+                ),
+              ),
             ],
             if (reviewsList.isNotEmpty) ...[
               Container(
@@ -109,7 +109,9 @@ class CustomReviewBottomSheet extends StatelessWidget {
                       ],
                     ),
                     AppText(
-                      text:totalReviewsRating==0.0?'0': totalReviewsRating.toString(),
+                      text: totalReviewsRating == 0.0
+                          ? '0'
+                          : totalReviewsRating.toString(),
                       style: AppStyles.ubNavyBlue30W600,
                       maxLines: 1,
                     ),

@@ -45,7 +45,7 @@ class Data {
   String? college;
   String? location;
   String? mobileNo;
-  dynamic bonusReferrals;
+  double? bonusReferrals;
   List<String>? services;
   int? age;
   DateTime? dob;
@@ -92,7 +92,7 @@ class Data {
         college: json["college"],
         location: json["location"],
         mobileNo: json["mobileNo"],
-        bonusReferrals: json["bonusReferrals"],
+        bonusReferrals: json["bonusReferrals"] ?? 0.0 ,
         services: json["services"] == null
             ? []
             : List<String>.from(json["services"]!.map((x) => x)),

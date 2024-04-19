@@ -236,7 +236,7 @@ class CustomerProfileView extends StatelessWidget {
                               ),
                               Dimens.boxHeight4,
                               AppText(
-                                text: '\$ ${controller.referralEarned.value}',
+                                text: '\$ ${double.parse(controller.referralEarned.value).toInt()}',
                                 style: AppStyles.ubGrey14W500,
                                 maxLines: 1,
                               ),

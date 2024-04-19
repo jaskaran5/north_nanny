@@ -44,7 +44,7 @@ class CustomerProfileData {
   int? userId;
   dynamic location;
   dynamic mobileNo;
-  dynamic referralsEarned;
+  double? referralsEarned;
   String? image;
 
   CustomerProfileData({
@@ -66,7 +66,7 @@ class CustomerProfileData {
         userId: json["userId"] ?? '',
         location: json["location"] ?? "",
         mobileNo: json["mobileNo"] ?? '',
-        referralsEarned: json["referralsEarned"] ?? '0',
+        referralsEarned: json["referralsEarned"] ?? 0.0,
         image: json["image"] ?? '',
       );
 

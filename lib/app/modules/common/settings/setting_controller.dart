@@ -7,6 +7,7 @@ import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/faq_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/common/common_web_view/common_web_view.dart';
+import 'package:northshore_nanny_flutter/app/modules/customer/home/customer_home_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/nanny_edit_profile/nanny_edit_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
@@ -318,6 +319,9 @@ class SettingController extends GetxController {
         if (response.response == AppConstants.apiResponseSuccess) {
           Storage.removeValue(StringConstants.isLogin);
           RouteManagement.goToOffAllLogIn();
+
+          Get.delete<CustomerHomeController>(force: true);
+
           toast(msg: response.message.toString(), isError: false);
         } else {
           toast(msg: response.message.toString(), isError: true);

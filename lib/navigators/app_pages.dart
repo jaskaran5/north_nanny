@@ -239,7 +239,12 @@ class AppPages {
       name: Routes.dashboard,
       transitionDuration: transitionDuration,
       page: DashboardBottomView.new,
-      bindings: [DashboardBottomBinding()],
+      bindings: [
+        DashboardBottomBinding(),
+        // Storage.getValue(StringConstants.loginType) == StringConstants.customer
+        //     ? CustomerHomeBinding()
+        //     : NannyHomeBinding()
+      ],
       transition: Transition.rightToLeft,
     ),
 

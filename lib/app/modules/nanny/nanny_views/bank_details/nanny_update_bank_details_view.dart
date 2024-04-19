@@ -58,7 +58,7 @@ class NannyUpdateSettingBankDetailsView extends StatelessWidget {
                         alignment: Alignment.center,
                         child: AppText(
                           text: TranslationKeys.noResultFound.tr,
-                          style: AppStyles.ubNavyBlue30W600,
+                          style: AppStyles.pdNavyBlue20W600,
                         ),
                       ),
                     ),

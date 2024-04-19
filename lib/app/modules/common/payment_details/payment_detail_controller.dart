@@ -119,6 +119,8 @@ class PaymentDetailController extends GetxController {
     }
   }
 
+  RxBool isCardLoading = true.obs;
+
   /// used to store card data
   List<CardData>? cardList;
 
@@ -133,6 +135,7 @@ class PaymentDetailController extends GetxController {
         printInfo(info: " get card list api  $value");
         var response = GetCardListModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          isCardLoading.value = false;
           cardList = response.data;
           update(['card-list-view']);
         } else {
@@ -141,6 +144,7 @@ class PaymentDetailController extends GetxController {
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isCardLoading.value = false;
       printError(info: "Get card  List  API ISSUE $s");
     }
   }

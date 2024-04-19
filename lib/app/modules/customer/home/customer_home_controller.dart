@@ -255,35 +255,37 @@ class CustomerHomeController extends GetxController {
   /**  */
 
   /// GET NANNY LIST DATA WITH LOCATION IN DASHBOARD
-  getDashboardApi(
-      // {
-      //   minMiles,
-      //   maxMiles,
-      //   minAge,
-      //   maxAge,
-      //   dateTime,
-      //   gender,
-      //   name,
-      // }
-      ) async {
-    // String newDateTime = convertDateTimeToString(DateTime.now());
+  getDashboardApi() async {
     try {
-      // if (!(await Utils.hasNetwork())) {
-      //   return;
-      // }
+      if (!(await Utils.hasNetwork())) {
+        return;
+      }
       final dateTime = returnFinalTimeAccordingToDate(
           selectedTime: selectedTime, day: selectedDate);
 
       debugPrint('final Date Time :$dateTime');
-      var body = {
-        "minMiles": filterMinMiles.value,
-        "maxMiles": filterMaxMiles.value,
-        "minAge": filterMinAge.value,
-        "maxAge": filterMaxAge.value,
-        "dateTime": dateTime.toUtc().toIso8601String(),
-        "gender": filterGender.value,
-        "name": filterName.value,
-      };
+      Map<String, dynamic> body;
+      if (isFilterApply.value) {
+        body = {
+          "minMiles": filterMinMiles.value,
+          "maxMiles": filterMaxMiles.value,
+          "minAge": filterMinAge.value,
+          "maxAge": filterMaxAge.value,
+          "dateTime": dateTime.toUtc().toIso8601String(),
+          "gender": filterGender.value,
+          "name": filterName.value,
+        };
+      } else {
+        body = {
+          "minMiles": null,
+          "maxMiles": null,
+          "minAge": null,
+          "maxAge": null,
+          "dateTime": null,
+          "gender": null,
+          "name": null,
+        };
+      }
 
       debugPrint('dashboard api body :$body');
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue(
@@ -295,8 +297,8 @@ class CustomerHomeController extends GetxController {
             AppConstants.apiResponseSuccess.toString()) {
           log("response success");
 
-          nannyListLoading.value = false;
           homeNannyList.value = res.data ?? [];
+          nannyListLoading.value = false;
           isNannyDataLoading.value = false;
           update();
           Utils.closeDialog();
@@ -375,7 +377,10 @@ class CustomerHomeController extends GetxController {
   @override
   void onReady() async {
     getDashboardApi();
-    onClickOnFilterApply(isResetFilters: true);
+    // if (isFilterApply.value) {
+    //   onClickOnFilterApply(isResetFilters: true);
+    // }
+    debugPrint('isFilter apply >>>>>>>>>> $isFilterApply');
     super.onReady();
 
     var address = getAddressFromCoordinates(
@@ -415,6 +420,9 @@ class CustomerHomeController extends GetxController {
     }
   }
 
+  /// used to check filter is applied or not.
+  RxBool isFilterApply = false.obs;
+
   onClickOnFilterApply({required bool isResetFilters}) async {
     var selectedTimeDate = Utility.addTimeToList(
         dates: [selectedDate], addTime: TimeOfDay.fromDateTime(selectedTime));
@@ -445,6 +453,8 @@ class CustomerHomeController extends GetxController {
           "gender": null,
           "name": '',
         };
+        isFilterApply.value = false;
+        update();
       } else {
         final dateTime = returnFinalTimeAccordingToDate(
             selectedTime: selectedTime, day: selectedDate);
@@ -464,8 +474,11 @@ class CustomerHomeController extends GetxController {
                   : 0,
           "name": filterName.value,
         };
+        isFilterApply.value = true;
+        update();
       }
       log("body:-->. $body");
+      log("isFilter apply >>>>>>>>>>. $isFilterApply");
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
 
@@ -492,17 +505,17 @@ class CustomerHomeController extends GetxController {
       // if (!(await Utils.hasNetwork())) {
       //   return;
       // }
-      final dateTime = returnFinalTimeAccordingToDate(
-          selectedTime: selectedTime, day: selectedDate);
+      // final dateTime = returnFinalTimeAccordingToDate(
+      //     selectedTime: selectedTime, day: selectedDate);
 
-      debugPrint('final Date Time :$dateTime');
+      // debugPrint('final Date Time :$dateTime');
       var body = {
-        "minMiles": filterMinMiles.value,
-        "maxMiles": filterMaxMiles.value,
-        "minAge": filterMinAge.value,
-        "maxAge": filterMaxAge.value,
-        "dateTime": dateTime.toUtc().toIso8601String(),
-        "gender": filterGender.value,
+        // "minMiles": filterMinMiles.value,
+        // "maxMiles": filterMaxMiles.value,
+        // // "minAge": filterMinAge.value,
+        // "maxAge": filterMaxAge.value,
+        // "dateTime": dateTime.toUtc().toIso8601String(),
+        // "gender": filterGender.value,
         "name": name,
       };
 

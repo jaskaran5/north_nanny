@@ -837,10 +837,10 @@ class ScheduleNannyView extends StatelessWidget {
                                   ?.minute ??
                               0);
 
-                      print(Utility.formatTimeOfDay(controller
+                      log(Utility.formatTimeOfDay(controller
                           .singleDay?.data?.bookingDetail?.openingTime
-                          .toString()));
-                      print(controller.startTime?.minute);
+                          .toString()).toString());
+                      log(controller.startTime?.minute.toString() ?? '');
                       // if (controller.startTime != null &&
                       //     controller.endTime != null) {
                       if (!isTimeDifferenceGreaterThanOrEqualToOneHour(

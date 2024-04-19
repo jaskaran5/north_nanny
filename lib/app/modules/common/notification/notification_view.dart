@@ -155,7 +155,7 @@ class NotificationView extends StatelessWidget {
                             ),
                             AppText(
                               text: TranslationKeys.noResultFound.tr,
-                              style: AppStyles.ubNavyBlue30W600,
+                              style: AppStyles.pdNavyBlue20W600,
                               textAlign: TextAlign.center,
                             ),
                           ]),

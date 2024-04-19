@@ -22,6 +22,9 @@ class NannyHomeController extends GetxController {
   /// used to store data from backend
   var nannyHomeData = NannyDashboardModel();
 
+  /// used to return the loading things.
+  RxBool isBookingLoading = true.obs;
+
   /// get nanny dashboard api.
   Future<void> getHomeData() async {
     try {
@@ -41,14 +44,18 @@ class NannyHomeController extends GetxController {
         var response = NannyDashboardModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           nannyHomeData = response;
+          isBookingLoading.value = false;
           isSwitchOn = response.data?.isAvailable ?? false;
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
+          isBookingLoading.value = false;
         }
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isBookingLoading.value = false;
+      update();
       printError(info: "Nanny Home get  API ISSUE $s");
     }
   }

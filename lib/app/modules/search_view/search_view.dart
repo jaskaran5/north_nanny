@@ -11,6 +11,8 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_text_field.dart';
 import 'package:northshore_nanny_flutter/app/widgets/short_detail_of_nanny_profile.dart';
 import 'package:northshore_nanny_flutter/navigators/routes_management.dart';
 
+import '../../widgets/app_text.dart';
+
 class SearchView extends StatelessWidget {
   SearchView({super.key});
   final searchTextEditingController = TextEditingController();
@@ -83,9 +85,9 @@ class SearchView extends StatelessWidget {
                   controller.homeNannyList.isEmpty
                       ? Expanded(
                           child: Center(
-                            child: Image.asset(
-                              Assets.imagesNoDataPng,
-                              scale: 2,
+                            child:  AppText(
+                              text: TranslationKeys.noResultFound.tr,
+                              style: AppStyles.pdNavyBlue20W600,
                             ),
                           ),
                         )

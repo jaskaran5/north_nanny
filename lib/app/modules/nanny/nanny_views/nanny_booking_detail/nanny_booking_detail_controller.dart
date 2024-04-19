@@ -39,6 +39,8 @@ class NannyBookingDetailController extends GetxController {
   Polyline? nannyPolyLine;
   BookingDetailsModel? bookingDetailsModel;
 
+  RxBool isArrivedButtonEnable = false.obs;
+
   /// used to check google map controller is Initialize or not
   bool isGoogleControllerInitialize = false;
 
@@ -393,8 +395,23 @@ class NannyBookingDetailController extends GetxController {
                 log('-----------------------position --- $position -------------------> ');
                 if (position != null) {
                   currentPosition = position;
-
                   log("**************** POSITION :  -->> ${currentPosition!.latitude},${currentPosition!.longitude}");
+                  final distance = Geolocator.distanceBetween(
+                    position.latitude,
+                    position.longitude,
+                    double.parse(
+                        bookingDetailsModel?.data?.userDetails?.latitude ??
+                            '0.0'),
+                    double.parse(
+                        bookingDetailsModel?.data?.userDetails?.longitude ??
+                            '0.0'),
+                  );
+
+                  log('distance>>>>>>>>>>>>>>>>>>>> $distance');
+                  if (distance <= 50.0) {
+                    isArrivedButtonEnable.value = true;
+                    update();
+                  }
 
                   /// used to send the data according to lat long.
                   updateLatLong(
