@@ -117,6 +117,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.present;
     } else if (bookingStatus == 2) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.onMyWay;
+      getCurrentLocation();
     } else if (bookingStatus == 3) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.rejected;
     } else if (bookingStatus == 4) {
