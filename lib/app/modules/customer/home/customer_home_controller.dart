@@ -376,19 +376,22 @@ class CustomerHomeController extends GetxController {
 
   @override
   void onReady() async {
-    getDashboardApi();
-    // if (isFilterApply.value) {
-    //   onClickOnFilterApply(isResetFilters: true);
-    // }
-    debugPrint('isFilter apply >>>>>>>>>> $isFilterApply');
     super.onReady();
+    if (Storage.getValue(StringConstants.loginType) ==
+        StringConstants.customer) {
+      getDashboardApi();
+      // if (isFilterApply.value) {
+      //   onClickOnFilterApply(isResetFilters: true);
+      // }
+      debugPrint('isFilter apply >>>>>>>>>> $isFilterApply');
 
-    var address = getAddressFromCoordinates(
-      Storage.getValue(StringConstants.latitude) ?? 0.0,
-      Storage.getValue(StringConstants.longitude) ?? 0.0,
-    );
+      var address = getAddressFromCoordinates(
+        Storage.getValue(StringConstants.latitude) ?? 0.0,
+        Storage.getValue(StringConstants.longitude) ?? 0.0,
+      );
 
-    log("customer home address :--->>$address");
+      log("customer home address :--->>$address");
+    }
     // await setMarkers();
   }
 
@@ -555,8 +558,10 @@ class CustomerHomeController extends GetxController {
   }
 
   socketConnection() async {
+    if (!_socketHelper.isConnected) {
+      _socketHelper.init();
+    }
     // final signalRHelper = SignalRHelper();
-    await _socketHelper.init();
   }
 
   redirectToGetNannyProfile() async {

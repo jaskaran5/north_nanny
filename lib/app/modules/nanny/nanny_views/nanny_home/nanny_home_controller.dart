@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/models/nanny_dashboard_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 
 import '../../../../data/api/api_helper.dart';
 import '../../../../res/constants/api_urls.dart';
@@ -65,7 +67,8 @@ class NannyHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (nannyHomeData.data == null) {
+    if (nannyHomeData.data == null &&
+        Storage.getValue(StringConstants.loginType) == StringConstants.nanny) {
       getHomeData();
     }
     if (!_socketHelper.isConnected) {

@@ -243,6 +243,7 @@ extension FutureExt<T> on Future<Response<T>?> {
       }
 
       if (onError != null) {
+        LoadingDialog.closeLoadingDialog();
         onError(errorMessage);
       }
 
