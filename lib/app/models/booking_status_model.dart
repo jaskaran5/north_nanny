@@ -33,16 +33,20 @@ class BookingStatusModel {
 
 class Data {
   int? bookingStatus;
+  int? bookingId;
 
   Data({
     this.bookingStatus,
+    this.bookingId,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         bookingStatus: json["bookingStatus"],
+        bookingId: json["bookingId"],
       );
 
   Map<String, dynamic> toJson() => {
         "bookingStatus": bookingStatus,
+        "bookingId": bookingId,
       };
 }

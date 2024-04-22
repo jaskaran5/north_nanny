@@ -368,7 +368,9 @@ class NannyBookingDetailView extends StatelessWidget {
                   ),
                   Dimens.boxHeight14,
                   if (controller.bookingDetailsModel?.data?.reviewGivenByMe !=
-                      null) ...[
+                          null
+                      // && controller.bookingDetailsModel?.data?.reviewGivenByMe?.isApprovedFromAdmin==true
+                      ) ...[
                     CustomBookingReview(
                       reviewsList: [
                         if (controller

@@ -92,7 +92,7 @@ class Data {
         college: json["college"],
         location: json["location"],
         mobileNo: json["mobileNo"],
-        bonusReferrals: json["bonusReferrals"] ?? 0.0 ,
+        bonusReferrals: json["bonusReferrals"] ?? 0.0,
         services: json["services"] == null
             ? []
             : List<String>.from(json["services"]!.map((x) => x)),
@@ -139,6 +139,7 @@ class RatingList {
   String? review;
   DateTime? datetime;
   double? rating;
+  bool? isApprovedFromAdmin;
 
   RatingList({
     this.name,
@@ -146,6 +147,7 @@ class RatingList {
     this.review,
     this.datetime,
     this.rating,
+    this.isApprovedFromAdmin,
   });
 
   factory RatingList.fromJson(Map<String, dynamic> json) => RatingList(
@@ -155,6 +157,7 @@ class RatingList {
         datetime:
             json["datetime"] == null ? null : DateTime.parse(json["datetime"]),
         rating: json["rating"],
+        isApprovedFromAdmin: json["isAprovedFromAdmin"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -163,5 +166,6 @@ class RatingList {
         "review": review,
         "datetime": datetime?.toIso8601String(),
         "rating": rating,
+        "isAprovedFromAdmin": isApprovedFromAdmin,
       };
 }

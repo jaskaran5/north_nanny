@@ -188,7 +188,7 @@ class EditProfileView extends StatelessWidget {
                           maxLines: 1,
                           minLines: 1,
                           decoration: customFieldDeco(
-                            hintText: '000 000 0000',
+                            hintText: '(000) 000 0000',
                             prefixWidget: Padding(
                               padding: Dimens.edgeInsets12,
                               child: SvgPicture.asset(

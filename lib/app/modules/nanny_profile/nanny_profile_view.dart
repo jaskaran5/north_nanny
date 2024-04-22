@@ -669,6 +669,9 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                               await showTimePicker(
                                                             context:
                                                                 Get.context!,
+                                                            initialEntryMode:
+                                                                TimePickerEntryMode
+                                                                    .input,
                                                             initialTime: Utility
                                                                 .convertDateTimeToTimeOfDay(controller
                                                                         .singleDay
@@ -712,6 +715,9 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                               await showTimePicker(
                                                             context:
                                                                 Get.context!,
+                                                            initialEntryMode:
+                                                                TimePickerEntryMode
+                                                                    .input,
                                                             initialTime: Utility
                                                                 .convertDateTimeToTimeOfDay(controller
                                                                         .singleDay
@@ -906,6 +912,8 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                               nannyController.startTime =
                                                   await showTimePicker(
                                                 context: Get.context!,
+                                                initialEntryMode:
+                                                    TimePickerEntryMode.input,
                                                 initialTime: nannyController
                                                             .startTime !=
                                                         null
@@ -939,6 +947,8 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                               nannyController.endTime =
                                                   await showTimePicker(
                                                 context: Get.context!,
+                                                initialEntryMode:
+                                                    TimePickerEntryMode.input,
                                                 initialTime: nannyController
                                                             .endTime !=
                                                         null

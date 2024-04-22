@@ -152,7 +152,7 @@ class RecentChatView extends GetView<RecentChatController> {
                       Dimens.boxHeight10,
                       //check
 
-                      controller.recentChatList.isEmpty
+                      controller.recentChatList.isEmpty && !controller.isShimmerEnabled.value
                           ? SizedBox(
                               height: Get.height / 1.4,
                               child: Center(

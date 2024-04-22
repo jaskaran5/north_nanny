@@ -117,7 +117,7 @@ class NannyBookingDetailController extends GetxController {
       nannyBookingDetailStatus = NannyBookingDetailStatus.present;
     } else if (bookingStatus == 2) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.onMyWay;
-      getCurrentLocation();
+      // getCurrentLocation();
     } else if (bookingStatus == 3) {
       nannyBookingDetailStatus = NannyBookingDetailStatus.rejected;
     } else if (bookingStatus == 4) {
@@ -170,6 +170,7 @@ class NannyBookingDetailController extends GetxController {
         var response = NannyBookingDetails.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           typeOfBooking(bookingStatus: bookingStatus);
+          getBookingDetailOfCustomer(bookingId: bookingId);
           update();
         } else {
           toast(msg: response.message.toString(), isError: true);
@@ -216,7 +217,8 @@ class NannyBookingDetailController extends GetxController {
               startTime: DateTime.now(),
             );
           }
-          typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
+          // typeOfBooking(bookingStatus: (response.data?.bookingStatus ?? 0) - 1);
+          getBookingDetailOfCustomer(bookingId: response.data?.bookingId ?? 0);
           update(['timerView']);
         } else {
           toast(msg: response.message.toString(), isError: true);

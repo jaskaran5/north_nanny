@@ -82,7 +82,7 @@ class SearchView extends StatelessWidget {
                     ],
                   ),
                   Dimens.boxHeight16,
-                  controller.homeNannyList.isEmpty
+                  controller.homeNannyList.isEmpty && !controller.isNannyDataLoading.value
                       ? Expanded(
                           child: Center(
                             child:  AppText(

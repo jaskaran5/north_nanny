@@ -32,7 +32,6 @@ class CustomerHomeController extends GetxController {
 
   String? selectedGender = '';
   final _socketHelper = SignalRHelper();
-  RxBool nannyListLoading = true.obs;
 
   double distanceLowerValue = Dimens.zero;
   double distanceHigherValue = 25;
@@ -298,7 +297,6 @@ class CustomerHomeController extends GetxController {
           log("response success");
 
           homeNannyList.value = res.data ?? [];
-          nannyListLoading.value = false;
           isNannyDataLoading.value = false;
           update();
           Utils.closeDialog();
@@ -311,6 +309,7 @@ class CustomerHomeController extends GetxController {
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isNannyDataLoading.value = false;
       printError(info: "Get dashboard data post  API ISSUE $s");
     }
   }
@@ -497,6 +496,7 @@ class CustomerHomeController extends GetxController {
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isNannyDataLoading.value = false;
       printError(info: "Get dashboard data post  API ISSUE $s");
     }
   }
@@ -538,6 +538,7 @@ class CustomerHomeController extends GetxController {
       }, retryFunction: getDashboardApi);
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
+      isNannyDataLoading.value = false;
       printError(info: "Get dashboard data post  API ISSUE $s");
     }
   }

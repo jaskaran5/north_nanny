@@ -102,13 +102,14 @@ class CustomNannyProfileView extends StatelessWidget {
               height: Dimens.thirty,
               alignment: Alignment.center,
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                // mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (nannyGender?.isNotEmpty == true)
                     Container(
                       height: Dimens.twentyEight,
                       padding: Dimens.edgeInsetsL12T6R12B6,
-                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      // margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.listColor,
@@ -125,7 +126,7 @@ class CustomNannyProfileView extends StatelessWidget {
                     Container(
                       height: Dimens.twentyEight,
                       padding: Dimens.edgeInsetsL12T6R12B6,
-                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      // margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.listColor,
@@ -143,7 +144,7 @@ class CustomNannyProfileView extends StatelessWidget {
                     Container(
                       height: Dimens.twentyEight,
                       padding: Dimens.edgeInsetsL12T6R12B6,
-                      margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
+                      // margin: Dimens.edgeInsets0.copyWith(right: Dimens.ten),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.listColor,

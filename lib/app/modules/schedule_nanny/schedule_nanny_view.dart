@@ -231,6 +231,7 @@ class ScheduleNannyView extends StatelessWidget {
                         onTap: () async {
                           TimeOfDay? bookingStartTime = await showTimePicker(
                             context: Get.context!,
+                            initialEntryMode: TimePickerEntryMode.input,
                             initialTime: Utility.convertDateTimeToTimeOfDay(
                                 controller.singleDay?.data?.bookingDetail
                                         ?.openingTime ??
@@ -308,6 +309,7 @@ class ScheduleNannyView extends StatelessWidget {
                         onTap: () async {
                           TimeOfDay? bookingEndTime = await showTimePicker(
                             context: Get.context!,
+                            initialEntryMode: TimePickerEntryMode.input,
                             initialTime: Utility.convertDateTimeToTimeOfDay(
                                 controller.singleDay?.data?.bookingDetail
                                         ?.closingTime ??

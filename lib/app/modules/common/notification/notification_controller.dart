@@ -18,7 +18,7 @@ class NotificationController extends GetxController {
   NotificationListModel? notificationListModel;
 
   /// used to hide the notification no data found variable.
-  bool? isNotificationLoading = true;
+  RxBool isNotificationLoading = true.obs;
 
   /// used to get notification list
   getNotificationList() async {
@@ -36,17 +36,16 @@ class NotificationController extends GetxController {
         printInfo(info: "Get Notification List  response value $value");
         var response = NotificationListModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
+          isNotificationLoading.value = false;
           notificationListModel = response;
-          isNotificationLoading = false;
           update();
         } else {
-          isNotificationLoading = false;
           toast(msg: response.message, isError: true);
         }
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
-      isNotificationLoading = false;
+      isNotificationLoading.value = false;
       printError(info: "Get Notification List   API ISSUE $s");
     }
   }

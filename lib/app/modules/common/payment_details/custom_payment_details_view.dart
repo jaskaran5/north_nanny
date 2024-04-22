@@ -106,15 +106,15 @@ class CustomPaymentDetails extends StatelessWidget {
           body: Padding(
               padding: Dimens.edgeInsets16,
               child:
-              controller.cardList?.isEmpty == true &&
+              controller.cardList?.isEmpty == true ||
                       controller.cardList == null && !controller.isCardLoading.value
                   ? Center(
-                      child: AppText(
-                        text: TranslationKeys.noResultFound.tr,
-                        style: AppStyles.pdNavyBlue20W600,
-                        maxLines: 1,
-                      ),
-                    )
+                    child: AppText(
+                      text: TranslationKeys.noResultFound.tr,
+                      style: AppStyles.pdNavyBlue20W600,
+                      maxLines: 1,
+                    ),
+                  )
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
