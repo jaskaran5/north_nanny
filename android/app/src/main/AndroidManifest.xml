@@ -13,7 +13,6 @@
         android:label="NorthShore Nanny"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
-        android:name="io.flutter.app.FlutterApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_round">
 <!--   this code is used for google map key which is use to access the map -->
