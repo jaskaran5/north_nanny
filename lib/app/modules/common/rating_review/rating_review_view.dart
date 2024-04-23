@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/colors.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
@@ -36,7 +37,8 @@ class RatingReviewView extends StatelessWidget {
                 ),
                 Dimens.boxHeight10,
                 AppText(
-                  text: "How was your experience with this family?",
+                  text:
+                      "How was your experience with this ${controller.logInType == StringConstants.customer ? 'this sitter' : 'this family'}?",
                   style: AppStyles.ubGrey16W400,
                 ),
                 Dimens.boxHeight16,

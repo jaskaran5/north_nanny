@@ -441,7 +441,8 @@ class NannyBookingDetailController extends GetxController {
                 update(['tracking-view']);
               });
             } else if (nannyBookingDetailStatus ==
-                NannyBookingDetailStatus.waitingForApproval) {
+                    NannyBookingDetailStatus.waitingForApproval ||
+                nannyBookingDetailStatus == NannyBookingDetailStatus.endJob) {
               locationStream?.pause();
               log('-----------------------tracking off -------------------> ');
             }
