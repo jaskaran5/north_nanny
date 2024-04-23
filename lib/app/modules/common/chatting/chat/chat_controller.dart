@@ -122,7 +122,7 @@ class ChatController extends GetxController {
     if (_socketHelper.isConnected == false) {
       _socketHelper.init();
     }
-    otherUserId.value = Get.arguments;
+    otherUserId.value = Get.arguments ?? '';
     update();
     super.onInit();
     log("user id -->> ${otherUserId.value}");

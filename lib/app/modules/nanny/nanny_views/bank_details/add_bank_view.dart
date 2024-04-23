@@ -15,7 +15,7 @@ import '../../../../widgets/custom_text_field.dart';
 class AddBankView extends StatelessWidget {
   AddBankView({super.key});
 
-  final bool? isComeFromBooking = Get.arguments;
+  final bool? isComeFromBooking = Get.arguments ?? false;
 
   @override
   Widget build(BuildContext context) => GetBuilder<AddBankDetailController>(
