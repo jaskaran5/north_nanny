@@ -317,9 +317,18 @@ class FCMService {
       String receiverId = resultMap["ReciverId"].toString();
 
       if (userId.toString() == senderId) {
-        Get.toNamed(Routes.chat, arguments: receiverId);
+        Get.toNamed(Routes.chat,
+            arguments: (receiverId == 'null' ||
+                    receiverId == 'Null' ||
+                    receiverId.isEmpty)
+                ? ''
+                : receiverId);
       } else if (userId.toString() == receiverId) {
-        Get.toNamed(Routes.chat, arguments: senderId);
+        Get.toNamed(Routes.chat,
+            arguments:
+                (senderId == 'null' || senderId == 'Null' || senderId.isEmpty)
+                    ? ''
+                    : senderId);
       }
     }
 
