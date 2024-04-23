@@ -9,6 +9,7 @@ import '../../../data/api/api_helper.dart';
 import '../../../res/constants/api_urls.dart';
 import '../../../utils/app_utils.dart';
 import '../../../utils/custom_toast.dart';
+import '../dashboard_bottom/dashboard_bottom_controller.dart';
 
 class NotificationController extends GetxController {
   /// api wrapper object.
@@ -36,10 +37,11 @@ class NotificationController extends GetxController {
         printInfo(info: "Get Notification List  response value $value");
         var response = NotificationListModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
-          isNotificationLoading.value = false;
           notificationListModel = response;
+          isNotificationLoading.value = false;
           update();
         } else {
+          isNotificationLoading.value = false;
           toast(msg: response.message, isError: true);
         }
       }, retryFunction: () {});
@@ -64,6 +66,10 @@ class NotificationController extends GetxController {
       )
           .futureValue((value) {
         printInfo(info: "post read Notification response value $value");
+        /// used to get notification counts.
+        Get.find<DashboardBottomController>().getNotificationCount();
+        /// used to get notification list .
+        getNotificationList();
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);

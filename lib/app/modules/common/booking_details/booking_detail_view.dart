@@ -404,11 +404,13 @@ class BookingDetailView extends StatelessWidget {
                       ) ...[
                     CustomBookingReview(
                       reviewsList: [
-                        if (controller.bookingDataById?.reviewGivenByMe != null)
                           controller.bookingDataById?.reviewGivenByMe,
                         if (controller.bookingDataById?.reviewGivenByOther !=
-                            null)
+                            null
+                        // && controller.bookingDataById?.reviewGivenByOther?.isApprovedFromAdmin==true
+                        )...[
                           controller.bookingDataById?.reviewGivenByOther,
+  ],
                       ],
                     ),
                     Dimens.boxHeight16,

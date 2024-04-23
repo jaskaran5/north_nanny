@@ -373,15 +373,15 @@ class NannyBookingDetailView extends StatelessWidget {
                       ) ...[
                     CustomBookingReview(
                       reviewsList: [
-                        if (controller
-                                .bookingDetailsModel?.data?.reviewGivenByMe !=
-                            null)
                           controller.bookingDetailsModel?.data?.reviewGivenByMe,
                         if (controller.bookingDetailsModel?.data
-                                ?.reviewGivenByOther !=
-                            null)
+                                    ?.reviewGivenByOther !=
+                                null
+                            // && controller.bookingDetailsModel?.data?.reviewGivenByOther?.isApprovedFromAdmin==true
+                            ) ...[
                           controller
                               .bookingDetailsModel?.data?.reviewGivenByOther,
+                        ],
                       ],
                     ),
                   ],
