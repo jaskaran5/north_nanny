@@ -17,7 +17,7 @@ class CommonWebView extends StatefulWidget {
 
 class _CommonWebViewState extends State<CommonWebView> {
   late final WebViewController controller;
-  bool isLoading = true;
+  RxBool isLoading = true.obs;
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _CommonWebViewState extends State<CommonWebView> {
         onProgress: (int progress) {
           log("progress is:-->> $progress");
           if (progress == 100) {
-            isLoading = false;
+            isLoading.value = false;
             setState(() {});
           }
         },
@@ -41,10 +41,14 @@ class _CommonWebViewState extends State<CommonWebView> {
             NavigationDecision.navigate,
       ),
     );
-    controller.loadRequest(Uri.parse(
-        widget.appBarTitle == TranslationKeys.aboutUs.tr
+    controller
+        .loadRequest(Uri.parse(widget.appBarTitle == TranslationKeys.aboutUs.tr
             ? AppConstants.aboutUsWebViewUrl
-            : 'https://www.codemicros.com'));
+            : widget.appBarTitle == TranslationKeys.privacyPolicy.tr
+                ? AppConstants.privacyPolicyWebViewUrl
+                : widget.appBarTitle == TranslationKeys.termAndConditions.tr
+                    ? AppConstants.termsAndConditionWebViewUrl
+                    : 'https://www.codemicros.com'));
   }
 
   @override
@@ -66,7 +70,7 @@ class _CommonWebViewState extends State<CommonWebView> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          isLoading
+          isLoading.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )

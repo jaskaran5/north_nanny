@@ -12,6 +12,10 @@ class AppConstants {
   static const int apiResponseSuccess = 1;
   static const String aboutUsWebViewUrl =
       "https://api.northshore.harishparas.com/StaticContent/About-us.html";
+  static const String termsAndConditionWebViewUrl =
+      "https://api.northshore.harishparas.com/StaticContent/Terms-Conditions.html";
+  static const String privacyPolicyWebViewUrl =
+      "https://api.northshore.harishparas.com/StaticContent/Privacy-Policy.html";
 
   static const Duration timeOutDuration = Duration(seconds: 60);
 }

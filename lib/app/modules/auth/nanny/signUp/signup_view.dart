@@ -197,7 +197,7 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(CommonWebView(
+                                              Get.to(()=>CommonWebView(
                                                 appBarTitle: TranslationKeys
                                                     .termAndConditions.tr,
                                               ));
@@ -213,7 +213,7 @@ class SignUpView extends StatelessWidget {
                                           style: AppStyles.ubNavyBlue14W700,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(
+                                              Get.to(()=>
                                                 CommonWebView(
                                                   appBarTitle: TranslationKeys
                                                       .privacyPolicy.tr,
