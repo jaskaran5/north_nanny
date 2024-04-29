@@ -330,24 +330,24 @@ class FCMService {
                     ? ''
                     : senderId);
       }
+    } else {
+      /// used to paras the response.
+      var response = parseNotificationModel(payload);
+
+      debugPrint('Notification Tap response: ${response.toJson()}');
+      String logInType = await Storage.getValue(StringConstants.loginType);
+
+      debugPrint(
+          'Notification Tap LogIn Type :$logInType  and  response $response');
+
+      var controller = Get.find<DashboardBottomController>();
+      controller.selectedBottomTab = 2;
+      controller.getNotificationCount();
+      Future.delayed(
+        const Duration(seconds: 4),
+        () => controller.update(),
+      );
     }
-
-    /// used to paras the response.
-    var response = parseNotificationModel(payload);
-
-    debugPrint('Notification Tap response: $response');
-    String logInType = await Storage.getValue(StringConstants.loginType);
-
-    debugPrint(
-        'Notification Tap LogIn Type :$logInType  and  response $response');
-
-    var controller = Get.find<DashboardBottomController>();
-    controller.selectedBottomTab = 2;
-    controller.getNotificationCount();
-    Future.delayed(
-      const Duration(seconds: 4),
-      () => controller.update(),
-    );
 
     /// this code is used to redirect to the booking flow when we tap on that.
     /*
