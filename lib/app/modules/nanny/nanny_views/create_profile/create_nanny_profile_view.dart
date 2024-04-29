@@ -214,13 +214,13 @@ class CreateNannyProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     TextField(
                       inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(14),
                         PhoneNumberFormatter(),
                       ],
                       controller: controller.phoneNumberTextEditingController,
                       maxLines: 1,
                       minLines: 1,
-                      maxLength: 14,
                       decoration: customFieldDeco(
                         hintText: ' (000) 000 0000',
                         prefixWidget: Padding(

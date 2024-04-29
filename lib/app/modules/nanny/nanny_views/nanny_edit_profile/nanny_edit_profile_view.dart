@@ -223,6 +223,7 @@ class NannyEditProfileView extends StatelessWidget {
                     Dimens.boxHeight20,
                     TextField(
                       inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(14),
                         PhoneNumberFormatter(),
                       ],
