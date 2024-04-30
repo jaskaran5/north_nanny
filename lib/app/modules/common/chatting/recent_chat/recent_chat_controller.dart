@@ -11,6 +11,7 @@ import 'package:northshore_nanny_flutter/app/modules/common/socket/singnal_r_soc
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/app_constants.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
+import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 class RecentChatController extends GetxController {
@@ -66,6 +67,7 @@ class RecentChatController extends GetxController {
   }
 
   void invokeRecentChat() {
+    Utils.hasNetwork();
     socketHelper.hubConnection.off("MyChatList");
     socketHelper.hubConnection.on("MyChatList", (arguments) {
       try {

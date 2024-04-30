@@ -54,8 +54,8 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         isAvailable: json["isAvailable"],
-        address: json["address"],
-        name: json["name"],
+        address: json["address"] ?? '',
+        name: json["name"] ?? '',
         totalRevenue: json["totalRevenue"],
         bookingRequest: json["bookingRequest"] == null
             ? []
@@ -107,7 +107,7 @@ class BookingRequest {
 
   factory BookingRequest.fromJson(Map<String, dynamic> json) => BookingRequest(
         bookingId: json["bookingId"],
-        name: json["name"],
+        name: json["name"] ?? '',
         image: json["image"],
         rating: json["rating"],
         reviewCount: json["reviewcount"],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -23,12 +25,132 @@ class Utils {
 
   static Future<bool> hasNetwork({bool? showToast}) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult[0] != ConnectivityResult.wifi &&
+        connectivityResult[0] != ConnectivityResult.mobile &&
+        connectivityResult[0] != ConnectivityResult.ethernet) {
       toast(msg: "Please check your Internet Connection", isError: true);
       return false;
     } else {
       return true;
     }
+  }
+
+  /// used to listen the internet connectivity.
+  static void checkInternetConnection() async {
+    Connectivity().onConnectivityChanged.listen((event) {
+      log("<<<<<<<<<<<<<<<<<< Network Connection Type >>>>>>>>>>>>>>  ${event.toString()}");
+      if (event[0] != ConnectivityResult.wifi &&
+          event[0] != ConnectivityResult.ethernet &&
+          event[0] != ConnectivityResult.mobile) {
+        // showCupertinoDialog(
+        //   context: Get.context!,
+        //   builder: (context) {
+        //     return Align(
+        //       alignment: Alignment.bottomCenter,
+        //       child: Material(
+        //         borderRadius: BorderRadius.circular(Dimens.twelve),
+        //         child: Container(
+        //           height: Dimens.eighteen,
+        //           padding: Dimens.edgeInsets8,
+        //           margin: EdgeInsets.symmetric(horizontal: Dimens.fifteen),
+        //           decoration: BoxDecoration(
+        //               color: AppColors.primaryColor,
+        //               borderRadius: BorderRadius.circular(Dimens.ten),
+        //               boxShadow: [
+        //                 BoxShadow(
+        //                   color: AppColors.hintColor.withOpacity(0.3),
+        //                   blurRadius: Dimens.four,
+        //                   spreadRadius: Dimens.zero,
+        //                   offset: Offset(
+        //                     Dimens.zero,
+        //                     Dimens.two,
+        //                   ),
+        //                 )
+        //               ]),
+        //           child: Column(
+        //             mainAxisSize: MainAxisSize.min,
+        //             children: [
+        //               Row(
+        //                 mainAxisSize: MainAxisSize.min,
+        //                 children: [
+        //                   Container(
+        //                     padding: Dimens.edgeInsets8,
+        //                     decoration: BoxDecoration(
+        //                         borderRadius: BorderRadius.circular(Dimens.ten),
+        //                         color:
+        //                             AppColors.fC3030RedColor.withOpacity(0.2)),
+        //                     child: const Icon(
+        //                       Icons.error,
+        //                       color: AppColors.fC3030RedColor,
+        //                     ),
+        //                   ),
+        //                   Dimens.boxWidth10,
+        //                   Flexible(
+        //                     child: Text(
+        //                       StringConstants.noInternet,
+        //                       textAlign: TextAlign.center,
+        //                       style: TextStyle(
+        //                         fontSize: Dimens.fifteen,
+        //                         fontWeight: FontWeight.w600,
+        //                         color: AppColors.fC3030RedColor,
+        //                       ),
+        //                     ),
+        //                   ),
+        //                   Dimens.boxWidth10,
+        //                 ],
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // );
+
+        Get.rawSnackbar(
+          borderRadius: Dimens.ten,
+          backgroundColor: AppColors.fC3030RedColor.withOpacity(.2),
+          animationDuration: const Duration(seconds: 5),
+          margin:Dimens.edgeInsets16,
+          snackPosition: SnackPosition.BOTTOM,
+          messageText: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: Dimens.edgeInsets8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimens.ten),
+                          color: AppColors.fC3030RedColor.withOpacity(0.2)),
+                      child: const Icon(
+                        Icons.error,
+                        color: AppColors.fC3030RedColor,
+                      ),
+                    ),
+                    Dimens.boxWidth10,
+                    Flexible(
+                      child: Text(
+                        StringConstants.noInternet,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: Dimens.fifteen,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.fC3030RedColor,
+                        ),
+                      ),
+                    ),
+                    Dimens.boxWidth10,
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    });
   }
 
   static bool emailValidation(String email) {

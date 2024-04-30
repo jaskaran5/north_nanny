@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/api_urls.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'api_helper.dart';
 
 class ApiHelperImpl extends GetConnect implements ApiHelper {
@@ -25,6 +26,7 @@ class ApiHelperImpl extends GetConnect implements ApiHelper {
   }
 
   void addRequestModifier() {
+    Utils.hasNetwork();
     httpClient.addRequestModifier<dynamic>((request) {
       if (Storage.hasData(StringConstants.token)) {
         printInfo(

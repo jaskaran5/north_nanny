@@ -77,21 +77,21 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        email: json["email"],
-        userId: json["userId"],
-        name: json["name"],
+        firstName: json["firstName"] ?? '',
+        lastName: json["lastName"] ?? '',
+        email: json["email"] ?? '',
+        userId: json["userId"] ?? '',
+        name: json["name"] ?? '',
         image: json["image"],
         gender: json["gender"],
         reviewCount: json["reviewCount"],
         rating: json["rating"],
         experience: json["experience"],
-        about: json["about"],
-        highSchool: json["highSchool"],
-        college: json["college"],
-        location: json["location"],
-        mobileNo: json["mobileNo"],
+        about: json["about"] ?? '',
+        highSchool: json["highSchool"] ?? '',
+        college: json["college"] ?? '',
+        location: json["location"] ?? '',
+        mobileNo: json["mobileNo"] ?? '',
         bonusReferrals: json["bonusReferrals"] ?? 0.0,
         services: json["services"] == null
             ? []

@@ -1,7 +1,7 @@
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
 var en = <String, String>{
-  TranslationKeys.appName: "NorthShore Nanny",
+  TranslationKeys.appName: "The Northshore Nanny",
   TranslationKeys.findTheBestBabySitter:
       "Find the best babysitters in your area!",
   TranslationKeys.needASitter: 'Need a sitter',

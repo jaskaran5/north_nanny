@@ -6,7 +6,7 @@
 class AppConstants {
   const AppConstants._();
 
-  static const String appName = 'NorthShore Nanny';
+  static const String appName = 'The Northshore Nanny';
   static const String fontFamilyPlayfairDisplay = 'PlayfairDisplay';
   static const String fontFamilyUrbanist = 'Urbanist';
   static const int apiResponseSuccess = 1;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/app/utils/initializers.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_values.dart';
 import 'package:northshore_nanny_flutter/navigators/app_pages.dart';
@@ -11,13 +12,14 @@ import 'app/data/notifications/firebase_helper.dart';
 import 'app/modules/common/socket/singnal_r_socket.dart';
 
 void main() async {
-  await _setup();
   runApp(const MyApp());
+  await _setup();
 }
 
 /// used to setup the storage and notification things.
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
+
 
   /// used to initialize the local storage.
   await GetStorage.init();
@@ -27,6 +29,9 @@ Future<void> _setup() async {
 
   /// used to initialize socket .
   SignalRHelper().init();
+
+  /// used to check the internet connection
+  Utils.checkInternetConnection();
 }
 
 class MyApp extends StatefulWidget {

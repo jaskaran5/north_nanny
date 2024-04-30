@@ -152,12 +152,13 @@ class RecentChatView extends GetView<RecentChatController> {
                       Dimens.boxHeight10,
                       //check
 
-                      controller.recentChatList.isEmpty && !controller.isShimmerEnabled.value
+                      controller.recentChatList.isEmpty &&
+                              !controller.isShimmerEnabled.value
                           ? SizedBox(
                               height: Get.height / 1.4,
                               child: Center(
                                 child: Text(
-                                  "No New Messages",
+                                  TranslationKeys.noResultFound.tr,
                                   style: AppStyles.pdNavyBlue20W600,
                                 ),
                               ),

@@ -679,6 +679,16 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                                         ?.openingTime ??
                                                                     DateTime
                                                                         .now()),
+                                                            builder: (context,
+                                                                    child) =>
+                                                                MediaQuery(
+                                                              data: MediaQuery.of(
+                                                                      context)
+                                                                  .copyWith(
+                                                                      alwaysUse24HourFormat:
+                                                                          false),
+                                                              child: child!,
+                                                            ),
                                                           );
                                                           nannyController
                                                               .update();
@@ -725,6 +735,16 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                                         ?.closingTime ??
                                                                     DateTime
                                                                         .now()),
+                                                            builder: (context,
+                                                                    child) =>
+                                                                MediaQuery(
+                                                              data: MediaQuery.of(
+                                                                      context)
+                                                                  .copyWith(
+                                                                      alwaysUse24HourFormat:
+                                                                          false),
+                                                              child: child!,
+                                                            ),
                                                           );
                                                           nannyController
                                                               .update();
@@ -919,6 +939,14 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                         null
                                                     ? nannyController.startTime!
                                                     : TimeOfDay.now(),
+                                                builder: (context, child) =>
+                                                    MediaQuery(
+                                                  data: MediaQuery.of(context)
+                                                      .copyWith(
+                                                          alwaysUse24HourFormat:
+                                                              false),
+                                                  child: child!,
+                                                ),
                                               );
                                               nannyController.update();
                                               log('startTime:${nannyController.startTime}');
@@ -954,6 +982,14 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                         null
                                                     ? nannyController.endTime!
                                                     : TimeOfDay.now(),
+                                                builder: (context, child) =>
+                                                    MediaQuery(
+                                                  data: MediaQuery.of(context)
+                                                      .copyWith(
+                                                          alwaysUse24HourFormat:
+                                                              false),
+                                                  child: child!,
+                                                ),
                                               );
                                               nannyController.update();
                                               log('endTime:${nannyController.endTime}');

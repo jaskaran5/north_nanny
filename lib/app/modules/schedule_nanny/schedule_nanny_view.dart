@@ -31,6 +31,11 @@ class ScheduleNannyView extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppbarWidget(
             title: TranslationKeys.scheduleNanny.tr,
+            onBackPress: () {
+              controller.startTime=null;
+              controller.endTime=null;
+              Get.back();
+            },
           ),
           body: Padding(
             padding: Dimens.edgeInsets16,
@@ -115,7 +120,8 @@ class ScheduleNannyView extends StatelessWidget {
 
                                 /// used to get the data by date.
                                 controller.getNannyDataByDate(
-                                    date: selectedDay,nannyUserId:  controller.getNannyData?.id);
+                                    date: selectedDay,
+                                    nannyUserId: controller.getNannyData?.id);
                               }
                             },
                             focusedDay: controller.focusedDay,
@@ -232,10 +238,19 @@ class ScheduleNannyView extends StatelessWidget {
                           TimeOfDay? bookingStartTime = await showTimePicker(
                             context: Get.context!,
                             initialEntryMode: TimePickerEntryMode.input,
-                            initialTime: Utility.convertDateTimeToTimeOfDay(
-                                controller.singleDay?.data?.bookingDetail
+                            initialTime: controller.startTime != null
+                                ? controller.startTime!
+                                : Utility.convertDateTimeToTimeOfDay(controller
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
                                         ?.openingTime ??
                                     DateTime.now()),
+                            builder: (context, child) => MediaQuery(
+                              data: MediaQuery.of(context)
+                                  .copyWith(alwaysUse24HourFormat: false),
+                              child: child!,
+                            ),
                           );
                           if (bookingStartTime != null) {
                             final openingTime =
@@ -310,8 +325,12 @@ class ScheduleNannyView extends StatelessWidget {
                           TimeOfDay? bookingEndTime = await showTimePicker(
                             context: Get.context!,
                             initialEntryMode: TimePickerEntryMode.input,
-                            initialTime: Utility.convertDateTimeToTimeOfDay(
-                                controller.singleDay?.data?.bookingDetail
+                            initialTime: controller.endTime != null
+                                ? controller.endTime!
+                                : Utility.convertDateTimeToTimeOfDay(controller
+                                        .singleDay
+                                        ?.data
+                                        ?.bookingDetail
                                         ?.closingTime ??
                                     DateTime.now()),
                           );
@@ -840,8 +859,9 @@ class ScheduleNannyView extends StatelessWidget {
                               0);
 
                       log(Utility.formatTimeOfDay(controller
-                          .singleDay?.data?.bookingDetail?.openingTime
-                          .toString()).toString());
+                              .singleDay?.data?.bookingDetail?.openingTime
+                              .toString())
+                          .toString());
                       log(controller.startTime?.minute.toString() ?? '');
                       // if (controller.startTime != null &&
                       //     controller.endTime != null) {
