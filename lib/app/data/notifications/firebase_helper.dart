@@ -46,7 +46,7 @@ class FCMService {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     messaging = FirebaseMessaging.instance;
-    const String iconNotification = '@drawable/ic_notification';
+    const String iconNotification = '@mipmap/ic_notification';
 
     const initializationSettingsAndroid =
         AndroidInitializationSettings(iconNotification);
@@ -148,7 +148,7 @@ class FCMService {
       message.senderId ?? '',
       'NorthShoreNanny',
       channelDescription: 'nanny channel description',
-      icon: "@drawable/ic_notification",
+      icon: "@mipmap/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,
@@ -245,7 +245,7 @@ class FCMService {
       message.senderId ?? '',
       'NorthShoreNanny',
       channelDescription: 'nanny channel description',
-      icon: "@drawable/ic_notification",
+      icon: "@mipmap/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,

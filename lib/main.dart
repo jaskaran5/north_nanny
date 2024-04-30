@@ -12,14 +12,14 @@ import 'app/data/notifications/firebase_helper.dart';
 import 'app/modules/common/socket/singnal_r_socket.dart';
 
 void main() async {
-  runApp(const MyApp());
   await _setup();
+  runApp(const MyApp());
+
 }
 
 /// used to setup the storage and notification things.
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
-
 
   /// used to initialize the local storage.
   await GetStorage.init();
