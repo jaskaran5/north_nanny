@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -25,9 +26,12 @@ class Utils {
 
   static Future<bool> hasNetwork({bool? showToast}) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
+    var isSlow = await isInternetSlow;
+
     if (connectivityResult[0] != ConnectivityResult.wifi &&
         connectivityResult[0] != ConnectivityResult.mobile &&
-        connectivityResult[0] != ConnectivityResult.ethernet) {
+        connectivityResult[0] != ConnectivityResult.ethernet &&
+        isSlow) {
       toast(msg: "Please check your Internet Connection", isError: true);
       return false;
     } else {
@@ -37,81 +41,29 @@ class Utils {
 
   /// used to listen the internet connectivity.
   static void checkInternetConnection() async {
-    Connectivity().onConnectivityChanged.listen((event) {
+    Connectivity().onConnectivityChanged.listen((event) async {
       log("<<<<<<<<<<<<<<<<<< Network Connection Type >>>>>>>>>>>>>>  ${event.toString()}");
+      var isSlow = await isInternetSlow;
       if (event[0] != ConnectivityResult.wifi &&
           event[0] != ConnectivityResult.ethernet &&
-          event[0] != ConnectivityResult.mobile) {
-        // showCupertinoDialog(
-        //   context: Get.context!,
-        //   builder: (context) {
-        //     return Align(
-        //       alignment: Alignment.bottomCenter,
-        //       child: Material(
-        //         borderRadius: BorderRadius.circular(Dimens.twelve),
-        //         child: Container(
-        //           height: Dimens.eighteen,
-        //           padding: Dimens.edgeInsets8,
-        //           margin: EdgeInsets.symmetric(horizontal: Dimens.fifteen),
-        //           decoration: BoxDecoration(
-        //               color: AppColors.primaryColor,
-        //               borderRadius: BorderRadius.circular(Dimens.ten),
-        //               boxShadow: [
-        //                 BoxShadow(
-        //                   color: AppColors.hintColor.withOpacity(0.3),
-        //                   blurRadius: Dimens.four,
-        //                   spreadRadius: Dimens.zero,
-        //                   offset: Offset(
-        //                     Dimens.zero,
-        //                     Dimens.two,
-        //                   ),
-        //                 )
-        //               ]),
-        //           child: Column(
-        //             mainAxisSize: MainAxisSize.min,
-        //             children: [
-        //               Row(
-        //                 mainAxisSize: MainAxisSize.min,
-        //                 children: [
-        //                   Container(
-        //                     padding: Dimens.edgeInsets8,
-        //                     decoration: BoxDecoration(
-        //                         borderRadius: BorderRadius.circular(Dimens.ten),
-        //                         color:
-        //                             AppColors.fC3030RedColor.withOpacity(0.2)),
-        //                     child: const Icon(
-        //                       Icons.error,
-        //                       color: AppColors.fC3030RedColor,
-        //                     ),
-        //                   ),
-        //                   Dimens.boxWidth10,
-        //                   Flexible(
-        //                     child: Text(
-        //                       StringConstants.noInternet,
-        //                       textAlign: TextAlign.center,
-        //                       style: TextStyle(
-        //                         fontSize: Dimens.fifteen,
-        //                         fontWeight: FontWeight.w600,
-        //                         color: AppColors.fC3030RedColor,
-        //                       ),
-        //                     ),
-        //                   ),
-        //                   Dimens.boxWidth10,
-        //                 ],
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // );
-
+          event[0] != ConnectivityResult.mobile &&
+          isSlow) {
         Get.rawSnackbar(
           borderRadius: Dimens.ten,
-          backgroundColor: AppColors.fC3030RedColor.withOpacity(.2),
+          backgroundColor: AppColors.primaryColor,
           animationDuration: const Duration(seconds: 5),
-          margin:Dimens.edgeInsets16,
+          margin: Dimens.edgeInsets16,
+          boxShadows: [
+            BoxShadow(
+              color: AppColors.hintColor.withOpacity(0.3),
+              blurRadius: Dimens.four,
+              spreadRadius: Dimens.zero,
+              offset: Offset(
+                Dimens.zero,
+                Dimens.two,
+              ),
+            )
+          ],
           snackPosition: SnackPosition.BOTTOM,
           messageText: Center(
             child: Column(
@@ -151,6 +103,19 @@ class Utils {
         );
       }
     });
+  }
+
+  /// used to check internet is slow or not.
+  static Future<bool> get isInternetSlow async {
+    try {
+      final stopwatch = Stopwatch()..start();
+      await InternetAddress.lookup(
+          'example.com'); // Replace with a reliable address
+      final duration = stopwatch.elapsedMilliseconds;
+      return duration > 2000;
+    } on SocketException catch (_) {
+      return true; // Consider slow if lookup fails
+    }
   }
 
   static bool emailValidation(String email) {
