@@ -46,7 +46,7 @@ class FCMService {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     messaging = FirebaseMessaging.instance;
-    const String iconNotification = '@mipmap/ic_notification';
+    const String iconNotification = '@drawable/ic_notification';
 
     const initializationSettingsAndroid =
         AndroidInitializationSettings(iconNotification);
@@ -146,9 +146,9 @@ class FCMService {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       message.senderId ?? '',
-      'NorthShoreNanny',
-      channelDescription: 'nanny channel description',
-      icon: "@mipmap/ic_notification",
+      'The Northshore Nanny',
+      channelDescription: 'the nanny channel description',
+      icon: "@drawable/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,
@@ -210,7 +210,7 @@ class FCMService {
 
       /// used to get booking detail.
       Get.find<NannyBookingDetailController>().getBookingDetailOfCustomer(
-          bookingId: int.parse(response.bookingId.toString()));
+          bookingId: int.parse(response.bookingId ?? ''));
 
       /// call if index ==0,
       if (dashBoardBottomController.selectedTabIndex.value == 0) {
@@ -243,9 +243,9 @@ class FCMService {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       message.senderId ?? '',
-      'NorthShoreNanny',
+      'The Northshore Nanny',
       channelDescription: 'nanny channel description',
-      icon: "@mipmap/ic_notification",
+      icon: "@drawable/ic_notification",
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,
