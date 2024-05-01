@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:northshore_nanny_flutter/app/models/common_response_model.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/assets.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/enums.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
+import '../../../navigators/routes_management.dart';
 import '../../data/api/api_response.dart';
 import '../../data/api/errors/api_error.dart';
 import '../../data/api/interface_controller/api_interface_controller.dart';
+import '../../data/storage/storage.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/loading_dialog.dart';
 import '../../widgets/custom_inkwell_widget.dart';
@@ -207,10 +212,18 @@ extension FutureExt<T> on Future<Response<T>?> {
       if (value?.body != null) {
         final result = ApiResponse.getResponse<T>(value!);
         if (result != null) {
-          response(result);
+          log('result lsan $result');
+          var middleWare =
+              CommonResponse.fromJson(result as Map<String,dynamic>);
+          if (middleWare.response == 401) {
+            log('>>>>>>>>>> MiddleWareHit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+            Storage.clearStorage();
+            RouteManagement.goChooseBabySitter();
+          } else {
+            response(result);
+          }
         }
       }
-
       interface.update();
     }).catchError((e) {
       LoadingDialog.closeLoadingDialog();

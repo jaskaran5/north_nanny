@@ -14,6 +14,9 @@ import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 import 'package:northshore_nanny_flutter/app/utils/app_utils.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
+import '../../../../../navigators/routes_management.dart';
+import '../../../../data/storage/storage.dart';
+
 class RecentChatController extends GetxController {
   final String _logTag = "Socket";
   final ApiHelper _apiHelper = ApiHelper.to;
@@ -74,8 +77,14 @@ class RecentChatController extends GetxController {
         log("argument recent chat:-->>$arguments");
         var data = arguments?[0] as Map<String, dynamic>;
         var response = ChatListResponseModel.fromJson(data);
-        recentChatList = response.data?.chatList ?? [];
-        isShimmerEnabled.value = false;
+        if (response.response == 401) {
+          log('>>>>>>>>>> MiddleWareHit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+          Storage.clearStorage();
+          RouteManagement.goChooseBabySitter();
+        } else {
+          recentChatList = response.data?.chatList ?? [];
+          isShimmerEnabled.value = false;
+        }
         update();
       } catch (e) {
         log('$_logTag: Error processing chat list: $e');
