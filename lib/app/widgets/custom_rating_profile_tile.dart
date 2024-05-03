@@ -70,7 +70,7 @@ class CustomRatingProfileTile extends StatelessWidget {
                   ),
                   Dimens.boxWidth4,
                   CustomRichText(
-                    firstTxt: rating.toString(),
+                    firstTxt: rating == 0.0 ? '0' : rating.toString(),
                     lastTxt: "($totalReviews ${TranslationKeys.reviews.tr})",
                   )
                 ],
