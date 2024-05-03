@@ -148,9 +148,10 @@ class HomeCustomListView extends StatelessWidget {
                       width: Dimens.oneHundredNinety,
                       child: AppText(
                         text: description,
-                        maxLines: 4,
+                        maxLines: 3,
                         style: AppStyles.ubGrey12W400,
                         textAlign: TextAlign.start,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

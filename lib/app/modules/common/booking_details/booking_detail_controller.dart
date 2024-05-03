@@ -139,7 +139,8 @@ class BookingDetailController extends GetxController {
               onTapFirstButton: () {
                 Get.to(
                   () => SendTipView(
-                      userName: bookingDataById?.userDetails?.name ?? '',
+                      userName:
+                          '${bookingDataById?.userDetails?.name ?? ''}${bookingDataById?.userDetails?.gender == 1 ? ', M' : bookingDataById?.userDetails?.gender == 2 ? ', F' : ''}',
                       image: bookingDataById?.userDetails?.image ?? '',
                       amountTextEditingController:
                           sendTipAmountTextEditingController,
@@ -205,12 +206,18 @@ class BookingDetailController extends GetxController {
                   RatingAndReviewBinding().dependencies();
                 }
                 Get.find<RatingAndReviewController>().storeUserData(
-                    name: bookingDataById?.userDetails?.name ?? '',
-                    image: bookingDataById?.userDetails?.image ?? '',
-                    userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
-                    toUserId: bookingDataById?.userDetails?.userId ?? 0,
-                    bookedId: bookingDataById?.bookingId ?? 0,
-                    userRating: bookingDataById?.userDetails?.rating ?? 0.0);
+                  name: bookingDataById?.userDetails?.name ?? '',
+                  image: bookingDataById?.userDetails?.image ?? '',
+                  userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
+                  toUserId: bookingDataById?.userDetails?.userId ?? 0,
+                  bookedId: bookingDataById?.bookingId ?? 0,
+                  userRating: bookingDataById?.userDetails?.rating ?? 0.0,
+                  userGender: bookingDataById?.userDetails?.gender == 1
+                      ? ', M'
+                      : bookingDataById?.userDetails?.gender == 2
+                          ? ', F'
+                          : '',
+                );
                 RouteManagement.goToRatingReviewScreen();
               },
               secondButtonTitle: 'Rate Now',
@@ -387,7 +394,8 @@ class BookingDetailController extends GetxController {
               onTapFirstButton: () {
                 Get.to(
                   () => SendTipView(
-                      userName: bookingDataById?.userDetails?.name ?? '',
+                      userName:
+                          '${bookingDataById?.userDetails?.name ?? ' '}${bookingDataById?.userDetails?.gender == 1 ? ', M' : bookingDataById?.userDetails?.gender == 2 ? ', F' : ''}',
                       image: bookingDataById?.userDetails?.image ?? '',
                       amountTextEditingController:
                           sendTipAmountTextEditingController,
@@ -452,12 +460,18 @@ class BookingDetailController extends GetxController {
                   RatingAndReviewBinding().dependencies();
                 }
                 Get.find<RatingAndReviewController>().storeUserData(
-                    name: bookingDataById?.userDetails?.name ?? '',
-                    image: bookingDataById?.userDetails?.image ?? '',
-                    userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
-                    toUserId: bookingDataById?.userDetails?.userId ?? 0,
-                    bookedId: bookingDataById?.bookingId ?? 0,
-                    userRating: bookingDataById?.userDetails?.rating ?? 0.0);
+                  name: bookingDataById?.userDetails?.name ?? '',
+                  image: bookingDataById?.userDetails?.image ?? '',
+                  userReviews: bookingDataById?.userDetails?.reviewCount ?? 0,
+                  toUserId: bookingDataById?.userDetails?.userId ?? 0,
+                  bookedId: bookingDataById?.bookingId ?? 0,
+                  userRating: bookingDataById?.userDetails?.rating ?? 0.0,
+                  userGender: bookingDataById?.userDetails?.gender == 1
+                      ? ', M'
+                      : bookingDataById?.userDetails?.gender == 2
+                          ? ', F'
+                          : '',
+                );
                 RouteManagement.goToRatingReviewScreen();
               },
               secondButtonTitle: 'Rate Now',

@@ -509,6 +509,7 @@ class NannyEditProfileView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      maxLength: 100,
                       cursorColor: AppColors.navyBlue,
                       cursorWidth: Dimens.one,
                       style: AppStyles.ubBlack15W600,

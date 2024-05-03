@@ -24,6 +24,7 @@ class RatingAndReviewController extends GetxController {
 
   String? userName;
   String? userImage;
+  String gender = '';
   double? totalRating;
   int? totalReview;
   int? userId;
@@ -72,6 +73,7 @@ class RatingAndReviewController extends GetxController {
   /// method used to store the user type and user data
   storeUserData({
     required String name,
+    required String userGender,
     required String image,
     required int userReviews,
     required int toUserId,
@@ -84,6 +86,7 @@ class RatingAndReviewController extends GetxController {
     totalReview = userReviews;
     userId = toUserId;
     bookingId = bookedId;
+    gender = userGender;
     update();
   }
 

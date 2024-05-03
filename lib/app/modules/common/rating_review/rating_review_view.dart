@@ -46,7 +46,7 @@ class RatingReviewView extends StatelessWidget {
                 /** PROFILE section */
                 CustomRatingProfileTile(
                   image: controller.userImage ?? '',
-                  name: controller.userName ?? '',
+                  name: '${controller.userName ?? ' '}${controller.gender}',
                   rating: controller.totalRating ?? 0.0,
                   totalReviews: controller.totalReview ?? 0,
                 ),

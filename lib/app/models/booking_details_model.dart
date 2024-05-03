@@ -210,6 +210,7 @@ class UserDetails {
   int? userId;
   String? name;
   String? image;
+  int? gender;
   double? rating;
   String? review;
   String? location;
@@ -231,12 +232,14 @@ class UserDetails {
     this.aboutMe,
     this.reviewCount,
     this.ratingList,
+    this.gender,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
         userId: json["userId"],
         name: json["name"],
         image: json["image"],
+        gender: json["gender"],
         rating: json["rating"],
         review: json["review"],
         location: json["location"],
@@ -254,6 +257,7 @@ class UserDetails {
         "userId": userId,
         "name": name,
         "image": image,
+        "gender": gender,
         "rating": rating,
         "review": review,
         "location": location,

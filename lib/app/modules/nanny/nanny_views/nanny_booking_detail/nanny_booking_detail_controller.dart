@@ -284,16 +284,21 @@ class NannyBookingDetailController extends GetxController {
                   RatingAndReviewBinding().dependencies();
                 }
                 Get.find<RatingAndReviewController>().storeUserData(
-                    name: bookingDetailsModel?.data?.userDetails?.name ?? '',
-                    image: bookingDetailsModel?.data?.userDetails?.image ?? '',
-                    userReviews:
-                        bookingDetailsModel?.data?.userDetails?.reviewCount ??
-                            0,
-                    toUserId:
-                        bookingDetailsModel?.data?.userDetails?.userId ?? 0,
-                    bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
-                    userRating:
-                        bookingDetailsModel?.data?.userDetails?.rating ?? 0.0);
+                  name: bookingDetailsModel?.data?.userDetails?.name ?? '',
+                  image: bookingDetailsModel?.data?.userDetails?.image ?? '',
+                  userReviews:
+                      bookingDetailsModel?.data?.userDetails?.reviewCount ?? 0,
+                  toUserId: bookingDetailsModel?.data?.userDetails?.userId ?? 0,
+                  bookedId: bookingDetailsModel?.data?.bookingId ?? 0,
+                  userRating:
+                      bookingDetailsModel?.data?.userDetails?.rating ?? 0.0,
+                  userGender:
+                      bookingDetailsModel?.data?.userDetails?.gender == 1
+                          ? ', M'
+                          : bookingDetailsModel?.data?.userDetails?.gender == 2
+                              ? ', F'
+                              : '',
+                );
                 RouteManagement.goToRatingReviewScreen();
               },
               isImage: true,

@@ -373,7 +373,7 @@ class NannyBookingDetailView extends StatelessWidget {
                       ) ...[
                     CustomBookingReview(
                       reviewsList: [
-                          controller.bookingDetailsModel?.data?.reviewGivenByMe,
+                        controller.bookingDetailsModel?.data?.reviewGivenByMe,
                         if (controller.bookingDetailsModel?.data
                                     ?.reviewGivenByOther !=
                                 null
@@ -784,24 +784,34 @@ class NannyBookingDetailView extends StatelessWidget {
                           RatingAndReviewBinding().dependencies();
                         }
                         Get.find<RatingAndReviewController>().storeUserData(
-                            name: controller.bookingDetailsModel?.data
-                                    ?.userDetails?.name ??
-                                '',
-                            image: controller.bookingDetailsModel?.data
-                                    ?.userDetails?.image ??
-                                '',
-                            userReviews: controller.bookingDetailsModel?.data
-                                    ?.userDetails?.reviewCount ??
-                                0,
-                            toUserId: controller.bookingDetailsModel?.data
-                                    ?.userDetails?.userId ??
-                                0,
-                            bookedId: controller
-                                    .bookingDetailsModel?.data?.bookingId ??
-                                0,
-                            userRating: controller.bookingDetailsModel?.data
-                                    ?.userDetails?.rating ??
-                                0.0);
+                          name: controller.bookingDetailsModel?.data
+                                  ?.userDetails?.name ??
+                              '',
+                          image: controller.bookingDetailsModel?.data
+                                  ?.userDetails?.image ??
+                              '',
+                          userReviews: controller.bookingDetailsModel?.data
+                                  ?.userDetails?.reviewCount ??
+                              0,
+                          toUserId: controller.bookingDetailsModel?.data
+                                  ?.userDetails?.userId ??
+                              0,
+                          bookedId:
+                              controller.bookingDetailsModel?.data?.bookingId ??
+                                  0,
+                          userRating: controller.bookingDetailsModel?.data
+                                  ?.userDetails?.rating ??
+                              0.0,
+                          userGender: controller.bookingDetailsModel?.data
+                                      ?.userDetails?.gender ==
+                                  1
+                              ? ', M'
+                              : controller.bookingDetailsModel?.data
+                                          ?.userDetails?.gender ==
+                                      2
+                                  ? ', F'
+                                  : '',
+                        );
                         RouteManagement.goToRatingReviewScreen();
                       },
                     ),

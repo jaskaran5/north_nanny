@@ -183,6 +183,7 @@ class UserDetails {
   String? aboutMe;
   int? reviewCount;
   int? age;
+  int? gender;
   dynamic distance;
   String? experience;
   List<RatingList>? ratingList;
@@ -202,6 +203,7 @@ class UserDetails {
     this.distance,
     this.experience,
     this.ratingList,
+    this.gender,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
@@ -216,6 +218,7 @@ class UserDetails {
         aboutMe: json["aboutMe"],
         reviewCount: json["reviewCount"],
         age: json["age"],
+        gender: json["gender"],
         distance: json["diatance"],
         experience: json["experience"],
         ratingList: json["ratingList"] == null
@@ -236,6 +239,7 @@ class UserDetails {
         "aboutMe": aboutMe,
         "reviewCount": reviewCount,
         "age": age,
+        "gender": gender,
         "diatance": distance,
         "experience": experience,
         "ratingList": ratingList == null

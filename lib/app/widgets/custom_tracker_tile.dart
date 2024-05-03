@@ -126,7 +126,8 @@ class CustomTrackerTile extends StatelessWidget {
                       Dimens.boxHeight4,
                       AppText(
                         text: description,
-                        maxLines: 4,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: AppStyles.ubLightNavy10W400,
                         textAlign: TextAlign.start,
                       ),
