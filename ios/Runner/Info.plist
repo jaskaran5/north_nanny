@@ -22,12 +22,28 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>schema</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>northshore</string>
+			</array>
+		</dict>
+		<dict/>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<string>0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play using while notification</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -40,8 +56,6 @@
 	<string>To update your profile and send images in chat, the app needs permission to access your device's camera and gallery</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Play using while notification</string> 
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
