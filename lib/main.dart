@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,6 +21,11 @@ void main() async {
 /// used to setup the storage and notification things.
 Future<void> _setup() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// used to set the app orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   /// used to initialize the local storage.
   await GetStorage.init();
