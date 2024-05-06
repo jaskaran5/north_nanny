@@ -54,6 +54,9 @@
                 <data
                     android:host="api.northshore.harishparas.com"
                     android:scheme="https" />
+                <data
+                    android:host="api.northshore.harishparas.com"
+                    android:scheme="northshorenanny" />
 
             </intent-filter>
 <!--            end deepLinking-->
