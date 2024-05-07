@@ -33,6 +33,9 @@ class CreateNannyProfileController extends GetxController {
   final collegeTextEditingController = TextEditingController();
   final tellUsTextEditingController = TextEditingController();
 
+  String latitude = '';
+  String longitude = '';
+
   List<String> experienceList = [
     '1 ${TranslationKeys.year.capitalizeFirst}',
     '2 ${TranslationKeys.year.capitalizeFirst}s',
@@ -126,10 +129,12 @@ class CreateNannyProfileController extends GetxController {
                   ? 2
                   : 0,
         "Location": locationTextEditingController.text.trim(),
-        "Latitude":
-            Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
-        "Longitude":
-            Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
+        "Latitude": latitude.isNotEmpty
+            ? latitude
+            : Storage.getValue(StringConstants.latitude),
+        "Longitude": longitude.isNotEmpty
+            ? longitude
+            : Storage.getValue(StringConstants.longitude),
         'Experience': selectedYear,
         'NameOfHighSchool': highSchoolTextEditingController.text.trim(),
         'NameOfCollage': collegeTextEditingController.text.trim(),
@@ -295,8 +300,14 @@ class CreateNannyProfileController extends GetxController {
   /// -------->>>>>>>>>> UPDATE LOCATION <<<<<<<<<<---------
   Future<void> updateLocationTextField({
     required String formatAddress,
+    required String lat,
+    required String long,
   }) async {
+    log('location in Nanny create profile >>>>>>> $formatAddress');
+
     locationTextEditingController.text = formatAddress;
+    latitude = lat;
+    longitude = long;
     update();
   }
 }

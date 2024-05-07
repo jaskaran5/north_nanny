@@ -13,6 +13,8 @@ import 'package:northshore_nanny_flutter/app/res/theme/styles.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
+import '../data/storage/storage.dart';
+
 class CurrentLocationGoogleMap extends StatelessWidget {
   const CurrentLocationGoogleMap({super.key});
 
@@ -95,7 +97,8 @@ class CurrentLocationGoogleMap extends StatelessWidget {
                     myLocationButtonEnabled: false,
                     zoomControlsEnabled: false,
                     initialCameraPosition: CameraPosition(
-                      target: googleMapViewController.currentLatLng.value!,
+                      target: LatLng(Storage.getValue(StringConstants.latitude),
+                          Storage.getValue(StringConstants.longitude)),
                       zoom: 15.0,
                     ),
                     onMapCreated: (GoogleMapController controller) {
@@ -105,8 +108,12 @@ class CurrentLocationGoogleMap extends StatelessWidget {
                     markers: <Marker>{
                       Marker(
                         markerId: const MarkerId('current_location'),
-                        position: googleMapViewController.currentLatLng.value ??
-                            const LatLng(0, 0),
+                        position: googleMapViewController
+                                    .currentLatLng.value.longitude ==
+                                0.0
+                            ? LatLng(Storage.getValue(StringConstants.latitude),
+                                Storage.getValue(StringConstants.longitude))
+                            : googleMapViewController.currentLatLng.value,
                         infoWindow: const InfoWindow(
                           title: 'Current Location',
                           snippet: 'Your current location',

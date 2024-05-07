@@ -137,10 +137,10 @@ class LogInController extends GetxController {
         "deviceType": Platform.isAndroid ? "android" : "ios",
         "userType": userType,
         'timeZone': timeZone,
-        "latitude":
-            Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
-        "longitude":
-            Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
+        // "latitude":
+        //     Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
+        // "longitude":
+        //     Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
       };
 
       printInfo(info: "login up controller form data: $body");

@@ -24,6 +24,9 @@ class CreateCustomerProfileController extends GetxController {
   final locationTextEditingController = TextEditingController();
   final referrelCodeTextEditingController = TextEditingController();
 
+  String latitude = '';
+  String longitude = '';
+
   CroppedFile? pickedImage;
 
   String imageUrl = '';
@@ -56,8 +59,15 @@ class CreateCustomerProfileController extends GetxController {
   }
 
   /// -------->>>>>>>>>> UPDATE LOCATION <<<<<<<<<<---------
-  Future<void> updateLocationTextField({required String position}) async {
+  Future<void> updateLocationTextField({
+    required String position,
+    required String lat,
+    required String long,
+  }) async {
+    log('location in customer create profile >>>>>>> $position');
     locationTextEditingController.text = position;
+    latitude = lat;
+    longitude = long;
     update();
   }
 
@@ -88,8 +98,12 @@ class CreateCustomerProfileController extends GetxController {
         return;
       }
 
-      var lat = Storage.getValue(StringConstants.latitude) ?? 30.7046 ?? 30;
-      var lang = Storage.getValue(StringConstants.longitude) ?? 76.7179;
+      var lat = latitude.isNotEmpty
+          ? latitude
+          : Storage.getValue(StringConstants.latitude);
+      var lang = longitude.isNotEmpty
+          ? longitude
+          : Storage.getValue(StringConstants.longitude);
 
       FormData body = FormData({
         if (pickedImage != null)
@@ -107,7 +121,7 @@ class CreateCustomerProfileController extends GetxController {
         "ReferralCode": referrelCodeTextEditingController.text.trim()
       });
 
-      log(body.fields.toString());
+      log('body create customer profile : ${body.fields.toString()}');
       log("auth token:-->> ${Storage.getValue(StringConstants.token)}");
 
       _apiHelper.postApi(ApiUrls.customerCreateProfile, body).futureValue(
