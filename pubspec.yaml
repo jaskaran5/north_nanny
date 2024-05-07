@@ -76,6 +76,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   share_plus: ^7.2.2
   dependency_validator: ^3.2.3
+  google_places_flutter: ^2.0.8
   
 
 

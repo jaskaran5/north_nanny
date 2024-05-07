@@ -45,7 +45,7 @@ class ContactUsView extends StatelessWidget {
                             width: Dimens.twoHundredFifty,
                             child: AppText(
                               text:
-                                  'Submit your queries by entering following detail',
+                                  'Submit your queries by entering following details',
                               style: AppStyles.ubGrey16W400,
                               textAlign: TextAlign.start,
                             ),

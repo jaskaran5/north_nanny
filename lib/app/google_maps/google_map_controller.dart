@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -9,15 +10,18 @@ import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_customer_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
+import 'package:northshore_nanny_flutter/app/res/theme/dimens.dart';
 
 class GoogleMapViewController extends GetxController {
   RxBool isFromEdit = false.obs;
+
+  final searchLocationTextEditingController = TextEditingController();
+
   Rxn<LatLng> currentLatLng = Rxn(LatLng(
       Storage.getValue(StringConstants.latitude) ?? 30.7046,
       Storage.getValue(StringConstants.longitude) ?? 76.7179));
 //
-  final Completer<GoogleMapController> googleMapController =
-      Completer<GoogleMapController>();
+  GoogleMapController? googleMapController;
 
   @override
   void onInit() {
@@ -79,8 +83,8 @@ class GoogleMapViewController extends GetxController {
     return position;
   }
 
-  initilizedGoogleMapController({contro}) {
-    googleMapController.complete(contro);
+  initializeGoogleMapController({required GoogleMapController controller}) {
+    googleMapController = controller;
     update();
   }
 
@@ -135,5 +139,25 @@ class GoogleMapViewController extends GetxController {
         currentLatLng.value?.longitude ?? 0.0);
 
     return address;
+  }
+
+  /// used to get location on based on search .
+  updateCameraPositionOfMapBySearch(
+      {required String lat, required String lon}) async {
+    if (lat.isNotEmpty && lat != 'null' || lon.isNotEmpty && lon != 'null') {
+      var latitude = double.parse(lat);
+      var longitude = double.parse(lon);
+      log('lat long update:$latitude  , $longitude');
+      googleMapController?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: Dimens.ten,
+          ),
+        ),
+      );
+      currentLatLng.value = LatLng(latitude, longitude);
+    }
+    update();
   }
 }
