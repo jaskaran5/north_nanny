@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/models/location_lat_long_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/auth/customer/customer_views/create_profile/create_customer_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny/nanny_views/create_profile/create_nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/string_contants.dart';
@@ -44,7 +45,6 @@ class GoogleMapViewController extends GetxController {
 
   updateCurrentPosition({required double latitude, required double longitude}) {
     currentLatLng.value = LatLng(latitude, longitude);
-
     update();
   }
 
@@ -147,14 +147,22 @@ class GoogleMapViewController extends GetxController {
     }
   }
 
-  Future<String> getEditLocation() async {
+  Future<LocationLatLongModel> getEditLocation() async {
     if (currentLatLng.value.longitude == 0.0) {
       var address = await getAddressFromCoordinates(
           Storage.getValue(StringConstants.latitude),
           Storage.getValue(StringConstants.longitude));
-      return address;
+      return LocationLatLongModel(
+        latitude: Storage.getValue(StringConstants.latitude),
+        longitude: Storage.getValue(StringConstants.longitude),
+        location: address,
+      );
     } else {
-      return searchLocationTextEditingController.text;
+      return LocationLatLongModel(
+        latitude: currentLatLng.value.latitude.toString(),
+        longitude: currentLatLng.value.longitude.toString(),
+        location: searchLocationTextEditingController.text,
+      );
     }
   }
 

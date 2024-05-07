@@ -45,6 +45,8 @@ class Data {
   String? college;
   String? location;
   String? mobileNo;
+  String? latitude;
+  String? longitude;
   double? bonusReferrals;
   List<String>? services;
   int? age;
@@ -74,6 +76,8 @@ class Data {
     this.isDrivingLicence,
     this.ratingList,
     this.dob,
+    this.latitude,
+    this.longitude,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -103,6 +107,8 @@ class Data {
             ? []
             : List<RatingList>.from(
                 json["ratingList"]!.map((x) => RatingList.fromJson(x))),
+        latitude: json["latitude"] ?? '',
+        longitude: json["longitude"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,6 +127,8 @@ class Data {
         "college": college,
         "location": location,
         "mobileNo": mobileNo,
+        "latitude": latitude,
+        "longitude": longitude,
         "bonusReferrals": bonusReferrals,
         "services":
             services == null ? [] : List<dynamic>.from(services!.map((x) => x)),

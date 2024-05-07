@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:northshore_nanny_flutter/app/models/location_lat_long_model.dart';
 import 'package:northshore_nanny_flutter/app/utils/phone_number_formate.dart';
 import 'package:northshore_nanny_flutter/app/utils/translations/translation_keys.dart';
 
@@ -306,7 +307,7 @@ class NannyEditProfileView extends StatelessWidget {
                       maxLines: 1,
                       minLines: 1,
                       onTap: () async {
-                        String? address = await Get.toNamed(
+                        LocationLatLongModel? address = await Get.toNamed(
                                 Routes.googleMapView,
                                 arguments: true)
                             ?.then((value) {
@@ -315,7 +316,11 @@ class NannyEditProfileView extends StatelessWidget {
                         log("new address is -->> $address");
 
                         if (address != null) {
-                          controller.updateLocationAddress(address: address);
+                          controller.updateLocationAddress(
+                            address: address.location.toString(),
+                            lat: address.latitude.toString(),
+                            lon: address.longitude.toString(),
+                          );
                         }
                       },
                       readOnly: true,

@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_binding.dart';
 import 'package:northshore_nanny_flutter/app/modules/nanny_profile/nanny_profile_controller.dart';
 import 'package:northshore_nanny_flutter/app/res/constants/extensions.dart';
 
 import '../../../../data/api/api_helper.dart';
+import '../../../../google_maps/google_map_controller.dart';
 import '../../../../models/nanny_profile_model.dart';
 import '../../../../models/register_response_model.dart';
 import '../../../../res/constants/api_urls.dart';
@@ -68,6 +70,9 @@ class NannyEditProfileController extends GetxController {
   String? licenseHaveOrNot = '';
   String? imageUrl = '';
 
+  String latitude = '';
+  String longitude = '';
+
   /// used to store the value of image from camera or galley.
   CroppedFile? pickedImage;
 
@@ -123,10 +128,21 @@ class NannyEditProfileController extends GetxController {
               licenseHaveOrNot = TranslationKeys.no.capitalizeFirst.toString();
             }
           }
-
+          latitude = response.data?.latitude.toString() ??
+              Storage.getValue(StringConstants.latitude);
+          longitude = response.data?.longitude.toString() ??
+              Storage.getValue(StringConstants.longitude);
           selectedServices = response.data?.services ?? [];
           imageUrl = response.data?.image;
           update();
+          if (!Get.isRegistered<GoogleMapViewController>()) {
+            GoogleMapBinding().dependencies();
+          }
+          Get.find<GoogleMapViewController>().updateCurrentPosition(
+              latitude: double.parse(response.data?.latitude.toString() ??
+                  Storage.getValue(StringConstants.latitude)),
+              longitude: double.parse(response.data?.longitude.toString() ??
+                  Storage.getValue(StringConstants.longitude)));
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
@@ -159,10 +175,12 @@ class NannyEditProfileController extends GetxController {
                   ? 2
                   : 0,
         "Location": locationTextEditingController.text.trim(),
-        "Latitude":
-            Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
-        "Longitude":
-            Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
+        "Latitude": latitude.isNotEmpty
+            ? latitude
+            : Storage.getValue(StringConstants.latitude) ?? 30.7046.toString(),
+        "Longitude": longitude.isNotEmpty
+            ? longitude
+            : Storage.getValue(StringConstants.longitude) ?? 76.7179.toString(),
         'Experience': selectedYear,
         'NameOfHighSchool': highSchoolTextEditingController.text.trim(),
         'NameOfCollage': collegeTextEditingController.text.trim(),
@@ -269,8 +287,11 @@ class NannyEditProfileController extends GetxController {
   }
 
   /// update location
-  updateLocationAddress({required String address}) {
+  updateLocationAddress(
+      {required String address, required String lat, required String lon}) {
     locationTextEditingController.text = address;
+    longitude = lon;
+    latitude = lat;
     update();
   }
 }
