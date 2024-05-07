@@ -140,7 +140,7 @@ class NannyHomeView extends StatelessWidget {
                           Dimens.boxHeight4,
                           AppText(
                             text:
-                                '\$${controller.nannyHomeData.data?.totalRevenue ?? ''}',
+                                '\$${controller.nannyHomeData.data?.totalRevenue?.toStringAsFixed(2) ?? ''}',
                             style: AppStyles.ubColorFFF24W700,
                             maxLines: 1,
                           ),
