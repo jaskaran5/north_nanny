@@ -69,7 +69,18 @@ class EditProfileView extends StatelessWidget {
 
                                 //*** ------------------------------------>>>>>>>>>>>>>>>>>>  PROFILE PIC */
                                 child: controller.pickedImage != null
-                                    ? controller
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.twenty),
+                                        child: Image.file(
+                                          File(controller.pickedImage?.path ??
+                                              ''),
+                                          height: Dimens.oneHundredTwenty,
+                                          width: Dimens.oneHundredTwenty,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : controller
                                             .customerImageUrl.value.isNotEmpty
                                         ? CustomCacheNetworkImage(
                                             img: controller
@@ -77,19 +88,7 @@ class EditProfileView extends StatelessWidget {
                                             size: Dimens.oneHundredTwenty,
                                             imageRadius: Dimens.eighteen,
                                           )
-                                        : ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimens.twenty),
-                                            child: Image.file(
-                                              File(controller
-                                                      .pickedImage?.path ??
-                                                  ''),
-                                              height: Dimens.oneHundredTwenty,
-                                              width: Dimens.oneHundredTwenty,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                    : Dimens.box0,
+                                        : Dimens.box0,
                               ),
                               Positioned(
                                 top: -20,
