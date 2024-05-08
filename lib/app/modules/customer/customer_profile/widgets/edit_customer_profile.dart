@@ -12,6 +12,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_cache_network_image.dart';
 import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
+import '../../../../models/location_lat_long_model.dart';
 import '../../../../res/constants/assets.dart';
 import '../../../../res/theme/colors.dart';
 import '../../../../res/theme/dimens.dart';
@@ -67,32 +68,28 @@ class EditProfileView extends StatelessWidget {
                                 ),
 
                                 //*** ------------------------------------>>>>>>>>>>>>>>>>>>  PROFILE PIC */
-                                child: controller.pickedImage == null
-                                    ? controller.customerImageUrl.value.isEmpty
-                                        ? Padding(
-                                            padding: Dimens.edgeInsets16,
-                                            child: SvgPicture.asset(
-                                              Assets.imagesUserAvatar,
-                                              fit: BoxFit.contain,
-                                            ),
-                                          )
-                                        : CustomCacheNetworkImage(
+                                child: controller.pickedImage != null
+                                    ? controller
+                                            .customerImageUrl.value.isNotEmpty
+                                        ? CustomCacheNetworkImage(
                                             img: controller
                                                 .customerImageUrl.value,
                                             size: Dimens.oneHundredTwenty,
                                             imageRadius: Dimens.eighteen,
                                           )
-                                    : ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimens.twenty),
-                                        child: Image.file(
-                                          File(controller.pickedImage?.path ??
-                                              ''),
-                                          height: Dimens.oneHundredTwenty,
-                                          width: Dimens.oneHundredTwenty,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                                        : ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.twenty),
+                                            child: Image.file(
+                                              File(controller
+                                                      .pickedImage?.path ??
+                                                  ''),
+                                              height: Dimens.oneHundredTwenty,
+                                              width: Dimens.oneHundredTwenty,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )
+                                    : Dimens.box0,
                               ),
                               Positioned(
                                 top: -20,
@@ -212,18 +209,21 @@ class EditProfileView extends StatelessWidget {
                           maxLines: 1,
                           minLines: 1,
                           onTap: () async {
-                            String? address = await Get.toNamed(
-                                    Routes.googleMapView,
+                            await Get.toNamed(Routes.googleMapView,
                                     arguments: true)
-                                ?.then((value) {
-                              return value;
+                                ?.then((address) {
+                              log("new address is -->> $address");
+                              log("new address is -->> ${address != null}");
+                              if (address != null) {
+                                final data = address as LocationLatLongModel;
+                                log("new address is -->> ${data.location}");
+                                controller.updateLocationAddress(
+                                  address: data.location.toString(),
+                                  lat: data.latitude.toString(),
+                                  long: data.longitude.toString(),
+                                );
+                              }
                             });
-                            log("new address is -->> $address");
-
-                            if (address != null) {
-                              controller.updateLocationAddress(
-                                  address: address);
-                            }
                           },
                           decoration: customFieldDeco(
                             hintText: TranslationKeys.selectLocation.tr,

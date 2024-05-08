@@ -212,7 +212,6 @@ extension FutureExt<T> on Future<Response<T>?> {
       if (value?.body != null) {
         final result = ApiResponse.getResponse<T>(value!);
         if (result != null) {
-          log('result lsan $result');
           var middleWare =
               CommonResponse.fromJson(result as Map<String,dynamic>);
           if (middleWare.response == 401) {

@@ -16,12 +16,18 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 import '../data/storage/storage.dart';
 
 class CurrentLocationGoogleMap extends StatelessWidget {
-  const CurrentLocationGoogleMap({super.key});
+  CurrentLocationGoogleMap({super.key});
+
+  final isFromEdit = Get.arguments ?? false;
 
   @override
   Widget build(BuildContext context) {
     // var googleMapViewController = Get.put(GoogleMapViewController());
     return GetBuilder<GoogleMapViewController>(
+      initState: (state) {
+        Get.find<GoogleMapViewController>()
+            .updateIsFromEdit(isFrom: isFromEdit);
+      },
       builder: (googleMapViewController) {
         return Scaffold(
             appBar: CustomAppbarWidget(
@@ -97,8 +103,19 @@ class CurrentLocationGoogleMap extends StatelessWidget {
                     myLocationButtonEnabled: false,
                     zoomControlsEnabled: false,
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(Storage.getValue(StringConstants.latitude),
-                          Storage.getValue(StringConstants.longitude)),
+                      target: LatLng(
+                          googleMapViewController
+                                      .currentLatLng.value.latitude !=
+                                  0.0
+                              ? googleMapViewController
+                                  .currentLatLng.value.latitude
+                              : Storage.getValue(StringConstants.latitude),
+                          googleMapViewController
+                                      .currentLatLng.value.longitude !=
+                                  0.0
+                              ? googleMapViewController
+                                  .currentLatLng.value.longitude
+                              : Storage.getValue(StringConstants.longitude)),
                       zoom: 15.0,
                     ),
                     onMapCreated: (GoogleMapController controller) {
@@ -129,6 +146,7 @@ class CurrentLocationGoogleMap extends StatelessWidget {
               onTap: () {
                 if (googleMapViewController.isFromEdit.value) {
                   googleMapViewController.getEditLocation().then((value) {
+                    log('value>>>> ${value.location}');
                     Get.back(result: value);
                   });
                 } else {

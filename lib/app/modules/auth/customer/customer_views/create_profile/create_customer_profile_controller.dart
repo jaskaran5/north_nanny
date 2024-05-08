@@ -64,7 +64,7 @@ class CreateCustomerProfileController extends GetxController {
     required String lat,
     required String long,
   }) async {
-    log('location in customer create profile >>>>>>> $position');
+    log('location in customer create profile >>>>>>> $position  $lat $long');
     locationTextEditingController.text = position;
     latitude = lat;
     longitude = long;
@@ -117,7 +117,7 @@ class CreateCustomerProfileController extends GetxController {
           "gender": selectedGender == 'Male' ? 1 : 2,
         "Latitude": lat.toString(),
         "Longitude": lang.toString(),
-        // "Location": firstNameTextEditingController.text.trim(),
+        "Location": locationTextEditingController.text.trim(),
         "ReferralCode": referrelCodeTextEditingController.text.trim()
       });
 

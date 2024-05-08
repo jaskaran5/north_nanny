@@ -46,6 +46,8 @@ class CustomerProfileData {
   dynamic mobileNo;
   double? referralsEarned;
   String? image;
+  String? latitude;
+  String? longitude;
 
   CustomerProfileData({
     this.firstName,
@@ -56,6 +58,8 @@ class CustomerProfileData {
     this.mobileNo,
     this.referralsEarned,
     this.image,
+    this.longitude,
+    this.latitude,
   });
 
   factory CustomerProfileData.fromJson(Map<String, dynamic> json) =>
@@ -68,6 +72,8 @@ class CustomerProfileData {
         mobileNo: json["mobileNo"] ?? '',
         referralsEarned: json["referralsEarned"] ?? 0.0,
         image: json["image"] ?? '',
+        longitude: json["longitude"] ?? '',
+        latitude: json["latitude"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,5 +85,7 @@ class CustomerProfileData {
         "mobileNo": mobileNo,
         "referralsEarned": referralsEarned,
         "image": image,
+        "latitude": latitude,
+        "longitude": longitude,
       };
 }

@@ -35,8 +35,9 @@ class GoogleMapViewController extends GetxController {
       //   longitude: value.longitude,
       // );
     });
+    searchLocationTextEditingController.clear();
 
-    isFromEdit.value = Get.arguments;
+    isFromEdit.value = Get.arguments ?? false;
 
     log("-----isfromEdit--->>>. ${isFromEdit.value}");
     update();
@@ -86,6 +87,7 @@ class GoogleMapViewController extends GetxController {
 
   initializeGoogleMapController({required GoogleMapController controller}) {
     googleMapController = controller;
+    log('>>>>>>>>>> map Created>>>>>>>>>>>>>>>>');
     update();
   }
 
@@ -105,8 +107,10 @@ class GoogleMapViewController extends GetxController {
     }
   }
 
-  updateIsFromData() {
-    isFromEdit.value = true;
+  updateIsFromEdit({required bool isFrom}) {
+    isFromEdit.value = isFrom;
+    log('isFrom Edit :$isFrom   >>>>>>> ${currentLatLng.value}');
+    searchLocationTextEditingController.clear();
     update();
   }
 
@@ -148,22 +152,11 @@ class GoogleMapViewController extends GetxController {
   }
 
   Future<LocationLatLongModel> getEditLocation() async {
-    if (currentLatLng.value.longitude == 0.0) {
-      var address = await getAddressFromCoordinates(
-          Storage.getValue(StringConstants.latitude),
-          Storage.getValue(StringConstants.longitude));
-      return LocationLatLongModel(
-        latitude: Storage.getValue(StringConstants.latitude),
-        longitude: Storage.getValue(StringConstants.longitude),
-        location: address,
-      );
-    } else {
-      return LocationLatLongModel(
-        latitude: currentLatLng.value.latitude.toString(),
-        longitude: currentLatLng.value.longitude.toString(),
-        location: searchLocationTextEditingController.text,
-      );
-    }
+    return LocationLatLongModel(
+      latitude: currentLatLng.value.latitude.toString(),
+      longitude: currentLatLng.value.longitude.toString(),
+      location: searchLocationTextEditingController.text,
+    );
   }
 
   /// used to get location on based on search .

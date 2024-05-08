@@ -289,9 +289,13 @@ class NannyEditProfileController extends GetxController {
   /// update location
   updateLocationAddress(
       {required String address, required String lat, required String lon}) {
-    locationTextEditingController.text = address;
+    if (address.isNotEmpty) {
+      locationTextEditingController.text = address;
+    }
     longitude = lon;
     latitude = lat;
+
+    log('updated lat long >>>>>>>>> $lon $lat ');
     update();
   }
 }

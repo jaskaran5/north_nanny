@@ -159,6 +159,7 @@ class CustomerProfileView extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   text: controller.customerAddress.value,
                                   style: AppStyles.ubGrey14W500,
+                                  textAlign: TextAlign.start,
                                   maxLines: 1,
                                 ),
                               ),
@@ -199,6 +200,7 @@ class CustomerProfileView extends StatelessWidget {
                               AppText(
                                 text: controller.customerPhoneNumber.value,
                                 style: AppStyles.ubGrey14W500,
+                                textAlign: TextAlign.start,
                                 maxLines: 1,
                               ),
                             ],
@@ -238,6 +240,7 @@ class CustomerProfileView extends StatelessWidget {
                               AppText(
                                 text: '\$ ${double.parse(controller.referralEarned.value).toInt()}',
                                 style: AppStyles.ubGrey14W500,
+                                textAlign: TextAlign.start,
                                 maxLines: 1,
                               ),
                             ],

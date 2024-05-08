@@ -307,21 +307,25 @@ class NannyEditProfileView extends StatelessWidget {
                       maxLines: 1,
                       minLines: 1,
                       onTap: () async {
-                        LocationLatLongModel? address = await Get.toNamed(
-                                Routes.googleMapView,
-                                arguments: true)
-                            ?.then((value) {
-                          return value;
-                        });
-                        log("new address is -->> $address");
+                        await Get.toNamed(
+                          Routes.googleMapView,
+                          arguments: true,
+                        )?.then((address) {
+                          log("new address is -->> $address");
+                          log("new address is -->> ${address!=null}");
+                          if (address!= null) {
+                            final data =address as  LocationLatLongModel;
+                            log("new address is -->> ${data.location}");
+                            controller.updateLocationAddress(
+                              address: data.location.toString(),
+                              lat: data.latitude.toString(),
+                              lon: data.longitude.toString(),
+                            );
+                          }
+                        }) ;
 
-                        if (address != null) {
-                          controller.updateLocationAddress(
-                            address: address.location.toString(),
-                            lat: address.latitude.toString(),
-                            lon: address.longitude.toString(),
-                          );
-                        }
+
+
                       },
                       readOnly: true,
                       decoration: customFieldDeco(

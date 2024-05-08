@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:northshore_nanny_flutter/app/data/api/api_helper.dart';
 import 'package:northshore_nanny_flutter/app/data/storage/storage.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_binding.dart';
+import 'package:northshore_nanny_flutter/app/google_maps/google_map_controller.dart';
 import 'package:northshore_nanny_flutter/app/models/customer_profile_response_model.dart';
 import 'package:northshore_nanny_flutter/app/models/register_response_model.dart';
 import 'package:northshore_nanny_flutter/app/modules/customer/customer_profile/widgets/edit_customer_profile.dart';
@@ -32,6 +34,9 @@ class CustomerProfileController extends GetxController {
   final lastNameTextEditingController = TextEditingController();
   final phoneNumberTextEditingController = TextEditingController();
   final locationTextEditingController = TextEditingController();
+
+  String latitude = '';
+  String longitude = '';
 
   @override
   void onInit() {
@@ -66,14 +71,25 @@ class CustomerProfileController extends GetxController {
           customerEmail.value = res.customerProfileData!.email!;
           customerPhoneNumber.value = res.customerProfileData!.mobileNo!;
           customerImageUrl.value = res.customerProfileData!.image!;
-          referralEarned.value = res.customerProfileData!.referralsEarned.toString();
+          referralEarned.value =
+              res.customerProfileData!.referralsEarned.toString();
 
           updateEditProfileFields(
-            firstName: res.customerProfileData!.firstName!,
-            lastName: res.customerProfileData!.lastName!,
-            location: res.customerProfileData!.location!,
-            phoneNumber: res.customerProfileData!.mobileNo!,
+            firstName: res.customerProfileData!.firstName.toString(),
+            lastName: res.customerProfileData!.lastName.toString(),
+            location: res.customerProfileData!.location.toString(),
+            phoneNumber: res.customerProfileData!.mobileNo.toString(),
           );
+
+          if (!Get.isRegistered<GoogleMapViewController>()) {
+            GoogleMapBinding().dependencies();
+          }
+          Get.find<GoogleMapViewController>().updateCurrentPosition(
+              latitude:
+                  double.parse(res.customerProfileData!.latitude.toString()),
+              longitude:
+                  double.parse(res.customerProfileData!.longitude.toString()));
+
           update();
         }
       },
@@ -121,8 +137,12 @@ class CustomerProfileController extends GetxController {
         return;
       }
 
-      var lat = Storage.getValue(StringConstants.latitude) ?? 30.7046;
-      var lang = Storage.getValue(StringConstants.longitude) ?? 76.7179;
+      var lat = latitude.isNotEmpty
+          ? latitude
+          : Storage.getValue(StringConstants.latitude);
+      var lang = longitude.isNotEmpty
+          ? longitude
+          : Storage.getValue(StringConstants.longitude);
 
       FormData body = FormData({
         'Image': ((pickedImage != null) == true)
@@ -132,6 +152,7 @@ class CustomerProfileController extends GetxController {
         "FirstName": firstNameTextEditingController.text.trim(),
         "LastName": lastNameTextEditingController.text.trim(),
         "MobileNumber": phoneNumberTextEditingController.text.trim(),
+        "Location": locationTextEditingController.text.trim(),
         "Latitude": lat.toString(),
         "Longitude": lang.toString(),
       });
@@ -162,7 +183,7 @@ class CustomerProfileController extends GetxController {
 
   /// ------->>>>>>>>> ------------------------->>>>>>>>>>>. REDIRECT TO EDIT PROFILE SCREEN
   redirectToEditProfileScreen() async {
-    bool? check = await Get.to(const EditProfileView());
+    bool? check = await Get.to(() => const EditProfileView());
 
     if (check!) {
       getCustomerProfileApi();
@@ -171,8 +192,16 @@ class CustomerProfileController extends GetxController {
 
   /// ----------------------------------------->>>>>>>>>>>>>>> update location
 
-  updateLocationAddress({required String address}) {
-    locationTextEditingController.text = address;
+  updateLocationAddress({
+    required String address,
+    required String lat,
+    required String long,
+  }) {
+    if (address.isNotEmpty) {
+      locationTextEditingController.text = address;
+    }
+    latitude = lat;
+    longitude = long;
     update();
   }
 }
