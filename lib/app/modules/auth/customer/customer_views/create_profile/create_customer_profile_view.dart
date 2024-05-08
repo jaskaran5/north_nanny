@@ -33,25 +33,6 @@ class CreateCustomerProfileView extends StatelessWidget {
             title: TranslationKeys.createProfile.tr,
             toUpperCaseTitle: false,
           ),
-          floatingActionButton: Container(
-            color: Colors.white,
-            padding: Dimens.edgeInsetsL16R16B16,
-            child: CustomButton(
-              title: TranslationKeys.continueWord.tr,
-              backGroundColor: AppColors.navyBlue,
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                controller.customerSignUpValidation();
-
-                // Get.to(
-
-                // const ChildProfileView(),
-                // );
-              },
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
           // bottomSheet: Container(
           //   color: Colors.white,
           //   padding: Dimens.edgeInsetsL16R16B16,
@@ -348,7 +329,20 @@ class CreateCustomerProfileView extends StatelessWidget {
                       style: AppStyles.ubBlack15W600,
                       keyboardType: TextInputType.text,
                     ),
-                    Dimens.boxHeight70,
+                    Dimens.boxHeight20,
+                    CustomButton(
+                      title: TranslationKeys.continueWord.tr,
+                      backGroundColor: AppColors.navyBlue,
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        controller.customerSignUpValidation();
+
+                        // Get.to(
+
+                        // const ChildProfileView(),
+                        // );
+                      },
+                    ),
                   ],
                 ),
               ),
