@@ -95,7 +95,7 @@ class EditChildProfileView extends StatelessWidget {
                             cursorColor: AppColors.blackColor,
                             cursorWidth: Dimens.one,
                             style: AppStyles.ubBlack15W600,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.phone,
                           ),
                           Dimens.boxHeight20,
                           AppDropdown(
