@@ -69,6 +69,7 @@ class ApiUrls {
   static const String updateCustomerBookingStatus =
       "api/UserDashBoard/UpdateBookingStatus";
   static const String searchChatUser = "api/User/SearchChatUser";
+  static const String validateAppointment = "api/UserDashBoard/ValidateAppointment";
 
   /// ----------------------- Nanny Interface Apis Url----------------------------------//
   ///

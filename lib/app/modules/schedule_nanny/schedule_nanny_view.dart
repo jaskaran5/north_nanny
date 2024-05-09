@@ -32,8 +32,8 @@ class ScheduleNannyView extends StatelessWidget {
           appBar: CustomAppbarWidget(
             title: TranslationKeys.scheduleNanny.tr,
             onBackPress: () {
-              controller.startTime=null;
-              controller.endTime=null;
+              controller.startTime = null;
+              controller.endTime = null;
               Get.back();
             },
           ),
@@ -922,8 +922,13 @@ class ScheduleNannyView extends StatelessWidget {
                                   DateTime.now());
 
                       var validator = await controller.confirmBookingValidator(
-                          controller.selectedServices,
-                          controller.selectedChildIds);
+                        servicesList: controller.selectedServices,
+                        childList: controller.selectedChildIds,
+                        openingTime: startDate,
+                        closingTime: endDate,
+                        nannyUserId:
+                            controller.getNannyData?.id.toString() ?? '',
+                      );
 
                       if (validator == true) {
                         // if (controller.getNannyData?.isCardAddedByCustomer ==

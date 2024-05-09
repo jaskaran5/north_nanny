@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -24,6 +25,7 @@ import 'package:northshore_nanny_flutter/navigators/app_routes.dart';
 
 import '../../../../navigators/routes_management.dart';
 import '../../../models/get_nanny_booking_detail_in_customer.dart';
+import '../../../models/validator_response.dart';
 import '../../../res/constants/assets.dart';
 import '../../../res/theme/styles.dart';
 
@@ -192,7 +194,7 @@ class GetNannyProfileController extends GetxController {
   bool isRangeSelection = false;
   bool isBookingMore = false;
 
-  usedToStoreNannyID(){
+  usedToStoreNannyID() {
     nannyId.value = Get.arguments ?? 0;
     update();
   }
@@ -206,7 +208,7 @@ class GetNannyProfileController extends GetxController {
       }
 
       var body = {
-        "id":nannyUserID ?? nannyId.value,
+        "id": nannyUserID ?? nannyId.value,
         "dateTime": time.toUtc().toIso8601String(),
       };
 
@@ -295,13 +297,13 @@ class GetNannyProfileController extends GetxController {
   }
 
   /// used to get single day data
-  getNannyDataByDate({required DateTime date,int? nannyUserId}) async {
+  getNannyDataByDate({required DateTime date, int? nannyUserId}) async {
     try {
       if (!(await Utils.hasNetwork())) {
         return;
       }
       var body = {
-        "nannyUserId":nannyUserId ?? nannyId.value,
+        "nannyUserId": nannyUserId ?? nannyId.value,
         "utcDateTime": date.toUtc().toIso8601String(),
       };
       log('get nanny Data by Date:$body');
@@ -393,12 +395,23 @@ class GetNannyProfileController extends GetxController {
   }
 
   /// confirm booking validator
-  Future<bool> confirmBookingValidator(
-      List<String> servicesList, List<int> childList) async {
+  Future<bool> confirmBookingValidator({
+    required List<String> servicesList,
+    required List<int> childList,
+    required String nannyUserId,
+    required DateTime openingTime,
+    required DateTime closingTime,
+  }) async {
     bool value = await Validator.instance
         .confirmBookingValidator(childList: childList, services: servicesList);
     if (value == true) {
-      return true;
+      var validate = await validateBookingAppointment(
+          nannyUserId: nannyUserId,
+          openingTime: openingTime,
+          closingTime: closingTime);
+      log('validator is >>>>>>>>>>> $validate');
+      return validate;
+      // return true;
     } else {
       toast(msg: Validator.instance.error, isError: true);
       return false;
@@ -522,6 +535,45 @@ class GetNannyProfileController extends GetxController {
       update();
       // Do something with the selected options
       log('Selected child list: $selectedOptions');
+    }
+  }
+
+  /// used to validate the confirm booking .
+  Future<bool> validateBookingAppointment({
+    required String nannyUserId,
+    required DateTime openingTime,
+    required DateTime closingTime,
+  }) async {
+    try {
+      if (!(await Utils.hasNetwork())) {
+        return false;
+      }
+
+      var body = {
+        "nannyUserId": nannyUserId,
+        "currentUtcTime": DateTime.now().toUtc().toIso8601String(),
+        "utcOpeningTime": openingTime.toUtc().toIso8601String(),
+        "utcClosingTime": closingTime.toUtc().toIso8601String(),
+      };
+      log('Validate booking appointment Api body:$body');
+      var value = await _apiHelper.postApi(
+        ApiUrls.validateAppointment,
+        jsonEncode(body),
+      );
+      var response = ValidatorResponse.fromJson(value.body);
+
+      if (response.response == AppConstants.apiResponseSuccess) {
+        log('response>>>>>>>> true');
+        return true;
+      } else {
+        log('response>>>>>>>> false');
+        toast(msg: response.message.toString(),isError: true);
+        return false;
+      }
+    } catch (e, s) {
+      toast(msg: e.toString(), isError: true);
+      printError(info: "validate Booking  appointment API ISSUE $s");
+      return false;
     }
   }
 }
