@@ -290,7 +290,7 @@ class Validator {
     required String accountNumber,
     required String routingNumber,
     required String addressOne,
-    required String otherAddress,
+    // required String otherAddress,
     required String city,
     required String state,
     required String country,
@@ -300,21 +300,23 @@ class Validator {
       error = 'Please enter your bank name';
       return false;
     } else if (accountHolderName.isEmpty) {
-      error = 'Please enter your  account name';
+      error = 'Please enter your account name';
       return false;
     } else if (accountNumber.isEmpty) {
-      error = 'Please enter your  account number';
+      error = 'Please enter your account number';
       return false;
     } else if (routingNumber.isEmpty) {
-      error = 'Please enter your  routing number';
+      error = 'Please enter your routing number';
       return false;
     } else if (addressOne.isEmpty) {
-      error = 'Please enter your  Address ';
+      error = 'Please enter your Address ';
       return false;
-    } else if (otherAddress.isEmpty) {
-      error = 'Please enter other address';
-      return false;
-    } else if (city.isEmpty) {
+    }
+    // else if (otherAddress.isEmpty) {
+    //   error = 'Please enter other address';
+    //   return false;
+    // }
+    else if (city.isEmpty) {
       error = 'Please enter your City';
       return false;
     } else if (state.isEmpty) {

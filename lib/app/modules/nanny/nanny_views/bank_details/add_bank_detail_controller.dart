@@ -35,7 +35,7 @@ class AddBankDetailController extends GetxController {
       accountNumber: accountNumberTextEditingController.text.tr,
       routingNumber: routingNumberTextEditingController.text.trim(),
       addressOne: addressOne.text.trim(),
-      otherAddress: addressTwo.text.trim(),
+      // otherAddress: addressTwo.text.trim(),
       city: cityTextEditingController.text.trim(),
       state: stateTextEditingController.text.trim(),
       country: countryTextEditingController.text.trim(),
