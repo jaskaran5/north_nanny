@@ -461,7 +461,7 @@ class CustomerHomeController extends GetxController {
         final dateTime = returnFinalTimeAccordingToDate(
             selectedTime: selectedTime, day: selectedDate);
 
-        debugPrint('final Date Time :$dateTime');
+        debugPrint('final Date Time filter :$dateTime');
         debugPrint('>>>>>>>>>>>>Apply filter ');
         body = {
           "minMiles": distanceLowerValue.toInt(),
@@ -479,7 +479,7 @@ class CustomerHomeController extends GetxController {
         isFilterApply.value = true;
         update();
       }
-      log("body:-->. $body");
+      log("body apply filter:-->. $body");
       log("isFilter apply >>>>>>>>>>. $isFilterApply");
       _apiHelper.postApi(ApiUrls.userDashBoard, body).futureValue((value) {
         var res = CustomerHomeDashboardResponseModel.fromJson(value);
@@ -579,6 +579,7 @@ class CustomerHomeController extends GetxController {
   DateTime returnFinalTimeAccordingToDate(
       {required DateTime? selectedTime, required DateTime day}) {
     if (selectedTime != null) {
+      log('condition>>>>>>> ${ selectedTime.hour != DateTime.now().hour}');
       return DateTime(
         day.year,
         day.month,

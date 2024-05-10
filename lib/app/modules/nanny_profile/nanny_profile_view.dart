@@ -1028,7 +1028,7 @@ Widget availabilityView({required NannyProfileController controller}) =>
                                                               DateTime.now()),
                                                   startTime:
                                                       controller.startTime,
-                                                  endTime: controller.endTime);
+                                                  endTime: controller.endTime,);
                                             },
                                           ),
                                           Dimens.boxHeight10,
