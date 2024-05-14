@@ -254,6 +254,7 @@ class BookingDetailController extends GetxController {
       seconds = 0;
       timer?.cancel();
       update(['customerTimerView']);
+      update();
     } else if (bookingStatus == 8) {
       bookingDetailStatus = BookingDetailStatus.disputeRaised;
     } else if (bookingStatus == 9) {
