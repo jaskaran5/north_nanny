@@ -333,6 +333,11 @@ class ScheduleNannyView extends StatelessWidget {
                                         ?.bookingDetail
                                         ?.closingTime ??
                                     DateTime.now()),
+                              builder: (context, child) => MediaQuery(
+                                data: MediaQuery.of(context)
+                                    .copyWith(alwaysUse24HourFormat: false),
+                                child: child!,
+                              )
                           );
                           if (bookingEndTime != null) {
                             final openingTime =
