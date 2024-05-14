@@ -503,9 +503,11 @@ class Utility {
     if ((dateTimeString == null) || (dateTimeString.isEmpty)) {
       return null;
     }
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
+    var dateTime =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeString, true);
     var dateLocal = dateTime.toLocal();
-    TimeOfDay formattedTime = TimeOfDay(hour: dateLocal.hour, minute: dateLocal.minute);
+    TimeOfDay formattedTime =
+        TimeOfDay(hour: dateLocal.hour, minute: dateLocal.minute);
     return formattedTime;
   }
 
@@ -609,7 +611,9 @@ class Utility {
     int hours = second ~/ 3600;
     int minutes = (second ~/ 60) % 60;
     int seconds = second % 60;
-    return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    log('seconds>>>>>>>>>>:$seconds');
+    log('minutes>>>>>>>>>>:$minutes');
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
   /// this method is used to return seconds difference according to dateTime
@@ -642,7 +646,21 @@ class Utility {
     // Calculate the difference
     Duration difference = localEndTime.difference(localStartTime);
 
-    return '${difference.inHours}:${difference.inMinutes}:${difference.inSeconds}';
+    // Extracting individual components of the duration
+    int hours = difference.inHours;
+    int minutes = difference.inMinutes.remainder(60);
+    int seconds = difference.inSeconds.remainder(60);
+
+    // Formatting the components to ensure they are displayed with leading zeros if needed
+    String formattedHours = hours.toString().padLeft(2, '0');
+    String formattedMinutes = minutes.toString().padLeft(2, '0');
+    String formattedSeconds = seconds.toString().padLeft(2, '0');
+    log('seconds1>>>>>>>>>>>:$formattedSeconds, minutes>>>>>>>>>>>: $formattedMinutes');
+
+    return '$formattedHours:$formattedMinutes:$formattedSeconds';
+    // log('seconds1>>>>>>>>>>>:${difference.inSeconds},  ${difference1.inSeconds.toInt()}');
+
+    // return '${difference.inHours}:${difference.inMinutes}:${difference.inSeconds}';
   }
 
   /// used to get the time zone
@@ -684,29 +702,30 @@ class Utility {
   }
 
   /// used to return the polyLine according to origin and designation.
-static setPolylineDirection(LatLng origin, LatLng destination) async {
-  List<LatLng> polylineCoordinates = [];
+  static setPolylineDirection(LatLng origin, LatLng destination) async {
+    List<LatLng> polylineCoordinates = [];
 
-  log("polyline :${origin.latitude}");
-  log("polyline :${destination.longitude}");
-  final result=await DirectionHelper()
-      .getRouteBetweenCoordinates(origin.latitude, origin.longitude,
-      destination.latitude, destination.longitude);
-  log("result.toString()---->${result.toString()}");
-  if (result.isNotEmpty) {
+    log("polyline :${origin.latitude}");
+    log("polyline :${destination.longitude}");
+    final result = await DirectionHelper().getRouteBetweenCoordinates(
+        origin.latitude,
+        origin.longitude,
+        destination.latitude,
+        destination.longitude);
+    log("result.toString()---->${result.toString()}");
+    if (result.isNotEmpty) {
+      for (PointLatLng point in result) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
 
-    for (PointLatLng point in result) {
-      polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      return Polyline(
+        polylineId: const PolylineId('line'),
+        color: AppColors.navyBlue3288DE,
+        points: polylineCoordinates,
+        width: 6,
+        startCap: Cap.squareCap,
+        endCap: Cap.roundCap,
+      );
     }
-
-    return Polyline(
-      polylineId: const PolylineId('line'),
-      color: AppColors.navyBlue3288DE,
-      points: polylineCoordinates,
-      width: 6,
-      startCap: Cap.squareCap,
-      endCap: Cap.roundCap,
-    );
   }
-}
 }
