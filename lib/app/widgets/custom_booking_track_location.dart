@@ -56,26 +56,29 @@ class CustomBookingTrackLocation extends StatelessWidget {
                   /// used to going tracking view.
                   RouteManagement.goToNannyTrackingView();
                 },
-                child: Container(
-                  height: Dimens.hundredFourteen,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimens.ten),
-                  ),
-                  child: IgnorePointer(
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(latitude, longitude),
-                        zoom: Dimens.fourteen,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(Dimens.ten),
+                  child: Container(
+                    height: Dimens.hundredFourteen,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimens.ten),
+                    ),
+                    child: IgnorePointer(
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(latitude, longitude),
+                          zoom: Dimens.fourteen,
+                        ),
+                        myLocationEnabled: false,
+                        indoorViewEnabled: false,
+                        zoomControlsEnabled: false,
+                        zoomGesturesEnabled: true,
+                        myLocationButtonEnabled: false,
+                        onMapCreated: onMapCreated,
+                        markers: markers,
+                        polylines: polyline,
+                        mapType: MapType.normal,
                       ),
-                      myLocationEnabled: false,
-                      indoorViewEnabled: false,
-                      zoomControlsEnabled: false,
-                      zoomGesturesEnabled: true,
-                      myLocationButtonEnabled: false,
-                      onMapCreated: onMapCreated,
-                      markers: markers,
-                      polylines: polyline,
-                      mapType: MapType.normal,
                     ),
                   ),
                 ),
