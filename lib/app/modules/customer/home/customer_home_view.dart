@@ -26,11 +26,12 @@ class CustomerHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GetBuilder<CustomerHomeController>(
         // init: CustomerHomeController(),
-    initState: (_){
-      if(Storage.getValue(StringConstants.loginType)==StringConstants.customer) {
-        Get.find<CustomerHomeController>().getDashboardApi();
-      }
-    },
+        initState: (_) {
+          if (Storage.getValue(StringConstants.loginType) ==
+              StringConstants.customer) {
+            Get.find<CustomerHomeController>().getDashboardApi();
+          }
+        },
         builder: (controller) => Scaffold(
           appBar: CustomAppbarWidget(
             leadingWidth: Dimens.zero,
@@ -310,7 +311,8 @@ class CustomerHomeView extends StatelessWidget {
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
                 )
-              : controller.homeNannyList.isEmpty && !controller.isNannyDataLoading.value
+              : controller.homeNannyList.isEmpty &&
+                      !controller.isNannyDataLoading.value
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

@@ -164,8 +164,10 @@ class CustomerHomeController extends GetxController {
       String formattedAddress =
           "${place.street}, ${place.locality}, ${place.country}";
 
+      log("address:-->. $place");
       log("address:-->. $formattedAddress");
-      address.value = "${place.locality},${place.country}";
+      /// locality is city and administrativeArea is state
+      address.value = "${place.locality},${place.administrativeArea}";
       update();
 
       return formattedAddress;
@@ -579,7 +581,7 @@ class CustomerHomeController extends GetxController {
   DateTime returnFinalTimeAccordingToDate(
       {required DateTime? selectedTime, required DateTime day}) {
     if (selectedTime != null) {
-      log('condition>>>>>>> ${ selectedTime.hour != DateTime.now().hour}');
+      log('condition>>>>>>> ${selectedTime.hour != DateTime.now().hour}');
       return DateTime(
         day.year,
         day.month,
