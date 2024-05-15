@@ -303,7 +303,7 @@ class CreateNannyProfileController extends GetxController {
     required String lat,
     required String long,
   }) async {
-    log('location in Nanny create profile >>>>>>> $formatAddress');
+    log('location in Nanny create profile >>>>>>> $formatAddress  $lat $long');
 
     locationTextEditingController.text = formatAddress;
     latitude = lat;
