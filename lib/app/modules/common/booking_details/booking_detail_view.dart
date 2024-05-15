@@ -90,7 +90,7 @@ class BookingDetailView extends StatelessWidget {
                   ],
                   if (controller.bookingDetailStatus ==
                           BookingDetailStatus.arrived &&
-                      controller.bookingDataById!.bookingStatus != 6) ...[
+                      controller.bookingDataById?.bookingStatus != 6) ...[
                     Container(
                       padding: Dimens.edgeInsets10,
                       width: Get.width,
