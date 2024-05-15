@@ -89,7 +89,8 @@ class BookingDetailView extends StatelessWidget {
                     Dimens.boxHeight16,
                   ],
                   if (controller.bookingDetailStatus ==
-                      BookingDetailStatus.arrived) ...[
+                          BookingDetailStatus.arrived &&
+                      controller.bookingDataById!.bookingStatus != 6) ...[
                     Container(
                       padding: Dimens.edgeInsets10,
                       width: Get.width,
