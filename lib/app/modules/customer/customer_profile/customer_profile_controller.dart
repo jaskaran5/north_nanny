@@ -136,7 +136,7 @@ class CustomerProfileController extends GetxController {
       if (!(await Utils.hasNetwork())) {
         return;
       }
-
+ log('lat , long >>>>> $latitude $longitude');
       var lat = latitude.isNotEmpty
           ? latitude
           : Storage.getValue(StringConstants.latitude);
@@ -202,6 +202,7 @@ class CustomerProfileController extends GetxController {
     }
     latitude = lat;
     longitude = long;
+    log('lat , long >>> $lat, $long');
     update();
   }
 }
