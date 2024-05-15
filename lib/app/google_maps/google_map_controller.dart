@@ -98,7 +98,7 @@ class GoogleMapViewController extends GetxController {
           await placemarkFromCoordinates(latitude, longitude);
       Placemark place = placeMarks[0];
       String formattedAddress =
-          "${place.street}, ${place.locality}, ${place.country}";
+          "${place.name},${place.locality},${place.subLocality}  ${place.administrativeArea} ${place.postalCode} ${place.country}";
 
       return formattedAddress;
     } catch (e) {
