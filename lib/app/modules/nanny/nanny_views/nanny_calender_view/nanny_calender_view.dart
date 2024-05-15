@@ -84,12 +84,19 @@ class NannyCalenderView extends StatelessWidget {
                         controller.update();
                       },
                       selectedDayPredicate: (day) =>
-                          controller.selectedDay == day,
+                          controller.selectedDay?.day == day.day &&
+                          controller.selectedDay?.month == day.month &&
+                          controller.selectedDay?.year == day.year,
                       focusedDay: controller.focusDate,
                       onPageChanged: (focusedDay) {
                         controller.focusDate = focusedDay;
+
+                        /// used to get all events of calender.
                         controller.getAllBookings(time: focusedDay);
-                        controller.update();
+
+                        /// used to get the single day data
+                        controller.getSelectedDateBookingDetail(
+                            selectedDate: focusedDay);
                       },
                       eventLoader: (day) {
                         return controller.isEvent(
@@ -208,7 +215,8 @@ class NannyCalenderView extends StatelessWidget {
                                                         .services
                                                         ?.join(', ')
                                                         .capitalizeFirst,
-                                                    style: AppStyles.ubGrey15W500,
+                                                    style:
+                                                        AppStyles.ubGrey15W500,
                                                     maxLines: 3,
                                                     textAlign: TextAlign.start,
                                                   ),

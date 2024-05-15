@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ class NannyCalenderController extends GetxController {
       var body = {
         "utcDateTime": time.toUtc().toIso8601String(),
       };
+      log('nanny booking all data body:$body');
       _apiHelper
           .postApi(
         ApiUrls.getNannyAllBookingDates,
@@ -44,10 +46,11 @@ class NannyCalenderController extends GetxController {
         var response = NannyBookingDetails.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           nannyBookingDetails = response;
-          update();
+          selectedDay = time;
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
+        update();
       }, retryFunction: () {});
     } catch (e, s) {
       toast(msg: e.toString(), isError: true);
@@ -64,6 +67,7 @@ class NannyCalenderController extends GetxController {
       var body = {
         "dateTime": selectedDate.toUtc().toIso8601String(),
       };
+      log('body of single day data:$body');
       _apiHelper
           .postApi(
         ApiUrls.postNannyBookingDetails,

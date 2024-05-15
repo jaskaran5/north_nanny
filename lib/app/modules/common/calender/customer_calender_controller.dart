@@ -37,7 +37,7 @@ class CustomerCalenderController extends GetxController {
 
           if (res.response == AppConstants.apiResponseSuccess) {
             log("user booking details =---->>SUCCESS");
-
+            selectedDay = focusDay;
             userBookingDetail = res;
           }
           update();
@@ -81,13 +81,14 @@ class CustomerCalenderController extends GetxController {
       var body = {
         "dateTime": selectedDate.toUtc().toIso8601String(),
       };
+
+      log('body of selected date >>>>> $body');
       _apiHelper.postApi(ApiUrls.userBookingDataByDate, body).futureValue(
           (value) {
         printInfo(info: "get  CUSTOMER booking single date   $value");
         var response = UserBookingDetailsByDateResponseModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           singleDateBookingData = response.data;
-          update();
         } else {
           toast(msg: response.message.toString(), isError: true);
         }
