@@ -1,6 +1,9 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -14,6 +17,7 @@ import 'package:northshore_nanny_flutter/app/widgets/custom_app_bar.dart';
 import 'package:northshore_nanny_flutter/app/widgets/custom_button.dart';
 
 import '../data/storage/storage.dart';
+import '../res/constants/assets.dart';
 
 class CurrentLocationGoogleMap extends StatelessWidget {
   CurrentLocationGoogleMap({super.key});
@@ -32,18 +36,37 @@ class CurrentLocationGoogleMap extends StatelessWidget {
         return Scaffold(
             appBar: CustomAppbarWidget(
               backgroundColor: Colors.transparent,
+              addBackButton: false,
+              leadingWidth: Dimens.zero,
               titleWidget: GooglePlaceAutoCompleteTextField(
                 textEditingController:
                     googleMapViewController.searchLocationTextEditingController,
                 googleAPIKey: StringConstants.googleApiKey,
+
                 boxDecoration: const BoxDecoration(
                   color: AppColors.primaryColor,
                 ),
+                focusNode: googleMapViewController.focusNode,
                 inputDecoration: InputDecoration(
                   hintText: "Search your location",
                   border: InputBorder.none,
                   hintStyle: AppStyles.ubBlack14W700,
                   enabledBorder: InputBorder.none,
+                  prefixIcon:  GestureDetector(
+                    onTap: () {
+                          Get.focusScope?.unfocus();
+                          Get.back();
+                        },
+                    child: Padding(
+                      padding: Dimens.edgeInsetsL2R4,
+                      child: SvgPicture.asset(
+                        Assets.iconsBack,
+                        height: Dimens.fortyOne,
+                        width: Dimens.fortyOne,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                  )
                 ),
                 textStyle: AppStyles.ubBlack14W700,
                 debounceTime: 400,
@@ -69,25 +92,25 @@ class CurrentLocationGoogleMap extends StatelessWidget {
                   color: AppColors.lightNavyBlue,
                   height: Dimens.one,
                 ),
-                containerHorizontalPadding: Dimens.ten,
+                containerHorizontalPadding: Dimens.zero,
                 // OPTIONAL// If you want to customize list view item builder
                 itemBuilder: (context, index, Prediction prediction) {
                   return prediction.id?.isEmpty == true
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : Container(
-                          padding: Dimens.edgeInsets10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(Icons.location_on),
-                              Dimens.boxWidth8,
-                              Expanded(
-                                  child: Text(prediction.description ?? ""))
-                            ],
-                          ),
-                        );
+                      : Padding(
+                        padding: Dimens.edgeInsets10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.location_on),
+                            Dimens.boxWidth8,
+                            Expanded(
+                                child: Text(prediction.description ?? ""))
+                          ],
+                        ),
+                      );
                 },
 
                 isCrossBtnShown: true,

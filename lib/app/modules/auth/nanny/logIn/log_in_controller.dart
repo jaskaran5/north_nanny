@@ -49,28 +49,67 @@ class LogInController extends GetxController {
   }
 
   /// SAVE REMEMBER ME DATA
-  saveRememberMeValue() {
-    if (rememberMe.value) {
+  saveRememberMeValue({required int userType}) {
+    /// user type 1 is equal to customer.
+    if (rememberMe.value && userType == 1) {
       Storage.saveValue(
           StringConstants.email, emailTextEditingController.text.trim());
       Storage.saveValue(
           StringConstants.pswd, passwordTextEditingController.text.trim());
+      log('customer remember me save ');
+    }
+
+    /// user type 2 is nanny.
+    else if (rememberMe.value && userType == 2) {
+      Storage.saveValue(
+          StringConstants.nannyEmail, emailTextEditingController.text.trim());
+      Storage.saveValue(StringConstants.nannyPassword,
+          passwordTextEditingController.text.trim());
+      log('Nanny remember me save ');
     } else {
       Storage.removeValue(
         StringConstants.email,
       );
       Storage.removeValue(StringConstants.pswd);
+      Storage.removeValue(StringConstants.nannyEmail);
+      Storage.removeValue(StringConstants.nannyPassword);
+      log('clear remember me save ');
     }
   }
 
   checkSavedSession() {
-    if (Storage.hasData(StringConstants.email)) {
+    if (Storage.getValue(StringConstants.loginType) ==
+            StringConstants.customer &&
+        Storage.hasData(StringConstants.email)) {
       rememberMe.value = true;
       emailTextEditingController.text = Storage.getValue(StringConstants.email);
       passwordTextEditingController.text =
           Storage.getValue(StringConstants.pswd);
-      update();
+      log('>>>>>>>>>>>> Customer data>>>>>>>>>>>>>');
+    } else if (Storage.getValue(StringConstants.loginType) ==
+            StringConstants.nanny &&
+        (Storage.hasData(StringConstants.nannyEmail))) {
+      rememberMe.value = true;
+      emailTextEditingController.text =
+          Storage.getValue(StringConstants.nannyEmail);
+      passwordTextEditingController.text =
+          Storage.getValue(StringConstants.nannyPassword);
+      log('>>>>>>>>>>>> nanny data>>>>>>>>>>>>>');
+    } else if (loginType == StringConstants.customer &&
+        !Storage.hasData(StringConstants.email)) {
+      Storage.removeValue(
+        StringConstants.email,
+      );
+      Storage.removeValue(StringConstants.pswd);
+
+      log('>>>>>>>>>>>> customer No data>>>>>>>>>>>>>');
+    } else if (loginType == StringConstants.nanny &&
+        !Storage.hasData(StringConstants.nannyEmail)) {
+      Storage.removeValue(StringConstants.nannyEmail);
+      Storage.removeValue(StringConstants.nannyPassword);
+      log('>>>>>>>>>>>> Nanny No data>>>>>>>>>>>>>');
     }
+    update();
   }
 
   /// check user Type.
@@ -147,7 +186,7 @@ class LogInController extends GetxController {
 
       _apiHelper.postApi(ApiUrls.customerLogin, body).futureValue(
           (value) async {
-        saveRememberMeValue();
+        saveRememberMeValue(userType: userType);
         if (userType == 2) {
           /******* NANNY ----------->>>>>>>> */
           var res = LoginResponseDataModel.fromJson(value);

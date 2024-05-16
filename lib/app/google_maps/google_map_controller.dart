@@ -17,6 +17,7 @@ class GoogleMapViewController extends GetxController {
   RxBool isFromEdit = false.obs;
 
   final searchLocationTextEditingController = TextEditingController();
+   FocusNode focusNode = FocusNode();
 
   // Rxn<LatLng> currentLatLng = Rxn(LatLng(
   //     Storage.getValue(StringConstants.latitude) ?? 30.7046,

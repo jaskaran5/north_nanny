@@ -102,6 +102,7 @@ class BookingDetailController extends GetxController {
             timer?.cancel();
             seconds = 0;
             update(['customerTimerView']);
+            Future.delayed(const Duration(seconds: 4));
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'No',
@@ -133,6 +134,7 @@ class BookingDetailController extends GetxController {
           if (response.data?.bookingStatus == 7 &&
               response.data?.isSendTip == false &&
               response.data?.reviewGivenByMe == null) {
+            Future.delayed(const Duration(seconds: 4));
             Utility.showAlertDialog(
               title: 'Congratulations',
               firstButtonTitle: 'Send Tip',

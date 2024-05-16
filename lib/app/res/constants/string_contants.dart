@@ -30,7 +30,9 @@ class StringConstants {
   static const String deviceType = 'deviceType';
   static const String deviceToken = 'deviceToken';
   static const String email = 'email';
+  static const String nannyEmail = 'nannyEmail';
   static const String pswd = 'pswd';
+  static const String nannyPassword = 'nannyPassword';
 
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';

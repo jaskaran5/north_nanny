@@ -130,6 +130,7 @@ class Dimens {
   static final EdgeInsets edgeInsets16 = EdgeInsets.all(sixteen);
 
   static final EdgeInsets edgeInsetsL2 = EdgeInsets.only(left: two);
+  static final EdgeInsets edgeInsetsL2R4 = EdgeInsets.only(left: two,right: eight);
   static final EdgeInsets edgeInsetsT10 = EdgeInsets.only(top: ten);
   static final EdgeInsets edgeInsetsT5 = EdgeInsets.only(top: five);
   static final EdgeInsets edgeInsetsB10 = EdgeInsets.only(bottom: ten);
