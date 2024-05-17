@@ -99,7 +99,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
                 AppText(
                   text:
-                      "\$ ${childCount == 1 ? HourlyChildrenRateList.oneChild.ratePricePerChildren : childCount == 2 ? HourlyChildrenRateList.twoChildren.ratePricePerChildren : childCount == 3 ? HourlyChildrenRateList.threeChildren.ratePricePerChildren : childCount == 4 ? HourlyChildrenRateList.forChildren.ratePricePerChildren : '0.0'}",
+                      "\$${childCount == 1 ? HourlyChildrenRateList.oneChild.ratePricePerChildren : childCount == 2 ? HourlyChildrenRateList.twoChildren.ratePricePerChildren : childCount == 3 ? HourlyChildrenRateList.threeChildren.ratePricePerChildren : childCount == 4 ? HourlyChildrenRateList.forChildren.ratePricePerChildren : '0.0'}",
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,
@@ -117,7 +117,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
                 AppText(
-                  text: "\$ $totalTimeHourPrice",
+                  text: "\$$totalTimeHourPrice",
                   style: AppStyles.ubGrey15W500,
                   maxLines: 1,
                   textAlign: TextAlign.start,
@@ -136,7 +136,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   AppText(
-                    text: '\$ ${serviceFees.toStringAsFixed(2)} ',
+                    text: '\$${serviceFees.toStringAsFixed(2)} ',
                     style: AppStyles.ubGrey15W500,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -156,7 +156,7 @@ class CustomBookingReceiptTile extends StatelessWidget {
                 ),
                 AppText(
                   text:
-                      '\$ ${double.parse(totalPriceReceived.toString()).toStringAsFixed(2)}',
+                      '\$${double.parse(totalPriceReceived.toString()).toStringAsFixed(2)}',
                   style: AppStyles.ubBlack15W600,
                   maxLines: 1,
                   textAlign: TextAlign.start,
