@@ -382,7 +382,7 @@ class NannyBookingDetailController extends GetxController {
                   allowBackgroundLocationUpdates: true);
             } else {
               locationSettings = const LocationSettings(
-                accuracy: LocationAccuracy.high,
+                accuracy: LocationAccuracy.bestForNavigation,
                 distanceFilter: 10,
                 // timeLimit: Duration(seconds: 5),
               );

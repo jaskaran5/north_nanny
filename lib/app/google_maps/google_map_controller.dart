@@ -17,7 +17,7 @@ class GoogleMapViewController extends GetxController {
   RxBool isFromEdit = false.obs;
 
   final searchLocationTextEditingController = TextEditingController();
-   FocusNode focusNode = FocusNode();
+  FocusNode focusNode = FocusNode();
 
   // Rxn<LatLng> currentLatLng = Rxn(LatLng(
   //     Storage.getValue(StringConstants.latitude) ?? 30.7046,
@@ -30,7 +30,8 @@ class GoogleMapViewController extends GetxController {
   void onInit() {
     getUserLocation().then((value) async {
       log("location position is:-->> $value");
-
+      currentLatLng.value =
+          LatLng(value?.latitude ?? 0.0, value?.longitude ?? 0.0);
       // await updateCurrentPosition(
       //   latitude: value!.latitude,
       //   longitude: value.longitude,
@@ -81,7 +82,7 @@ class GoogleMapViewController extends GetxController {
 
     // Get user's current position
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
 
     return position;
   }
@@ -161,10 +162,15 @@ class GoogleMapViewController extends GetxController {
   }
 
   Future<LocationLatLongModel> getEditLocation() async {
+    var address = await getAddressFromCoordinates(
+        Storage.getValue(StringConstants.latitude),
+        Storage.getValue(StringConstants.longitude));
     return LocationLatLongModel(
       latitude: currentLatLng.value.latitude.toString(),
       longitude: currentLatLng.value.longitude.toString(),
-      location: searchLocationTextEditingController.text,
+      location: searchLocationTextEditingController.text.isEmpty
+          ? address
+          : searchLocationTextEditingController.text,
     );
   }
 
