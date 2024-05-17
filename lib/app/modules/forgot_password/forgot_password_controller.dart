@@ -8,6 +8,7 @@ import 'package:northshore_nanny_flutter/app/utils/validators.dart';
 
 import '../../../navigators/routes_management.dart';
 import '../../data/api/api_helper.dart';
+import '../../models/add_payment_response_model.dart';
 import '../../models/register_response_model.dart';
 import '../../res/constants/api_urls.dart';
 import '../../res/constants/app_constants.dart';
@@ -86,7 +87,7 @@ class ForgotPasswordController extends GetxController {
 
       _apiHelper.postApi(ApiUrls.verifyOtp, body).futureValue((value) {
         printInfo(info: "Verify Otp response value $value");
-        var response = RegisterModelResponseJson.fromJson(value);
+        var response = AddPaymentMethodModel.fromJson(value);
         if (response.response == AppConstants.apiResponseSuccess) {
           newPasswordTextEditingController.clear();
           confirmPasswordTextEditingController.clear();
