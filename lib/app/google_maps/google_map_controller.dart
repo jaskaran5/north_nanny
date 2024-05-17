@@ -30,12 +30,11 @@ class GoogleMapViewController extends GetxController {
   void onInit() {
     getUserLocation().then((value) async {
       log("location position is:-->> $value");
-      currentLatLng.value =
-          LatLng(value?.latitude ?? 0.0, value?.longitude ?? 0.0);
-      // await updateCurrentPosition(
-      //   latitude: value!.latitude,
-      //   longitude: value.longitude,
-      // );
+
+      await updateCurrentPosition(
+        latitude: value!.latitude,
+        longitude: value.longitude,
+      );
     });
     searchLocationTextEditingController.clear();
 
@@ -48,6 +47,7 @@ class GoogleMapViewController extends GetxController {
 
   updateCurrentPosition({required double latitude, required double longitude}) {
     currentLatLng.value = LatLng(latitude, longitude);
+    log('Current  long >>>>>>>>> $currentLatLng');
     update();
   }
 
@@ -119,25 +119,21 @@ class GoogleMapViewController extends GetxController {
   saveLocationCoordinates() async {
     var logInType = await Storage.getValue(StringConstants.loginType);
     String address = '';
-    if (currentLatLng.value.longitude == 0.0) {
-      address = await getAddressFromCoordinates(
-          Storage.getValue(StringConstants.latitude),
-          Storage.getValue(StringConstants.longitude));
-      log('current lat long 0.0>>>>>>$address');
-    }
+
+    address = await getAddressFromCoordinates(
+        Storage.getValue(StringConstants.latitude),
+        Storage.getValue(StringConstants.longitude));
+    log('current lat long 0.0>>>>>>$address');
+
     log('address >>>>>> $address   ${searchLocationTextEditingController.text}  lat long $currentLatLng');
     if (logInType == StringConstants.customer) {
       Get.find<CreateCustomerProfileController>()
           .updateLocationTextField(
-        position: currentLatLng.value.longitude != 0.0
+        position: searchLocationTextEditingController.text.isNotEmpty
             ? searchLocationTextEditingController.text
             : address,
-        lat: currentLatLng.value.latitude == 0.0
-            ? Storage.getValue(StringConstants.latitude).toString()
-            : currentLatLng.value.latitude.toString(),
-        long: currentLatLng.value.longitude == 0.0
-            ? Storage.getValue(StringConstants.longitude).toString()
-            : currentLatLng.value.longitude.toString(),
+        lat: currentLatLng.value.latitude.toString(),
+        long: currentLatLng.value.longitude.toString(),
       )
           .then((value) {
         Get.back();
@@ -145,15 +141,11 @@ class GoogleMapViewController extends GetxController {
     } else if (logInType == StringConstants.nanny) {
       Get.find<CreateNannyProfileController>()
           .updateLocationTextField(
-        formatAddress: currentLatLng.value.longitude != 0.0
+        formatAddress: searchLocationTextEditingController.text.isNotEmpty
             ? searchLocationTextEditingController.text
             : address,
-        lat: currentLatLng.value.latitude == 0.0
-            ? Storage.getValue(StringConstants.latitude).toString()
-            : currentLatLng.value.latitude.toString(),
-        long: currentLatLng.value.longitude == 0.0
-            ? Storage.getValue(StringConstants.longitude).toString()
-            : currentLatLng.value.longitude.toString(),
+        lat: currentLatLng.value.latitude.toString(),
+        long: currentLatLng.value.longitude.toString(),
       )
           .then((value) {
         Get.back();
@@ -192,15 +184,5 @@ class GoogleMapViewController extends GetxController {
       currentLatLng.value = LatLng(latitude, longitude);
     }
     update();
-  }
-
-  LatLng returnLatLong() {
-    if (currentLatLng.value.longitude == 0.0) {
-      var value = currentLatLng.value;
-      return value;
-    } else {
-      return LatLng(Storage.getValue(StringConstants.latitude),
-          Storage.getValue(StringConstants.longitude));
-    }
   }
 }
