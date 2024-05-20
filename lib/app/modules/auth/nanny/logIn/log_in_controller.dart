@@ -131,6 +131,7 @@ class LogInController extends GetxController {
     update();
   }
 
+  // Email controller
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();
